@@ -35,7 +35,7 @@ public class Role {
 	
 	@Column(name = "description")
 	private String description;
-	
+
 	@ManyToMany
 	@JoinTable(
 			name = "user_role",

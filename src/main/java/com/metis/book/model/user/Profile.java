@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -54,14 +53,13 @@ public class Profile extends UserDateAudit{
 	@OneToOne(mappedBy = "profile")
 	private User user;
 	
-	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-	@JoinColumn(name = "address_id", referencedColumnName = "id")
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)	
 	private List<Address> addresses;
 
 	public List<Address> getAddresses() {
 		return addresses == null ? null : new ArrayList<Address>(this.addresses);
 	}
-
+	
 	public void setAddresses(List<Address> addresses) {
 		if(addresses == null) {
 			this.addresses = null;

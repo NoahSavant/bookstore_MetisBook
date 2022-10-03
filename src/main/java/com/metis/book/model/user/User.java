@@ -43,7 +43,7 @@ public class User extends UserDateAudit  {
 	
 	@Column(name = "password")
 	private String password;
-	
+		
 	@ManyToMany
 	@JoinTable(
 			name = "user_role",

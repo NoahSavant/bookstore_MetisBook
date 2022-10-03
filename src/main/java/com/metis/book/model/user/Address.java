@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
@@ -38,11 +40,16 @@ public class Address extends UserDateAudit{
 	private String subDistrict;
 	
 	@Column(name = "province")
-	private String provinces;
+	private String province;
 	
 	@Column(name = "full_address")
 	private String fullAddress;
 	
 	@Column(name = "is_primary")
 	private Boolean isPrimary;
+	
+	@ManyToOne
+	@JoinColumn(name = "profile_id", referencedColumnName = "id")
+	private Profile profile;
+	
 }
