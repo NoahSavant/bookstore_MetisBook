@@ -12,6 +12,6 @@ public class HomeController {
 	
 	@GetMapping
 	public String home() {
-		return "admin/order.html";
+		return "client/shop.html";
 	}
 }
