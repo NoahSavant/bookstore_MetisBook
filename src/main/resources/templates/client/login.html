@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<div th:replace="admin/fragments/header :: header"></div>
+	<div th:replace="client/fragments/header :: header"></div>
+	 	<div>
+	 		<title>Đăng nhập</title>
+		    <meta name="keywords" content="">
+		    <meta name="description" content="">
+		    <meta name="author" content="">
+	 	</div>
+</head>
+
+<body>
+<!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    	<i class="fa fa-bars"></i>
+                	</button>
+                    <a class="navbar-brand" th:href="@{/metis}"><img th:src="@{/images/logo.png}" width="120" height="70" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" th:href="@{/metis}">TRANG CHỦ</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/shop}">TẤT CẢ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">BÀI VIẾT</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/contact}">LIÊN HỆ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">YÊU CẦU SÁCH</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/about}">THÔNG TIN</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav mr-3">
+                    <ul>
+                        <li class="search"><a th:href="@{/#}"><i class="fa fa-search"></i></a></li>
+                        <li class="side-menu">
+                            <a href="https://www.google.com">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+				<div class="attr-nav">
+                    <ul>
+                        <li class="nav-item">
+            				<div class="widget-header">
+								<small class="title text-muted">Welcome guest!</small>
+								<div> 
+									<a href="./signin.html">Sign in</a> <span class="dark-transp"> | </span>
+									<a href="./register.html"> Register</a>
+								</div>
+							</div>
+                       	</li>
+                    </ul>
+                </div>
+            </div>
+          
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block">
+                            	<img class="img-fluid" th:src="@{/images/login-image.jpg}"/>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Chào mừng bạn trở lại!</h1>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Nhập email...">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                id="exampleInputPassword" placeholder="Mật khẩu">
+                                        </div>
+                                       <div class="form-group pl-2" >
+	                                         <div class="checkbox " >
+											    <label for="checkid" >
+											    	<input class="align-middle"  id="checkid" type="checkbox"> Nhớ mật khẩu
+											    </label>
+											 </div>
+                                        </div>
+                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                            Đăng nhập
+                                        </a>
+                                        <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Đăng nhập với Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Đăng nhập với Facebook
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">Đăng ký tài khoản mới!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+		<!-- Bootstrap core JavaScript-->
+	    <script src="vendor/jquery/jquery.min.js"></script>
+	    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+	    <!-- Core plugin JavaScript-->
+	    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	
+	    <!-- Custom scripts for all pages-->
+	    <script src="js/sb-admin-2.min.js"></script>
+	</footer>
+
+
+</body>
+
+</html>
