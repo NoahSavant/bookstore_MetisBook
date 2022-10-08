@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -58,9 +57,9 @@ public class User extends UserDateAudit  {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
-			orphanRemoval = true)
-	private List<Cart> carts;
+	@OneToOne
+	@JoinColumn(name = "cart_id", referencedColumnName = "id")
+	private Cart cart;
 	
 	
 	
@@ -75,17 +74,5 @@ public class User extends UserDateAudit  {
 		this.roles = roles;
 	}
 
-	public List<Cart> getCarts() {
-		return carts == null ? null : new ArrayList<Cart>(this.carts);
-	}
-
-	public void setCarts(List<Cart> carts) {
-		if(carts == null) {
-			this.carts = null;
-		}
-		this.carts = carts;
-	}
-	
-	
 
 }

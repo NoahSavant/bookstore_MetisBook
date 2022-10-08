@@ -73,7 +73,7 @@ public class Book extends UserDateAudit {
 
 	
 	@OneToMany(mappedBy = "book")
-	private List<Cart> carts;
+	private List<CartItem> carts;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -94,11 +94,11 @@ public class Book extends UserDateAudit {
 		this.orderItems = orderItems;
 	}
 
-	public List<Cart> getCarts() {
-		return carts == null ? null : new ArrayList<Cart>(this.carts);
+	public List<CartItem> getCarts() {
+		return carts == null ? null : new ArrayList<CartItem>(this.carts);
 	}
 
-	public void setCarts(List<Cart> carts) {
+	public void setCarts(List<CartItem> carts) {
 		if(carts == null) {
 			this.carts = null;
 		}
