@@ -42,7 +42,7 @@ public class Order extends UserDateAudit {
 	@Column(name = "payment_method")
 	private String paymentMethod;
 	
-	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<OrderItem> orderItems;	
 	
 	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
