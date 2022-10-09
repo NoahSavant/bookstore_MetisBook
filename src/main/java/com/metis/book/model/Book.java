@@ -21,6 +21,7 @@ import com.metis.book.model.audit.UserDateAudit;
 import com.metis.book.model.order.OrderItem;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Builder
 public class Book extends UserDateAudit {
 	
 	private static final long serialVersionUID = 1L;
@@ -49,7 +51,7 @@ public class Book extends UserDateAudit {
 	private Long price;
 	
 	@Column(name = "publication_date")
-	private Date date;
+	private Date publicationDate;
 	
 	@Column(name = "publisher_name")
 	private String publisherName;

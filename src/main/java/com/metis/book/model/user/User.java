@@ -19,6 +19,7 @@ import com.metis.book.model.Cart;
 import com.metis.book.model.audit.UserDateAudit;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User extends UserDateAudit  {
 	
 	private static final long serialVersionUID = 1L;
