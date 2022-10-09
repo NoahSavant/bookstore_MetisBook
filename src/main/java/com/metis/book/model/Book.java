@@ -51,7 +51,7 @@ public class Book extends UserDateAudit {
 	private Long price;
 	
 	@Column(name = "publication_date")
-	private Date date;
+	private Date publicationDate;
 	
 	@Column(name = "publisher_name")
 	private String publisherName;
