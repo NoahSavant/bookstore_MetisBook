@@ -1,17 +1,20 @@
 package com.metis.book.model.user;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -45,6 +48,24 @@ public class User extends UserDateAudit  {
 	@Column(name = "password")
 	private String password;
 		
+	@Column(name = "first_name")
+	private String firstName;
+	
+	@Column(name = "last_name")
+	private String lastName;
+	
+	@Column(name = "gender")
+	private Integer gender;
+	
+	@Column(name = "phone_number")
+	private String phoneNumber;
+	
+	@Column(name = "birthday")
+	private LocalDate birthday;
+	
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)	
+	private List<Address> addresses;
+
 	@ManyToMany
 	@JoinTable(
 			name = "user_role",
@@ -54,16 +75,21 @@ public class User extends UserDateAudit  {
 	
 	@Column(name = "enabled")
 	private Boolean enabled;
-
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    private Profile profile;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cart_id", referencedColumnName = "id")
 	private Cart cart;
 	
+	public List<Address> getAddresses() {
+		return addresses == null ? null : new ArrayList<Address>(this.addresses);
+	}
 	
+	public void setAddresses(List<Address> addresses) {
+		if(addresses == null) {
+			this.addresses = null;
+		}
+		this.addresses = addresses;
+	}
 	
 	public List<Role> getRoles() {
 		return roles == null ? null : new ArrayList<Role>(this.roles);
@@ -75,6 +101,5 @@ public class User extends UserDateAudit  {
 		}
 		this.roles = roles;
 	}
-
 
 }

@@ -49,7 +49,7 @@ public class Address extends UserDateAudit{
 	private Boolean isPrimary;
 	
 	@ManyToOne
-	@JoinColumn(name = "profile_id", referencedColumnName = "id")
-	private Profile profile;
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 	
 }
