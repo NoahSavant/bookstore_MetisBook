@@ -1,0 +1,73 @@
+<div th:fragment="mainTop">
+	<!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    	<i class="fa fa-bars"></i>
+                	</button>
+                    <a class="navbar-brand" href="index.html"><img th:src="@{/images/logo.png}" width="120" height="70" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" th:href="@{/metis}">TRANG CHỦ</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/shop}">TẤT CẢ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">BÀI VIẾT</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/contact}">LIÊN HỆ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">YÊU CẦU SÁCH</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/about}">THÔNG TIN</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav mr-3">
+                    <ul>
+                        <li class="search"><a th:href="@{/#}"><i class="fa fa-search"></i></a></li>
+                        <li class="side-menu">
+                            <a href="https://www.google.com">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+				<div class="attr-nav">
+                    <ul>
+                        <li class="nav-item">
+            				<div class="widget-header">
+								<small class="title text-muted">Welcome guest!</small>
+								<div> 
+									<a href="./signin.html">Sign in</a> <span class="dark-transp"> | </span>
+									<a href="./register.html"> Register</a>
+								</div>
+							</div>
+                       	</li>
+                    </ul>
+                </div>
+            </div>
+          
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+     <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+ 
+</div>
