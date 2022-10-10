@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +21,7 @@ public class SecurityConfig {
             "/img/**",
             "/scss/**",
             "/vendor/**",
-            "/metis/auth/**"
+            "/auth/**"
             };
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,20 +30,30 @@ public class SecurityConfig {
 				.disable()
 			.formLogin()
 				.usernameParameter("email")
-				.loginPage("/metis/auth/login")
-				.defaultSuccessUrl("/metis/")
-				.failureUrl("/metis/auth/login?error=true")
+				.loginPage("/auth/login")
+				.loginProcessingUrl("/auth/login")
+				.successHandler(myAuthenticationHandler())
+				.failureUrl("/auth/login?error=true")
 			.and()
 				.authorizeRequests()
 					.antMatchers(allowURL)
 						.permitAll()
+					.antMatchers("/member/**")
+						.hasAuthority("ROLE_USER")
+					.antMatchers("/admin/**")
+						.hasAuthority("ROLE_ADMIN")
 					.anyRequest()
-						.authenticated();
+						.permitAll();
 		return http.build();
 	}
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	AuthenticationSuccessHandler myAuthenticationHandler(){
+	    return new AuthenticationHandler();
 	}
 }
