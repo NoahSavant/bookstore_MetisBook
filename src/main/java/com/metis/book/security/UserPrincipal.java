@@ -24,6 +24,7 @@ public class UserPrincipal implements UserDetails {
 	private Long id;
 	private String username;
 	private String password;
+	private String email;
 	private String firstName;
 	private String lastName;
 	private Integer gender;
@@ -79,6 +80,7 @@ public class UserPrincipal implements UserDetails {
 				user.getId(),
 				user.getUsername(),
 				user.getPassword(),
+				user.getEmail(),
 				user.getFirstName(),
 				user.getLastName(),
 				user.getGender(),
@@ -94,12 +96,14 @@ public class UserPrincipal implements UserDetails {
 
 	}
 
-	public UserPrincipal(Long id, String username, String password, String firstName, String lastName, Integer gender,
-			String phoneNumber, LocalDate birthday, Boolean enabled, List<GrantedAuthority> authorities) {
+	public UserPrincipal(Long id, String username, String password, String email, String firstName, String lastName,
+			Integer gender, String phoneNumber, LocalDate birthday, Boolean enabled,
+			List<GrantedAuthority> authorities) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
@@ -108,6 +112,8 @@ public class UserPrincipal implements UserDetails {
 		this.enabled = enabled;
 		this.authorities = authorities;
 	}
+
+	
 
 
 	
