@@ -349,4 +349,6 @@ public class InsertData {
 		userRepository.save(user);
 		
 	}
+	
+	
 }

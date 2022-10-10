@@ -12,13 +12,29 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	String[] allowURL = {
+            "/css/**",
+            "/images/**",
+            "/fonts/**",
+            "/scripts/**",
+            };
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			.cors().and().csrf()
-			.disable()
-			.authorizeRequests()
-				.anyRequest().permitAll();
+				.disable()
+			.formLogin()
+				.loginPage("/metis/auth/login")
+			    .defaultSuccessUrl("/metis/", true)
+			.and()
+				
+				.authorizeRequests()
+					.antMatchers("/metis/auth/**")
+						.permitAll()
+					.antMatchers(allowURL)
+						.permitAll()
+					.anyRequest()
+						.authenticated();
 		return http.build();
 	}
 	
