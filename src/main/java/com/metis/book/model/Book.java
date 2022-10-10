@@ -59,8 +59,9 @@ public class Book extends UserDateAudit {
 	@Column(name = "available")
 	private Boolean available;
 	
-	@OneToMany(mappedBy = "book")
-	private List<Language> languages;
+	@ManyToOne
+	@JoinColumn(name = "language_id", referencedColumnName = "id")
+	private Language language;
 	
 	@OneToOne
 	@JoinColumn(name = "stock_id", referencedColumnName = "id")
@@ -106,18 +107,7 @@ public class Book extends UserDateAudit {
 		}
 		this.carts = carts;
 	}
-
-	public List<Language> getLanguages() {
-		return languages == null ? null : new ArrayList<Language>(this.languages);
-	}
-
-	public void setLanguages(List<Language> languages) {
-		if(languages == null) {
-			this.languages = null;
-		}
-		this.languages = languages;
-	}
-
+	
 	public List<Author> getAuthors() {
 		return authors == null ? null : new ArrayList<Author>(this.authors);
 	}

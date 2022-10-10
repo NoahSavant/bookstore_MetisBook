@@ -153,7 +153,7 @@ public class InsertData {
 				.available(Boolean.TRUE)
 				.category(category)
 				.description("Một cuốn tiểu thuyết giành cho giới trẻ")
-				.languages(Arrays.asList(language))
+				.language(language)
 				.publicationDate(null)
 				.publisherName("Kim Đồng")
 				.stock(stockSaved1)
@@ -168,7 +168,7 @@ public class InsertData {
 				.available(Boolean.TRUE)
 				.category(category)
 				.description("Một cuốn tiểu thuyết chốn đồng quê")
-				.languages(Arrays.asList(language))
+				.language(language)
 				.publicationDate(null)
 				.publisherName("Kim Đồng")
 				.stock(stockSaved2)
@@ -319,11 +319,7 @@ public class InsertData {
 
 		// Map user to cart because user not exits
 		userSaved.getCart().setUser(userSaved);
-		
-		
-		log.error("haha");
-		log.error(userSaved.getCart().getId().toString());
-		log.error(userSaved.getCart().getUser().getFirstName().toString());
+
 	}
 	
 	
