@@ -3,14 +3,10 @@ package com.metis.book.controller;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +25,7 @@ public class AuthController {
 			@RequestParam(name = "error") Optional<String> error) {
 
 		ModelAndView mav = new ModelAndView();
-		
+
 		// check if user already authenticated
 		String viewName = redirectUser();
 		if(viewName!="") {
@@ -42,30 +38,8 @@ public class AuthController {
 			log.info(error.get());
 			mav.addObject("errorMessage", "Email hoặc mật khẩu không chính xác. Vui lòng nhấn \"Quên mật khẩu?\" để đặt lại mật khẩu mới.");
 		}
-		
 		mav.setViewName("client/login.html");
 		return mav;
-	}
-	
-
-	@GetMapping("/logout")
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView mav = new ModelAndView();
-				
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();  
-		if (auth != null){      
-		   new SecurityContextLogoutHandler().logout(request, response, auth);  
-		}  
-		
-		// check if user already authenticated
-		String viewName = redirectUser();
-		if(viewName!="") {
-			mav.setViewName(viewName);
-			return mav;
-		}
-		
-		return mav;  
 	}
 	
 	private String redirectUser() {
