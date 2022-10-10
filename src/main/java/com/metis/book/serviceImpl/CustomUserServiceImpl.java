@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.security.UserPrincipal;
-
-import lombok.extern.slf4j.Slf4j;
+import com.metis.book.utils.AppConstant;
 
 @Service
-@Slf4j
 public class CustomUserServiceImpl implements UserDetailsService{
 
 	@Autowired
@@ -21,9 +19,9 @@ public class CustomUserServiceImpl implements UserDetailsService{
 	
 	
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email){
 		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Email or password not correct!"));
+				.orElseThrow(() -> new UsernameNotFoundException(AppConstant.USER_NOT_FOUND+email));
 		return UserPrincipal.create(user);
 
 	

@@ -13,10 +13,8 @@ import com.metis.book.model.user.Role;
 import com.metis.book.model.user.User;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 @Data	
-@Slf4j
 public class UserPrincipal implements UserDetails {
 
 	private static final long serialVersionUID = 1L;

@@ -23,11 +23,13 @@ public class AuthController {
 		
 		if(error.isPresent()) {
 			log.info(error.get());
-			mav.addObject("errorMessage", "Username or password not correct");
+			mav.addObject("errorMessage", "Email hoặc mật khẩu không chính xác. Vui lòng nhấn \"Quên mật khẩu?\" để đặt lại mật khẩu mới.");
 		}
 		
 		mav.setViewName("client/login.html");
 		return mav;
 	}
+	
+
 	
 }
