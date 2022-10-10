@@ -3,10 +3,14 @@ package com.metis.book.controller;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +48,25 @@ public class AuthController {
 	}
 	
 
+	@GetMapping("/logout")
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mav = new ModelAndView();
+				
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();  
+		if (auth != null){      
+		   new SecurityContextLogoutHandler().logout(request, response, auth);  
+		}  
+		
+		// check if user already authenticated
+		String viewName = redirectUser();
+		if(viewName!="") {
+			mav.setViewName(viewName);
+			return mav;
+		}
+		
+		return mav;  
+	}
 	
 	private String redirectUser() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
