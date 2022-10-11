@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/auth")
 @Slf4j
 public class AuthController {
+	
+	@Autowired
+	UserService userService;
 	
 	@GetMapping("/login")
 	public ModelAndView viewLoginPage(
@@ -115,7 +120,9 @@ public class AuthController {
 	
 	
 	private Boolean isExistByUsername(String username) {
-		
+		if(userService.existsByUsername(username)) {
+			return true;
+		}
 		return false;
 	}
 	

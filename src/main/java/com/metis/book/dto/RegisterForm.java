@@ -14,11 +14,11 @@ import lombok.Data;
 public class RegisterForm {
 
 	@NotEmpty(message = "Tên đăng nhập không thể trống!")
-	@Size(min = 5, max = 30, message = "Độ dài tên đăng nhập phải từ [5-30] ký tự")
+	@Size(min = 2, max = 30, message = "Độ dài tên đăng nhập phải từ [2-30] ký tự")
 	private String username;
 	
 	@NotEmpty(message = "Mật khẩu không thể trống")
-	@Size(min = 7, max = 30, message = "Độ dài mật khẩu phải từ [5-30] ký tự")
+	@Size(min = 7, max = 30, message = "Độ dài mật khẩu phải từ [7-30] ký tự")
 	private String password;
 
 	@NotEmpty(message = "Mật khâur nhập lại không thể trống")
