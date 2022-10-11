@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.validation.Valid;
 
@@ -81,6 +82,7 @@ public class AuthController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		// Check constraint on info
 		if(result.hasErrors()) {
 			mav.setViewName("client/register");
 			return mav;
@@ -88,13 +90,15 @@ public class AuthController {
 			
 		Map<String, String> authenErrors = getAuthenError(registerRequest);
 
+		// Check constraint on data - duplicate, not match,...
 		if(authenErrors.size()>0) {
 			mav.addObject("authenErrors",authenErrors);
-			log.error("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			mav.setViewName("client/register");
 			return mav;
 		}
 
+		// create new User
+		userService.createNewUser(registerRequest);
 		
 		mav.setViewName("redirect:/auth/login");
 		return mav;
@@ -111,13 +115,32 @@ public class AuthController {
 		if(isExistByUsername(registerRequest.getUsername())) {
 			errors.put("existByUsername", "Tên đăng nhập đã tồn tại");
 		}
+		if(isContainSpecialChar(registerRequest.getUsername())) {
+			errors.put("usernameSpecial", "Tên đăng nhập không được phép chứa ký tự đặc biệt");
+		}
+		if(isContainSpecialChar(registerRequest.getFirstName())) {
+			errors.put("firstNameSpecial", "Tên không được phép chứa ký tự đặc biệt");
+		}
+		if(isContainSpecialChar(registerRequest.getLastName())) {
+			errors.put("lastNameSpecial", "Họ không được phép chứa ký tự đặc biệt");
+		}
 		if(isExistByEmail(registerRequest.getEmail())) {
 			errors.put("existByEmail", "Email đã tồn tại");
 		}
+		
 		log.error(errors.toString());
 		return errors;
 	}
 	
+	private Boolean isContainSpecialChar(String username) {
+		
+		Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]"); // fill in any chars that you consider special
+
+		if (regex.matcher(username).find()) {
+		   return true;
+		} 
+		return false;
+	}
 	
 	private Boolean isExistByUsername(String username) {
 		if(userService.existsByUsername(username)) {
@@ -127,7 +150,7 @@ public class AuthController {
 	}
 	
 	private Boolean isExistByEmail(String email) {
-		if(email.equals("duckhailinux@gmail.com")) {
+		if(userService.existsByEmail(email)) {
 			return true;
 		}
 		return false;

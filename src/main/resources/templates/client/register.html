@@ -26,23 +26,29 @@
                    	 <img class="img-fluid" th:src="@{/images/register-image.jpg}"/>
                     </div>
                     <div class="col-lg-7">
-                        <div class="p-5">
+                        <div class="p-3">
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Đăng ký tài khoản!</h1>
                             </div>
                             
                             <form class="user" method="post" th:action="@{/auth/register-process}" th:object="${registerRequest}">
                                 <div class="form-group row">
+                                
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            th:field= "*{firstName}" placeholder="Tên">
-                                          <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"th:field= "*{firstName}" placeholder="Tên">
+                                        <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                   		<div th:if="${authenErrors != null && authenErrors.containsKey('firstNameSpecial')}" 
+							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('firstNameSpecial')}">
+							        	</div>
                                     </div>
-                                    
+                                	
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
                                             th:field = "*{lastName}" placeholder="Họ">
                                          <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                                    	<div th:if="${authenErrors != null && authenErrors.containsKey('lastNameSpecial')}" 
+							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('lastNameSpecial')}">
+							        	</div>
                                     </div>
                                 </div>
                                  <div class="form-group mt-3">
@@ -52,6 +58,9 @@
 
 							        <div th:if="${authenErrors != null && authenErrors.containsKey('existByUsername')}" 
 							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('existByUsername')}">
+							        </div>
+							        <div th:if="${authenErrors != null && authenErrors.containsKey('usernameSpecial')}" 
+							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('usernameSpecial')}">
 							        </div>
 	                              </div>
 	                              

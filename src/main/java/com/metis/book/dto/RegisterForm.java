@@ -21,7 +21,7 @@ public class RegisterForm {
 	@Size(min = 7, max = 30, message = "Độ dài mật khẩu phải từ [7-30] ký tự")
 	private String password;
 
-	@NotEmpty(message = "Mật khâur nhập lại không thể trống")
+	@NotEmpty(message = "Mật khẩu nhập lại không thể trống")
 	private String confirmPassword;
 	
 	@NotEmpty(message = "Email không thể trống")

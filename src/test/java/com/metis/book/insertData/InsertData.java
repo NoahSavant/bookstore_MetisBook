@@ -316,10 +316,10 @@ public class InsertData {
 				.cart(cartSaved)
 				.addresses(null)
 				.build();
-		User userSaved = userRepository.save(user);
+		userRepository.save(user);
 
-		// Map user to cart because user not exits
-		userSaved.getCart().setUser(userSaved);
+//		// Map user to cart because user not exits
+//		userSaved.getCart().setUser(userSaved);
 
 	}
 	
