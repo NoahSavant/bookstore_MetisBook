@@ -105,7 +105,8 @@ public class AuthController {
 		}
 		if(isExistByUsername(registerRequest.getUsername())) {
 			errors.put("existByUsername", "Tên đăng nhập đã tồn tại");
-		}else if(isExistByEmail(registerRequest.getEmail())) {
+		}
+		if(isExistByEmail(registerRequest.getEmail())) {
 			errors.put("existByEmail", "Email đã tồn tại");
 		}
 		log.error(errors.toString());

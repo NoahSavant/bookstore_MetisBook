@@ -50,7 +50,7 @@
                                         th:field = "*{username}" placeholder="Tên đăng nhập">
 	                            	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
 
-							        <div th:if="${authenErrors.containsKey('existByUsername')}" 
+							        <div th:if="${authenErrors != null && authenErrors.containsKey('existByUsername')}" 
 							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('existByUsername')}">
 							        </div>
 	                              </div>
@@ -92,7 +92,7 @@
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
                                         th:field="*{email}" placeholder="Email">
                                     <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-	                            	 <div th:if="${authenErrors.containsKey('existByEmail')}" 
+	                            	 <div th:if="${authenErrors != null && authenErrors.containsKey('existByEmail')}" 
 								       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('existByEmail')}">
 								     </div>
 	                             </div>
@@ -112,9 +112,9 @@
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
                                             th:field = "*{confirmPassword}" id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
-                                    	<div th:if="${authenErrors.containsKey('passwordNotMatch')}" 
-							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('passwordNotMatch')}">
-							        </div>
+                                    	<div th:if="${authenErrors != null && authenErrors.containsKey('passwordNotMatch')}" 
+							       			 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('passwordNotMatch')}">
+							        	</div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block mt-3">
