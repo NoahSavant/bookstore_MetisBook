@@ -9,19 +9,19 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     	<i class="fa fa-bars"></i>
                 	</button>
-                    <a class="navbar-brand" href="index.html"><img th:src="@{/images/logo.png}" width="120" height="70" class="logo" alt=""></a>
+                    <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" width="120" height="70" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" th:href="@{/metis}">TRANG CHỦ</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/shop}">TẤT CẢ</a></li>
+                        <li class="nav-item active"><a class="nav-link" th:href="@{/}">TRANG CHỦ</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/shop}">TẤT CẢ</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">BÀI VIẾT</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/contact}">LIÊN HỆ</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/contact}">LIÊN HỆ</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">YÊU CẦU SÁCH</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/metis/about}">THÔNG TIN</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/about}">THÔNG TIN</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -30,8 +30,8 @@
                 <div class="attr-nav mr-3">
                     <ul>
                         <li class="search"><a th:href="@{/#}"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-                            <a href="https://www.google.com">
+                        <li >
+                            <a th:href="@{/member/cart}">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="badge">0</span>
                             </a>
@@ -43,10 +43,29 @@
                     <ul>
                         <li class="nav-item">
             				<div class="widget-header">
-								<small class="title text-muted">Welcome guest!</small>
-								<div> 
-									<a href="./signin.html">Sign in</a> <span class="dark-transp"> | </span>
-									<a href="./register.html"> Register</a>
+            				
+								<div sec:authorize="isAuthenticated()">
+								   <div class="icontext w-100">
+									<a th:href="@{/#}" class="brand-wrap">
+										<img
+										th:src="@{/#}"
+										class="img-xs icon rounded-circle" 
+										style="max-width:2%;"
+		            					/>
+									</a>
+									<small class="title text-muted">Welcome <br><span th:text="${#authentication.getPrincipal().getUsername()}"></span> !</small>
+								   </div>
+									<span class="" >
+										<a th:href="@{/auth/logout}">Logout</a>
+									</span>
+								</div>
+								
+								<div sec:authorize="!isAuthenticated()">
+									<small class="title text-muted">Welcome guest!</small>
+									<div>
+										<a th:href="@{/auth/login}">Sign in</a> <span class="dark-transp"> | </span>
+										<a th:href="@{/#}"> Register</a>
+									</div>
 								</div>
 							</div>
                        	</li>

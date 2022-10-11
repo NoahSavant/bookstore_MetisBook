@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import com.metis.book.model.Cart;
 import com.metis.book.model.audit.UserDateAudit;
 
+import groovy.transform.ToString;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class User extends UserDateAudit  {
 	
 	private static final long serialVersionUID = 1L;
@@ -48,6 +50,9 @@ public class User extends UserDateAudit  {
 	@Column(name = "password")
 	private String password;
 		
+	@Column(name = "email")
+	private String email;
+	
 	@Column(name = "first_name")
 	private String firstName;
 	
@@ -66,7 +71,7 @@ public class User extends UserDateAudit  {
 	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)	
 	private List<Address> addresses;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_role",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -76,7 +81,7 @@ public class User extends UserDateAudit  {
 	@Column(name = "enabled")
 	private Boolean enabled;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cart_id", referencedColumnName = "id")
 	private Cart cart;
 	
