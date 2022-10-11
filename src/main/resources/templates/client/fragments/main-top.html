@@ -53,18 +53,18 @@
 										style="max-width:2%;"
 		            					/>
 									</a>
-									<small class="title text-muted">Welcome <br><span th:text="${#authentication.getPrincipal().getUsername()}"></span> !</small>
+									<small class="title text-muted">Xin chào <br><span th:text="${#authentication.getPrincipal().getUsername()}"></span> !</small>
 								   </div>
 									<span class="" >
-										<a th:href="@{/auth/logout}">Logout</a>
+										<a th:href="@{/auth/logout}">Đăng xuất</a>
 									</span>
 								</div>
 								
 								<div sec:authorize="!isAuthenticated()">
 									<small class="title text-muted">Welcome guest!</small>
 									<div>
-										<a th:href="@{/auth/login}">Sign in</a> <span class="dark-transp"> | </span>
-										<a th:href="@{/#}"> Register</a>
+										<a th:href="@{/auth/login}">Đăng nhập</a> <span class="dark-transp"> | </span>
+										<a th:href="@{/auth/register}">Đăng ký</a>
 									</div>
 								</div>
 							</div>
