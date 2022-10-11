@@ -32,7 +32,7 @@ public class Language extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false, length = 30)
 	private String name;
 	
 	@OneToMany(mappedBy = "language")

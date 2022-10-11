@@ -29,7 +29,7 @@ public class OrderTrack extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "status")
+	@Column(name = "status", nullable = false)
 	private String status;
 	
 	@OneToOne(mappedBy = "orderTrack")

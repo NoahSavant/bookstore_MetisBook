@@ -36,7 +36,7 @@ public class Order extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "order_date")
+	@Column(name = "order_date", nullable = false)
 	private Date orderDate;
 	
 	@Column(name = "payment_method")
@@ -46,7 +46,7 @@ public class Order extends UserDateAudit {
 	private List<OrderItem> orderItems;	
 	
 	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-	@JoinColumn(name = "order_track_id", referencedColumnName = "id")
+	@JoinColumn(name = "order_track_id", referencedColumnName = "id", nullable = false)
 	private OrderTrack orderTrack;
 
 	public List<OrderItem> getOrderItems() {

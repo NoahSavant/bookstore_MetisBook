@@ -33,7 +33,7 @@ public class Category extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 	
 	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL,

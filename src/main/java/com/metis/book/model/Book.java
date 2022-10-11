@@ -41,10 +41,10 @@ public class Book extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "title")
+	@Column(name = "title",nullable = false, length = 40)
 	private String title;
 	
-	@Column(name = "description")
+	@Column(name = "description", length = 200)
 	private String description;
 	
 	@Column(name = "price")
@@ -53,18 +53,18 @@ public class Book extends UserDateAudit {
 	@Column(name = "publication_date")
 	private Date publicationDate;
 	
-	@Column(name = "publisher_name")
+	@Column(name = "publisher_name", nullable = false)
 	private String publisherName;
 	
-	@Column(name = "available")
+	@Column(name = "available", nullable = false)
 	private Boolean available;
 	
 	@ManyToOne
-	@JoinColumn(name = "language_id", referencedColumnName = "id")
+	@JoinColumn(name = "language_id", referencedColumnName = "id",nullable = false)
 	private Language language;
 	
 	@OneToOne
-	@JoinColumn(name = "stock_id", referencedColumnName = "id")
+	@JoinColumn(name = "stock_id", referencedColumnName = "id", nullable = false)
 	private Stock stock;
 	
 	@ManyToMany
@@ -79,7 +79,7 @@ public class Book extends UserDateAudit {
 	private List<CartItem> carts;
 	
 	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	@JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
 	private Category category;
 	
 	@OneToMany(mappedBy = "book")
