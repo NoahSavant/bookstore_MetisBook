@@ -1,5 +1,7 @@
 package com.metis.book.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -75,16 +77,54 @@ public class AuthController {
 		ModelAndView mav = new ModelAndView();
 		
 		if(result.hasErrors()) {
-			log.error(result.getAllErrors().toString());
 			mav.setViewName("client/register");
 			return mav;
 		}
+			
+		Map<String, String> authenErrors = getAuthenError(registerRequest);
+
+		if(authenErrors.size()>0) {
+			mav.addObject("authenErrors",authenErrors);
+			log.error("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			mav.setViewName("client/register");
+			return mav;
+		}
+
+		
 		mav.setViewName("redirect:/auth/login");
 		return mav;
 		
 	}
 	
+	private HashMap<String, String> getAuthenError(RegisterForm registerRequest){
+		
+		HashMap<String, String> errors = new HashMap<>();
+		
+		if(!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+			errors.put("passwordNotMatch", "Mật khẩu nhập lại không khớp");
+		}
+		if(isExistByUsername(registerRequest.getUsername())) {
+			errors.put("existByUsername", "Tên đăng nhập đã tồn tại");
+		}else if(isExistByEmail(registerRequest.getEmail())) {
+			errors.put("existByEmail", "Email đã tồn tại");
+		}
+		log.error(errors.toString());
+		return errors;
+	}
 	
+	
+	private Boolean isExistByUsername(String username) {
+		
+		return false;
+	}
+	
+	private Boolean isExistByEmail(String email) {
+		if(email.equals("duckhailinux@gmail.com")) {
+			return true;
+		}
+		return false;
+	}
+
 	private String redirectUser() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication == null || AnonymousAuthenticationToken.class.
@@ -99,6 +139,4 @@ public class AuthController {
         }
 	    return "";
 	}
-
-	
 }

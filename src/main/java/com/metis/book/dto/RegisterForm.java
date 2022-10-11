@@ -4,9 +4,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.metis.book.validation.Phone;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +20,8 @@ public class RegisterForm {
 	@NotEmpty(message = "Mật khẩu không thể trống")
 	@Size(min = 7, max = 30, message = "Độ dài mật khẩu phải từ [5-30] ký tự")
 	private String password;
-	
+
+	@NotEmpty(message = "Mật khâur nhập lại không thể trống")
 	private String confirmPassword;
 	
 	@NotEmpty(message = "Email không thể trống")
@@ -40,6 +42,7 @@ public class RegisterForm {
 	
 	@NotEmpty(message = "Số điện thoại không thể trống")
 	@Size(min = 6, max =12, message = "Độ dài số điện thoại phải từ [6-12] ký tự")
+	@Phone(message = "Số điện thoại không hợp lệ")
 	private String phoneNumber;
 	
 	private String birthday;
