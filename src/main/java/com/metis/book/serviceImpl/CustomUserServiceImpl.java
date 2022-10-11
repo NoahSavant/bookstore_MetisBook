@@ -24,7 +24,15 @@ public class CustomUserServiceImpl implements UserDetailsService{
 				.orElseThrow(() -> new UsernameNotFoundException(AppConstant.USER_NOT_FOUND+email));
 		return UserPrincipal.create(user);
 
-	
+		/*
+		 * // khai -> database -> tìm được -> tạo userDetail -> trả về UserDetailService
+		 * -> // 123 -> userDetailSerice -> kiểm tra -> nếu 123 = pass trong database
+		 * (giải mã) -> đăng nhập -> lỗi // đăng nhập thành công -> tạo một
+		 * http request -> stateless -> duy trì đăng nhập
+		 * UserPrincipal ( đã authenticated ) trong spring container
+		 * 
+		 */	
+		
 	}
 
 }

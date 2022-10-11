@@ -30,11 +30,11 @@ public class CartItem extends UserDateAudit{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "quantity")
+	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
 	
 	@ManyToOne
-	@JoinColumn(name = "book_id", referencedColumnName = "id")
+	@JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false)
 	private Book book;
 	
 

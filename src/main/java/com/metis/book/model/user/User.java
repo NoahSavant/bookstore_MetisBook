@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.metis.book.model.Cart;
 import com.metis.book.model.audit.UserDateAudit;
@@ -29,7 +30,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", 
+uniqueConstraints = {
+		@UniqueConstraint(name = "UniqueUsername",columnNames = "username"),
+		@UniqueConstraint(name = "UniqueEmail", columnNames = "email")
+})
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -44,25 +49,25 @@ public class User extends UserDateAudit  {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "username")
+	@Column(name = "username", nullable = false, length = 30)
 	private String username;
 	
-	@Column(name = "password")
+	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 		
-	@Column(name = "email")
+	@Column(name = "email", nullable = false, length = 30)
 	private String email;
 	
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false, length = 30)
 	private String firstName;
 	
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false, length = 30)
 	private String lastName;
 	
-	@Column(name = "gender")
+	@Column(name = "gender",nullable = false)
 	private Integer gender;
 	
-	@Column(name = "phone_number")
+	@Column(name = "phone_number",nullable = false)
 	private String phoneNumber;
 	
 	@Column(name = "birthday")
@@ -78,7 +83,7 @@ public class User extends UserDateAudit  {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 	
-	@Column(name = "enabled")
+	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 	
 	@OneToOne(fetch = FetchType.LAZY)

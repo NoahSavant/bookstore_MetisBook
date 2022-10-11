@@ -30,90 +30,110 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Đăng ký tài khoản!</h1>
                             </div>
-                            <form class="user">
+                            
+                            <form class="user" method="post" th:action="@{/auth/register-process}" th:object="${registerRequest}">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Tên">
+                                            th:field= "*{firstName}" placeholder="Tên">
+                                          <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                                     </div>
+                                    
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Họ">
+                                            th:field = "*{lastName}" placeholder="Họ">
+                                         <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                                     </div>
                                 </div>
                                  <div class="form-group mt-3">
                                     <input type="text" class="form-control form-control-user" id="exampleInputUsername"
-                                        placeholder="Tên đăng nhập">
+                                        th:field = "*{username}" placeholder="Tên đăng nhập">
+	                            	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+
+							        <div th:if="${authenErrors.containsKey('existByUsername')}" 
+							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('existByUsername')}">
+							        </div>
 	                              </div>
+	                              
                                 <div class="row">
 		                            <div class="datepicker form-group col-sm-6 mb-3 mb-sm-0">
 								   		<h6 class="ml-3">Ngày sinh: </h6>
-										<input placeholder="Select date" type="date" id="birthday" 
+										<input placeholder="Select date" th:field = "*{birthday}" type="date" id="birthday" 
 										class="form-control form-control-user">
+										<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
 									</div>
 	                               
 	                                <div class="ml-4">
 					                  <h6 class="mb-2 pb-1">Giới tính: </h6>
 					
 					                  <div class="form-check form-check-inline">
-					                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-					                      value="option1" checked />
+					                    <input class="form-check-input" type="radio" th:field="*{gender}" id="femaleGender"
+					                      value="1" checked />
 					                    <label class="form-check-label" for="femaleGender">Nam</label>
 					                  </div>
 					
 					                  <div class="form-check form-check-inline">
-					                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-					                      value="option2" />
+					                    <input class="form-check-input" type="radio" th:field="*{gender}" id="maleGender"
+					                      value="2" />
 					                    <label class="form-check-label" for="maleGender">Nữ</label>
 					                  </div>
 					
 					                  <div class="form-check form-check-inline">
-					                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-					                      value="option3" />
+					                    <input class="form-check-input" type="radio" th:field="*{gender}" id="otherGender"
+					                      value="0" />
 					                    <label class="form-check-label" for="otherGender">Khác</label>
 					                  </div>
-					
+									  <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
 					                </div>
                                 </div>
                                 
                                 <div class="row mt-3">
                                  <div class="form-group col-md-6 ">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email">
+                                        th:field="*{email}" placeholder="Email">
+                                    <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+	                            	 <div th:if="${authenErrors.containsKey('existByEmail')}" 
+								       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('existByEmail')}">
+								     </div>
 	                             </div>
 	                            <div class="form-group col-md-6 ">
                                     <input type="text" class="form-control form-control-user" id="phoneNumber"
-                                        placeholder="Số điện thoại">
+                                        th:field= "*{phoneNumber}" placeholder="Số điện thoại">
+	                             	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
 	                             </div>
                                 </div>
 							   
                                 <div class="form-group row ">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Mật khẩu">
+                                          th:field= "*{password}"  id="exampleInputPassword" placeholder="Mật khẩu">
+                                    	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
+                                            th:field = "*{confirmPassword}" id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
+                                    	<div th:if="${authenErrors.containsKey('passwordNotMatch')}" 
+							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('passwordNotMatch')}">
+							        </div>
                                     </div>
                                 </div>
-                                <a th:href="@{/metis}" class="btn btn-primary btn-user btn-block mt-3">
+                                <button type="submit" class="btn btn-primary btn-user btn-block mt-3">
                                     Đăng ký
-                                </a>
+                                </button>
                                 <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <button  class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Đăng ký với Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                </button>
+                                <button  class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Đăng ký với Facebook
-                                </a>
+                                </button >
                             </form>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Đã có tài khoản? Đăng nhập!</a>
+                                <a class="small" th:href="@{/auth/login}">Đã có tài khoản? Đăng nhập!</a>
                             </div>
                         </div>
                     </div>

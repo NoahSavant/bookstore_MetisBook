@@ -31,7 +31,7 @@ public class OrderItem extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "quantity")
+	@Column(name = "quantity", nullable = false)
 	private Integer quantity; 
 
 	@ManyToOne
