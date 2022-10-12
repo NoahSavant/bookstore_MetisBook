@@ -75,6 +75,7 @@ public class AuthController {
 		return mav;
 	}
 	
+	
 	@PostMapping("/register-process")
 	public ModelAndView register(
 			@Valid @ModelAttribute("registerRequest") RegisterForm registerRequest,
@@ -82,6 +83,29 @@ public class AuthController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		// Check constraint
+		mav = checkViolation(result,registerRequest);
+		if(!mav.isEmpty()) {
+			return mav;
+		}
+
+		// create new User
+		userService.createNewUser(registerRequest);
+		
+		mav.setViewName("redirect:/auth/login");
+		return mav;
+		
+	}
+	
+	@PostMapping(name = "/register-confirm")
+	public ModelAndView registerConfirm() {
+		return null;
+	}
+	
+	private ModelAndView checkViolation(BindingResult result, 
+			RegisterForm registerRequest) {
+		
+		ModelAndView mav = new ModelAndView();
 		// Check constraint on info
 		if(result.hasErrors()) {
 			mav.setViewName("client/register");
@@ -96,13 +120,7 @@ public class AuthController {
 			mav.setViewName("client/register");
 			return mav;
 		}
-
-		// create new User
-		userService.createNewUser(registerRequest);
-		
-		mav.setViewName("redirect:/auth/login");
 		return mav;
-		
 	}
 	
 	private HashMap<String, String> getAuthenError(RegisterForm registerRequest){
