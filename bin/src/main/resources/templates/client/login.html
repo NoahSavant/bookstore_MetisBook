@@ -34,15 +34,18 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Chào mừng bạn trở lại!</h1>
                                     </div>
-                                    <form class="user">
+                                     <div th:if="${errorMessage}" class="alert alert-danger text-center">
+									    <p >[[${errorMessage}]]</p>
+									</div>
+                                    <form class="user" method="post" th:action="@{/auth/login}">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Nhập email...">
+                                                placeholder="Nhập email..." name = "email">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Mật khẩu">
+                                                id="exampleInputPassword" placeholder="Mật khẩu" name = "password">
                                         </div>
                                        <div class="form-group pl-2" >
 	                                         <div class="checkbox " >
@@ -51,23 +54,24 @@
 											    </label>
 											 </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Đăng nhập
-                                        </a>
+                                        </button>
                                         <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                        <button href="#" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Đăng nhập với Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Đăng nhập với Facebook
-                                        </a>
+                                        </button>
+                                        <button href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="#"></i> Đăng nhập với Facebook
+                                        </button >
+                                       
                                     </form>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Đăng ký tài khoản mới!</a>
+                                        <a class="small" th:href="@{/auth/register}">Đăng ký tài khoản mới!</a>
                                     </div>
                                 </div>
                             </div>
