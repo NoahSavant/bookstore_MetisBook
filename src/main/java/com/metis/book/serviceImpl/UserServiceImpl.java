@@ -13,13 +13,13 @@ import com.metis.book.model.user.User;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.repository.VerificationTokenRepository;
-import com.metis.book.service.UserService;
+import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	UserRepository userRepository;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 				.lastName(registerRequest.getLastName())
 				.phoneNumber(registerRequest.getPhoneNumber())
 				.birthday(registerRequest.getBirthday().isEmpty() ? null : LocalDate.parse(registerRequest.getBirthday()))
-				.enabled(true)
+				.enabled(false) // true when click on verification link
 				.gender(Integer.parseInt(registerRequest.getGender()))
 				.addresses(null)
 				.cart(cartSaved)

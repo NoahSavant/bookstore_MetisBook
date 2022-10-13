@@ -1,6 +1,9 @@
 package com.metis.book.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -26,8 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.event.OnRegistrationCompleteEvent;
+import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
-import com.metis.book.service.UserService;
+import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 
 	@Autowired
-	UserService userService;
+	IUserService userService;
 
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
@@ -95,26 +99,34 @@ public class AuthController {
 
 		// create new User
 		User savedUser = userService.createNewUser(registerRequest);
-		
+
 		// Publish even send email with verification token
-		publishEvent(savedUser,request);
-		
+		publishEvent(savedUser, request);
+
 		mav.setViewName("redirect:/auth/login");
 		return mav;
 
 	}
 
 	@PostMapping(name = "/register-confirm")
-	public ModelAndView registerConfirm() {
+	public ModelAndView registerConfirm(@RequestParam(name = "token") String token, HttpServletRequest request) {
+		Locale locale = request.getLocale();
+
+		VerificationToken verificationToken = service.getVerificationToken(token);
+		if (verificationToken == null) {
+			String message = messages.getMessage("auth.message.invalidToken", null, locale);
+			model.addAttribute("message", message);
+			return "redirect:/badUser.html?lang=" + locale.getLanguage();
+		}
 		return null;
 	}
 
 	private void publishEvent(User user, HttpServletRequest request) {
 		final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort()
-		+ request.getContextPath();
+				+ request.getContextPath();
 		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), appUrl));
 	}
-	
+
 	private ModelAndView checkViolation(BindingResult result, RegisterForm registerRequest) {
 
 		ModelAndView mav = new ModelAndView();

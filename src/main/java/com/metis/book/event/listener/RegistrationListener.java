@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.metis.book.event.OnRegistrationCompleteEvent;
 import com.metis.book.model.user.User;
-import com.metis.book.service.UserService;
+import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	@Autowired
 	private MessageSource messages;

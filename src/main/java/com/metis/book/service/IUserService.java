@@ -3,7 +3,7 @@ package com.metis.book.service;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.user.User;
 
-public interface UserService {
+public interface IUserService {
 
 	boolean existsByUsername(String username);
 
