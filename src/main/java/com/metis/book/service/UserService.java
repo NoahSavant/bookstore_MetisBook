@@ -1,6 +1,7 @@
 package com.metis.book.service;
 
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.model.user.User;
 
 public interface UserService {
 
@@ -8,6 +9,8 @@ public interface UserService {
 
 	boolean existsByEmail(String email);
 
-	void createNewUser(RegisterForm registerRequest);
+	User createNewUser(RegisterForm registerRequest);
+
+	void createVerificationTokenForUser(User user, String token);
 
 }

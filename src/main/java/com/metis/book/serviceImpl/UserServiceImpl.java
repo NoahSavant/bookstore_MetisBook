@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.Cart;
+import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.UserRepository;
+import com.metis.book.repository.VerificationTokenRepository;
 import com.metis.book.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	VerificationTokenRepository tokenRepository;
+	
 	@Override
 	public boolean existsByUsername(String username) {
 		return userRepository.existsByUsername(username);
@@ -39,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void createNewUser(RegisterForm registerRequest) {
+	public User createNewUser(RegisterForm registerRequest) {
 		
 		Cart cart = new Cart();
 		cart.setUser(null);
@@ -59,7 +64,14 @@ public class UserServiceImpl implements UserService {
 				.addresses(null)
 				.cart(cartSaved)
 				.build();
-		userRepository.save(user);
+		return userRepository.save(user);
+	}
+
+	@Override
+	public void createVerificationTokenForUser(User user, String token) {
+		VerificationToken verificationToken = new VerificationToken(token, user);
+		tokenRepository.save(verificationToken);
+		
 	}
 	
 }

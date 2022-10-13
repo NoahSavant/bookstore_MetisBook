@@ -34,12 +34,12 @@ public class VerificationToken {
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
 	private User user;
 
-	public VerificationToken(Long id, String token, Date expiryDate, User user) {
+	
+	public VerificationToken(String token, User user) {
 		super();
-		this.id = id;
 		this.token = token;
-		this.expiryDate = calculateExpiryDate(EXPIRATION);
 		this.user = user;
+		this.expiryDate = calculateExpiryDate(EXPIRATION);
 	}
 
 	public void updateToken(final String token) {
