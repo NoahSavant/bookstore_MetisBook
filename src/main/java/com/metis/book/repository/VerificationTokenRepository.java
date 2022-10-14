@@ -8,4 +8,6 @@ import com.metis.book.model.VerificationToken;
 @Repository
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
 
+	VerificationToken findByToken(String token);
+
 }

@@ -90,6 +90,7 @@ public class User extends UserDateAudit  {
 	@JoinColumn(name = "cart_id", referencedColumnName = "id")
 	private Cart cart;
 	
+	
 	public List<Address> getAddresses() {
 		return addresses == null ? null : new ArrayList<Address>(this.addresses);
 	}
