@@ -13,9 +13,6 @@ import com.metis.book.event.OnRegistrationCompleteEvent;
 import com.metis.book.model.user.User;
 import com.metis.book.service.IUserService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
@@ -35,14 +32,11 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 	}
 
 	private void confirmRegistration(final OnRegistrationCompleteEvent event) {
-		log.info("In onApplicationEvent ");
 		final User user = event.getUser();
 		final String token = UUID.randomUUID().toString();
 		userService.createVerificationTokenForUser(user, token);
-
 		final SimpleMailMessage email = constructEmailMessage(event, user, token);
 		mailSender.send(email);
-		log.info("Done onApplicationEvent ");
 	}
 
 
@@ -52,12 +46,13 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 		final String subject = "Xác nhận đăng ký";
 		final String confirmationUrl = event.getAppUrl() + "/auth/register-confirm?token=" + token;
 		final String message = messages.getMessage("message.regSuccLink", null,
-				"Chúc mừng bạn đã đăng ký tài khoản thành công. Vui lòng nhấn vào link bên dưới để xác thực tài khoản.",
-				event.getLocale());
+				"Xin chào "+user.getFirstName()+" "+user.getLastName()+","
+				+"\n\nChúc mừng bạn đã đăng ký tài khoản thành công. Vui lòng nhấn vào link bên dưới để xác thực tài khoản.",null);
+		final String endingMessage = "Thân chào, \nMetis's book store";
 		final SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(recipientAddress);
 		email.setSubject(subject);
-		email.setText(message + " \r\n" + confirmationUrl);
+		email.setText(message + " \r\n" + confirmationUrl +"\n\n\n\n"+endingMessage);
 		return email;
 	}
 

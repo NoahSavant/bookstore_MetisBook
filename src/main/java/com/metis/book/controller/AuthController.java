@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -107,38 +106,39 @@ public class AuthController {
 
 		// Publish even send email with verification token
 		publishEvent(savedUser, request);
-
-		mav.setViewName("redirect:/auth/login");
+		mav.addObject("email",savedUser.getEmail());
+		mav.setViewName("client/register-verify.html");
 		return mav;
-
 	}
 
 	@GetMapping("/register-confirm")
-	public String registerConfirm(
+	public ModelAndView registerConfirm(
 			@RequestParam(name = "token") String token, 
 			HttpServletRequest request,
-			Model model) {
+			ModelAndView mav) {
 
 		log.info("In registerConfirm");
 		VerificationToken verificationToken = tokenService.getVerificationToken(token);
 		if (Objects.isNull(verificationToken)) {
 			String message = "Đường dẫn xác thực không đúng";
-			model.addAttribute("message",message);
-			return "redirect:/client/badUser.html";
+			mav.addObject("message",message);
+			mav.setViewName("client/exception/badUser.html");
+			return mav;
 		}
 		
 		User user = verificationToken.getUser();
 	    Calendar cal = Calendar.getInstance();
 	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 	        String message = "Đường dẫn xác thực đã hết hạn";
-	        model.addAttribute("message",message);
-	        return "redirect:/client/badUser.html";
+	        mav.addObject("message",message);
+	        mav.setViewName("client/exception/badUser.html");
+	        return mav;
 	    } 
 	    
 	    user.setEnabled(true); 
 	    userService.updateUser(user); 
-	    
-		return "redirect:/auth/login";
+	    mav.setViewName("redirect:/auth/login");
+		return mav;
 	}
 
 	private void publishEvent(User user, HttpServletRequest request) {

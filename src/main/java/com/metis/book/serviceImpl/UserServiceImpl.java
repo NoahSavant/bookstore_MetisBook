@@ -60,12 +60,13 @@ public class UserServiceImpl implements IUserService {
 		cart.setUser(null);
 		Cart cartSaved = cartReposiroty.save(cart);
 
+		log.info("In create new User");
 		// get Role user
-//		Role role = roleRepository.findByName(RoleName.USER);
-//		if(Objects.isNull(role)) {
-//			log.error(AppConstant.ROLE_NOT_FOUND+ "USER");
-//		}
-		
+		Role role = roleRepository.findByName(RoleName.USER);
+		if(Objects.isNull(role)) {
+			log.error(AppConstant.ROLE_NOT_FOUND+ "USER");
+		}
+		log.info(role.getName().toString());
 		// Create new User
 		User user = User.builder()
 				.username(registerRequest.getUsername())
@@ -79,7 +80,7 @@ public class UserServiceImpl implements IUserService {
 				.gender(Integer.parseInt(registerRequest.getGender()))
 				.addresses(null)
 				.cart(cartSaved)
-				.roles(null)
+				.roles(Arrays.asList(role))
 				.build();
 		return userRepository.save(user);
 	}
@@ -87,7 +88,9 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void createVerificationTokenForUser(User user, String token) {
 		VerificationToken verificationToken = new VerificationToken(token, user);
+		log.info("In createVerificationTokenForUser");
 		tokenRepository.save(verificationToken);
+		log.info("After createVerificationTokenForUser");
 		
 	}
 
