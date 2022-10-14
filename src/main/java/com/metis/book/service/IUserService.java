@@ -13,4 +13,6 @@ public interface IUserService {
 
 	void createVerificationTokenForUser(User user, String token);
 
+	void updateUser(User user);
+
 }

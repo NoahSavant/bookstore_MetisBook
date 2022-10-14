@@ -1,10 +1,9 @@
 package com.metis.book.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -19,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,6 +32,7 @@ import com.metis.book.event.OnRegistrationCompleteEvent;
 import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
 import com.metis.book.service.IUserService;
+import com.metis.book.service.IVerificationTokenService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,9 @@ public class AuthController {
 
 	@Autowired
 	IUserService userService;
+
+	@Autowired
+	IVerificationTokenService tokenService;
 
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
@@ -87,8 +91,9 @@ public class AuthController {
 
 	@PostMapping("/register-process")
 	public ModelAndView register(@Valid @ModelAttribute("registerRequest") RegisterForm registerRequest,
-			HttpServletRequest request, BindingResult result) {
-
+			BindingResult result,
+			HttpServletRequest request ) {
+		log.error("In register-process");
 		ModelAndView mav = new ModelAndView();
 
 		// Check constraint
@@ -108,17 +113,32 @@ public class AuthController {
 
 	}
 
-	@PostMapping(name = "/register-confirm")
-	public ModelAndView registerConfirm(@RequestParam(name = "token") String token, HttpServletRequest request) {
-		Locale locale = request.getLocale();
+	@GetMapping("/register-confirm")
+	public String registerConfirm(
+			@RequestParam(name = "token") String token, 
+			HttpServletRequest request,
+			Model model) {
 
-		VerificationToken verificationToken = service.getVerificationToken(token);
-		if (verificationToken == null) {
-			String message = messages.getMessage("auth.message.invalidToken", null, locale);
-			model.addAttribute("message", message);
-			return "redirect:/badUser.html?lang=" + locale.getLanguage();
+		log.info("In registerConfirm");
+		VerificationToken verificationToken = tokenService.getVerificationToken(token);
+		if (Objects.isNull(verificationToken)) {
+			String message = "Đường dẫn xác thực không đúng";
+			model.addAttribute("message",message);
+			return "redirect:/client/badUser.html";
 		}
-		return null;
+		
+		User user = verificationToken.getUser();
+	    Calendar cal = Calendar.getInstance();
+	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+	        String message = "Đường dẫn xác thực đã hết hạn";
+	        model.addAttribute("message",message);
+	        return "redirect:/client/badUser.html";
+	    } 
+	    
+	    user.setEnabled(true); 
+	    userService.updateUser(user); 
+	    
+		return "redirect:/auth/login";
 	}
 
 	private void publishEvent(User user, HttpServletRequest request) {

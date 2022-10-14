@@ -14,8 +14,15 @@ import javax.persistence.Table;
 
 import com.metis.book.model.user.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "verification_token")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class VerificationToken {
 
 	private static final int EXPIRATION = 60 * 24;

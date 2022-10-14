@@ -50,7 +50,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 			final String token) {
 		final String recipientAddress = user.getEmail();
 		final String subject = "Xác nhận đăng ký";
-		final String confirmationUrl = event.getAppUrl() + "/auth/registrationConfirm?token=" + token;
+		final String confirmationUrl = event.getAppUrl() + "/auth/register-confirm?token=" + token;
 		final String message = messages.getMessage("message.regSuccLink", null,
 				"Chúc mừng bạn đã đăng ký tài khoản thành công. Vui lòng nhấn vào link bên dưới để xác thực tài khoản.",
 				event.getLocale());

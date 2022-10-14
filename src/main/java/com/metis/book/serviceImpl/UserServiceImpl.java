@@ -1,6 +1,8 @@
 package com.metis.book.serviceImpl;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,11 +11,15 @@ import org.springframework.stereotype.Service;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.Cart;
 import com.metis.book.model.VerificationToken;
+import com.metis.book.model.user.Role;
+import com.metis.book.model.user.RoleName;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.CartReposiroty;
+import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.repository.VerificationTokenRepository;
 import com.metis.book.service.IUserService;
+import com.metis.book.utils.AppConstant;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +37,9 @@ public class UserServiceImpl implements IUserService {
 	PasswordEncoder passwordEncoder;
 	
 	@Autowired
+	RoleRepository roleRepository;
+	
+	@Autowired
 	VerificationTokenRepository tokenRepository;
 	
 	@Override
@@ -46,11 +55,18 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User createNewUser(RegisterForm registerRequest) {
 		
+		// Create new Cart for user
 		Cart cart = new Cart();
 		cart.setUser(null);
 		Cart cartSaved = cartReposiroty.save(cart);
 
+		// get Role user
+//		Role role = roleRepository.findByName(RoleName.USER);
+//		if(Objects.isNull(role)) {
+//			log.error(AppConstant.ROLE_NOT_FOUND+ "USER");
+//		}
 		
+		// Create new User
 		User user = User.builder()
 				.username(registerRequest.getUsername())
 				.password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -63,6 +79,7 @@ public class UserServiceImpl implements IUserService {
 				.gender(Integer.parseInt(registerRequest.getGender()))
 				.addresses(null)
 				.cart(cartSaved)
+				.roles(null)
 				.build();
 		return userRepository.save(user);
 	}
@@ -71,6 +88,12 @@ public class UserServiceImpl implements IUserService {
 	public void createVerificationTokenForUser(User user, String token) {
 		VerificationToken verificationToken = new VerificationToken(token, user);
 		tokenRepository.save(verificationToken);
+		
+	}
+
+	@Override
+	public void updateUser(User user) {
+		userRepository.save(user);
 		
 	}
 	
