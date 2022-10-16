@@ -21,6 +21,7 @@
                     <p>[[${message}]]</p>
                   </p>
                 <a th:href="@{/}" class="btn btn-primary">Trang chủ</a>
+                <a th:if=${isExpired} th:href="@{/auth/resend-register-token(token=${#httpServletRequest.getParameter('token')})}" class="btn btn-primary">Gửi lại mã xác nhận</a>
             </div>
         </div>
 		    <!-- Start Instagram Feed  -->

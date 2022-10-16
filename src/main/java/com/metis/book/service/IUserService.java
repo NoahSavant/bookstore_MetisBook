@@ -1,6 +1,7 @@
 package com.metis.book.service;
 
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
 
 public interface IUserService {
@@ -14,5 +15,11 @@ public interface IUserService {
 	void createVerificationTokenForUser(User user, String token);
 
 	void updateUser(User user);
+
+	VerificationToken generateNewVerificationToken(String existingToken);
+
+	User getUserByToken(String token);
+
+	
 
 }

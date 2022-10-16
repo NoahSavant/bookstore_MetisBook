@@ -103,10 +103,12 @@ public class AuthController {
 
 		// create new User
 		User savedUser = userService.createNewUser(registerRequest);
-
 		// Publish even send email with verification token
 		publishEvent(savedUser, request);
+		
+		// Get token
 		mav.addObject("email",savedUser.getEmail());
+		mav.addObject("message","Xin vui lòng xác thực tài khoản của bạn.");
 		mav.setViewName("client/register-verify.html");
 		return mav;
 	}
@@ -131,6 +133,7 @@ public class AuthController {
 	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 	        String message = "Đường dẫn xác thực đã hết hạn";
 	        mav.addObject("message",message);
+	        mav.addObject("isExpired","true");
 	        mav.setViewName("client/exception/badUser.html");
 	        return mav;
 	    } 
@@ -140,7 +143,23 @@ public class AuthController {
 	    mav.setViewName("redirect:/auth/login");
 		return mav;
 	}
-
+	@GetMapping("/resend-register-token")
+    public ModelAndView resendRegistrationToken(
+    		final HttpServletRequest request,
+    		@RequestParam("token") final String existingToken,
+    		ModelAndView mav) {
+		log.error("aaaaaaaaaaaaaaaa");
+		VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
+		
+		User user = userService.getUserByToken(newToken.getToken());
+       
+        tokenService.sendEmail(request,newToken,user);
+        
+        mav.addObject("email",user.getEmail());
+        mav.addObject("message", "Đường dẫn xác thực đã được làm mới");
+        mav.setViewName("client/register-verify.html");
+        return mav;
+    }
 	private void publishEvent(User user, HttpServletRequest request) {
 		final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath();

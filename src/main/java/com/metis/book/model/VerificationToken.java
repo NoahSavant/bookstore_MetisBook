@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VerificationToken {
 
-	private static final int EXPIRATION = 60 * 24;
+	private static final int EXPIRATION = 1;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

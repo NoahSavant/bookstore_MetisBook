@@ -3,6 +3,7 @@ package com.metis.book.serviceImpl;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,19 +30,19 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	CartReposiroty cartReposiroty;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	RoleRepository roleRepository;
-	
+
 	@Autowired
 	VerificationTokenRepository tokenRepository;
-	
+
 	@Override
 	public boolean existsByUsername(String username) {
 		return userRepository.existsByUsername(username);
@@ -54,7 +55,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User createNewUser(RegisterForm registerRequest) {
-		
+
 		// Create new Cart for user
 		Cart cart = new Cart();
 		cart.setUser(null);
@@ -63,25 +64,20 @@ public class UserServiceImpl implements IUserService {
 		log.info("In create new User");
 		// get Role user
 		Role role = roleRepository.findByName(RoleName.USER);
-		if(Objects.isNull(role)) {
-			log.error(AppConstant.ROLE_NOT_FOUND+ "USER");
+		if (Objects.isNull(role)) {
+			log.error(AppConstant.ROLE_NOT_FOUND + "USER");
 		}
 		log.info(role.getName().toString());
 		// Create new User
-		User user = User.builder()
-				.username(registerRequest.getUsername())
-				.password(passwordEncoder.encode(registerRequest.getPassword()))
-				.email(registerRequest.getEmail())
-				.firstName(registerRequest.getFirstName())
-				.lastName(registerRequest.getLastName())
+		User user = User.builder().username(registerRequest.getUsername())
+				.password(passwordEncoder.encode(registerRequest.getPassword())).email(registerRequest.getEmail())
+				.firstName(registerRequest.getFirstName()).lastName(registerRequest.getLastName())
 				.phoneNumber(registerRequest.getPhoneNumber())
-				.birthday(registerRequest.getBirthday().isEmpty() ? null : LocalDate.parse(registerRequest.getBirthday()))
+				.birthday(
+						registerRequest.getBirthday().isEmpty() ? null : LocalDate.parse(registerRequest.getBirthday()))
 				.enabled(false) // true when click on verification link
-				.gender(Integer.parseInt(registerRequest.getGender()))
-				.addresses(null)
-				.cart(cartSaved)
-				.roles(Arrays.asList(role))
-				.build();
+				.gender(Integer.parseInt(registerRequest.getGender())).addresses(null).cart(cartSaved)
+				.roles(Arrays.asList(role)).build();
 		return userRepository.save(user);
 	}
 
@@ -91,13 +87,28 @@ public class UserServiceImpl implements IUserService {
 		log.info("In createVerificationTokenForUser");
 		tokenRepository.save(verificationToken);
 		log.info("After createVerificationTokenForUser");
-		
+
 	}
 
 	@Override
 	public void updateUser(User user) {
 		userRepository.save(user);
-		
+
 	}
-	
+
+	@Override
+	public VerificationToken generateNewVerificationToken(String existingToken) {
+		VerificationToken token = tokenRepository.findByToken(existingToken);
+		token.updateToken(UUID.randomUUID().toString());
+		token = tokenRepository.save(token);
+		return token;
+	}
+
+	@Override
+	public User getUserByToken(String token) {
+		VerificationToken verificationToken = tokenRepository.findByToken(token);
+		return verificationToken.getUser();
+	}
+
+
 }

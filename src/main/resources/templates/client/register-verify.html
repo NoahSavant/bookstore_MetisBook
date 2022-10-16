@@ -15,13 +15,15 @@
 			
 		<div class="d-flex align-items-center justify-content-center vh-100 mb-5 mt-5">
             <div class="text-center">
-                <p class="fs-3"> Xin vui lòng xác thực tài khoản của bạn.</p>
+                <p class="fs-3"> [[${message}]]</p>
                 <p class="lead">
                     <p>Chúng tôi đã gửi qua email [[${email}]] đường link xác thực tài khoản</p>
                     <p>Xin vui lòng nhấn vào link xác thực để kích hoạt tài khoản </p>
                     <p>Lưu ý: Đường link có thời gian tồn tại trong vòng 1 giờ </p>
                   </p>
                 <a th:href="@{/auth/login}" class="btn btn-primary">Đăng nhập</a>
+	 
+        </div>
             </div>
         </div>
 		    <!-- Start Instagram Feed  -->
@@ -32,5 +34,7 @@
 		    <footer>
  				<div th:replace="client/fragments/footer :: footer"></div>
  			</footer>
+ 			
+ 			
  	</body>
 </html>
