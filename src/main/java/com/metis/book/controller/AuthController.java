@@ -50,7 +50,10 @@ public class AuthController {
 	private ApplicationEventPublisher eventPublisher;
 
 	@GetMapping("/login")
-	public ModelAndView viewLoginPage(@RequestParam(name = "error") Optional<String> error) {
+	public ModelAndView viewLoginPage(
+			@RequestParam(name = "error") Optional<String> error,
+			@RequestParam(name = "disabled") Optional<String> disabled,
+			HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
 
@@ -60,16 +63,22 @@ public class AuthController {
 			mav.setViewName(viewName);
 			return mav;
 		}
-
-		if (error.isPresent()) {
-			log.info(error.get());
+		
+		// check if user account not yet verify then verify
+		if(disabled.isPresent()) {
+			return viewVerifyPage(request,mav);
+		}
+		// check if there are any error on authentication
+		else if (error.isPresent()) {
 			mav.addObject("errorMessage",
 					"Email hoặc mật khẩu không chính xác. Vui lòng nhấn \"Quên mật khẩu?\" để đặt lại mật khẩu mới.");
 		}
 		mav.setViewName("client/login.html");
 		return mav;
+		
 	}
 
+	
 	@GetMapping("/register")
 	public ModelAndView viewRegisterPage() {
 
@@ -108,8 +117,9 @@ public class AuthController {
 		
 		// Get token
 		mav.addObject("email",savedUser.getEmail());
+		mav.addObject("userId",savedUser.getId());
 		mav.addObject("message","Xin vui lòng xác thực tài khoản của bạn.");
-		mav.setViewName("client/register-verify.html");
+		mav.setViewName("client/verify.html");
 		return mav;
 	}
 
@@ -146,18 +156,31 @@ public class AuthController {
 	@GetMapping("/resend-register-token")
     public ModelAndView resendRegistrationToken(
     		final HttpServletRequest request,
-    		@RequestParam("token") final String existingToken,
+    		@RequestParam(name = "token", required = false) String existingToken,
+    		@RequestParam(name = "userId", required = false) Long userId,
     		ModelAndView mav) {
-		log.error("aaaaaaaaaaaaaaaa");
-		VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
+		VerificationToken newToken;
+		
+		if(userId!=null) {
+			log.info(userId.toString());
+			newToken = userService.generateTokenById(userId);
+		}else if (existingToken!=null) {
+			newToken = userService.generateNewVerificationToken(existingToken);
+		}else {
+			String message = "Đường dẫn xác thực không đúng";
+			mav.addObject("message",message);
+			mav.setViewName("client/exception/badUser.html");
+			return mav;
+		}
+		
 		
 		User user = userService.getUserByToken(newToken.getToken());
-       
         tokenService.sendEmail(request,newToken,user);
         
         mav.addObject("email",user.getEmail());
+        mav.addObject("userId",user.getId());
         mav.addObject("message", "Đường dẫn xác thực đã được làm mới");
-        mav.setViewName("client/register-verify.html");
+        mav.setViewName("client/verify.html");
         return mav;
     }
 	private void publishEvent(User user, HttpServletRequest request) {
@@ -249,5 +272,22 @@ public class AuthController {
 			return "redirect:/"; // home page for user
 		}
 		return "";
+	}
+	
+	private ModelAndView viewVerifyPage(HttpServletRequest request, ModelAndView mav) {
+		try {
+			String email = request.getSession().getAttribute("email").toString();
+			User user = userService.findByEmail(email);
+			mav.addObject("userId",user.getId());
+			mav.addObject("email",user.getEmail());
+			mav.addObject("message","Xin vui lòng xác thực tài khoản của bạn.");
+			mav.setViewName("client/verify.html");
+			return mav;
+		}catch(Exception e){
+			String message = "Đường dẫn đăng nhập không đúng";
+			mav.addObject("message",message);
+			mav.setViewName("client/exception/badUser.html");
+			return mav;
+		}
 	}
 }

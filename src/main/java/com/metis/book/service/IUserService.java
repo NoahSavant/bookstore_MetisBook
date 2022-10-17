@@ -20,6 +20,11 @@ public interface IUserService {
 
 	User getUserByToken(String token);
 
+	VerificationToken generateTokenById(Long userId);
+
+	User findByEmail(String email);
+
+
 	
 
 }

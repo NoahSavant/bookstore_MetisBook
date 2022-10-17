@@ -110,5 +110,20 @@ public class UserServiceImpl implements IUserService {
 		return verificationToken.getUser();
 	}
 
+	@Override
+	public VerificationToken generateTokenById(Long userId) {
+		
+		User user = userRepository.findById(userId).get();
+		VerificationToken token = tokenRepository.findByUser(user);
+		token.updateToken(UUID.randomUUID().toString());
+		token = tokenRepository.save(token);
+		return token;
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email).get();
+	}
+
 
 }

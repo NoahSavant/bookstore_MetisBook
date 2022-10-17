@@ -22,6 +22,7 @@
                     <p>Lưu ý: Đường link có thời gian tồn tại trong vòng 1 giờ </p>
                   </p>
                 <a th:href="@{/auth/login}" class="btn btn-primary">Đăng nhập</a>
+                <a th:href="@{/auth/resend-register-token(userId=${userId})}" class="btn btn-primary">Gửi lại mã xác nhận</a>
 	 
         </div>
             </div>

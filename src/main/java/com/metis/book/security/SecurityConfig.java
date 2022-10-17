@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -32,8 +33,8 @@ public class SecurityConfig {
 				.usernameParameter("email")
 				.loginPage("/auth/login")
 				.loginProcessingUrl("/auth/login")
-				.successHandler(myAuthenticationHandler())
-				.failureUrl("/auth/login?error=true")
+				.successHandler(myLoginSuccessHandler())
+				.failureHandler(myLoginFailureHandler())
 			.and()
 				.logout()
 				.logoutUrl("/auth/logout")
@@ -57,7 +58,13 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	AuthenticationSuccessHandler myAuthenticationHandler(){
-	    return new AuthenticationHandler();
+	AuthenticationSuccessHandler myLoginSuccessHandler(){
+	    return new LoginSuccessHandler();
 	}
+	
+	@Bean
+	AuthenticationFailureHandler myLoginFailureHandler() {
+		return new LoginFailureHandler();
+	}
+
 }
