@@ -276,6 +276,8 @@ public class AuthController {
 	
 	private ModelAndView viewVerifyPage(HttpServletRequest request, ModelAndView mav) {
 		try {
+			
+			// get session from LoginFailureHandler
 			String email = request.getSession().getAttribute("email").toString();
 			User user = userService.findByEmail(email);
 			mav.addObject("userId",user.getId());
