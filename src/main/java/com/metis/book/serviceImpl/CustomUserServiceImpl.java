@@ -1,5 +1,7 @@
 package com.metis.book.serviceImpl;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,8 +22,10 @@ public class CustomUserServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String email){
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException(AppConstant.USER_NOT_FOUND+email));
+		User user = userRepository.findByEmail(email);
+		if(Objects.isNull(user)) {
+			throw new UsernameNotFoundException(AppConstant.USER_NOT_FOUND+email);
+		}
 		return UserPrincipal.create(user);
 
 		/*

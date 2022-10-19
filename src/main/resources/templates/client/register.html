@@ -35,7 +35,10 @@
                                 <div class="form-group row">
                                 
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"th:field= "*{firstName}" placeholder="Tên">
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"th:field= "*{firstName}" placeholder="Tên" 
+                                        		required
+                                        		oninvalid="this.setCustomValidity('Tên Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
                                         <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                                    		<div th:if="${authenErrors != null && authenErrors.containsKey('firstNameSpecial')}" 
 							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('firstNameSpecial')}">
@@ -44,7 +47,10 @@
                                 	
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            th:field = "*{lastName}" placeholder="Họ">
+                                            th:field = "*{lastName}" placeholder="Họ" 
+                                           		required
+                                            	oninvalid="this.setCustomValidity('Họ Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
                                          <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                                     	<div th:if="${authenErrors != null && authenErrors.containsKey('lastNameSpecial')}" 
 							       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('lastNameSpecial')}">
@@ -53,7 +59,10 @@
                                 </div>
                                  <div class="form-group mt-3">
                                     <input type="text" class="form-control form-control-user" id="exampleInputUsername"
-                                        th:field = "*{username}" placeholder="Tên đăng nhập">
+                                        th:field = "*{username}" placeholder="Tên đăng nhập" 
+                                         		required
+                                        		oninvalid="this.setCustomValidity('Tên đăng nhập Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 	                            	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
 
 							        <div th:if="${authenErrors != null && authenErrors.containsKey('existByUsername')}" 
@@ -99,7 +108,10 @@
                                 <div class="row mt-3">
                                  <div class="form-group col-md-6 ">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        th:field="*{email}" placeholder="Email">
+                                        th:field="*{email}" placeholder="Email" 
+                                        		required
+                                        		oninvalid="this.setCustomValidity('Email Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
                                     <div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 	                            	 <div th:if="${authenErrors != null && authenErrors.containsKey('existByEmail')}" 
 								       		 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('existByEmail')}">
@@ -107,7 +119,10 @@
 	                             </div>
 	                            <div class="form-group col-md-6 ">
                                     <input type="text" class="form-control form-control-user" id="phoneNumber"
-                                        th:field= "*{phoneNumber}" placeholder="Số điện thoại">
+                                        th:field= "*{phoneNumber}" placeholder="Số điện thoại"
+                                        		required 
+                                        		oninvalid="this.setCustomValidity('Số điện thoại Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 	                             	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
 	                             </div>
                                 </div>
@@ -116,11 +131,17 @@
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
                                           th:field= "*{password}"  id="exampleInputPassword" placeholder="Mật khẩu">
-                                    	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                    	<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" 
+                                    			required
+                                    			oninvalid="this.setCustomValidity('Mật khẩu Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')"></div>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            th:field = "*{confirmPassword}" id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
+                                            th:field = "*{confirmPassword}" id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu" 
+                                            required
+                                            oninvalid="this.setCustomValidity('Mật khẩu nhập lại Không thể bỏ trống')"
+                                            oninput="this.setCustomValidity('')">
                                     	<div th:if="${authenErrors != null && authenErrors.containsKey('passwordNotMatch')}" 
 							       			 class="alert alert-warning mt-3 mb-3" th:text="${authenErrors.get('passwordNotMatch')}">
 							        	</div>
@@ -130,12 +151,12 @@
                                     Đăng ký
                                 </button>
                                 <hr>
-                                <button  class="btn btn-google btn-user btn-block">
+                                <a th:href="@{/oauth2/authorization/google}" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Đăng ký với Google
-                                </button>
-                                <button  class="btn btn-facebook btn-user btn-block">
+                                </a>
+                                <a th:href="@{/oauth2/authorization/facebook}" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Đăng ký với Facebook
-                                </button >
+                                </a >
                             </form>
                             <hr>
                             <div class="text-center">

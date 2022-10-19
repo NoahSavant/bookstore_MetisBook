@@ -1,0 +1,48 @@
+server:
+  port: 8081
+  #========================= CONFIG DATA JPA ===============================
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: k989898k
+    url: jdbc:mysql://localhost:3306/metis_book_store?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+#========================= CONFIG JAVAMAIL SENDER ===============================
+  mail:
+    host: smtp.gmail.com
+    password: kajsjudlynswxvxz
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: duckhailinux@gmail.com
+#========================= CONFIG OAUTH2 ===============================
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 396077386050587
+            client-secret: c461f14c5da70be0f6e20a3ef4b9bea5
+            
+            scope: 
+            - public_profile
+          google:
+            client-id: 617507540054-jdmn0o2ks9m3c4pfl43plrv7d775pe4p.apps.googleusercontent.com
+            client-secret: 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
+            scope: 
+            - profile
+            - email
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html

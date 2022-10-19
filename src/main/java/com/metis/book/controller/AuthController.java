@@ -70,8 +70,9 @@ public class AuthController {
 		}
 		// check if there are any error on authentication
 		else if (error.isPresent()) {
-			mav.addObject("errorMessage",
-					"Email hoặc mật khẩu không chính xác. Vui lòng nhấn \"Quên mật khẩu?\" để đặt lại mật khẩu mới.");
+			String errorMessage = request.getSession()
+					.getAttribute("errorMessage").toString();
+			mav.addObject("errorMessage",errorMessage);
 		}
 		mav.setViewName("client/login.html");
 		return mav;

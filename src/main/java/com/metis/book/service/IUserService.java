@@ -14,7 +14,7 @@ public interface IUserService {
 
 	void createVerificationTokenForUser(User user, String token);
 
-	void updateUser(User user);
+	User updateUser(User user);
 
 	VerificationToken generateNewVerificationToken(String existingToken);
 
@@ -23,6 +23,8 @@ public interface IUserService {
 	VerificationToken generateTokenById(Long userId);
 
 	User findByEmail(String email);
+
+	User createNewUserOAuth2(User user);
 
 
 	

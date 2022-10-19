@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Role {
 	private Long id;
 	
 	@Column(name = "name")
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private RoleName name;
 	
 	@Column(name = "description")

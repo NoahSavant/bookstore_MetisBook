@@ -6,9 +6,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.metis.book.security.oauth.CustomOauth2UserService;
+import com.metis.book.security.oauth.OAuthLoginFailureHandler;
+import com.metis.book.security.oauth.OAuthLoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,7 +27,8 @@ public class SecurityConfig {
             "/img/**",
             "/scss/**",
             "/vendor/**",
-            "/auth/**"
+            "/auth/**",
+            "/oauth2/**"
             };
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,6 +48,14 @@ public class SecurityConfig {
 				.deleteCookies("JSESSIONID","remember-me")
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
+			.and()
+				.oauth2Login()
+					.loginPage("/auth/login")
+					.successHandler(myOAuthLoginSuccessHandler())
+					.failureHandler(myOAuthLoginFailureHandler())
+					.userInfoEndpoint()
+						.userService(auth2UserService())
+				.and()
 			.and()
 				.rememberMe()
 				.tokenValiditySeconds(1209600)
@@ -71,6 +85,21 @@ public class SecurityConfig {
 	@Bean
 	AuthenticationFailureHandler myLoginFailureHandler() {
 		return new LoginFailureHandler();
+	}
+	
+	@Bean
+	OAuthLoginFailureHandler myOAuthLoginFailureHandler() {
+		return new OAuthLoginFailureHandler();
+	}
+	
+	@Bean
+	OAuthLoginSuccessHandler myOAuthLoginSuccessHandler() {
+		return new OAuthLoginSuccessHandler();
+	}
+	
+	@Bean 
+	DefaultOAuth2UserService auth2UserService() {
+		return new CustomOauth2UserService();
 	}
 
 }

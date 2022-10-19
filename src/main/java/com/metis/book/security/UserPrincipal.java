@@ -4,21 +4,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.User;
 
 import lombok.Data;
 
-@Data	
-public class UserPrincipal implements UserDetails {
+@Data
+public class UserPrincipal implements UserDetails, OAuth2User {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	private String username;
 	private String password;
@@ -29,9 +31,9 @@ public class UserPrincipal implements UserDetails {
 	private String phoneNumber;
 	private LocalDate birthday;
 	private Boolean enabled;
-	
+	private Map<String, Object> attributes;
 	private List<GrantedAuthority> authorities; // roles
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities == null ? null : new ArrayList<>(this.authorities);
@@ -70,23 +72,21 @@ public class UserPrincipal implements UserDetails {
 	public static UserPrincipal create(User user) {
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		for(Role r : user.getRoles()) {
-			authorities.add(new SimpleGrantedAuthority("ROLE_"+r.getName()));
+		for (Role r : user.getRoles()) {
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + r.getName()));
 		}
-		
-		return new UserPrincipal(
-				user.getId(),
-				user.getUsername(),
-				user.getPassword(),
-				user.getEmail(),
-				user.getFirstName(),
-				user.getLastName(),
-				user.getGender(),
-				user.getPhoneNumber(),
-				user.getBirthday(),
-				user.getEnabled(),
-				authorities); // roles
-		
+
+		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(),
+				user.getFirstName(), user.getLastName(), user.getGender(), user.getPhoneNumber(), user.getBirthday(),
+				user.getEnabled(), authorities); // roles
+
+	}
+
+	// Create user for oauth2
+	public static UserPrincipal create(User user, Map<String, Object> attributes) {
+		UserPrincipal userPrincipal = UserPrincipal.create(user);
+		userPrincipal.setAttributes(attributes);
+		return userPrincipal;
 	}
 
 	public UserPrincipal() {
@@ -111,8 +111,14 @@ public class UserPrincipal implements UserDetails {
 		this.authorities = authorities;
 	}
 
-	
+	@Override
+	public Map<String, Object> getAttributes() {
+		return this.attributes;
+	}
 
+	@Override
+	public String getName() {
+		return String.valueOf(this.id);
+	}
 
-	
 }

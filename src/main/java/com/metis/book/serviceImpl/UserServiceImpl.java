@@ -91,8 +91,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void updateUser(User user) {
-		userRepository.save(user);
+	public User updateUser(User user) {
+		return userRepository.save(user);
 
 	}
 
@@ -122,7 +122,27 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.findByEmail(email).get();
+		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public User createNewUserOAuth2(User user) {
+		
+		// Create new Cart for user
+		Cart cart = new Cart();
+		cart.setUser(null);
+		Cart cartSaved = cartReposiroty.save(cart);
+
+		// get Role user
+		Role role = roleRepository.findByName(RoleName.USER);
+		if (Objects.isNull(role)) {
+			log.error(AppConstant.ROLE_NOT_FOUND + "USER");
+		}
+		
+		user.setCart(cartSaved);
+		user.setRoles(Arrays.asList(role));
+		
+		return userRepository.save(user);
 	}
 
 

@@ -25,6 +25,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 			request.getSession().setAttribute("email", email);
 			response.sendRedirect("/auth/login?disabled=true");
 		}else {
+			request.getSession().setAttribute("errorMessage", "Email hoặc mật khẩu không chính xác. Vui lòng nhấn \"Quên mật khẩu?\" để đặt lại mật khẩu mới.");
 			response.sendRedirect("/auth/login?error=true");
 		}
 		

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,25 +51,25 @@ public class User extends UserDateAudit  {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "username", nullable = false, length = 30)
+	@Column(name = "username",length = 30)
 	private String username;
 	
-	@Column(name = "password", nullable = false, length = 100)
+	@Column(name = "password", length = 100)
 	private String password;
 		
 	@Column(name = "email", nullable = false, length = 30)
 	private String email;
 	
-	@Column(name = "first_name", nullable = false, length = 30)
+	@Column(name = "first_name", length = 30)
 	private String firstName;
 	
-	@Column(name = "last_name", nullable = false, length = 30)
+	@Column(name = "last_name", length = 30)
 	private String lastName;
 	
-	@Column(name = "gender",nullable = false)
+	@Column(name = "gender")
 	private Integer gender;
 	
-	@Column(name = "phone_number",nullable = false)
+	@Column(name = "phone_number")
 	private String phoneNumber;
 	
 	@Column(name = "birthday")
@@ -82,6 +84,10 @@ public class User extends UserDateAudit  {
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "auth_provider")
+	private AuthProvider authProvider;
 	
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
