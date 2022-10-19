@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
+import com.metis.book.repository.PasswordResetTokenRepository;
 import com.metis.book.repository.VerificationTokenRepository;
 import com.metis.book.service.IVerificationTokenService;
 
@@ -24,6 +25,9 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 	VerificationTokenRepository tokenRepository;
 
 	@Autowired
+	PasswordResetTokenRepository passwordTokenRepository;
+	
+	@Autowired
 	private MessageSource messages;
 	
 	@Autowired
@@ -35,10 +39,11 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 	}
 
 	@Override
-	public String sendEmail(HttpServletRequest request, VerificationToken newToken,User user) {
+	public String sendVerificationToken(HttpServletRequest request, VerificationToken newToken,User user) {
 		try {
             final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            final SimpleMailMessage email = constructResetVerificationTokenEmail(appUrl, newToken, user);
+            final String confirmationUrl = appUrl + "/auth/register-confirm?token=" + newToken.getToken();
+            final SimpleMailMessage email = constructVerificationTokenEmail(confirmationUrl, user);
             mailSender.send(email);
         } catch (final MailAuthenticationException e) {
             log.debug("MailAuthenticationException", e);
@@ -50,23 +55,26 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 		
 	}
 	
-	   private SimpleMailMessage constructResetVerificationTokenEmail(final String contextPath, final VerificationToken newToken, final User user) {
-	        final String confirmationUrl = contextPath + "/auth/register-confirm?token=" + newToken.getToken();
-	        final String subject = "Xác nhận đăng ký";
-			final String message = messages.getMessage("message.regSuccLink", null,
-					"Xin chào "+user.getFirstName()+" "+user.getLastName()+","
-					+"\n\nChúc mừng bạn đã đăng ký tài khoản thành công. Vui lòng nhấn vào link bên dưới để xác thực tài khoản.",null);
-			final String endingMessage = "Thân chào, \nMetis's book store";
-			final SimpleMailMessage email = new SimpleMailMessage();
-			email.setTo(user.getEmail());
-			email.setSubject(subject);
-			email.setText(message + " \r\n" + confirmationUrl +"\n\n\n\n"+endingMessage);
-	        return email;
-	    }
+   private SimpleMailMessage constructVerificationTokenEmail(final String resetURL, final User user) {
+        
+        final String subject = "Xác nhận đăng ký";
+		final String message = messages.getMessage("message.regSuccLink", null,
+				"Xin chào "+user.getFirstName()+" "+user.getLastName()+","
+				+"\n\nChúc mừng bạn đã đăng ký tài khoản thành công. Vui lòng nhấn vào link bên dưới để xác thực tài khoản.",null);
+		final String endingMessage = "Thân chào, \nMetis's book store";
+		final SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo(user.getEmail());
+		email.setSubject(subject);
+		email.setText(message + " \r\n" + resetURL +"\n\n\n\n"+endingMessage);
+        return email;
+    }
 
 	@Override
 	public VerificationToken getTokenByUser(User savedUser) {		
 		return tokenRepository.getTokenByUser(savedUser);
 	}
+
+	
+	
 
 }

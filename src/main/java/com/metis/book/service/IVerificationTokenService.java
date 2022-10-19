@@ -9,8 +9,9 @@ public interface IVerificationTokenService {
 
 	VerificationToken getVerificationToken(String token);
 
-	String sendEmail(HttpServletRequest request, VerificationToken newToken, User user);
-
+	String sendVerificationToken(HttpServletRequest request, VerificationToken newToken, User user);
+	
 	VerificationToken getTokenByUser(User savedUser);
+
 
 }

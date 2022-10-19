@@ -18,13 +18,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name = "verification_token")
+@Table(name = "password_reset_token")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VerificationToken {
-
+public class PasswordResetToken {
 	private static final int EXPIRATION = 1;
 
 	@Id
@@ -42,7 +42,7 @@ public class VerificationToken {
 	private User user;
 
 	
-	public VerificationToken(String token, User user) {
+	public PasswordResetToken(String token, User user) {
 		super();
 		this.token = token;
 		this.user = user;
@@ -60,7 +60,8 @@ public class VerificationToken {
 		cal.add(Calendar.MINUTE, expiryTimeInMinutes);
 		return new Date(cal.getTime().getTime());
 	}
-	
 
+
+	
 
 }

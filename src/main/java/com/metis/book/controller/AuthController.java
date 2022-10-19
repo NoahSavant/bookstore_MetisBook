@@ -28,8 +28,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.event.OnRegistrationCompleteEvent;
+import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
+import com.metis.book.service.IPasswordResetTokenService;
 import com.metis.book.service.IUserService;
 import com.metis.book.service.IVerificationTokenService;
 
@@ -44,8 +46,11 @@ public class AuthController {
 	IUserService userService;
 
 	@Autowired
-	IVerificationTokenService tokenService;
+	IVerificationTokenService verificationTokenService;
 
+	@Autowired
+	IPasswordResetTokenService passwordTokenService;
+	
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 
@@ -131,7 +136,7 @@ public class AuthController {
 			ModelAndView mav) {
 
 		log.info("In registerConfirm");
-		VerificationToken verificationToken = tokenService.getVerificationToken(token);
+		VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);
 		if (Objects.isNull(verificationToken)) {
 			String message = "Đường dẫn xác thực không đúng";
 			mav.addObject("message",message);
@@ -164,7 +169,7 @@ public class AuthController {
 		
 		if(userId!=null) {
 			log.info(userId.toString());
-			newToken = userService.generateTokenById(userId);
+			newToken = userService.generateVerifyTokenById(userId);
 		}else if (existingToken!=null) {
 			newToken = userService.generateNewVerificationToken(existingToken);
 		}else {
@@ -175,8 +180,8 @@ public class AuthController {
 		}
 		
 		
-		User user = userService.getUserByToken(newToken.getToken());
-        tokenService.sendEmail(request,newToken,user);
+		User user = userService.getUserByVerificationToken(newToken.getToken());
+		verificationTokenService.sendVerificationToken(request,newToken,user);
         
         mav.addObject("email",user.getEmail());
         mav.addObject("userId",user.getId());
@@ -184,6 +189,61 @@ public class AuthController {
         mav.setViewName("client/verify.html");
         return mav;
     }
+	
+	@GetMapping("/reset-password")
+	public ModelAndView viewForgotPasswordPage(
+			ModelAndView mav,
+			@RequestParam(name = "token", required = false) final String token) {
+		
+		if(token!=null) {
+			User user = userService.getUserByPasswordToken(token);
+			if(Objects.isNull(user)) {
+				String message = "Đường dẫn xác thực không đúng";
+				mav.addObject("message",message);
+				mav.setViewName("client/exception/badUser.html");
+				return mav;
+			}
+			log.info(user.getEmail());
+			// render page to reset password
+		}
+		mav.setViewName("client/reset-password.html");
+		return mav;
+	}
+	
+	@PostMapping("/reset-password")
+	public ModelAndView resetPassword(
+			final HttpServletRequest request,
+			@Valid @ModelAttribute("email") String email,
+			BindingResult result,
+			ModelAndView mav) {
+		
+		if(result.hasErrors()) {
+			mav.addObject("errorMessage","Email không hợp lệ");
+			mav.setViewName("client/reset-password.html");
+			return mav;
+		}
+
+		User user = userService.findByEmail(email);
+		if(Objects.isNull(user)) {
+			mav.addObject("errorMessage","Không tìm thấy tài khoản với địa chỉ email này");
+			mav.setViewName("client/reset-password.html");
+			return mav;
+		}
+		
+		PasswordResetToken existingtoken = passwordTokenService.getPasswordTokenByUser(user);
+		PasswordResetToken newToken;
+		if(Objects.isNull(existingtoken)) {
+			newToken = userService.generatePasswordTokenByUser(user);
+		}else {
+			log.info(existingtoken.getToken());
+			newToken = userService.generateNewPasswordToken(existingtoken.getToken());
+		}
+		passwordTokenService.sendResetPasswordToken(request, newToken , user);
+		mav.addObject("isSuccess","Chúng tôi đã gửi cho bạn đường link đặt lại mật khẩu, xin hãy kiểm tra hộp thư");
+		mav.setViewName("client/reset-password.html");
+		return mav;
+	}
+	
 	private void publishEvent(User user, HttpServletRequest request) {
 		final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath();

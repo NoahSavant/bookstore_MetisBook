@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.Cart;
+import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.RoleName;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.CartReposiroty;
+import com.metis.book.repository.PasswordResetTokenRepository;
 import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.repository.VerificationTokenRepository;
@@ -41,7 +43,10 @@ public class UserServiceImpl implements IUserService {
 	RoleRepository roleRepository;
 
 	@Autowired
-	VerificationTokenRepository tokenRepository;
+	VerificationTokenRepository verifyTokenRepository;
+	
+	@Autowired
+	PasswordResetTokenRepository passwordTokenRepository;
 
 	@Override
 	public boolean existsByUsername(String username) {
@@ -85,7 +90,7 @@ public class UserServiceImpl implements IUserService {
 	public void createVerificationTokenForUser(User user, String token) {
 		VerificationToken verificationToken = new VerificationToken(token, user);
 		log.info("In createVerificationTokenForUser");
-		tokenRepository.save(verificationToken);
+		verifyTokenRepository.save(verificationToken);
 		log.info("After createVerificationTokenForUser");
 
 	}
@@ -98,25 +103,25 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public VerificationToken generateNewVerificationToken(String existingToken) {
-		VerificationToken token = tokenRepository.findByToken(existingToken);
+		VerificationToken token = verifyTokenRepository.findByToken(existingToken);
 		token.updateToken(UUID.randomUUID().toString());
-		token = tokenRepository.save(token);
+		token = verifyTokenRepository.save(token);
 		return token;
 	}
 
 	@Override
-	public User getUserByToken(String token) {
-		VerificationToken verificationToken = tokenRepository.findByToken(token);
+	public User getUserByVerificationToken(String token) {
+		VerificationToken verificationToken = verifyTokenRepository.findByToken(token);
 		return verificationToken.getUser();
 	}
 
 	@Override
-	public VerificationToken generateTokenById(Long userId) {
+	public VerificationToken generateVerifyTokenById(Long userId) {
 		
 		User user = userRepository.findById(userId).get();
-		VerificationToken token = tokenRepository.findByUser(user);
+		VerificationToken token = verifyTokenRepository.findByUser(user);
 		token.updateToken(UUID.randomUUID().toString());
-		token = tokenRepository.save(token);
+		token = verifyTokenRepository.save(token);
 		return token;
 	}
 
@@ -143,6 +148,28 @@ public class UserServiceImpl implements IUserService {
 		user.setRoles(Arrays.asList(role));
 		
 		return userRepository.save(user);
+	}
+
+	@Override
+	public PasswordResetToken generatePasswordTokenByUser(User user) {
+
+		final String token = UUID.randomUUID().toString();
+		PasswordResetToken passwordToken = new PasswordResetToken(token, user);
+		return passwordTokenRepository.save(passwordToken);
+	}
+
+	@Override
+	public PasswordResetToken generateNewPasswordToken(String existingToken) {
+		PasswordResetToken token = passwordTokenRepository.findByToken(existingToken);
+		token.updateToken(UUID.randomUUID().toString());
+		token = passwordTokenRepository.save(token);
+		return token;
+	}
+
+	@Override
+	public User getUserByPasswordToken(String token) {
+		PasswordResetToken passwordToken = passwordTokenRepository.findByToken(token);
+		return passwordToken.getUser();
 	}
 
 
