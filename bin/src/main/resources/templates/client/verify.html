@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<div th:replace="client/fragments/header :: header"></div>
+	 	<div>
+	 		<title>Trang chủ</title>
+		    <meta name="keywords" content="">
+		    <meta name="description" content="">
+		    <meta name="author" content="">
+	 	</div>
+	</head>
+ 	<body>
+		<div th:replace="client/fragments/main-top :: mainTop"></div>
+		
+			
+		<div class="d-flex align-items-center justify-content-center vh-100 mb-5 mt-5">
+            <div class="text-center">
+                <p class="fs-3"> [[${message}]]</p>
+                <p class="lead">
+                    <p>Chúng tôi đã gửi qua email [[${email}]] đường link xác thực tài khoản</p>
+                    <p>Xin vui lòng nhấn vào link xác thực để kích hoạt tài khoản </p>
+                    <p>Lưu ý: Đường link có thời gian tồn tại trong vòng 1 giờ </p>
+                  </p>
+                <a th:href="@{/auth/login}" class="btn btn-primary">Đăng nhập</a>
+                <a th:href="@{/auth/resend-register-token(userId=${userId})}" class="btn btn-primary">Gửi lại mã xác nhận</a>
+	 
+        </div>
+            </div>
+        </div>
+		    <!-- Start Instagram Feed  -->
+		    <div class="instagram-box">
+			  <div th:replace="client/fragments/sub-footer :: subFooter"></div>
+		    </div>
+		    <!-- End Instagram Feed  -->
+		    <footer>
+ 				<div th:replace="client/fragments/footer :: footer"></div>
+ 			</footer>
+ 			
+ 			
+ 	</body>
+</html>
