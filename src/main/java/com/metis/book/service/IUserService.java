@@ -31,6 +31,10 @@ public interface IUserService {
 
 	PasswordResetToken generateNewPasswordToken(String existingtoken);
 
+	void updatePassword(String passwordToken, String password);
+
+
+
 
 	
 

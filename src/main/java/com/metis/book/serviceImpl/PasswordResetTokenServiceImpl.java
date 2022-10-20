@@ -40,7 +40,7 @@ public class PasswordResetTokenServiceImpl implements IPasswordResetTokenService
 		try {
 			final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath();
-			final String resetPasswordUrl = appUrl + "/auth/reset-password?token=" + newToken.getToken();
+			final String resetPasswordUrl = appUrl + "/auth/update-password?token=" + newToken.getToken();
 			final SimpleMailMessage email = constructResetTokenEmail(resetPasswordUrl, user);
 			mailSender.send(email);
 		} catch (final MailAuthenticationException e) {

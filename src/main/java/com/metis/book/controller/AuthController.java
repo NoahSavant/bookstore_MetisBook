@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.dto.ResetPasswordForm;
 import com.metis.book.event.OnRegistrationCompleteEvent;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
@@ -50,15 +51,13 @@ public class AuthController {
 
 	@Autowired
 	IPasswordResetTokenService passwordTokenService;
-	
+
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 
 	@GetMapping("/login")
-	public ModelAndView viewLoginPage(
-			@RequestParam(name = "error") Optional<String> error,
-			@RequestParam(name = "disabled") Optional<String> disabled,
-			HttpServletRequest request) {
+	public ModelAndView viewLoginPage(@RequestParam(name = "error") Optional<String> error,
+			@RequestParam(name = "disabled") Optional<String> disabled, HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
 
@@ -68,23 +67,21 @@ public class AuthController {
 			mav.setViewName(viewName);
 			return mav;
 		}
-		
+
 		// check if user account not yet verify then verify
-		if(disabled.isPresent()) {
-			return viewVerifyPage(request,mav);
+		if (disabled.isPresent()) {
+			return viewVerifyPage(request, mav);
 		}
 		// check if there are any error on authentication
 		else if (error.isPresent()) {
-			String errorMessage = request.getSession()
-					.getAttribute("errorMessage").toString();
-			mav.addObject("errorMessage",errorMessage);
+			String errorMessage = request.getSession().getAttribute("errorMessage").toString();
+			mav.addObject("errorMessage", errorMessage);
 		}
 		mav.setViewName("client/login.html");
 		return mav;
-		
+
 	}
 
-	
 	@GetMapping("/register")
 	public ModelAndView viewRegisterPage() {
 
@@ -105,8 +102,7 @@ public class AuthController {
 
 	@PostMapping("/register-process")
 	public ModelAndView register(@Valid @ModelAttribute("registerRequest") RegisterForm registerRequest,
-			BindingResult result,
-			HttpServletRequest request ) {
+			BindingResult result, HttpServletRequest request) {
 		log.error("In register-process");
 		ModelAndView mav = new ModelAndView();
 
@@ -120,130 +116,177 @@ public class AuthController {
 		User savedUser = userService.createNewUser(registerRequest);
 		// Publish even send email with verification token
 		publishEvent(savedUser, request);
-		
+
 		// Get token
-		mav.addObject("email",savedUser.getEmail());
-		mav.addObject("userId",savedUser.getId());
-		mav.addObject("message","Xin vui lòng xác thực tài khoản của bạn.");
+		mav.addObject("email", savedUser.getEmail());
+		mav.addObject("userId", savedUser.getId());
+		mav.addObject("message", "Xin vui lòng xác thực tài khoản của bạn.");
 		mav.setViewName("client/verify.html");
 		return mav;
 	}
 
 	@GetMapping("/register-confirm")
-	public ModelAndView registerConfirm(
-			@RequestParam(name = "token") String token, 
-			HttpServletRequest request,
+	public ModelAndView registerConfirm(@RequestParam(name = "token") String token, HttpServletRequest request,
 			ModelAndView mav) {
 
 		log.info("In registerConfirm");
 		VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);
 		if (Objects.isNull(verificationToken)) {
 			String message = "Đường dẫn xác thực không đúng";
-			mav.addObject("message",message);
-			mav.setViewName("client/exception/badUser.html");
+			mav.addObject("message", message);
 			return mav;
 		}
-		
+
 		User user = verificationToken.getUser();
-	    Calendar cal = Calendar.getInstance();
-	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-	        String message = "Đường dẫn xác thực đã hết hạn";
-	        mav.addObject("message",message);
-	        mav.addObject("isExpired","true");
-	        mav.setViewName("client/exception/badUser.html");
-	        return mav;
-	    } 
-	    
-	    user.setEnabled(true); 
-	    userService.updateUser(user); 
-	    mav.setViewName("redirect:/auth/login");
+		Calendar cal = Calendar.getInstance();
+		if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+			String message = "Đường dẫn xác thực đã hết hạn";
+			mav.addObject("isAccountVerify", "true");
+			mav.addObject("message", message);
+			mav.setViewName("client/exception/bad-user.html");
+			return mav;
+		}
+
+		user.setEnabled(true);
+		userService.updateUser(user);
+		mav.setViewName("redirect:/auth/login");
 		return mav;
 	}
+
 	@GetMapping("/resend-register-token")
-    public ModelAndView resendRegistrationToken(
-    		final HttpServletRequest request,
-    		@RequestParam(name = "token", required = false) String existingToken,
-    		@RequestParam(name = "userId", required = false) Long userId,
-    		ModelAndView mav) {
+	public ModelAndView resendRegistrationToken(final HttpServletRequest request,
+			@RequestParam(name = "token", required = false) String existingToken,
+			@RequestParam(name = "userId", required = false) Long userId, ModelAndView mav) {
 		VerificationToken newToken;
-		
-		if(userId!=null) {
+
+		if (userId != null) {
 			log.info(userId.toString());
 			newToken = userService.generateVerifyTokenById(userId);
-		}else if (existingToken!=null) {
+		} else if (existingToken != null) {
 			newToken = userService.generateNewVerificationToken(existingToken);
-		}else {
+		} else {
 			String message = "Đường dẫn xác thực không đúng";
-			mav.addObject("message",message);
-			mav.setViewName("client/exception/badUser.html");
+			mav.addObject("message", message);
+			mav.setViewName("client/exception/bad-user.html");
 			return mav;
 		}
-		
-		
+
 		User user = userService.getUserByVerificationToken(newToken.getToken());
-		verificationTokenService.sendVerificationToken(request,newToken,user);
-        
-        mav.addObject("email",user.getEmail());
-        mav.addObject("userId",user.getId());
-        mav.addObject("message", "Đường dẫn xác thực đã được làm mới");
-        mav.setViewName("client/verify.html");
-        return mav;
-    }
-	
-	@GetMapping("/reset-password")
-	public ModelAndView viewForgotPasswordPage(
-			ModelAndView mav,
-			@RequestParam(name = "token", required = false) final String token) {
-		
-		if(token!=null) {
-			User user = userService.getUserByPasswordToken(token);
-			if(Objects.isNull(user)) {
-				String message = "Đường dẫn xác thực không đúng";
-				mav.addObject("message",message);
-				mav.setViewName("client/exception/badUser.html");
-				return mav;
-			}
-			log.info(user.getEmail());
-			// render page to reset password
-		}
-		mav.setViewName("client/reset-password.html");
+		verificationTokenService.sendVerificationToken(request, newToken, user);
+
+		mav.addObject("email", user.getEmail());
+		mav.addObject("userId", user.getId());
+		mav.addObject("message", "Đường dẫn xác thực đã được làm mới");
+		mav.setViewName("client/verify.html");
 		return mav;
 	}
-	
-	@PostMapping("/reset-password")
-	public ModelAndView resetPassword(
-			final HttpServletRequest request,
-			@Valid @ModelAttribute("email") String email,
-			BindingResult result,
-			ModelAndView mav) {
-		
-		if(result.hasErrors()) {
-			mav.addObject("errorMessage","Email không hợp lệ");
-			mav.setViewName("client/reset-password.html");
+
+	@GetMapping("/forgot-password")
+	public ModelAndView viewForgotPasswordPage(ModelAndView mav) {
+		mav.setViewName("client/forgot-password.html");
+		return mav;
+	}
+
+	@PostMapping("/forgot-password")
+	public ModelAndView resetPassword(final HttpServletRequest request, @Valid @ModelAttribute("email") String email,
+			BindingResult result, ModelAndView mav) {
+
+		if (result.hasErrors()) {
+			mav.addObject("errorMessage", "Email không hợp lệ");
+			mav.setViewName("client/forgot-password.html");
 			return mav;
 		}
 
 		User user = userService.findByEmail(email);
-		if(Objects.isNull(user)) {
-			mav.addObject("errorMessage","Không tìm thấy tài khoản với địa chỉ email này");
-			mav.setViewName("client/reset-password.html");
+		if (Objects.isNull(user)) {
+			mav.addObject("errorMessage", "Không tìm thấy tài khoản với địa chỉ email này");
+			mav.setViewName("client/forgot-password.html");
 			return mav;
 		}
-		
+
 		PasswordResetToken existingtoken = passwordTokenService.getPasswordTokenByUser(user);
 		PasswordResetToken newToken;
-		if(Objects.isNull(existingtoken)) {
+		if (Objects.isNull(existingtoken)) {
 			newToken = userService.generatePasswordTokenByUser(user);
-		}else {
+		} else {
 			log.info(existingtoken.getToken());
 			newToken = userService.generateNewPasswordToken(existingtoken.getToken());
 		}
-		passwordTokenService.sendResetPasswordToken(request, newToken , user);
-		mav.addObject("isSuccess","Chúng tôi đã gửi cho bạn đường link đặt lại mật khẩu, xin hãy kiểm tra hộp thư");
-		mav.setViewName("client/reset-password.html");
+		passwordTokenService.sendResetPasswordToken(request, newToken, user);
+		mav.addObject("isSuccess", "Chúng tôi đã gửi cho bạn đường link đặt lại mật khẩu, xin hãy kiểm tra hộp thư");
+		mav.setViewName("client/forgot-password.html");
 		return mav;
 	}
-	
+
+	@GetMapping("/update-password")
+	public ModelAndView viewUpdatePasswordPage(
+			@RequestParam(name = "token") String token,
+			ModelAndView mav) {
+		
+		User user = userService.getUserByPasswordToken(token);
+		PasswordResetToken passwordToken = passwordTokenService.getPasswordTokenByUser(user);
+		// Check violation
+		mav = checkPassWordToken(user, token, passwordToken);
+		if (!mav.isEmpty()) {
+			log.info("aaaaaaaaaaaaa");
+			return mav; // if have violation on token
+		}
+
+		mav.addObject("token", token);
+		mav.setViewName("client/update-password.html");
+		return mav;
+	}
+
+	@PostMapping("/update-password")
+	public ModelAndView updatePassword(@RequestParam(name = "token") String token,
+			@ModelAttribute("resetPassword") ResetPasswordForm passwordForm, 
+			BindingResult result, 
+			ModelAndView mav) {
+
+		if (result.hasErrors()) {
+			mav.addObject("errorMessage", "Mật khẩu không hợp lệ");
+			mav.setViewName("client/update-password.html");
+			return mav;
+		}
+		if (!passwordForm.getPassword().equals(passwordForm.getConfirmPassword())) {
+			mav.addObject("errorMessage", "Mật khẩu nhập lại không khớp");
+			mav.setViewName("client/update-password.html");
+			return mav;
+		}
+		User user = userService.getUserByPasswordToken(token);
+		PasswordResetToken passwordToken = passwordTokenService.getPasswordTokenByUser(user);
+		
+		// Check violation
+		mav = checkPassWordToken(user, token, passwordToken);
+		if (!mav.isEmpty()) {
+			return mav; // if have violation on token
+		}
+
+		String password = passwordForm.getPassword();
+		userService.updatePassword(passwordToken.getToken(), password);
+		mav.setViewName("redirect:/auth/login");
+		return mav;
+	}
+
+	private ModelAndView checkPassWordToken(User user, String token, PasswordResetToken passwordToken) {
+		ModelAndView mav = new ModelAndView();
+		if (Objects.isNull(user)) {
+			String message = "Đường dẫn thay đổi mật khẩu không đúng";
+			mav.addObject("message", message);
+			mav.setViewName("client/exception/bad-user.html");
+			return mav;
+		}
+
+		Calendar cal = Calendar.getInstance();
+		if ((passwordToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+			String message = "Đường dẫn thay đổi mật khẩu đã hết hạn";
+			mav.addObject("message", message);
+			mav.setViewName("client/exception/bad-user.html");
+			return mav;
+		}
+		return mav;
+	}
+
 	private void publishEvent(User user, HttpServletRequest request) {
 		final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath();
@@ -334,21 +377,21 @@ public class AuthController {
 		}
 		return "";
 	}
-	
+
 	private ModelAndView viewVerifyPage(HttpServletRequest request, ModelAndView mav) {
 		try {
-			
+
 			// get session from LoginFailureHandler
 			String email = request.getSession().getAttribute("email").toString();
 			User user = userService.findByEmail(email);
-			mav.addObject("userId",user.getId());
-			mav.addObject("email",user.getEmail());
-			mav.addObject("message","Xin vui lòng xác thực tài khoản của bạn.");
+			mav.addObject("userId", user.getId());
+			mav.addObject("email", user.getEmail());
+			mav.addObject("message", "Xin vui lòng xác thực tài khoản của bạn.");
 			mav.setViewName("client/verify.html");
 			return mav;
-		}catch(Exception e){
+		} catch (Exception e) {
 			String message = "Đường dẫn đăng nhập không đúng";
-			mav.addObject("message",message);
+			mav.addObject("message", message);
 			mav.setViewName("client/exception/badUser.html");
 			return mav;
 		}
