@@ -62,36 +62,12 @@
 		    <div class="categories-shop">
 		        <div class="container">
 		            <div class="row">
-		                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" th:each="category:${categories}">
 		                    <div class="shop-cat-box">
 		                        <img class="img-fluid" th:src="@{/images/action and advencture.jpg}" width="352px" length="352px" alt="" />
-		                        <a class="btn hvr-hover" href="#">Action and Adventure</a>
+		                        <a class="btn hvr-hover" href="#">[[${category.name}]]</a>
 		                    </div>
-		                    <div class="shop-cat-box">
-		                        <img class="img-fluid" th:src="@{/images/Classics.png}" alt="" />
-		                        <a class="btn hvr-hover" href="#">Classics</a>
-		                    </div>
-		                </div>
-		                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-		                    <div class="shop-cat-box">
-		                        <img class="img-fluid" th:src="@{/images/Historical_fiction.jpg}" alt="" />
-		                        <a class="btn hvr-hover" href="#">Historical Fiction</a>
-		                    </div>
-		                    <div class="shop-cat-box">
-		                        <img class="img-fluid" th:src="@{/images/Litrature.jpg}" alt="" />
-		                        <a class="btn hvr-hover" href="#">Literary Fiction</a>
-		                    </div>
-		                </div>
-		                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-		                    <div class="shop-cat-box">
-		                        <img class="img-fluid" th:src="@{/images/Science_fictiom.jpg}" alt="" />
-		                        <a class="btn hvr-hover" href="#">Science Fiction</a>
-		                    </div>
-		                    <div class="shop-cat-box">
-		                        <img class="img-fluid" th:src="@{/images/Biography.jpg}" alt="" />
-		                        <a class="btn hvr-hover" href="#">Biography</a>
-		                    </div>
-		                </div>
+		                </div>		            
 		            </div>
 		        </div>
 		    </div>

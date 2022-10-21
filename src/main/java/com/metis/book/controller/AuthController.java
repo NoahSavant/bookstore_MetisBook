@@ -58,7 +58,6 @@ public class AuthController {
 	@GetMapping("/login")
 	public ModelAndView viewLoginPage(@RequestParam(name = "error") Optional<String> error,
 			@RequestParam(name = "disabled") Optional<String> disabled, HttpServletRequest request) {
-
 		ModelAndView mav = new ModelAndView();
 
 		// check if user already authenticated
