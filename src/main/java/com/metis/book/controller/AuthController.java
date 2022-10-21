@@ -134,6 +134,7 @@ public class AuthController {
 		if (Objects.isNull(verificationToken)) {
 			String message = "Đường dẫn xác thực không đúng";
 			mav.addObject("message", message);
+			mav.setViewName("client/exception/bad-user.html");
 			return mav;
 		}
 
