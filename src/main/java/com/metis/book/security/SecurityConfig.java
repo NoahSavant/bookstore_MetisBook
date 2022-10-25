@@ -30,7 +30,8 @@ public class SecurityConfig {
             "/scss/**",
             "/vendor/**",
             "/auth/**",
-            "/oauth2/**"
+            "/oauth2/**",
+            "/uploads/**"
             };
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

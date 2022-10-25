@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<div th:replace="client/fragments/header :: header"></div>
+	 	<div>
+	 		<title>Trang chủ</title>
+		    <meta name="keywords" content="">
+		    <meta name="description" content="">
+		    <meta name="author" content="">
+	 	</div>
+	</head>
+ 	<body>
+		<div th:replace="client/fragments/main-top :: mainTop"></div>
+		<form method="post" enctype="multipart/form-data" class="container">
+			<input class="form-control" type="file" accept="image/png, image/jpeg" name="image" />
+			<button type="submit">Submit</button>
+		</form>
+		<p th:if="${imagePath}">[[${imagePath}]]<p>
+		<img class="img-fluid" th:if="${imagePath}" th:src="@{${'/uploads/'+imagePath}}" />
+		    <!-- Start Instagram Feed  -->
+		    <div class="instagram-box">
+			  <div th:replace="client/fragments/sub-footer :: subFooter"></div>
+		    </div>
+		    <!-- End Instagram Feed  -->
+		    <footer>
+ 				<div th:replace="client/fragments/footer :: footer"></div>
+ 			</footer>
+ 	</body>
+</html>

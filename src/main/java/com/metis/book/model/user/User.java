@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.metis.book.model.Cart;
+import com.metis.book.model.Image;
 import com.metis.book.model.audit.UserDateAudit;
 
 import groovy.transform.ToString;
@@ -96,6 +97,9 @@ public class User extends UserDateAudit  {
 	@JoinColumn(name = "cart_id", referencedColumnName = "id")
 	private Cart cart;
 	
+	@OneToOne
+	@JoinColumn(name = "image_id", referencedColumnName = "id")
+	private Image image;
 	
 	public List<Address> getAddresses() {
 		return addresses == null ? null : new ArrayList<Address>(this.addresses);

@@ -2,6 +2,7 @@ package com.metis.book.utils;
 
 public class AppConstant {
 	
+	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 	public static final String ROLE_NOT_FOUND = "Not found role with name: ";
 	public static final String CATEGORY_NOT_FOUND = "Not found category with name: ";
 	public static final String LANGUAGE_NOT_FOUND = "Not found language with name: ";
