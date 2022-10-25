@@ -348,11 +348,18 @@ public class InsertData {
 			log.error(AppConstant.ROLE_NOT_FOUND + " Admin");
 		}
 
+		// get user role
+		Role roleUser = roleRepository.findByName(RoleName.USER);
+
+		if (Objects.isNull(roleUser)) {
+			log.error(AppConstant.ROLE_NOT_FOUND + "User");
+		}
+		
 		// Create new Admin
 		User user = User.builder().username("khai").password(passwordEncoder.encode("123"))
 				.email("duckhailinux@gmail.com").firstName("khai").lastName("Nguyen")
 				.birthday(LocalDate.of(2002, 06, 06)).gender(1) // 1: male, 2: female, 3: Not know
-				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleAdmin)).cart(null)
+				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleAdmin,roleUser)).cart(null)
 				.addresses(null).build();
 		userRepository.save(user);
 

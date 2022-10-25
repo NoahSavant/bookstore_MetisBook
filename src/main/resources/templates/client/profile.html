@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<div th:replace="client/fragments/header :: header"></div>
+	<div>
+		<title>Trang chủ</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	</div>
+</head>
+
+<body>
+	<div th:replace="client/fragments/main-top :: mainTop"></div>
+
+	<section class="section-conten padding-y bg">
+
+		<div class="container">
+			<div class="row">
+				<aside class="col-md-3">
+					<!--   SIDEBAR   -->
+					<ul class="list-group">
+						<a class="list-group-item active" href="#"> Thông tin cá nhân</a>
+					</ul>
+					<br>
+					<a class="btn btn-light btn-block" th:href="@{/auth/logout}"> <i class="fa fa-power-off"></i> <span
+							class="text">Đăng xuất</span> </a>
+					<!--   SIDEBAR .//END   -->
+				</aside>
+				<main class="col-md-9">
+					<article class="card">
+						<header class="card-header" id="header_user">
+							<strong class="d-inline-block mr-3 ">Tên đăng nhập: [[${user.username}]] </strong>
+						</header>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="icontext w-100 text-center">
+										<img th:src="@{/images/avatar2.jpg}"
+											class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:50%;"
+											id="avatar" />
+										<label><strong>[[${user.firstName}]] [[${user.lastName}]]</strong></label>
+										<button class="btn btn-outline-primary mt-3 ml-auto mr-auto d-block">Đổi mật
+											khẩu</button>
+									</div>
+
+								</div>
+								<div class="col-md-8">
+									<h6 class="text-muted">Thông tin</h6>
+									<p>Email: [[${user.email}]] </p>
+									<form method="POST" action="">
+
+										<!-- if show -->
+										<div th:if="${isShow}">
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Tên</label>
+													<input type="text" class="form-control" disabled name="firstName"
+														th:value="${user.firstName}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Họ</label>
+													<input type="text" class="form-control" disabled name="lastName"
+														th:value="${ user.lastName}">
+												</div>
+											</div> <!-- form-row.// -->
+											
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Số điện thoại</label>
+													<input type="text" class="form-control" disabled name="firstName"
+														th:value="${user.phoneNumber}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Ngày sinh</label>
+													<input type="date" class="form-control" disabled name="birthday"
+														th:value="${ user.birthday}">
+												</div>
+											</div> <!-- form-row.// -->
+											
+											
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Tỉnh/Thành phố</label>
+													<input type="text" class="form-control" disabled name="province"
+														th:value="${address.province}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Quận/Huyện</label>
+													<input type="text" class="form-control" disabled name="district"
+														th:value="${address.district}">
+												</div>
+											</div> <!-- form-row.// -->
+
+
+
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Phường/Xã</label>
+													<input type="text" class="form-control" disabled name="subDistrict"
+														th:value="${address.subDistrict}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Số nhà</label>
+													<input type="text" class="form-control" disabled name="street"
+														th:value="${address.street}">
+												</div>
+											</div> <!-- form-row.// -->
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Giới tính</label>
+
+													<div th:if="${user.gender==1}">
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" checked=""
+																type="radio" name="gender" value="male">
+															<span class="custom-control-label"> Nam </span>
+														</label>
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" type="radio"
+																name="gender" value="female">
+															<span class="custom-control-label"> Nữ </span>
+														</label>
+													</div>
+
+													<div th:if="${user.gender==2}">
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" type="radio"
+																name="gender" value="male">
+															<span class="custom-control-label"> Nam </span>
+														</label>
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" checked=""
+																type="radio" name="gender" value="female">
+															<span class="custom-control-label"> Nữ </span>
+														</label>
+													</div>
+
+
+												</div>
+												<div class="col-md-6">
+													<button onclick="document.getElementById('type').value = 'edit'"
+														type="submit" class="btn btn-outline-primary">Edit</button>
+												</div>
+
+
+											</div> <!-- form-row.// -->
+										</div><!-- end show -->
+
+										<!-- if edit -->
+										<div th:if="${isEdit}">
+										
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Tên</label>
+													<input type="text" class="form-control" name="first_name"
+														th:value="${user.firstName}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Họ</label>
+													<input type="text" class="form-control" name="lastName"
+														th:value="${ user.lastName}">
+												</div>
+											</div> <!-- form-row.// -->
+											
+												<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Số điện thoại</label>
+													<input type="text" class="form-control"  name="firstName"
+														th:value="${user.phoneNumber}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Ngày sinh</label>
+													<input type="date" class="form-control"  name="birthday"
+														th:value="${ user.birthday}">
+												</div>
+											</div> <!-- form-row.// -->
+
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Tỉnh/Thành phố</label>
+													<input type="text" class="form-control" name="province"
+														th:value="${address.province}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Quận/Huyện</label>
+													<input type="text" class="form-control" name="district"
+														th:value="${address.district}">
+												</div>
+											</div> <!-- form-row.// -->
+
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Phường/Xã</label>
+													<input type="text" class="form-control" name="subDistrict"
+														th:value="${address.subDistrict}">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Số nhà</label>
+													<input type="text" class="form-control" name="street"
+														th:value="${address.street}">
+												</div>
+											</div> <!-- form-row.// -->
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label>Giới tính</label>
+
+													<div th:if="${user.gender==1}">
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" checked=""
+																type="radio" name="gender" value="male">
+															<span class="custom-control-label"> Nam </span>
+														</label>
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" type="radio"
+																name="gender" value="female">
+															<span class="custom-control-label"> Nữ </span>
+														</label>
+													</div>
+
+													<div th:if="${user.gender==2}">
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" type="radio"
+																name="gender" value="male">
+															<span class="custom-control-label"> Nam </span>
+														</label>
+														<label
+															class="custom-control custom-radio custom-control-inline">
+															<input disabled class="custom-control-input" checked=""
+																type="radio" name="gender" value="female">
+															<span class="custom-control-label"> Nữ </span>
+														</label>
+													</div>
+
+
+												</div>
+												<div class="col-md-6">
+													<button onclick="document.getElementById('type').value = 'save'"
+														type="submit" class="btn btn-outline-primary">Save</button>
+												</div>
+
+
+											</div> <!-- form-row.// -->
+										</div><!-- end edit -->
+										<input hidden id="type" name="type" value="">
+									</form>
+								</div>
+							</div> <!-- row.// -->
+						</div> <!-- card-body .// -->
+						<header class="card-header" id="header_bill">
+							<strong class="d-inline-block mr-3 ">TOP 3 RECENTS ORDER </strong>
+						</header><br>
+						<div class="table-responsive">
+							{% for item in bill_list %}
+							<table class="table table-hover">
+								<label id="date_label"><strong>{{ item.bills.0.checkout_date }}</strong></label>
+								{% for bill in item.bills %}
+								<tr>
+									<td width="100">
+										<img src="{{ bill.sq.product.image.url }}" class="border" id="bill_item_img">
+									</td>
+									<td>
+										<p class="title mb-0">{{ bill.sq.product.name }}</p>
+										<small class="title text-muted">$ {{ bill.sq.product.price }}</small><br>
+										<p class="price text-muted">$ {{ bill.total }}</p>
+									</td>
+									<td width="200">Quantity: {{ bill.quantity }} <br>Size: {{ bill.sq.size }}
+										<br>Brand: {{ bill.sq.product.brand }}
+									</td>
+									<td width="200"><a href="{% url 'detail' bill.sq.product.slug %}"
+											class="btn btn-outline-primary">Detail</a></td>
+								</tr>
+								{% endfor %}
+
+							</table>
+							<p id="total_label"><strong>Total: </strong>$ {{ item.total|floatformat:2 }}</p>
+							{% endfor %}
+						</div> <!-- table-responsive .end// -->
+					</article> <!-- order-group.// -->
+				</main>
+			</div> <!-- row.// -->
+		</div>
+
+
+	</section>
+
+	<!-- Start Instagram Feed  -->
+	<div class="instagram-box">
+		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
+	</div>
+	<!-- End Instagram Feed  -->
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+	</footer>
+</body>
+
+</html>

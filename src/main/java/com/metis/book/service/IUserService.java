@@ -33,6 +33,8 @@ public interface IUserService {
 
 	void updatePassword(String passwordToken, String password);
 
+	User getUserById(Long id);
+
 
 
 

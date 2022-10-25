@@ -3,6 +3,7 @@ package com.metis.book.serviceImpl;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,6 +182,17 @@ public class UserServiceImpl implements IUserService {
 		User user = getUserByPasswordToken(passwordToken);
 		user.setPassword(passwordEncoder.encode(password));
 		userRepository.save(user);		
+	}
+
+	@Override
+	public User getUserById(Long id) {
+		
+		Optional<User> user = userRepository.findById(id);
+		if(user.isEmpty()) {
+			log.error(AppConstant.USER_NOT_FOUND+id);
+			return null;
+		}
+		return user.get();
 	}
 
 
