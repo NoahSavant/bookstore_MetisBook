@@ -20,6 +20,7 @@ import com.metis.book.model.Book;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.Category;
+import com.metis.book.model.Image;
 import com.metis.book.model.Language;
 import com.metis.book.model.Stock;
 import com.metis.book.model.user.Address;
@@ -32,6 +33,7 @@ import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.CategoryRepository;
+import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.LanguageRepository;
 import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.StockRepository;
@@ -79,6 +81,9 @@ public class InsertData {
 
 	@Autowired
 	CartItemReposirory cartItemReposirory;
+
+	@Autowired
+	ImageRepository imageRepository;
 
 	@Test
 	@Order(1)
@@ -178,9 +183,10 @@ public class InsertData {
 		Stock stockSaved4 = stockRepository.save(stockForBook4);
 
 		// Create Book 1
-		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE).category(categoryTieuThuyet)
-				.description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language).publicationDate(null)
-				.publisherName("Kim Đồng").stock(stockSaved1).authors(Arrays.asList(author)).build();
+		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE)
+				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
+				.publicationDate(null).publisherName("Kim Đồng").stock(stockSaved1).authors(Arrays.asList(author))
+				.build();
 		bookRepository.save(book1);
 
 		// Create Book 2
@@ -223,6 +229,7 @@ public class InsertData {
 		roleStaff.setName(RoleName.STAFF);
 		roleRepository.save(roleStaff);
 	}
+
 
 	@Test
 	@Order(6)
@@ -320,6 +327,14 @@ public class InsertData {
 		cart.setCartItems(null);
 		cart.setUser(null);
 		Cart cartSaved = cartReposiroty.save(cart);
+		
+		// Create new Image
+		Image imageThumbnail = new Image();
+		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
+		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.jpg");
+		imageRepository.save(imageThumbnail);
+	
+		
 		// get user role
 		Role roleUser = roleRepository.findByName(RoleName.USER);
 
@@ -331,7 +346,7 @@ public class InsertData {
 				.email("kietle1709@gmail.com").firstName("kiet").lastName("Le Nguyen Tuan")
 				.birthday(LocalDate.of(2002, 9, 17)).gender(1) // 1: male, 2: female, 3: Not know
 				.phoneNumber("01255145165").enabled(Boolean.TRUE).roles(Arrays.asList(roleUser)).cart(cartSaved)
-				.addresses(null).build();
+				.addresses(null).image(imageThumbnail).build();
 		userRepository.save(user);
 
 //		// Map user to cart because user not exits
@@ -348,19 +363,25 @@ public class InsertData {
 			log.error(AppConstant.ROLE_NOT_FOUND + " Admin");
 		}
 
+		// Create new Image
+		Image imageThumbnail = new Image();
+		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
+		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.jpg");
+		imageRepository.save(imageThumbnail);
+
 		// get user role
 		Role roleUser = roleRepository.findByName(RoleName.USER);
 
 		if (Objects.isNull(roleUser)) {
 			log.error(AppConstant.ROLE_NOT_FOUND + "User");
 		}
-		
+
 		// Create new Admin
 		User user = User.builder().username("khai").password(passwordEncoder.encode("123"))
 				.email("duckhailinux@gmail.com").firstName("khai").lastName("Nguyen")
 				.birthday(LocalDate.of(2002, 06, 06)).gender(1) // 1: male, 2: female, 3: Not know
-				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleAdmin,roleUser)).cart(null)
-				.addresses(null).build();
+				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleAdmin, roleUser)).cart(null)
+				.addresses(null).image(imageThumbnail).build();
 		userRepository.save(user);
 
 	}

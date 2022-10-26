@@ -1,5 +1,6 @@
 package com.metis.book.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.ProfileForm;
@@ -46,6 +49,16 @@ public class ProfileController {
 		return mav;
 	}
 
+	@PostMapping("/upload-image")
+	public ModelAndView uploadImage(
+			ModelAndView mav,
+			@RequestParam("image") MultipartFile file) throws IOException {
+
+		userService.updateImage(file);
+		mav.setViewName("redirect:/member/profile");
+		return mav;
+	}
+	
 	@PostMapping
 	public ModelAndView editProfile(
 			@Valid @ModelAttribute("profile") ProfileForm profileForm,
@@ -128,18 +141,20 @@ public class ProfileController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		User user = userService.getUserById(userPrincipal.getId());
-		
 		// find primary address
 		Address address = findPrimaryAddress(user);
 		if (Objects.isNull(address)) {
 			log.error("Address is null");
 		}
+
 		
 		ProfileForm profileForm = ProfileForm.builder()
 				.username(user.getUsername())
 				.firstName(user.getFirstName())
 				.lastName(user.getLastName())
 				.email(user.getEmail())
+				.imageName(user.getImage()==null?null:user.getImage().getTitle())
+				.thumbnailName(user.getImage()==null?null:user.getImage().getThumbnailName())
 				.gender(user.getGender().toString())
 				.birthday(user.getBirthday().toString())
 				.phoneNumber(user.getPhoneNumber())

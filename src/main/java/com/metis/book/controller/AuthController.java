@@ -190,13 +190,14 @@ public class AuthController {
 	@PostMapping("/forgot-password")
 	public ModelAndView resetPassword(final HttpServletRequest request, @Valid @ModelAttribute("email") String email,
 			BindingResult result, ModelAndView mav) {
-
+		log.info(email);
 		if (result.hasErrors()) {
 			mav.addObject("errorMessage", "Email không hợp lệ");
 			mav.setViewName("client/forgot-password.html");
 			return mav;
 		}
 
+		
 		User user = userService.findByEmail(email);
 		if (Objects.isNull(user)) {
 			mav.addObject("errorMessage", "Không tìm thấy tài khoản với địa chỉ email này");

@@ -32,6 +32,9 @@ public class Image {
 	@Column(name = "url")
 	private String url;
 
+	@Column(name = "thumbnail_name")
+	private String thumbnailName;
+	
 	@Column(name = "thumbnail_url")
 	private String thumbnailURL;
 	

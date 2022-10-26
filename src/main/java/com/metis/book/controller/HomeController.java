@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.model.Category;
 import com.metis.book.service.ICategoryService;
+import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
 
 @Controller
@@ -41,7 +42,7 @@ public class HomeController {
 
 	@PostMapping("/upload")
 	public ModelAndView getUploadImage(ModelAndView mav, @RequestParam("image") MultipartFile file) throws IOException {
-		FileUploadUtils.saveFile(file);
+		FileUploadUtils.saveFile(AppConstant.UPLOAD_DIRECTORY,file);
 		StringBuilder fileName = new StringBuilder();
 		fileName.append(file.getOriginalFilename());
 		mav.addObject("imagePath",fileName.toString());

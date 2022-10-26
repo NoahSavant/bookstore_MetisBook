@@ -8,10 +8,14 @@ import java.nio.file.Paths;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtils {
-	public static void saveFile(MultipartFile file) throws IOException {
-		StringBuilder fileNames = new StringBuilder();
-		Path fileNameAndPath = Paths.get(AppConstant.UPLOAD_DIRECTORY, file.getOriginalFilename());
-		fileNames.append(file.getOriginalFilename());
+	public static Path saveFile(String uploadDir,MultipartFile file) throws IOException {
+		Path fileNameAndPath = Paths.get(uploadDir, file.getOriginalFilename());
 		Files.write(fileNameAndPath, file.getBytes());
+		return fileNameAndPath;
     }
+	public static Path saveUserImage(MultipartFile file, Long userId) throws IOException {
+		Path fileNameAndPath = Paths.get(AppConstant.UPLOAD_USER_DIRECTORY, userId.toString()+".png");
+		Files.write(fileNameAndPath, file.getBytes());
+		return fileNameAndPath;
+	}
 }

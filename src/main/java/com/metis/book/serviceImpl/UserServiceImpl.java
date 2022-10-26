@@ -1,5 +1,7 @@
 package com.metis.book.serviceImpl;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.Cart;
+import com.metis.book.model.Image;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.Address;
@@ -24,6 +28,7 @@ import com.metis.book.model.user.RoleName;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.AddressRepository;
 import com.metis.book.repository.CartReposiroty;
+import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.PasswordResetTokenRepository;
 import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.UserRepository;
@@ -31,6 +36,7 @@ import com.metis.book.repository.VerificationTokenRepository;
 import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IUserService;
 import com.metis.book.utils.AppConstant;
+import com.metis.book.utils.FileUploadUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,6 +58,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	AddressRepository addressRepository;
+	
+	@Autowired
+	ImageRepository imageRepository;
 	
 	@Autowired
 	VerificationTokenRepository verifyTokenRepository;
@@ -240,6 +249,40 @@ public class UserServiceImpl implements IUserService {
 		user.setBirthday(LocalDate.parse(profileForm.getBirthday()));
 	
 		userRepository.save(user);
+	}
+
+	@Override
+	public void updateImage(MultipartFile file) throws IOException {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userRepository.findById(userPrincipal.getId()).get();
+		Path fileNameAndPath = FileUploadUtils.saveUserImage(file,user.getId());
+		
+		Image image = imageRepository.findByUser(user);
+		
+		if(Objects.isNull(image)) {
+			// if user don't have any image
+			Image newImage = new Image();
+			newImage.setTitle(user.getId().toString()+".png");
+			newImage.setUrl(fileNameAndPath.toString());
+			imageRepository.save(newImage);
+			
+			user.setImage(newImage);
+			userRepository.save(user);
+		}else {
+			
+			// if user already have image
+			image.setTitle(user.getId().toString()+".png");
+			image.setUrl(fileNameAndPath.toString());
+			imageRepository.save(image);
+		}
+
+		imageRepository.save(image);
+		
+		// update authenticated user 
+		userPrincipal.setImage(image);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 	
 
