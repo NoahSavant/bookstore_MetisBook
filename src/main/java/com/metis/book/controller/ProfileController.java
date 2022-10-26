@@ -90,12 +90,13 @@ public class ProfileController {
 		if(ConstraintUltils.isContainSpecialChar(profileForm.getSubDistrict())) {
 			errors.put("subDistrictSpecial", "Phường/Xã không được phép chứa ký tự đặc biệt");
 		}
-		mav.addObject("formErrors",errors);
+		if(errors.size()>0) {
+			mav.addObject("formErrors",errors);
+		}
 		return mav;
 	}
 	
-	private Address findPrimaryAddress(UserPrincipal userPrincipal) {
-		User user = userService.getUserById(userPrincipal.getId());
+	private Address findPrimaryAddress(User user) {
 
 		List<Address> addresses = addressService.getAddressByUser(user);
 		if (Objects.isNull(addresses)) {
@@ -112,29 +113,36 @@ public class ProfileController {
 	}
 
 	private ModelAndView renderObjects() {
-
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		ModelAndView mav = new ModelAndView();
-		Address address = findPrimaryAddress(userPrincipal);
-		if (Objects.isNull(address)) {
-			log.error("Address is null");
-		}
-		ProfileForm profileForm = mapToProfileForm(userPrincipal, address);
+		
+		// return credential of authenticated user in database
+		ProfileForm profileForm = mapToProfileForm();
 		mav.addObject("profile",profileForm);
 		mav.setViewName("client/profile");
 		return mav;
 	}
 	
-	private ProfileForm mapToProfileForm(UserPrincipal userPrincipal, Address address) {
+	private ProfileForm mapToProfileForm() {
+		
+		// Get authenticated usser
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		
+		// find primary address
+		Address address = findPrimaryAddress(user);
+		if (Objects.isNull(address)) {
+			log.error("Address is null");
+		}
+		
 		ProfileForm profileForm = ProfileForm.builder()
-				.username(userPrincipal.getUsername())
-				.firstName(userPrincipal.getFirstName())
-				.lastName(userPrincipal.getLastName())
-				.email(userPrincipal.getEmail())
-				.gender(userPrincipal.getGender().toString())
-				.birthday(userPrincipal.getBirthday().toString())
-				.phoneNumber(userPrincipal.getPhoneNumber())
+				.username(user.getUsername())
+				.firstName(user.getFirstName())
+				.lastName(user.getLastName())
+				.email(user.getEmail())
+				.gender(user.getGender().toString())
+				.birthday(user.getBirthday().toString())
+				.phoneNumber(user.getPhoneNumber())
 				.province(address.getProvince())
 				.district(address.getDistrict())
 				.subDistrict(address.getSubDistrict())

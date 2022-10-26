@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ import com.metis.book.repository.PasswordResetTokenRepository;
 import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.repository.VerificationTokenRepository;
+import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IUserService;
 import com.metis.book.utils.AppConstant;
 
@@ -235,8 +238,10 @@ public class UserServiceImpl implements IUserService {
 		user.setGender(Integer.valueOf(profileForm.getGender()));
 		user.setPhoneNumber(profileForm.getPhoneNumber());
 		user.setBirthday(LocalDate.parse(profileForm.getBirthday()));
+	
 		userRepository.save(user);
 	}
+	
 
 
 }
