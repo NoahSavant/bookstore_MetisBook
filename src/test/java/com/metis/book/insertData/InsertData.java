@@ -2,6 +2,7 @@ package com.metis.book.insertData;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Objects;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -21,8 +22,10 @@ import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.Category;
 import com.metis.book.model.Image;
-import com.metis.book.model.Language;
 import com.metis.book.model.Inventory;
+import com.metis.book.model.Language;
+import com.metis.book.model.order.OrderItem;
+import com.metis.book.model.order.OrderTrack;
 import com.metis.book.model.user.Address;
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.RoleName;
@@ -34,9 +37,12 @@ import com.metis.book.repository.CartItemReposirory;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.CategoryRepository;
 import com.metis.book.repository.ImageRepository;
-import com.metis.book.repository.LanguageRepository;
-import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.InventoryRepository;
+import com.metis.book.repository.LanguageRepository;
+import com.metis.book.repository.OrderItemRepository;
+import com.metis.book.repository.OrderRepository;
+import com.metis.book.repository.OrderTrackRepository;
+import com.metis.book.repository.RoleRepository;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.utils.AppConstant;
 
@@ -84,6 +90,15 @@ public class InsertData {
 
 	@Autowired
 	ImageRepository imageRepository;
+
+	@Autowired
+	OrderTrackRepository orderTrackRepository;
+
+	@Autowired
+	OrderRepository orderRepository;
+
+	@Autowired
+	OrderItemRepository orderItemRepository;
 
 	@Test
 	@Order(1)
@@ -185,8 +200,8 @@ public class InsertData {
 		// Create Book 1
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE)
 				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
-				.publicationDate(null).publisherName("Kim Đồng").inventory(inventorySaved1).authors(Arrays.asList(author))
-				.build();
+				.publicationDate(null).publisherName("Kim Đồng").inventory(inventorySaved1)
+				.authors(Arrays.asList(author)).build();
 		bookRepository.save(book1);
 
 		// Create Book 2
@@ -229,7 +244,6 @@ public class InsertData {
 		roleStaff.setName(RoleName.STAFF);
 		roleRepository.save(roleStaff);
 	}
-
 
 	@Test
 	@Order(6)
@@ -322,17 +336,99 @@ public class InsertData {
 
 	@Test
 	@Order(9)
-	public void testCreateOrderItem() {
+	public void testCreateOrderTrack() {
+
+		// Delivery
+		OrderTrack trackDelivering = new OrderTrack();
+		trackDelivering.setStatus("Đang giao");
+		orderTrackRepository.save(trackDelivering);
+
+		// Preparing
+		OrderTrack trackPreparing = new OrderTrack();
+		trackPreparing.setStatus("Đang chuẩn bị");
+		orderTrackRepository.save(trackPreparing);
+
+		// Completed
+		OrderTrack trackCompleted = new OrderTrack();
+		trackCompleted.setStatus("Đã giao");
+		orderTrackRepository.save(trackCompleted);
+
+	}
+
+	@Test
+	@Order(10)
+	public void testCreateOrder() {
+
+		// get order track
+		OrderTrack trackDelivering = orderTrackRepository.findByStatus("Đang giao");
 		
+		// Create order1
+		com.metis.book.model.order.Order order1 = new com.metis.book.model.order.Order();
+		order1.setOrderDate(new Date());
+		order1.setOrderTrack(trackDelivering);
+		order1.setPaymentMethod("paypal");
+		orderRepository.save(order1);
+		
+		com.metis.book.model.order.Order order2 = new com.metis.book.model.order.Order();
+		order2.setOrderDate(new Date());
+		order2.setOrderTrack(trackDelivering);
+		order2.setPaymentMethod("momo");
+		orderRepository.save(order2);
+	}
+
+	@Test
+	@Order(11)
+	public void testCreateOrderItem() {
+
 		// get User
 		User user = userRepository.findByUsername("kiet");
 		if (Objects.isNull(user)) {
 			log.error(AppConstant.USER_NOT_FOUND + "kiet");
 		}
-		
-		//Order order = new Order();
-	}
+
+		// get order1
+		com.metis.book.model.order.Order order1 = orderRepository.findById(1L).get();
+		// get order2
+		com.metis.book.model.order.Order order2 = orderRepository.findById(2L).get();
 	
+		// get Book1
+		Book book1 = bookRepository.findById(1L).get();
+		// get Book2
+		Book book2 = bookRepository.findById(2L).get();
+		// get Book3
+		Book book3 = bookRepository.findById(3L).get();
+		// get Book4
+		Book book4 = bookRepository.findById(4L).get();
+		
+		// Create OrderItem1 for order1
+		OrderItem orderItem1 = new OrderItem();
+		orderItem1.setQuantity(2);
+		orderItem1.setBook(book1);
+		orderItem1.setOrder(order1);
+		orderItemRepository.save(orderItem1);
+		
+		// Create OrderItem2 for order1
+		OrderItem orderItem2 = new OrderItem();
+		orderItem2.setQuantity(3);
+		orderItem2.setBook(book2);
+		orderItem2.setOrder(order1);
+		orderItemRepository.save(orderItem2);
+		
+		// Create OrderItem3 for order2
+		OrderItem orderItem3 = new OrderItem();
+		orderItem3.setQuantity(2);
+		orderItem3.setBook(book3);
+		orderItem3.setOrder(order2);
+		orderItemRepository.save(orderItem3);
+		
+		// Create OrderItem4 for order2
+		OrderItem orderItem4 = new OrderItem();
+		orderItem4.setQuantity(3);
+		orderItem4.setBook(book4);
+		orderItem4.setOrder(order2);
+		orderItemRepository.save(orderItem4);
+	}
+
 	public void createCustomer() {
 
 		// Create new Cart
@@ -340,14 +436,13 @@ public class InsertData {
 		cart.setCartItems(null);
 		cart.setUser(null);
 		Cart cartSaved = cartReposiroty.save(cart);
-		
+
 		// Create new Image
 		Image imageThumbnail = new Image();
 		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
 		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.jpg");
 		imageRepository.save(imageThumbnail);
-	
-		
+
 		// get user role
 		Role roleUser = roleRepository.findByName(RoleName.USER);
 

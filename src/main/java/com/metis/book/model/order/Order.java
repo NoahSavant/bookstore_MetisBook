@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
@@ -45,7 +45,7 @@ public class Order extends UserDateAudit {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<OrderItem> orderItems;	
 	
-	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+	@ManyToOne
 	@JoinColumn(name = "order_track_id", referencedColumnName = "id", nullable = false)
 	private OrderTrack orderTrack;
 

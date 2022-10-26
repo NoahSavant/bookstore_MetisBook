@@ -1,11 +1,13 @@
 package com.metis.book.model.order;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
@@ -32,6 +34,6 @@ public class OrderTrack extends UserDateAudit {
 	@Column(name = "status", nullable = false)
 	private String status;
 	
-	@OneToOne(mappedBy = "orderTrack")
-	private Order order;
+	@OneToMany(mappedBy = "orderTrack")
+	private List<Order> orders;
 }
