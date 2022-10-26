@@ -1,5 +1,6 @@
 package com.metis.book.service;
 
+import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
@@ -34,6 +35,8 @@ public interface IUserService {
 	void updatePassword(String passwordToken, String password);
 
 	User getUserById(Long id);
+
+	void updateProfile(ProfileForm profileForm);
 
 
 

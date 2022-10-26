@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,6 +34,7 @@ import com.metis.book.model.user.User;
 import com.metis.book.service.IPasswordResetTokenService;
 import com.metis.book.service.IUserService;
 import com.metis.book.service.IVerificationTokenService;
+import com.metis.book.utils.ConstraintUltils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -323,13 +323,13 @@ public class AuthController {
 		if (isExistByUsername(registerRequest.getUsername())) {
 			errors.put("existByUsername", "Tên đăng nhập đã tồn tại");
 		}
-		if (isContainSpecialChar(registerRequest.getUsername())) {
+		if (ConstraintUltils.isContainSpecialChar(registerRequest.getUsername())) {
 			errors.put("usernameSpecial", "Tên đăng nhập không được phép chứa ký tự đặc biệt");
 		}
-		if (isContainSpecialChar(registerRequest.getFirstName())) {
+		if (ConstraintUltils.isContainSpecialChar(registerRequest.getFirstName())) {
 			errors.put("firstNameSpecial", "Tên không được phép chứa ký tự đặc biệt");
 		}
-		if (isContainSpecialChar(registerRequest.getLastName())) {
+		if (ConstraintUltils.isContainSpecialChar(registerRequest.getLastName())) {
 			errors.put("lastNameSpecial", "Họ không được phép chứa ký tự đặc biệt");
 		}
 		if (isExistByEmail(registerRequest.getEmail())) {
@@ -340,15 +340,7 @@ public class AuthController {
 		return errors;
 	}
 
-	private Boolean isContainSpecialChar(String username) {
 
-		Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]"); // fill in any chars that you consider special
-
-		if (regex.matcher(username).find()) {
-			return true;
-		}
-		return false;
-	}
 
 	private Boolean isExistByUsername(String username) {
 		if (userService.existsByUsername(username)) {

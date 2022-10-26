@@ -2,6 +2,7 @@ package com.metis.book.serviceImpl;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.Cart;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
+import com.metis.book.model.user.Address;
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.RoleName;
 import com.metis.book.model.user.User;
+import com.metis.book.repository.AddressRepository;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.PasswordResetTokenRepository;
 import com.metis.book.repository.RoleRepository;
@@ -43,6 +47,9 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	RoleRepository roleRepository;
 
+	@Autowired
+	AddressRepository addressRepository;
+	
 	@Autowired
 	VerificationTokenRepository verifyTokenRepository;
 	
@@ -193,6 +200,42 @@ public class UserServiceImpl implements IUserService {
 			return null;
 		}
 		return user.get();
+	}
+
+	@Override
+	public void updateProfile(ProfileForm profileForm) {
+		
+		// Get user
+		User user = userRepository.findByEmail(profileForm.getEmail());
+		if(Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND+profileForm.getEmail());
+		}
+		
+		// Get address
+		List<Address> addresses = addressRepository.findByUser(user);
+		if(Objects.isNull(addresses)) {
+			log.error("Not found any address for this user");
+		}
+		
+		Address address = new Address();
+		for (Address addr : addresses) {
+			if (addr.getIsPrimary()) {
+				address = addr;
+			}
+		}
+		
+		address.setDistrict(profileForm.getDistrict());
+		address.setSubDistrict(profileForm.getSubDistrict());
+		address.setProvince(profileForm.getProvince());
+		address.setStreet(profileForm.getStreet());
+		addressRepository.save(address);
+		
+		user.setFirstName(profileForm.getFirstName());
+		user.setLastName(profileForm.getLastName());
+		user.setGender(Integer.valueOf(profileForm.getGender()));
+		user.setPhoneNumber(profileForm.getPhoneNumber());
+		user.setBirthday(LocalDate.parse(profileForm.getBirthday()));
+		userRepository.save(user);
 	}
 
 

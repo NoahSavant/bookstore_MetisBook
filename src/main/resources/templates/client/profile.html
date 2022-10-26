@@ -31,7 +31,7 @@
 				<main class="col-md-9">
 					<article class="card">
 						<header class="card-header" id="header_user">
-							<strong class="d-inline-block mr-3 ">Tên đăng nhập: [[${user.username}]] </strong>
+							<strong class="d-inline-block mr-3 ">Tên đăng nhập: [[${profile.username}]] </strong>
 						</header>
 						<div class="card-body">
 							<div class="row">
@@ -40,7 +40,7 @@
 										<img th:src="@{/images/avatar2.jpg}"
 											class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:50%;"
 											id="avatar" />
-										<label><strong>[[${user.firstName}]] [[${user.lastName}]]</strong></label>
+										<label><strong>[[${profile.firstName}]] [[${profile.lastName}]]</strong></label>
 										<button class="btn btn-outline-primary mt-3 ml-auto mr-auto d-block">Đổi mật
 											khẩu</button>
 									</div>
@@ -48,213 +48,144 @@
 								</div>
 								<div class="col-md-8">
 									<h6 class="text-muted">Thông tin</h6>
-									<p>Email: [[${user.email}]] </p>
-									<form method="POST" action="">
+									<p>Email: [[${profile.email}]] </p>
+									<form method="post" th:object="${profile}" id="profile_form">
 
-										<!-- if show -->
-										<div th:if="${isShow}">
+										<input hidden type="text" th:field="*{email}"/>
+										<div id="isError" hidden th:if="${#fields.hasErrors('*')}" value="true"></div>
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label>Tên</label>
+												<input type="text" class="form-control" disabled
+													th:field="*{firstName}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+												</div>
+												<div th:if="${formErrors!=null && formErrors.containsKey('firstNameSpecial')}" 
+							       				 class="alert alert-warning mt-3 mb-3" th:text="${formErrors.get('firstNameSpecial')}">
+							        			</div>
+											</div>
+											<div class="form-group col-md-6">
+												<label>Họ</label>
+												<input type="text" class="form-control" disabled th:field="*{lastName}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+												</div>
+												<div th:if="${formErrors!=null && formErrors.containsKey('lastNameSpecial')}" 
+							       				 class="alert alert-warning mt-3 mb-3" th:text="${formErrors.get('lastNameSpecial')}">
+							        			</div>
+											</div>
+										</div> <!-- form-row.// -->
 
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Tên</label>
-													<input type="text" class="form-control" disabled name="firstName"
-														th:value="${user.firstName}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Họ</label>
-													<input type="text" class="form-control" disabled name="lastName"
-														th:value="${ user.lastName}">
-												</div>
-											</div> <!-- form-row.// -->
-											
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Số điện thoại</label>
-													<input type="text" class="form-control" disabled name="firstName"
-														th:value="${user.phoneNumber}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Ngày sinh</label>
-													<input type="date" class="form-control" disabled name="birthday"
-														th:value="${ user.birthday}">
-												</div>
-											</div> <!-- form-row.// -->
-											
-											
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Tỉnh/Thành phố</label>
-													<input type="text" class="form-control" disabled name="province"
-														th:value="${address.province}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Quận/Huyện</label>
-													<input type="text" class="form-control" disabled name="district"
-														th:value="${address.district}">
-												</div>
-											</div> <!-- form-row.// -->
-
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label>Số điện thoại</label>
+												<input type="text" class="form-control" disabled
+													th:field="*{phoneNumber}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('phoneNumber')}"
+													th:errors="*{phoneNumber}"></div>
+													
+											</div>
+											<div class="form-group col-md-6">
+												<label>Ngày sinh</label>
+												<input type="date" class="form-control" disabled th:field="*{birthday}">
+											</div>
+										</div> <!-- form-row.// -->
 
 
-
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Phường/Xã</label>
-													<input type="text" class="form-control" disabled name="subDistrict"
-														th:value="${address.subDistrict}">
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label>Tỉnh/Thành phố</label>
+												<input type="text" class="form-control" disabled th:field="*{province}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('province')}" th:errors="*{province}">
 												</div>
-												<div class="form-group col-md-6">
-													<label>Số nhà</label>
-													<input type="text" class="form-control" disabled name="street"
-														th:value="${address.street}">
+												<div th:if="${formErrors!=null &&  formErrors.containsKey('provinceSpecial')}" 
+							       				 class="alert alert-warning mt-3 mb-3" th:text="${formErrors.get('provinceSpecial')}">
+							        			</div>
+											</div>
+											<div class="form-group col-md-6">
+												<label>Quận/Huyện</label>
+												<input type="text" class="form-control" disabled th:field="*{district}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('district')}" th:errors="*{district}">
 												</div>
-											</div> <!-- form-row.// -->
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Giới tính</label>
+												<div th:if="${formErrors!=null && formErrors.containsKey('districtSpecial')}" 
+							       				 class="alert alert-warning mt-3 mb-3" th:text="${formErrors.get('districtSpecial')}">
+							        			</div>
+											</div>
+										</div> <!-- form-row.// -->
 
-													<div th:if="${user.gender==1}">
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" checked=""
-																type="radio" name="gender" value="male">
-															<span class="custom-control-label"> Nam </span>
-														</label>
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" type="radio"
-																name="gender" value="female">
-															<span class="custom-control-label"> Nữ </span>
-														</label>
+
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label>Phường/Xã</label>
+												<input type="text" class="form-control" disabled
+													th:field="*{subDistrict}">
+												<div class="alert alert-warning mt-3 mb-3" th:if="${#fields.hasErrors('subDistrict')}" th:errors="*{subDistrict}"></div>
+												<div th:if="${formErrors!=null && formErrors.containsKey('subDistrictSpecial')}" 
+							       				 class="alert alert-warning mt-3 mb-3" th:text="${formErrors.get('subDistrictSpecial')}">
+							        			</div>
+											</div>
+											<div class="form-group col-md-6">
+												<label>Số nhà</label>
+												<input type="text" class="form-control" disabled th:field="*{street}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
+												</div>		
+											</div>
+										</div> <!-- form-row.// -->
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label>Giới tính</label>
+
+												<div th:if="${profile.gender=='1'}">
+													<label class="custom-control custom-radio custom-control-inline">
+														<input class="custom-control-input" disabled checked=""
+															type="radio" th:field="*{gender}" value="1">
+														<span class="custom-control-label"> Nam </span>
+													</label>
+													<label class="custom-control custom-radio custom-control-inline">
+														<input class="custom-control-input" disabled type="radio"
+															th:field="*{gender}" value="2">
+														<span class="custom-control-label"> Nữ </span>
+													</label>
+													<div class="alert alert-warning mt-3 mb-3"
+														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
 													</div>
+												</div>
 
-													<div th:if="${user.gender==2}">
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" type="radio"
-																name="gender" value="male">
-															<span class="custom-control-label"> Nam </span>
-														</label>
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" checked=""
-																type="radio" name="gender" value="female">
-															<span class="custom-control-label"> Nữ </span>
-														</label>
+												<div th:if="${profile.gender=='2'}">
+													<label class="custom-control custom-radio custom-control-inline">
+														<input class="custom-control-input" disabled type="radio"
+															th:field="*{gender}" value="1">
+														<span class="custom-control-label"> Nam </span>
+													</label>
+													<label class="custom-control custom-radio custom-control-inline">
+														<input class="custom-control-input" disabled checked=""
+															type="radio" th:field="*{gender}" value="2">
+														<span class="custom-control-label"> Nữ </span>
+													</label>
+													<div class="alert alert-warning mt-3 mb-3"
+														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
 													</div>
-
-
-												</div>
-												<div class="col-md-6">
-													<button onclick="document.getElementById('type').value = 'edit'"
-														type="submit" class="btn btn-outline-primary">Edit</button>
 												</div>
 
 
-											</div> <!-- form-row.// -->
-										</div><!-- end show -->
-
-										<!-- if edit -->
-										<div th:if="${isEdit}">
-										
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Tên</label>
-													<input type="text" class="form-control" name="first_name"
-														th:value="${user.firstName}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Họ</label>
-													<input type="text" class="form-control" name="lastName"
-														th:value="${ user.lastName}">
-												</div>
-											</div> <!-- form-row.// -->
-											
-												<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Số điện thoại</label>
-													<input type="text" class="form-control"  name="firstName"
-														th:value="${user.phoneNumber}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Ngày sinh</label>
-													<input type="date" class="form-control"  name="birthday"
-														th:value="${ user.birthday}">
-												</div>
-											</div> <!-- form-row.// -->
+											</div>
+											<div class="col-md-6">
+												<button id="profileChange" type="button" onclick="enableInput()"
+													class="btn btn-outline-primary">Chỉnh Sửa</button>
+												<button id="profileSave" hidden type="submit"
+													class="btn btn-outline-primary">Lưu</button>
+											</div>
 
 
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Tỉnh/Thành phố</label>
-													<input type="text" class="form-control" name="province"
-														th:value="${address.province}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Quận/Huyện</label>
-													<input type="text" class="form-control" name="district"
-														th:value="${address.district}">
-												</div>
-											</div> <!-- form-row.// -->
+
+										</div> <!-- form-row.// -->
 
 
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Phường/Xã</label>
-													<input type="text" class="form-control" name="subDistrict"
-														th:value="${address.subDistrict}">
-												</div>
-												<div class="form-group col-md-6">
-													<label>Số nhà</label>
-													<input type="text" class="form-control" name="street"
-														th:value="${address.street}">
-												</div>
-											</div> <!-- form-row.// -->
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Giới tính</label>
-
-													<div th:if="${user.gender==1}">
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" checked=""
-																type="radio" name="gender" value="male">
-															<span class="custom-control-label"> Nam </span>
-														</label>
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" type="radio"
-																name="gender" value="female">
-															<span class="custom-control-label"> Nữ </span>
-														</label>
-													</div>
-
-													<div th:if="${user.gender==2}">
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" type="radio"
-																name="gender" value="male">
-															<span class="custom-control-label"> Nam </span>
-														</label>
-														<label
-															class="custom-control custom-radio custom-control-inline">
-															<input disabled class="custom-control-input" checked=""
-																type="radio" name="gender" value="female">
-															<span class="custom-control-label"> Nữ </span>
-														</label>
-													</div>
-
-
-												</div>
-												<div class="col-md-6">
-													<button onclick="document.getElementById('type').value = 'save'"
-														type="submit" class="btn btn-outline-primary">Save</button>
-												</div>
-
-
-											</div> <!-- form-row.// -->
-										</div><!-- end edit -->
-										<input hidden id="type" name="type" value="">
 									</form>
 								</div>
 							</div> <!-- row.// -->
@@ -304,6 +235,29 @@
 	<footer>
 		<div th:replace="client/fragments/footer :: footer"></div>
 	</footer>
+
+	<script>
+		
+		var error = document.getElementById("isError").getAttribute("value");
+		if(error === "true"){
+			enableInput();
+		}
+	
+		function enableInput() {
+			var element = document.getElementsByTagName("input");
+			for (var i = 0; i < element.length; i++) {
+				element[i].disabled = false;
+			}
+			var buttonChange = document.getElementById("profileChange");
+			buttonChange.style.display = 'none';
+
+			var buttonSave = document.getElementById("profileSave");
+			buttonSave.removeAttribute("hidden");
+
+		}
+
+	</script>
+
 </body>
 
 </html>
