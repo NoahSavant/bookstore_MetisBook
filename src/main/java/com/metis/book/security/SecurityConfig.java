@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 
 import com.metis.book.security.oauth.CustomOauth2UserService;
 import com.metis.book.security.oauth.OAuthLoginFailureHandler;
@@ -28,7 +30,8 @@ public class SecurityConfig {
             "/scss/**",
             "/vendor/**",
             "/auth/**",
-            "/oauth2/**"
+            "/oauth2/**",
+            "/uploads/**"
             };
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,6 +44,8 @@ public class SecurityConfig {
 				.loginProcessingUrl("/auth/login")
 				.successHandler(myLoginSuccessHandler())
 				.failureHandler(myLoginFailureHandler())
+			.and()
+				.requestCache().requestCache(requestCache())
 			.and()
 				.logout()
 				.logoutUrl("/auth/logout")
@@ -100,6 +105,11 @@ public class SecurityConfig {
 	@Bean 
 	DefaultOAuth2UserService auth2UserService() {
 		return new CustomOauth2UserService();
+	}
+	
+	@Bean
+	RequestCache requestCache() {
+	   return new HttpSessionRequestCache();
 	}
 
 }

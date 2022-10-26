@@ -1,5 +1,10 @@
 package com.metis.book.service;
 
+import java.io.IOException;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
@@ -32,6 +37,12 @@ public interface IUserService {
 	PasswordResetToken generateNewPasswordToken(String existingtoken);
 
 	void updatePassword(String passwordToken, String password);
+
+	User getUserById(Long id);
+
+	void updateProfile(ProfileForm profileForm);
+
+	void updateImage(MultipartFile file) throws IOException;
 
 
 

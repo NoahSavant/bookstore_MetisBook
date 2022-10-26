@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import com.metis.book.model.Image;
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.User;
 
@@ -31,6 +32,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 	private String phoneNumber;
 	private LocalDate birthday;
 	private Boolean enabled;
+	private Image image;
 	private Map<String, Object> attributes;
 	private List<GrantedAuthority> authorities; // roles
 
@@ -78,7 +80,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 
 		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(),
 				user.getFirstName(), user.getLastName(), user.getGender(), user.getPhoneNumber(), user.getBirthday(),
-				user.getEnabled(), authorities); // roles
+				user.getEnabled(), user.getImage(), authorities); // roles
 
 	}
 
@@ -94,9 +96,20 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 
 	}
 
+	
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return this.attributes;
+	}
+
+	@Override
+	public String getName() {
+		return String.valueOf(this.id);
+	}
+
 	public UserPrincipal(Long id, String username, String password, String email, String firstName, String lastName,
-			Integer gender, String phoneNumber, LocalDate birthday, Boolean enabled,
-			List<GrantedAuthority> authorities) {
+			Integer gender, String phoneNumber, LocalDate birthday, Boolean enabled, Image image, List<GrantedAuthority> authorities) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -108,17 +121,8 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 		this.phoneNumber = phoneNumber;
 		this.birthday = birthday;
 		this.enabled = enabled;
+		this.image = image;
 		this.authorities = authorities;
-	}
-
-	@Override
-	public Map<String, Object> getAttributes() {
-		return this.attributes;
-	}
-
-	@Override
-	public String getName() {
-		return String.valueOf(this.id);
 	}
 
 }
