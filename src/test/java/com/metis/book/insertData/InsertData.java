@@ -22,7 +22,7 @@ import com.metis.book.model.CartItem;
 import com.metis.book.model.Category;
 import com.metis.book.model.Image;
 import com.metis.book.model.Language;
-import com.metis.book.model.Stock;
+import com.metis.book.model.Inventory;
 import com.metis.book.model.user.Address;
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.RoleName;
@@ -36,7 +36,7 @@ import com.metis.book.repository.CategoryRepository;
 import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.LanguageRepository;
 import com.metis.book.repository.RoleRepository;
-import com.metis.book.repository.StockRepository;
+import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.UserRepository;
 import com.metis.book.utils.AppConstant;
 
@@ -71,7 +71,7 @@ public class InsertData {
 	LanguageRepository languageRepository;
 
 	@Autowired
-	StockRepository stockRepository;
+	InventoryRepository inventoryRepository;
 
 	@Autowired
 	AddressRepository addressRepository;
@@ -158,34 +158,34 @@ public class InsertData {
 			log.error(AppConstant.AUTHOR_NOT_FOUND + "Nguyễn Nhật Ánh");
 		}
 
-		// Create new stock for Book1
-		Stock stockForBook1 = new Stock();
-		stockForBook1.setQuantiy(10);
-		stockForBook1.setBook(null);
-		Stock stockSaved1 = stockRepository.save(stockForBook1);
+		// Create new inventory for Book1
+		Inventory inventoryForBook1 = new Inventory();
+		inventoryForBook1.setQuantiy(10);
+		inventoryForBook1.setBook(null);
+		Inventory inventorySaved1 = inventoryRepository.save(inventoryForBook1);
 
-		// Create new stock for Book2
-		Stock stockForBook2 = new Stock();
-		stockForBook2.setQuantiy(5);
-		stockForBook2.setBook(null);
-		Stock stockSaved2 = stockRepository.save(stockForBook2);
+		// Create new inventory for Book2
+		Inventory inventoryForBook2 = new Inventory();
+		inventoryForBook2.setQuantiy(5);
+		inventoryForBook2.setBook(null);
+		Inventory inventorySaved2 = inventoryRepository.save(inventoryForBook2);
 
-		// Create new stock for Book3
-		Stock stockForBook3 = new Stock();
-		stockForBook3.setQuantiy(5);
-		stockForBook3.setBook(null);
-		Stock stockSaved3 = stockRepository.save(stockForBook3);
+		// Create new inventory for Book3
+		Inventory inventoryForBook3 = new Inventory();
+		inventoryForBook3.setQuantiy(5);
+		inventoryForBook3.setBook(null);
+		Inventory inventorySaved3 = inventoryRepository.save(inventoryForBook3);
 
-		// Create new stock for Book4
-		Stock stockForBook4 = new Stock();
-		stockForBook4.setQuantiy(5);
-		stockForBook4.setBook(null);
-		Stock stockSaved4 = stockRepository.save(stockForBook4);
+		// Create new inventory for Book4
+		Inventory inventoryForBook4 = new Inventory();
+		inventoryForBook4.setQuantiy(5);
+		inventoryForBook4.setBook(null);
+		Inventory inventorySaved4 = inventoryRepository.save(inventoryForBook4);
 
 		// Create Book 1
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE)
 				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
-				.publicationDate(null).publisherName("Kim Đồng").stock(stockSaved1).authors(Arrays.asList(author))
+				.publicationDate(null).publisherName("Kim Đồng").inventory(inventorySaved1).authors(Arrays.asList(author))
 				.build();
 		bookRepository.save(book1);
 
@@ -193,21 +193,21 @@ public class InsertData {
 
 		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTieuThuyet)
 				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(null)
-				.publisherName("Kim Đồng").stock(stockSaved2).authors(Arrays.asList(author)).build();
+				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author)).build();
 		bookRepository.save(book2);
 
 		// Create Book 3
 
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
 				.description("Một cuốn sách về cung đấu").language(language).publicationDate(null)
-				.publisherName("Kim Đồng").stock(stockSaved3).authors(Arrays.asList(author)).build();
+				.publisherName("Kim Đồng").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
 		bookRepository.save(book3);
 
 		// Create Book 4
 
 		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh)
 				.description("Một cuốn sách ngôn tình").language(language).publicationDate(null)
-				.publisherName("Kim Đồng").stock(stockSaved4).authors(Arrays.asList(author)).build();
+				.publisherName("Kim Đồng").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
 		bookRepository.save(book4);
 	}
 
@@ -320,6 +320,19 @@ public class InsertData {
 
 	}
 
+	@Test
+	@Order(9)
+	public void testCreateOrderItem() {
+		
+		// get User
+		User user = userRepository.findByUsername("kiet");
+		if (Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND + "kiet");
+		}
+		
+		//Order order = new Order();
+	}
+	
 	public void createCustomer() {
 
 		// Create new Cart

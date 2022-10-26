@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Stock extends UserDateAudit{
+public class Inventory extends UserDateAudit{
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,6 @@ public class Stock extends UserDateAudit{
 	@Column(name = "quantity")
 	private Integer quantiy;
 	
-	@OneToOne(mappedBy = "stock")
+	@OneToOne(mappedBy = "inventory")
 	private Book book;
 }

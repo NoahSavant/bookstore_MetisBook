@@ -64,8 +64,8 @@ public class Book extends UserDateAudit {
 	private Language language;
 	
 	@OneToOne
-	@JoinColumn(name = "stock_id", referencedColumnName = "id", nullable = false)
-	private Stock stock;
+	@JoinColumn(name = "inventory_id", referencedColumnName = "id", nullable = false)
+	private Inventory inventory;
 	
 	@ManyToMany
 	@JoinTable(
