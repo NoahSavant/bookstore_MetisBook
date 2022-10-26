@@ -18,4 +18,9 @@ public class FileUploadUtils {
 		Files.write(fileNameAndPath, file.getBytes());
 		return fileNameAndPath;
 	}
+	public static Path saveBookImage(MultipartFile file, Long bookId) throws IOException {
+		Path fileNameAndPath = Paths.get(AppConstant.UPLOAD_BOOK_DIRECTORY, bookId.toString()+".png");
+		Files.write(fileNameAndPath, file.getBytes());
+		return fileNameAndPath;
+	}
 }

@@ -4,6 +4,7 @@ public class AppConstant {
 	
 	public static final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 	public static final String UPLOAD_USER_DIRECTORY = System.getProperty("user.dir") + "/uploads/users";
+	public static final String UPLOAD_BOOK_DIRECTORY = System.getProperty("user.dir") + "/uploads/books";
 	public static final String ROLE_NOT_FOUND = "Not found role with name: ";
 	public static final String CATEGORY_NOT_FOUND = "Not found category with name: ";
 	public static final String LANGUAGE_NOT_FOUND = "Not found language with name: ";
@@ -11,4 +12,5 @@ public class AppConstant {
 	public static final String USER_NOT_FOUND = "Not found user with username: ";
 	public static final String CART_NOT_FOUND = "Not found cart with user: ";
 	public static final String BOOK_NOT_FOUND = "Not found book with title: ";
+	
 }

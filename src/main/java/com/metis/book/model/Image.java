@@ -40,4 +40,7 @@ public class Image {
 	
 	@OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
 	private User user;
+	
+	@OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+	private Book book;
 }

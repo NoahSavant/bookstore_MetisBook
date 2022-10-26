@@ -73,7 +73,10 @@ public class Book extends UserDateAudit {
 			joinColumns = @JoinColumn(name = "book_id"),
 			inverseJoinColumns = @JoinColumn(name = "author_id"))
 	private List<Author> authors;
-
+	
+	@OneToOne
+	@JoinColumn(name = "image_id", referencedColumnName = "id")
+	private Image image;
 	
 	@OneToMany(mappedBy = "book")
 	private List<CartItem> carts;
@@ -108,9 +111,9 @@ public class Book extends UserDateAudit {
 		this.carts = carts;
 	}
 	
-	public List<Author> getAuthors() {
-		return authors == null ? null : new ArrayList<Author>(this.authors);
-	}
+//	public List<Author> getAuthors() {
+//		return authors == null ? null : new ArrayList<Author>(this.authors);
+//	}
 
 	public void setAuthors(List<Author> authors) {
 		if(authors == null) {

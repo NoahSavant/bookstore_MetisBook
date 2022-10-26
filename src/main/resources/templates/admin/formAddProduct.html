@@ -186,31 +186,44 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Thêm sản phẩm mới!</h1>
                                 </div>
-                                <form class="user">
-                                    <div class="form-group">
-                                        
-                                            <input type="text" class="form-control " id="title" name="title"
-                                                placeholder="Tựa sách">
-                                        
+                                
+                                <form class="user" action="#" th:action="@{/admin/book/add}" th:object="${bookForm}" method="post" enctype="multipart/form-data">
+                                    <div class="form-group row">
+                                    	<div class="col-sm-6">
+                                    		<input id="image-upload" type="file" th:field="*{file}"
+												accept="image/png, image/jpeg" />
+                                    	</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        	<div class="col-sm-6"> 
+                                            	<input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Tựa sách">
+                                       		 </div>
+                                            
+                                        	<div class="col-sm-6"> 
+	                                            <select id="categoryBook"  th:field="*{category}" class="form-control">
+	                                                <option th:value="${category.id}" th:each="category : ${categories}">[[${category.name}]]</option>
+	                                                
+	                                            </select>  
+                                        	</div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="text" class="form-control " id="price" name="price"
+                                            <input type="text" class="form-control " id="price" th:field="*{price}"
                                                 placeholder="Giá">
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control " id="publisherName" name="publisherName"
+                                            <input type="text" class="form-control " id="publisherName" th:field="*{publisherName}"
                                                 placeholder="Nhà xuất bản">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="date" class="form-control" id="publicationDate" name="publicationDate"
+                                            <input type="date" class="form-control" id="publicationDate" th:field="*{publicationDate}"
                                                 placeholder="Ngày xuất bản">
                                         </div>
                                         <div class="col-sm-6">
                                             
-                                            <input type="number" class="form-control " id="stock" name="stock"
+                                            <input type="number" class="form-control " id="stock" th:field="*{quantity}"
                                                 placeholder="Số lượng vào kho">
                                         </div>
                                     </div>
@@ -221,32 +234,20 @@
                                                 <input type="text" id="searchinput" placeholder="Chọn tác giả" class="search1 input-group form-control " oninput="search1()" onfocus="search1() ">
                                                 
                                                 <div id="category">
-                                                    <div class="tacgia mt-3">
+                                                    <div class="tacgia mt-2" th:each="author : ${authors}">
                                                         <label>
-                                                            <input type="checkbox" value="Tác giả 1" class="cb-item">
-                                                            Tác giả 1
+                                                            <input type="checkbox" th:value="${author.id}" th:field="*{authors}" class="cb-item">
+                                                            [[${author.name}]]
                                                         </label>
                                                     </div>
-                                                    <div class="tacgia">
-                                                        <label>
-                                                            <input type="checkbox" class="cb-item">
-                                                            Tác giả 2
-                                                        </label>
-                                                    </div>
-                                                    <div class="tacgia">
-                                                        <label>
-                                                            <input type="checkbox" class="cb-item">
-                                                            Tác giả 3
-                                                        </label>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <select name="language" id="language" class="form-control">
-                                                <option value="Tiếng Việt">Tiếng Việt</option>
-                                                <option value="Tiếng Anh">Tiếng Anh</option>
-                                                <option value="Tiếng Trung">Tiếng Trung</option>
+                                        <div class="col-sm-6"> 
+                                            <select id="language"  th:field="*{language}" class="form-control">
+                                                <option th:value="${language.id}" th:each="language : ${languages}">[[${language.name}]]</option>
+                                                
                                             </select>  
                                         </div>
                                     </div>
@@ -255,7 +256,7 @@
                                     </div>
                                     
                                     
-                                    <button class="btn btn-primary btn-user btn-block">
+                                    <button class="btn btn-primary btn-user btn-block" type="submit">
                                         Thêm
                                     </button>
                                     
