@@ -71,6 +71,8 @@
 									<form method="post" th:object="${profile}" id="profile_form">
 
 										<input hidden type="text" th:field="*{email}" />
+										<input hidden th:if="${profile.imageName}" th:field="*{imageName}" type="text" th:value="${profile.imageName}"/>
+										<input hidden th:if="${profile.thumbnailName}" th:field="*{thumbnailName}" type="text" th:value="${profile.thumbnailName}"/>
 										<div id="isError" hidden th:if="${#fields.hasErrors('*')}" value="true"></div>
 										<div class="form-row">
 											<div class="form-group col-md-6">
