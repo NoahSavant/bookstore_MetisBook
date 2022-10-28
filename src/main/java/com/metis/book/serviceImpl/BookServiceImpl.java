@@ -85,4 +85,22 @@ public class BookServiceImpl implements IBookService{
 		
 	}
 
+	@Override
+	public List<Book> getTopFeatured() {
+		List<Book> topFeatured = new ArrayList<>();
+		List<Book> books = bookRepository.findAll();
+		topFeatured.add(books.get(0));
+		topFeatured.add(books.get(1));
+		return topFeatured;
+	}
+
+	@Override
+	public List<Book> getBestSeller() {
+		List<Book> bestSeller = new ArrayList<>();
+		List<Book> books = bookRepository.findAll();
+		bestSeller.add(books.get(2));
+		bestSeller.add(books.get(3));
+		return bestSeller;
+	}
+
 }

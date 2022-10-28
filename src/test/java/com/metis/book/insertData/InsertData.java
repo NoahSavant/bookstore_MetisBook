@@ -199,6 +199,7 @@ public class InsertData {
 
 		// Create Book 1
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE)
+				.price(50000L)
 				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
 				.publicationDate(null).publisherName("Kim Đồng").inventory(inventorySaved1)
 				.authors(Arrays.asList(author)).build();
@@ -207,6 +208,7 @@ public class InsertData {
 		// Create Book 2
 
 		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTieuThuyet)
+				.price(45000L)
 				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(null)
 				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author)).build();
 		bookRepository.save(book2);
@@ -214,6 +216,7 @@ public class InsertData {
 		// Create Book 3
 
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
+				.price(58000L)
 				.description("Một cuốn sách về cung đấu").language(language).publicationDate(null)
 				.publisherName("Kim Đồng").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
 		bookRepository.save(book3);
@@ -221,6 +224,7 @@ public class InsertData {
 		// Create Book 4
 
 		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh)
+				.price(26000L)
 				.description("Một cuốn sách ngôn tình").language(language).publicationDate(null)
 				.publisherName("Kim Đồng").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
 		bookRepository.save(book4);

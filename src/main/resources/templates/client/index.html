@@ -97,7 +97,7 @@
 		            </div>
 		
 		            <div class="row special-list">
-		                <div class="col-lg-3 col-md-6 special-grid best-seller">
+		                <div class="col-lg-3 col-md-6 special-grid best-seller" th:each="item:${bestSeller}">
 		                    <div class="products-single fix">
 		                        <div class="box-img-hover">
 		                            <div class="type-lb">
@@ -112,77 +112,29 @@
 		                            </div>
 		                        </div>
 		                        <div class="why-text">
-		                            <h4>Zero to One</h4>
-		                            <h5> ₹160</h5>
+		                            <h4>[[${item.title}]]</h4>
+		                            <h5>[[${item.price}]] VNĐ</h5>
 		                        </div>
 		                    </div>
 		                </div>
-		
-		                <div class="col-lg-3 col-md-6 special-grid top-featured">
-		                    <div class="products-single fix">
-		                        <div class="box-img-hover">
-		                            <div class="type-lb">
-		                                <p class="new">New</p>
-		                            </div>
-		                            <img th:src="@{/images/Alchemist.png}" class="img-fluid" alt="Image">
-		                            <div class="mask-icon">
-		                                <ul>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-		                                </ul>
-		                                <a class="cart" href="#">Add to Cart</a>
-		                            </div>
-		                        </div>
-		                        <div class="why-text">
-		                            <h4>Alchemist</h4>
-		                            <h5> ₹160</h5>
-		                        </div>
-		                    </div>
-		                </div>
-		
-		                <div class="col-lg-3 col-md-6 special-grid top-featured">
+		                
+		                <div class="col-lg-3 col-md-6 special-grid top-featured" th:each="item:${topFeatured}">
 		                    <div class="products-single fix">
 		                        <div class="box-img-hover">
 		                            <div class="type-lb">
 		                                <p class="sale">Sale</p>
 		                            </div>
-		                            <img th:src="@{/images/The_Intelligent_invester.jpg}" class="img-fluid" alt="Image">
+		                            <img th:src="@{/images/Zero-To-One-by-Peter-Thiel-400x600.jpg}" class="img-fluid" alt="Image">
 		                            <div class="mask-icon">
 		                                <ul>
 		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
 		                                </ul>
 		                                <a class="cart" href="#">Add to Cart</a>
 		                            </div>
 		                        </div>
 		                        <div class="why-text">
-		                            <h4>The Intelligent Invester</h4>
-		                            <h5> ₹249</h5>
-		                        </div>
-		                    </div>
-		                </div>
-		
-		                <div class="col-lg-3 col-md-6 special-grid best-seller">
-		                    <div class="products-single fix">
-		                        <div class="box-img-hover">
-		                            <div class="type-lb">
-		                                <p class="sale">Sale</p>
-		                            </div>
-		                            <img th:src="@{/images/sherlock.jpg}" class="img-fluid" alt="Image">
-		                            <div class="mask-icon">
-		                                <ul>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-		                                </ul>
-		                                <a class="cart" href="#">Add to Cart</a>
-		                            </div>
-		                        </div>
-		                        <div class="why-text">
-		                            <h4>Sherlock Homes</h4>
-		                            <h5> ₹299</h5>
+		                            <h4>[[${item.title}]]</h4>
+		                            <h5>[[${item.price}]] VNĐ</h5>
 		                        </div>
 		                    </div>
 		                </div>

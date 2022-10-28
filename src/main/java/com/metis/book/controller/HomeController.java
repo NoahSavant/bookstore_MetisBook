@@ -2,6 +2,7 @@ package com.metis.book.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.model.Book;
 import com.metis.book.model.Category;
+import com.metis.book.service.IBookService;
 import com.metis.book.service.ICategoryService;
 import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
@@ -23,11 +26,18 @@ public class HomeController {
 
 	@Autowired
 	ICategoryService categoryService;
+	
+	@Autowired
+	IBookService bookService;
 
 	@GetMapping
 	public ModelAndView home(ModelAndView mav) {
 		List<Category> categories = categoryService.getAllCategories();
+		List<Book> topFeatured = bookService.getTopFeatured();
+		List<Book> bestSeller = bookService.getBestSeller();
 		mav.addObject("categories", categories);
+		mav.addObject("topFeatured", topFeatured);
+		mav.addObject("bestSeller", bestSeller);
 		mav.setViewName("client/index.html");
 		return mav;
 	}
