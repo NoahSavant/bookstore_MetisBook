@@ -21,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.ProfileForm;
+import com.metis.book.model.order.Order;
 import com.metis.book.model.user.Address;
 import com.metis.book.model.user.User;
 import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IAddressService;
+import com.metis.book.service.IOrderService;
 import com.metis.book.service.IUserService;
 import com.metis.book.utils.ConstraintUltils;
 
@@ -40,6 +42,9 @@ public class ProfileController {
 
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	IOrderService orderService;
 
 	@GetMapping
 	public ModelAndView viewProfilePage(ModelAndView mav) {
@@ -128,19 +133,26 @@ public class ProfileController {
 	private ModelAndView renderObjects() {
 		ModelAndView mav = new ModelAndView();
 		
+		// Get authenticated usser
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		
+		List<Order> orders = orderService.getAllOrderByUser();
+		log.info(String.valueOf(orders.size()));
+		if(orders.size()>0) {
+			mav.addObject("orders", orders);
+		}
 		// return credential of authenticated user in database
-		ProfileForm profileForm = mapToProfileForm();
+		ProfileForm profileForm = mapToProfileForm(user);
 		mav.addObject("profile",profileForm);
 		mav.setViewName("client/profile");
 		return mav;
 	}
 	
-	private ProfileForm mapToProfileForm() {
+	private ProfileForm mapToProfileForm(User user) {
 		
-		// Get authenticated usser
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		User user = userService.getUserById(userPrincipal.getId());
+		
 		// find primary address
 		Address address = findPrimaryAddress(user);
 		if (Objects.isNull(address)) {

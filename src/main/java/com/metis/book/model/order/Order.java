@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Data
@@ -28,6 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orders")
+@Slf4j
 public class Order extends UserDateAudit {
 
 	private static final long serialVersionUID = 1L;
@@ -42,13 +45,23 @@ public class Order extends UserDateAudit {
 	@Column(name = "payment_method")
 	private String paymentMethod;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<OrderItem> orderItems;	
 	
 	@ManyToOne
 	@JoinColumn(name = "order_track_id", referencedColumnName = "id", nullable = false)
 	private OrderTrack orderTrack;
 
+	public Long getTotalPrice() {
+		Long total = 0L;
+		if(this.orderItems.size()>0) {
+			for (OrderItem item : orderItems) {
+				total = total + item.getTotalPrice();
+			}
+		}
+		return total;
+	}
+	
 	public List<OrderItem> getOrderItems() {
 		return orderItems == null ? null : new ArrayList<OrderItem>(this.orderItems);
 	}

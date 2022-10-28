@@ -2,6 +2,7 @@ package com.metis.book.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +33,6 @@ public class Inventory extends UserDateAudit{
 	@Column(name = "quantity")
 	private Integer quantiy;
 	
-	@OneToOne(mappedBy = "inventory")
+	@OneToOne(mappedBy = "inventory", fetch = FetchType.LAZY)
 	private Book book;
 }

@@ -2,6 +2,7 @@ package com.metis.book.model.order;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class OrderItem extends UserDateAudit {
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity; 
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", referencedColumnName = "id")
 	private Order order;
 	
@@ -42,6 +43,9 @@ public class OrderItem extends UserDateAudit {
 	@JoinColumn(name = "book_id", referencedColumnName = "id")
 	private Book book;
 
+	public Long getTotalPrice() {
+		return quantity * book.getPrice();
+	}
 
 	
 	

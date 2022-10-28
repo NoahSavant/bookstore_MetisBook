@@ -219,33 +219,48 @@
 							</div> <!-- row.// -->
 						</div> <!-- card-body .// -->
 						<header class="card-header" id="header_bill">
-							<strong class="d-inline-block mr-3 ">TOP 3 RECENTS ORDER </strong>
+							<strong class="d-inline-block mr-3 ">Đơn hàng gần đây</strong>
 						</header><br>
 						<div class="table-responsive">
-							{% for item in bill_list %}
-							<table class="table table-hover">
-								<label id="date_label"><strong>{{ item.bills.0.checkout_date }}</strong></label>
-								{% for bill in item.bills %}
-								<tr>
+						
+						<th:block th:if="${orders}">
+							<table class="table table-hover" th:each="order : ${orders}">
+								<b class="ml-3"> <i class="fas fa-bell mr-2"></i> Đơn hàng [[${orderStat.index+1}]]:</b>
+								<div class="text-center" >
+									<label id="date_label" ><strong>[[${#dates.format(order.orderDate, 'dd-MM-yyyy | hh:mm:ss')}]] </strong></label>
+									<p id="total_label"><strong>Tổng cộng: </strong>[[${order.getTotalPrice()}]] VNĐ</p>
+								</div>
+								
+								<tr th:each="orderItem : ${order.orderItems}">
 									<td width="100">
-										<img src="{{ bill.sq.product.image.url }}" class="border" id="bill_item_img">
+										<img th:src="@{/uploads/books/GOT.png}" class="border img-fluid" >
 									</td>
 									<td>
-										<p class="title mb-0">{{ bill.sq.product.name }}</p>
-										<small class="title text-muted">$ {{ bill.sq.product.price }}</small><br>
-										<p class="price text-muted">$ {{ bill.total }}</p>
+										<p class="title mb-0">[[${orderItem.book.title}]]</p>
+										<small class="title text-muted">Giá: [[${orderItem.book.price}]] VNĐ</small><br>
+										<p class="price text-muted">Tổng: [[${orderItem.getTotalPrice()}]] VNĐ</p>
 									</td>
-									<td width="200">Quantity: {{ bill.quantity }} <br>Size: {{ bill.sq.size }}
-										<br>Brand: {{ bill.sq.product.brand }}
+									<td width="200" style="word-wrap:break-word;">Số lượng: [[${orderItem.quantity}]] 
+									<br>
+									Tác Giả: 
+									<th:block th:each="author : ${orderItem.book.authors}">
+										[[${author.name}]] <span th:if="${authorStat.index < orderItem.book.authors.size()-1}">, <br></span>
+									</th:block>
+									
+									<br>Nhà xuất bản: [[${orderItem.book.publisherName}]]
 									</td>
-									<td width="200"><a href="{% url 'detail' bill.sq.product.slug %}"
-											class="btn btn-outline-primary">Detail</a></td>
+									<td width="200"><a href="#"
+											class="btn btn-outline-primary">Chi tiết</a></td>
 								</tr>
-								{% endfor %}
-
+								
+									
+								
+								
+							
 							</table>
-							<p id="total_label"><strong>Total: </strong>$ {{ item.total|floatformat:2 }}</p>
-							{% endfor %}
+							
+						</th:block>
+							
 						</div> <!-- table-responsive .end// -->
 					</article> <!-- order-group.// -->
 				</main>
