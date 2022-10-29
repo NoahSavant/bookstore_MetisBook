@@ -16,12 +16,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" th:href="@{/}">TRANG CHỦ</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/shop}">TẤT CẢ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">BÀI VIẾT</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/contact}">LIÊN HỆ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">YÊU CẦU SÁCH</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/about}">THÔNG TIN</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI=='/' ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/}">TRANG CHỦ</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/shop') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/shop}">TẤT CẢ</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/blog') ? 'active' : ''}" class="nav-item"><a class="nav-link" href="#">BÀI VIẾT</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/contact') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/contact}">LIÊN HỆ</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/request') ? 'active' : ''}" class="nav-item"><a class="nav-link" href="#">YÊU CẦU SÁCH</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/info') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/about}">THÔNG TIN</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -96,5 +96,5 @@
         </div>
     </div>
     <!-- End Top Search -->
- 
+
 </div>

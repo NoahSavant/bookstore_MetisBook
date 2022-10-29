@@ -218,7 +218,7 @@ public class InsertData {
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
 				.price(58000L)
 				.description("Một cuốn sách về cung đấu").language(language).publicationDate(null)
-				.publisherName("Kim Đồng").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
+				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
 		bookRepository.save(book3);
 
 		// Create Book 4
@@ -226,7 +226,7 @@ public class InsertData {
 		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh)
 				.price(26000L)
 				.description("Một cuốn sách ngôn tình").language(language).publicationDate(null)
-				.publisherName("Kim Đồng").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
+				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
 		bookRepository.save(book4);
 	}
 

@@ -103,4 +103,56 @@ public class BookServiceImpl implements IBookService{
 		return bestSeller;
 	}
 
+	@Override
+	public List<Book> getAllBooks() {
+		List<Book> books = bookRepository.findAll();
+		return books;
+	}
+
+	@Override
+	public List<String> getAllPublishers() {
+		List<Book> books = bookRepository.findAll();
+		List<String> publishers = new ArrayList<>();
+		for(Book book:books)
+		{
+			if(!publishers.contains(book.getPublisherName()))
+			{
+				publishers.add(book.getPublisherName());
+			}
+		}
+		return publishers;
+	}
+
+	@Override
+	public Long getMaxPrice() {
+		List<Book> books = bookRepository.findAll();
+		Long max = 0L;
+		for(Book book: books)
+		{
+			if(book.getPrice() > max)
+			{
+				max = book.getPrice();
+			}
+		}
+		
+		double tempPrice = (double)max;
+		while(tempPrice > 10)
+		{
+			tempPrice = tempPrice / 10;
+		}
+		tempPrice = Math.ceil(tempPrice);
+		
+		while(tempPrice < max)
+		{
+			tempPrice = tempPrice * 10;
+		}
+		return (long)tempPrice;
+	}
+
+	@Override
+	public Long getNumAllBooks() {
+		List<Book> books = bookRepository.findAll();
+		return (long)books.size();
+	}
+
 }

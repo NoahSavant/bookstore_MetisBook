@@ -17,4 +17,12 @@ public interface IBookService {
 
 	List<Book> getBestSeller();
 
+	List<Book> getAllBooks();
+
+	List<String> getAllPublishers();
+
+	Long getMaxPrice();
+
+	Long getNumAllBooks();
+
 }
