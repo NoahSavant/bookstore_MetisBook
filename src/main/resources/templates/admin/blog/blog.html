@@ -122,10 +122,10 @@
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Title</th>
-											<th>Content</th>
-											<th>Delete</th>
-											<th>Edit</th>
+											<th>Tiêu đề</th>
+											<th>Nội dung</th>
+											<th>Xóa</th>
+											<th>Sửa</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -136,8 +136,11 @@
 											<td>[[${blog.content}]]</td>
 											<td><input type="button" class="btn btn-danger" value="Xóa"
 													th:onclick="deleteRow([[${blog.id}]])"></td>
-											<td><input type="button" class="btn btn-primary" value="Sửa"
-													th:onclick="editRow([[${blog.id}]])"></td>
+											<td>
+												<a th:href="@{/admin/blog/edit(blogId=${blog.id})}">
+													<input type="button" class="btn btn-primary" value="Sửa">
+												</a>
+											</td>
 
 										</tr>
 									</tbody>
@@ -216,6 +219,8 @@
 				}
 			})
 		}
+
+		
 
 		function initData() {
 			$('#blog').DataTable({

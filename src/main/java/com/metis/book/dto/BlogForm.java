@@ -7,9 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BlogForm {
+public class BlogForm{
 
-	private Long id;
+	private String id;
 	private String title;
 	private String content;
+	private String createBy;
+	private String lastUpdateBy;
+	private String createDate;
+	private String lastUpdateDate;
 }
