@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
 import com.metis.book.model.Author;
+import com.metis.book.model.Blog;
 import com.metis.book.model.Book;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
@@ -32,6 +33,7 @@ import com.metis.book.model.user.RoleName;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.AddressRepository;
 import com.metis.book.repository.AuthorRepository;
+import com.metis.book.repository.BlogRepository;
 import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
 import com.metis.book.repository.CartReposiroty;
@@ -100,6 +102,9 @@ public class InsertData {
 	@Autowired
 	OrderItemRepository orderItemRepository;
 
+	@Autowired
+	BlogRepository blogRepository;
+	
 	@Test
 	@Order(1)
 	public void testCreateAuthor() {
@@ -432,7 +437,25 @@ public class InsertData {
 		orderItem4.setOrder(order2);
 		orderItemRepository.save(orderItem4);
 	}
-
+	
+	@Test
+	@Order(12)
+	public void testCreateBlog(){
+		Blog blog1 = new Blog();
+		blog1.setTitle("Cho em 10 điểm nha cô");
+		blog1.setContent("Cho em 10 điểm đi mà");
+		blogRepository.save(blog1);
+		
+		Blog blog2 = new Blog();
+		blog2.setTitle("Cho em 9 điểm nha cô");
+		blog2.setContent("Cho em 9 điểm đi mà");
+		blogRepository.save(blog2);
+		
+		Blog blog3 = new Blog();
+		blog3.setTitle("Cho em 8 điểm nha cô");
+		blog3.setContent("Cho em 8 điểm đi mà");
+		blogRepository.save(blog3);
+	}
 // if fetch type = lazy, we can get that objects using get. Only able with eager type.
 // ToString is the thing cause stackoverflow, 
 	
