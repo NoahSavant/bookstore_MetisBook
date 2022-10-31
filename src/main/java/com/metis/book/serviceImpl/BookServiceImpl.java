@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +23,6 @@ import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.LanguageRepository;
 import com.metis.book.service.IBookService;
-import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -89,8 +87,12 @@ public class BookServiceImpl implements IBookService{
 	public List<Book> getTopFeatured() {
 		List<Book> topFeatured = new ArrayList<>();
 		List<Book> books = bookRepository.findAll();
-		topFeatured.add(books.get(0));
-		topFeatured.add(books.get(1));
+		log.info("aaaaaaaaaaa");
+		if(!books.isEmpty()) {
+			log.info("bbbbbbbbbb");
+			topFeatured.add(books.get(0));
+			topFeatured.add(books.get(1));
+		}
 		return topFeatured;
 	}
 
@@ -98,8 +100,10 @@ public class BookServiceImpl implements IBookService{
 	public List<Book> getBestSeller() {
 		List<Book> bestSeller = new ArrayList<>();
 		List<Book> books = bookRepository.findAll();
-		bestSeller.add(books.get(2));
-		bestSeller.add(books.get(3));
+		if(!books.isEmpty()) {
+			bestSeller.add(books.get(2));
+			bestSeller.add(books.get(3));
+		}
 		return bestSeller;
 	}
 
