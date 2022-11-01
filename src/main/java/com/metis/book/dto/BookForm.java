@@ -42,7 +42,7 @@ public class BookForm {
 	
 	private MultipartFile file;
 	private String available;
-	
+	private String ImageName;
 	private List<String> authors;
 	
 }

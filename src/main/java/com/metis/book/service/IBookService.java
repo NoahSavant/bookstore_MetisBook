@@ -26,6 +26,12 @@ public interface IBookService {
 	Long getNumAllBooks();
 
 	List<BookForm> getBookShows();
+
+	void deleteById(Long bookId);
+
+	BookForm getById(Long parseLong);
+
+	void updateBook(BookForm bookForm) throws ParseException, IOException;
 	
 
 }

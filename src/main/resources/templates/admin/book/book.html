@@ -7,7 +7,7 @@
     <div th:replace="admin/fragments/header :: header"></div>
 </head>
 
-<body id="page-top">
+<body id="page-top" >
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -115,7 +115,8 @@
                         
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            	
+                                <table class="table table-bordered" id="book" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -128,7 +129,6 @@
                                             <th>Tác giả</th>
                                             <th>Số lượng</th>
                                             <th>Trạng thái</th>
-                                            <th>Xóa</th>
                                             <th>Sửa</th>
                                         </tr>
                                     </thead>
@@ -144,7 +144,6 @@
                                             <th>Tác giả</th>
                                             <th>Số lượng</th>
                                             <th>Trạng thái</th>
-                                            <th>Xóa</th>
                                             <th>Sửa</th>
                                         </tr>
                                     </tfoot>
@@ -168,8 +167,11 @@
 											</td>
 											<td>[[${book.quantity}]]</td>
 											<td>[[${book.available}]]</td>
-                                            <td><input type="button" class="btn btn-danger" value="Xóa" onclick="deleteRow(this)"></td>
-                                            <td><input type="button" class="btn btn-primary" value="Sửa" onclick="deleteRow(this)"></td>
+                                            <td>
+                                            	<a th:href="@{/admin/book/edit(bookId=${book.id})}">
+													<input type="button" class="btn btn-primary" value="Sửa">
+												</a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -225,6 +227,42 @@
     </div>
 
     <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <script>
+
+
+		function initData() {
+			$('#book').DataTable({
+				"processing": true,
+				"lengthMenu": [5, 10, 20, 50],
+				"oLanguage": {
+					"sSearch": "Tìm kiếm:",
+					"sLengthMenu": "Liệt kê _MENU_ dòng",
+					"sInfo": "Liệt kê dòng _START_ - _END_ trong _TOTAL_ dòng",
+					"sZeroRecords": "Không tìm thấy dữ liệu",
+					
+				},
+				oPaginate: {
+						"sFirst": "Đầu",
+						"sLast": "Cuối",
+						"sNext": "Tiếp",
+						"sPrevious": "Trước"
+				}
+			});
+		}
+
+		$(document).ready(function () {
+			initData();
+		})
+		
+		
+	</script>
+
+	<script th:if="${updateSucceed}">
+
+			alert("Sửa thành công");
+	
+	</script>
 
 </body>
 
