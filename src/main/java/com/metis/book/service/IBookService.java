@@ -27,4 +27,6 @@ public interface IBookService {
 
 	List<Book> getBooksByCategory(String category);
 
+	List<BookForm> getBookShows();
+	
 }

@@ -1,6 +1,9 @@
 package com.metis.book.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.metis.book.dto.BlogForm;
 import com.metis.book.model.Blog;
@@ -11,11 +14,13 @@ public interface IBlogService {
 
 	void deleteById(Long blogId);
 
-	void addBlog(BlogForm blogForm);
+	void addBlog(BlogForm blogForm) throws IOException;
 
 	Blog getById(Long blogId);
 
-	void updateBlog(BlogForm blogForm);
+	void updateBlog(BlogForm blogForm) throws IOException;
+
+	void updateImage(MultipartFile file);
 
 
 }

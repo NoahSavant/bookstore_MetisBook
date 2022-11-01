@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,7 +69,7 @@ public class BookServiceImpl implements IBookService{
 		
 		
 		Book bookSaved =  bookRepository.save(book);
-		if(!Objects.isNull(bookForm.getFile())) {
+		if(!bookForm.getFile().isEmpty()) {
 			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(),bookSaved.getId());
 			Image image = new Image();
 			image.setTitle(bookSaved.getId().toString()+".png");
@@ -170,4 +169,30 @@ public class BookServiceImpl implements IBookService{
 		return books;
 	}
 
+	public List<BookForm> getBookShows() {
+		List<Book> books = bookRepository.findAll();
+		List<BookForm> bookForms = new ArrayList<>();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
+		for (Book book : books) {
+			BookForm bookForm = new BookForm();
+			List<String> authorNames = new ArrayList<>();
+			for (Author author : book.getAuthors()) {
+				authorNames.add(author.getName());
+			}
+			bookForm.setAuthors(authorNames);
+			bookForm.setCategory(book.getCategory().getName());
+			bookForm.setDescription(book.getDescription());
+			//bookForm.setFile(book.getImage());
+			bookForm.setLanguage(book.getLanguage().getName());
+			bookForm.setPrice(book.getPrice().toString());
+			bookForm.setPublicationDate(formatter.format(book.getPublicationDate()));
+			bookForm.setPublisherName(book.getPublisherName());
+			bookForm.setQuantity(book.getInventory().getQuantiy().toString());
+			bookForm.setTitle(book.getTitle());
+			bookForm.setId(book.getId().toString());
+			bookForm.setAvailable(book.getAvailable()==true? "Còn bán" : "Ngưng bán");
+			bookForms.add(bookForm);
+		}
+		return bookForms;
+	}
 }
