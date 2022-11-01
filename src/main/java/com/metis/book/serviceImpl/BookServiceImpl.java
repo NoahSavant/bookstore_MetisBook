@@ -161,6 +161,16 @@ public class BookServiceImpl implements IBookService{
 	}
 
 	@Override
+	public List<Book> getBooksByCategory(String category) {
+		List<Book> books = new ArrayList<>();
+		for(Book book:bookRepository.findAll()) {
+			if(book.getCategory().getDomain().compareTo(category) == 0) {
+				books.add(book);
+			}
+		}
+		return books;
+	}
+
 	public List<BookForm> getBookShows() {
 		List<Book> books = bookRepository.findAll();
 		List<BookForm> bookForms = new ArrayList<>();
@@ -187,6 +197,7 @@ public class BookServiceImpl implements IBookService{
 		}
 		return bookForms;
 	}
+
 
 	@Override
 	public void deleteById(Long bookId) {
@@ -268,8 +279,6 @@ public class BookServiceImpl implements IBookService{
 		
 	}
 
-
-	
 
 
 }

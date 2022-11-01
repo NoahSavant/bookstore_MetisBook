@@ -49,8 +49,8 @@
                                 <h3>Danh mục</h3>
                             </div>
                             <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
-                            	<a href="#" class="list-group-item list-group-item-action"> Tất cả <small class="text-muted"> ([[${numAllBooks}]]) </small></a>                                                       
-                                <a th:each="category:${categories}" href="#" class="list-group-item list-group-item-action"> [[${category.name}]]  <small class="text-muted"> ([[${#lists.size(category.books)}]]) </small></a>          
+                            	<a th:styleappend="${#httpServletRequest.requestURI=='/shop' ? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop}" class="list-group-item list-group-item-action"> Tất cả <small class="text-muted"> ([[${numAllBooks}]]) </small></a>                                                       
+                                <a th:each="category:${categories}" th:styleappend="${#httpServletRequest.requestURI.contains(category.getDomain())? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop/{categoryName}(categoryName=${category.getDomain()})}" class="list-group-item list-group-item-action"> [[${category.name}]] <small class="text-muted"> ([[${#lists.size(category.books)}]]) </small></a>          
                             </div>
                         </div>
                         <form action="" method="">
@@ -108,7 +108,7 @@
 									<option value="4">Giá giảm dần</option>
 								</select>
                                 </div>
-                                <p>Tất cả 4 sản phẩm</p>
+                                <p>Tất cả [[${#lists.size(books)}]] sản phẩm</p>
                             </div>
                             <div class="col-12 col-sm-4 text-center text-sm-right">
                                 <ul class="nav nav-tabs ml-auto">

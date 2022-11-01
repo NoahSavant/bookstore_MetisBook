@@ -1,7 +1,9 @@
 package com.metis.book.model;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,6 +51,12 @@ public class Category extends UserDateAudit {
 			this.books = null;
 		}
 		this.books = books;
+	}
+	
+	public String getDomain(){
+		String temp = Normalizer.normalize(this.name, Normalizer.Form.NFD);
+		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(temp).replaceAll("").replaceAll("đ", "d").replaceAll("Đ", "D").replaceAll(" ", "");
 	}
 	
 	
