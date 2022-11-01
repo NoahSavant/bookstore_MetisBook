@@ -1,5 +1,6 @@
 package com.metis.book.controller.admin;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,17 @@ public class AdminBlogController {
 	@Autowired
 	IUserService userService;
 
+	
 	@GetMapping
 	public ModelAndView viewAdminBlogPage(ModelAndView mav) throws JsonProcessingException {
 		List<Blog> blogs = blogService.getAllBlogs();
-		updateAudtit(blogs);
+		updateAudit(blogs);
 		mav.addObject("blogs",blogs);
 		mav.setViewName("/admin/blog/blog.html");
 		return mav;
 	}
 	
-	private void updateAudtit(List<Blog> blogs) {
+	private void updateAudit(List<Blog> blogs) {
 		for (Blog blog : blogs) {
 			if(blog.getCreateBy()!=null) {
 				String createUser = userService.getUsernameById(blog.getCreateBy());
@@ -51,7 +53,6 @@ public class AdminBlogController {
 				blog.setUpdatedUser(updateUser);
 			}
 		}
-		
 	}
 	
 	@GetMapping("/insert")
@@ -64,8 +65,7 @@ public class AdminBlogController {
 	@PostMapping("/insert")
 	public ModelAndView createNewBlog(
 			ModelAndView mav,
-			@ModelAttribute("blogForm") BlogForm blogForm) {
-		log.info(blogForm.getContent());
+			@ModelAttribute("blogForm") BlogForm blogForm) throws IOException {
 		blogService.addBlog(blogForm);
 		
 		mav.setViewName("redirect:/admin/blog");
@@ -87,7 +87,7 @@ public class AdminBlogController {
 	@PostMapping("/edit")
 	public ModelAndView updateBlog(
 			ModelAndView mav,
-			@ModelAttribute("blogForm") BlogForm blogForm) {
+			@ModelAttribute("blogForm") BlogForm blogForm) throws IOException {
 
 		blogService.updateBlog(blogForm);
 
@@ -102,7 +102,12 @@ public class AdminBlogController {
 		BlogForm blogForm = new BlogForm();
 		blogForm.setId(blog.getId().toString());
 		blogForm.setTitle(blog.getTitle());
+		blogForm.setSubTitle(blog.getSubTitle());
 		blogForm.setContent(blog.getContent());
+		if(blog.getImage()!=null) {
+			blogForm.setImageName(blog.getImage().getTitle());
+		}
+		
 		return blogForm;
 	}
 	

@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -33,9 +35,16 @@ public class Blog extends UserDateAudit {
 	@Column(name = "title")
 	private String title;
 	
+	@Column(name = "sub_title")
+	private String subTitle;
+	
 	@Column(name = "content")
 	@Lob
 	private String content;
+	
+	@OneToOne
+	@JoinColumn(name = "image_id", referencedColumnName = "id")
+	private Image image;
 	
 	@Transient
 	private String createdUser;

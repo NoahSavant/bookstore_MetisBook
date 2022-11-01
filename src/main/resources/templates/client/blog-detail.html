@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<div th:replace="client/fragments/header :: header"></div>
+	<div>
+		<title>Trang chủ</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	</div>
+</head>
+
+<body>
+	<div th:replace="client/fragments/main-top :: mainTop"></div>
+	<!-- Page Header-->
+	<header>
+		<!-- Start Slider -->
+		<div id="slides-shop" class="cover-slides">
+			<ul class="slides-container">
+				<li class="text-left">
+					<img th:src="@{${'/uploads/blogs/'+blog.image.title}}" alt="">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<h1 class="m-b-20"><strong>[[${blog.title}]]</strong></h1>
+								<p class="m-b-40">Tác giả: [[${blog.createdUser}]] <br>
+									 Vào lúc:
+									 <span th:text="${#dates.format(blog.createdAt, 'dd-MM-yyyy')}"></span>
+								</p>
+								<p><a class="btn hvr-hover" href="#">Mua hàng</a></p>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="text-center">
+					<img th:src="@{${'/uploads/blogs/'+blog.image.title}}" alt="">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<h1 class="m-b-20"><strong>[[${blog.title}]]</strong></h1>
+								<p class="m-b-40">Tác giả: [[${blog.createdUser}]] <br>
+									 Vào lúc:
+									 <span th:text="${#dates.format(blog.createdAt, 'dd-MM-yyyy')}"></span>
+								</p>
+								<p><a class="btn hvr-hover" href="#">Shop New</a></p>
+							</div>
+						</div>
+					</div>
+				</li>
+	
+			</ul>
+			<div class="slides-navigation">
+				<a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+				<a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			</div>
+		</div>
+		<!-- End Slider -->
+	</header>
+	<!-- Post Content-->
+	<article class="mb-5 mt-5">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<p class="content" th:utext="${blog.content}"></p>
+			</div>
+		</div>
+	</article>
+
+
+
+
+
+	<!-- Start Instagram Feed  -->
+	<div class="instagram-box">
+		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
+	</div>
+	<!-- End Instagram Feed  -->
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+	</footer>
+</body>
+
+</html>

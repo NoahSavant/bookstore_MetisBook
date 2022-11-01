@@ -43,4 +43,7 @@ public class Image {
 	
 	@OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
 	private Book book;
+	
+	@OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+	private Blog blog;
 }
