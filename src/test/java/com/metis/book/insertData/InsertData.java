@@ -480,14 +480,7 @@ public class InsertData {
 	}
 // if fetch type = lazy, we can get that objects using get. Only able with eager type.
 // ToString is the thing cause stackoverflow, 
-
-//	@Test
-//	public void testStackOverFlow() {
-//		List<com.metis.book.model.order.Order> orders = orderRepository.findAll();
-//		log.info(orders.get(0).getOrderItems().get(0).getBook().getLanguage().getName());
-//		//log.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-//	}
-//	
+	
 	public void createCustomer() {
 
 		// Create new Cart
