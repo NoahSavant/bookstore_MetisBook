@@ -1,9 +1,12 @@
 package com.metis.book.insertData;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -206,7 +209,7 @@ public class InsertData {
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE)
 				.price(50000L)
 				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
-				.publicationDate(null).publisherName("Kim Đồng").inventory(inventorySaved1)
+				.publicationDate(new Date()).publisherName("Kim Đồng").inventory(inventorySaved1)
 				.authors(Arrays.asList(author)).build();
 		bookRepository.save(book1);
 
@@ -214,7 +217,7 @@ public class InsertData {
 
 		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTieuThuyet)
 				.price(45000L)
-				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(null)
+				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(new Date())
 				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author)).build();
 		bookRepository.save(book2);
 
@@ -222,7 +225,7 @@ public class InsertData {
 
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
 				.price(58000L)
-				.description("Một cuốn sách về cung đấu").language(language).publicationDate(null)
+				.description("Một cuốn sách về cung đấu").language(language).publicationDate(new Date())
 				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
 		bookRepository.save(book3);
 
@@ -230,7 +233,7 @@ public class InsertData {
 
 		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh)
 				.price(26000L)
-				.description("Một cuốn sách ngôn tình").language(language).publicationDate(null)
+				.description("Một cuốn sách ngôn tình").language(language).publicationDate(new Date())
 				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
 		bookRepository.save(book4);
 	}

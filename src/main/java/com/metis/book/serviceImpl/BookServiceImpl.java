@@ -159,4 +159,36 @@ public class BookServiceImpl implements IBookService{
 		return (long)books.size();
 	}
 
+	@Override
+	public List<BookForm> getBookShows() {
+		List<Book> books = bookRepository.findAll();
+		List<BookForm> bookForms = new ArrayList<>();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
+		for (Book book : books) {
+			BookForm bookForm = new BookForm();
+			List<String> authorNames = new ArrayList<>();
+			for (Author author : book.getAuthors()) {
+				authorNames.add(author.getName());
+			}
+			bookForm.setAuthors(authorNames);
+			bookForm.setCategory(book.getCategory().getName());
+			bookForm.setDescription(book.getDescription());
+			//bookForm.setFile(book.getImage());
+			bookForm.setLanguage(book.getLanguage().getName());
+			bookForm.setPrice(book.getPrice().toString());
+			bookForm.setPublicationDate(formatter.format(book.getPublicationDate()));
+			bookForm.setPublisherName(book.getPublisherName());
+			bookForm.setQuantity(book.getInventory().getQuantiy().toString());
+			bookForm.setTitle(book.getTitle());
+			bookForm.setId(book.getId().toString());
+			bookForm.setAvailable(book.getAvailable()==true? "Còn bán" : "Ngưng bán");
+			bookForms.add(bookForm);
+		}
+		return bookForms;
+	}
+
+
+	
+
+
 }

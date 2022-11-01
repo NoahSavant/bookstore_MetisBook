@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,7 +68,7 @@ public class Book extends UserDateAudit {
 	@JoinColumn(name = "inventory_id", referencedColumnName = "id", nullable = false)
 	private Inventory inventory;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "book_author",
 			joinColumns = @JoinColumn(name = "book_id"),
@@ -111,9 +112,9 @@ public class Book extends UserDateAudit {
 		this.carts = carts;
 	}
 	
-//	public List<Author> getAuthors() {
-//		return authors == null ? null : new ArrayList<Author>(this.authors);
-//	}
+	public List<Author> getAuthors() {
+		return authors == null ? null : new ArrayList<Author>(this.authors);
+	}
 
 	public void setAuthors(List<Author> authors) {
 		if(authors == null) {
