@@ -25,4 +25,6 @@ public interface IBookService {
 
 	Long getNumAllBooks();
 
+	List<Book> getBooksByCategory(String category);
+
 }

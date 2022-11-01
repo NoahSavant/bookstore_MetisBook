@@ -157,7 +157,7 @@ public class InsertData {
 		}
 
 		Category categoryNgonTinh = categoryRepository.findByName("Ngôn tình");
-		if (Objects.isNull(categoryTieuThuyet)) {
+		if (Objects.isNull(categoryNgonTinh)) {
 			log.error(AppConstant.CATEGORY_NOT_FOUND + "Ngôn tình");
 		}
 
@@ -166,6 +166,10 @@ public class InsertData {
 			log.error(AppConstant.CATEGORY_NOT_FOUND + "Cung đấu");
 		}
 
+		Category categoryTrinhTham = categoryRepository.findByName("Trinh thám");
+		if (Objects.isNull(categoryCungDau)) {
+			log.error(AppConstant.CATEGORY_NOT_FOUND + "Trinh thám");
+		} 
 		// Get language
 		Language language = languageRepository.findByName("Tiếng Việt");
 		if (Objects.isNull(language)) {

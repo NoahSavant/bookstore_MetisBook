@@ -159,4 +159,15 @@ public class BookServiceImpl implements IBookService{
 		return (long)books.size();
 	}
 
+	@Override
+	public List<Book> getBooksByCategory(String category) {
+		List<Book> books = new ArrayList<>();
+		for(Book book:bookRepository.findAll()) {
+			if(book.getCategory().getDomain().compareTo(category) == 0) {
+				books.add(book);
+			}
+		}
+		return books;
+	}
+
 }
