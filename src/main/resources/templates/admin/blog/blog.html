@@ -94,18 +94,13 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">Tables</h1>
-					<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-						For more information about DataTables, please visit the <a target="_blank"
-							href="https://datatables.net">official DataTables documentation</a>.</p>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<div class="row">
 								<div class="col-sm-10">
-									<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Thông tin bài viết</h6>
 								</div>
 								<div class="col-sm-2">
 									<a th:href="@{/admin/blog/insert}">
@@ -121,19 +116,48 @@
 								<table class="table table-bordered" id="blog" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>Id</th>
-											<th>Tiêu đề</th>
-											<th>Nội dung</th>
-											<th>Xóa</th>
-											<th>Sửa</th>
+											<th width="5%">Id</th>
+											<th width="10%">Tiêu đề 1</th>
+											<th width="10%">Tiêu đề 2</th>
+											<th width="10%">Nội dung</th>
+											<th width="10%">Ngày tạo</th>
+											<th width="5%">Tác giả</th>
+											<th width="10%">Ngày cập nhật</th>
+											<th width="10%">Cập nhật</th>
+											<th width="5%">Xem</th>
+											<th width="5%">Xóa</th>
+											<th width="5%">Sửa</th>
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<th width="5%">Id</th>
+											<th width="10%">Tiêu đề 1</th>
+											<th width="10%">Tiêu đề 2</th>
+											<th width="10%">Nội dung</th>
+											<th width="10%">Ngày tạo</th>
+											<th width="5%">Tác giả</th>
+											<th width="10%">Ngày cập nhật</th>
+											<th width="10%">Cập nhật</th>
+											<th width="5%">Xem</th>
+											<th width="5%">Xóa</th>
+											<th width="5%">Sửa</th>
+										</tr>
+									</tfoot>
 									<tbody>
 
 										<tr th:each="blog : ${blogs}">
 											<td>[[${blog.id}]]</td>
 											<td>[[${blog.title}]]</td>
-											<td>[[${blog.content}]]</td>
+											<td>[[${blog.subTitle}]]</td>
+											<td>
+												<div style="height:70px; width:300px;overflow:auto;">
+													[[${blog.content}]]</div>
+											</td>
+											<td>[[${blog.createdAt}]]</td>
+											<td>[[${blog.createdUser}]]</td>
+											<td>[[${blog.updatedAt}]]</td>
+											<td>[[${blog.updatedUser}]]</td>
 											<td><input type="button" class="btn btn-danger" value="Xóa"
 													th:onclick="deleteRow([[${blog.id}]])"></td>
 											<td>
@@ -141,7 +165,11 @@
 													<input type="button" class="btn btn-primary" value="Sửa">
 												</a>
 											</td>
-
+											<td>
+												<a th:href="@{/blog/blog-detail(blogId=${blog.id})}">
+													<input type="button" class="btn btn-primary" value="Xem">
+												</a>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -200,7 +228,7 @@
 	<div th:replace="admin/fragments/footer :: footer"></div>
 
 	<script>
-	
+
 		function deleteRow(blogId) {
 
 			$.ajax({
@@ -212,7 +240,7 @@
 				success: function () {
 					location.reload();
 					alert("Xóa thành công!");
-					
+
 				},
 				error: function (e) {
 					alert('Xóa thất bại!!, message: ' + e);
@@ -220,18 +248,24 @@
 			})
 		}
 
-		
+
 
 		function initData() {
 			$('#blog').DataTable({
 				"processing": true,
-				"lengthMenu": [10],
-				columnDefs: [{
-					"defaultContent": "-",
-					"targets": "_all"
-				}],
-
-
+				"lengthMenu": [5, 10, 20, 50],
+				"oLanguage": {
+					"sSearch": "Tìm kiếm:",
+					"sLengthMenu": "Liệt kê _MENU_ dòng",
+					"sInfo": "Liệt kê dòng _START_ - _END_ trong _TOTAL_ dòng",
+					"sZeroRecords": "Không tìm thấy dữ liệu",
+					oPaginate: {
+						"sFirst": "Đầu",
+						"sLast": "Cuối",
+						"sNext": "Tiếp",
+						"sPrevious": "Trước"
+					}
+				}
 			});
 		}
 

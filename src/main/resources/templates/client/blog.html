@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<div th:replace="admin/fragments/header :: header"></div>
+	<div th:replace="client/fragments/header :: header"></div>
+	<div>
+		<title>Đăng nhập</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	</div>
+</head>
+
+<body>
+	<div th:replace="client/fragments/main-top :: mainTop"></div>
+	<!-- Main Content-->
+	<div class="container-fluid px-4 px-lg-5 mt-5">
+		<div class="row gx-4 gx-lg-5 justify-content-center">
+			<div class="col-md-10 col-lg-8 col-xl-7" th:each="blog : ${blogs}">
+				<div class="row">
+
+					<div class="col">
+						<a href="#">
+							<img th:if ="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}" class="img-fluid d-block mx-auto" />
+							<img th:if ="${blog.image.thumbnailName!=null && blog.image.title == null }" th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
+										class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;"
+										id="avatar" />
+						</a>
+						
+					</div>
+					<!-- Post preview-->
+					<div class="post-preview col-8">
+						<a th:href="@{/blog/blog-detail(blogId=${blog.id})}">
+							<h2 class="font-weight-bold" style="font-size:35px">[[${blog.title}]]</h2>
+							<h3 class="post-subtitle" style="font-size:25px">[[${blog.subTitle}]]</h3>
+						</a>
+						<i class="post-meta">
+							Tác giả: <strong>[[${blog.createdUser}]]</strong>
+							vào lúc: <span th:text="${#dates.format(blog.createdAt, 'dd-MM-yyyy')}"></span>
+
+						</i>
+					</div>
+				</div>
+				<!-- Divider-->
+				<hr class="my-4" />
+
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+	</footer>
+
+
+</body>
+
+</html>

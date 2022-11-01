@@ -1,5 +1,6 @@
 package com.metis.book.controller.admin;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.metis.book.dto.BlogForm;
 import com.metis.book.model.Blog;
 import com.metis.book.service.IBlogService;
+import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,15 +28,33 @@ public class AdminBlogController {
 
 	@Autowired
 	IBlogService blogService;
+	
+	@Autowired
+	IUserService userService;
 
+	
 	@GetMapping
 	public ModelAndView viewAdminBlogPage(ModelAndView mav) throws JsonProcessingException {
 		List<Blog> blogs = blogService.getAllBlogs();
+		updateAudit(blogs);
 		mav.addObject("blogs",blogs);
 		mav.setViewName("/admin/blog/blog.html");
 		return mav;
 	}
-
+	
+	private void updateAudit(List<Blog> blogs) {
+		for (Blog blog : blogs) {
+			if(blog.getCreateBy()!=null) {
+				String createUser = userService.getUsernameById(blog.getCreateBy());
+				blog.setCreatedUser(createUser);
+			}
+			if(blog.getUpdateBy()!=null) {
+				String updateUser = userService.getUsernameById(blog.getUpdateBy());
+				blog.setUpdatedUser(updateUser);
+			}
+		}
+	}
+	
 	@GetMapping("/insert")
 	public ModelAndView viewInsertBlogPage(ModelAndView mav) {
 		mav.addObject("blogForm", new BlogForm());
@@ -45,8 +65,7 @@ public class AdminBlogController {
 	@PostMapping("/insert")
 	public ModelAndView createNewBlog(
 			ModelAndView mav,
-			@ModelAttribute("blogForm") BlogForm blogForm) {
-		log.info(blogForm.getContent());
+			@ModelAttribute("blogForm") BlogForm blogForm) throws IOException {
 		blogService.addBlog(blogForm);
 		
 		mav.setViewName("redirect:/admin/blog");
@@ -68,7 +87,7 @@ public class AdminBlogController {
 	@PostMapping("/edit")
 	public ModelAndView updateBlog(
 			ModelAndView mav,
-			@ModelAttribute("blogForm") BlogForm blogForm) {
+			@ModelAttribute("blogForm") BlogForm blogForm) throws IOException {
 
 		blogService.updateBlog(blogForm);
 
@@ -83,7 +102,12 @@ public class AdminBlogController {
 		BlogForm blogForm = new BlogForm();
 		blogForm.setId(blog.getId().toString());
 		blogForm.setTitle(blog.getTitle());
+		blogForm.setSubTitle(blog.getSubTitle());
 		blogForm.setContent(blog.getContent());
+		if(blog.getImage()!=null) {
+			blogForm.setImageName(blog.getImage().getTitle());
+		}
+		
 		return blogForm;
 	}
 	

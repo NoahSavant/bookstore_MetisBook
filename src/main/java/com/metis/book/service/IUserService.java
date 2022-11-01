@@ -44,6 +44,8 @@ public interface IUserService {
 
 	void updateImage(MultipartFile file) throws IOException;
 
+	String getUsernameById(Long createBy);
+
 
 
 

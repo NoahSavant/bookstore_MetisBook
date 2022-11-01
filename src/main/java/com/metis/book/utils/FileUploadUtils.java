@@ -23,4 +23,9 @@ public class FileUploadUtils {
 		Files.write(fileNameAndPath, file.getBytes());
 		return fileNameAndPath;
 	}
+	public static Path saveBlogImage(MultipartFile file, Long blogId) throws IOException {
+		Path fileNameAndPath = Paths.get(AppConstant.UPLOAD_BLOG_DIRECTORY, blogId.toString()+".png");
+		Files.write(fileNameAndPath, file.getBytes());
+		return fileNameAndPath;
+	}
 }

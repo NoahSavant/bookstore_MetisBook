@@ -284,6 +284,15 @@ public class UserServiceImpl implements IUserService {
 		userPrincipal.setImage(image);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
+
+	@Override
+	public String getUsernameById(Long userId) {
+		User user = userRepository.findById(userId).get();
+		if(Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND+userId);
+		}
+		return user.getUsername();
+	}
 	
 
 
