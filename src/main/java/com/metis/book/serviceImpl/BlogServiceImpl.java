@@ -51,13 +51,21 @@ public class BlogServiceImpl implements IBlogService {
 		
 		Blog blogSaved = blogRepository.save(blog);
 		
-		if(!Objects.isNull(blogForm.getFile())) {
+		if(!blogForm.getFile().isEmpty()) {
 			Path fileNameAndPath = FileUploadUtils.saveBlogImage(blogForm.getFile(),blogSaved.getId());
 			Image image = new Image();
 			image.setTitle(blogSaved.getId().toString()+".png");
 			image.setUrl(fileNameAndPath.toString());
 			Image imageSaved = imageRepository.save(image);
 			blogSaved.setImage(imageSaved);
+			blogRepository.save(blogSaved);
+		}else {
+			// Create thumbnail image 1
+			Image imageThumbnail = new Image();
+			imageThumbnail.setThumbnailName("BlogThumbnail.png");
+			imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
+			imageRepository.save(imageThumbnail);
+			blogSaved.setImage(imageThumbnail);
 			blogRepository.save(blogSaved);
 		}
 		

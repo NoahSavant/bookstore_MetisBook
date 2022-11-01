@@ -104,7 +104,7 @@ public class InsertData {
 
 	@Autowired
 	BlogRepository blogRepository;
-	
+
 	@Test
 	@Order(1)
 	public void testCreateAuthor() {
@@ -203,8 +203,7 @@ public class InsertData {
 		Inventory inventorySaved4 = inventoryRepository.save(inventoryForBook4);
 
 		// Create Book 1
-		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE)
-				.price(50000L)
+		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE).price(50000L)
 				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
 				.publicationDate(null).publisherName("Kim Đồng").inventory(inventorySaved1)
 				.authors(Arrays.asList(author)).build();
@@ -212,8 +211,7 @@ public class InsertData {
 
 		// Create Book 2
 
-		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTieuThuyet)
-				.price(45000L)
+		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTieuThuyet).price(45000L)
 				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(null)
 				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author)).build();
 		bookRepository.save(book2);
@@ -221,15 +219,13 @@ public class InsertData {
 		// Create Book 3
 
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
-				.price(58000L)
-				.description("Một cuốn sách về cung đấu").language(language).publicationDate(null)
+				.price(58000L).description("Một cuốn sách về cung đấu").language(language).publicationDate(null)
 				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
 		bookRepository.save(book3);
 
 		// Create Book 4
 
-		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh)
-				.price(26000L)
+		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh).price(26000L)
 				.description("Một cuốn sách ngôn tình").language(language).publicationDate(null)
 				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
 		bookRepository.save(book4);
@@ -370,14 +366,14 @@ public class InsertData {
 
 		// get order track
 		OrderTrack trackDelivering = orderTrackRepository.findByStatus("Đang giao");
-		
+
 		// Create order1
 		com.metis.book.model.order.Order order1 = new com.metis.book.model.order.Order();
 		order1.setOrderDate(new Date());
 		order1.setOrderTrack(trackDelivering);
 		order1.setPaymentMethod("paypal");
 		orderRepository.save(order1);
-		
+
 		com.metis.book.model.order.Order order2 = new com.metis.book.model.order.Order();
 		order2.setOrderDate(new Date());
 		order2.setOrderTrack(trackDelivering);
@@ -399,7 +395,7 @@ public class InsertData {
 		com.metis.book.model.order.Order order1 = orderRepository.findById(1L).get();
 		// get order2
 		com.metis.book.model.order.Order order2 = orderRepository.findById(2L).get();
-	
+
 		// get Book1
 		Book book1 = bookRepository.findById(1L).get();
 		// get Book2
@@ -408,28 +404,28 @@ public class InsertData {
 		Book book3 = bookRepository.findById(3L).get();
 		// get Book4
 		Book book4 = bookRepository.findById(4L).get();
-		
+
 		// Create OrderItem1 for order1
 		OrderItem orderItem1 = new OrderItem();
 		orderItem1.setQuantity(2);
 		orderItem1.setBook(book1);
 		orderItem1.setOrder(order1);
 		orderItemRepository.save(orderItem1);
-		
+
 		// Create OrderItem2 for order1
 		OrderItem orderItem2 = new OrderItem();
 		orderItem2.setQuantity(3);
 		orderItem2.setBook(book2);
 		orderItem2.setOrder(order1);
 		orderItemRepository.save(orderItem2);
-		
+
 		// Create OrderItem3 for order2
 		OrderItem orderItem3 = new OrderItem();
 		orderItem3.setQuantity(2);
 		orderItem3.setBook(book3);
 		orderItem3.setOrder(order2);
 		orderItemRepository.save(orderItem3);
-		
+
 		// Create OrderItem4 for order2
 		OrderItem orderItem4 = new OrderItem();
 		orderItem4.setQuantity(3);
@@ -437,28 +433,54 @@ public class InsertData {
 		orderItem4.setOrder(order2);
 		orderItemRepository.save(orderItem4);
 	}
-	
+
 	@Test
 	@Order(12)
-	public void testCreateBlog(){
+	public void testCreateBlog() {
+
+		// Create thumbnail image 1
+		Image imageThumbnail1 = new Image();
+		imageThumbnail1.setThumbnailName("BlogThumbnail.png");
+		imageThumbnail1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
+		imageRepository.save(imageThumbnail1);
+
+		// Create thumbnail image 2
+		Image imageThumbnail2 = new Image();
+		imageThumbnail2.setThumbnailName("BlogThumbnail.png");
+		imageThumbnail2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
+		imageRepository.save(imageThumbnail2);
+
+		// Create thumbnail image 3
+		Image imageThumbnail3 = new Image();
+		imageThumbnail3.setThumbnailName("BlogThumbnail.png");
+		imageThumbnail3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
+		imageRepository.save(imageThumbnail3);
+
 		Blog blog1 = new Blog();
-		blog1.setTitle("Cho em 10 điểm nha cô");
-		blog1.setContent("Cho em 10 điểm đi mà");
+		blog1.setTitle("Đại dương đen: Ánh sáng giữa đại dương tăm tối");
+		blog1.setSubTitle("Dữ dội, loang lổ nhưng vỗ về và nhân văn");
+		blog1.setContent(
+				"<span style=\"color: rgb(34, 34, 34); font-family: Verdana, BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; text-align: justify;\">Tiếp nối thành công từ những cuốn sách trước đó như&nbsp;</span><span style=\"color: rgb(34, 34, 34); font-family: Verdana, BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; text-align: justify;\">“<a href=\"https://reviewsach.net/buc-xuc-khong-lam-ta-vo-can/\" data-wpel-link=\"internal\" rel=\"nofollow noopener noreferrer\" style=\"color: rgb(130, 113, 39);\">Bức xúc không làm ta vô can</a>”, “<a href=\"https://reviewsach.net/thien-ac-va-smartphone/\" data-wpel-link=\"internal\" rel=\"nofollow noopener noreferrer\" style=\"color: rgb(130, 113, 39);\">Thiện – ác và smartphone</a>”, “<a href=\"https://reviewsach.net/tim-minh-trong-the-gioi-hau-tuoi-tho/\" data-wpel-link=\"internal\" rel=\"nofollow noopener noreferrer\" style=\"color: rgb(130, 113, 39);\">Tìm mình trong thế giới hậu tuổi thơ</a>”</span><span style=\"color: rgb(34, 34, 34); font-family: Verdana, BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; text-align: justify;\">, Tiến sĩ Đặng Hoàng Giang công bố cuốn sách mang tên&nbsp;</span><span style=\"color: rgb(34, 34, 34); font-family: Verdana, BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; text-align: justify;\">“Đại dương đen”</span><span style=\"color: rgb(34, 34, 34); font-family: Verdana, BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; text-align: justify;\">&nbsp;– kết tinh hành trình đầy nhọc nhằn và nhẫn nại của tác giả với người trầm cảm trong suốt hai năm ròng. Cuốn sách ghi lại tiếng nói đầy xót xa, ám ảnh của những người đang ngấp ngoải trong “đại dương” trầm cảm, đồng thời đem đến cho người đọc góc nhìn đầy khoa học khi cung cấp những kiến thức cơ bản về trầm cảm từ nguyên nhân, hậu quả, phương thức trị liệu, đến cách đối mặt với trầm cảm.&nbsp;</span><div style=\"text-align: left;\"><span style=\"color: rgb(34, 34, 34); font-family: Verdana, BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; text-align: justify;\">Sách được chia làm 2 phần. Phần đầu là 12 câu chuyện của những nhân vật có thật cùng những chứng bệnh: trầm cảm, rối loạn lưỡng cực, rối loạn lo âu… Phần thứ 2 cung cấp kiến thức, phương pháp trị liệu và những hiểu biết về trầm cảm mà ai cũng nên biết.&nbsp;</span></div><div style=\"text-align: left;\"><div style=\"text-align:center;\"><img src=\"https://reviewsach.net/wp-content/uploads/2022/03/dai-duong-den-dang-hoang-giang.jpeg\"></div><br></div><div style=\"text-align: left;\"><div style=\"text-align: justify;\"><font color=\"#222222\" face=\"Verdana, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif\"><span style=\"font-size: 15px;\"><br></span></font></div><div style=\"text-align: justify;\"><br></div></div><div><div style=\"text-align: justify;\"><span style=\"font-size: 1rem; text-align: left;\">Cuốn sách trước hết ghi lại những trải nghiệm thực tế của những người mắc bệnh trầm cảm, cách họ sống và làm việc, yêu đương và cống hiến với căn bệnh quái ác nhưng thiếu sự hiểu biết và đồng cảm từ người thân, gia đình, xã hội. Nhân vật chính trong những câu chuyện không bó hẹp với bất cứ ai ở bất kì giới tính, độ tuổi; nghề nghiệp hay địa vị xã hội.&nbsp;</span><br></div></div><div><div>Như tác giả Đặng Hoàng Giang đã tóm tắt:&nbsp;<i>“Nó không chỉ có ở trong giới trẻ, “vì chúng vốn thất thường trong cảm xúc.” Không chỉ ở trong giới văn nghệ sĩ, “vì họ quá nhạy cảm”. Không chỉ ở người có kinh tế đầy đủ, “bởi người nghèo lo kiếm sống thì lấy đâu ra thời gian mà trầm cảm”. Trầm cảm phổ biến như thế nào? Nếu bạn có 1000 người bạn Facebook, thì trong năm qua, bảy mươi người trong số đó mắc trầm cảm.”</i></div><div>Từng câu từng chữ như đan bện vào nhau tạo ra bức màn tăm tối ngăn cách những bệnh nhân trầm cảm được sống, được cống hiến, được yêu thương và hạnh phúc. Những câu chuyện u ám, ảm đạm, ngạt thở, dữ dội, không lối thoát có thể sẽ gây kích động tâm lí cho người đọc:&nbsp;</div><div>Ta được gặp Uyên, 21 tuổi, sinh viên ngành Kinh tế và cách đối chọi với căn bệnh đầy cực đoan: tự làm đau cơ thể. Ham muốn làm đau bản thân dữ dội và thường trực, Uyên luôn thuyết phục bạn bè “đưa cho mình vật gì nhọn để tự hại”. Chỉ khi đó, Uyên mới có thể “<i>trở lại bình thường và sự căng thẳng dịu xuống”.</i></div><div>Hay người mẹ mới sinh bị cô lập trong sự ghẻ lạnh, thờ ơ của cả gia đình bố mẹ đẻ và gia đình nhà chồng đến độ có những suy nghĩ làm hại chính đứa con mình sinh ra:&nbsp;<i>“Tôi biết là mình đang bị trầm cảm. Đây không phải là lần đầu tôi muốn làm cho H đau. Tôi yêu nó vô cùng, tôi đã suýt mất mạng khi sinh nó ra, nhưng tôi vẫn có cảm giác muốn đày đọa nó.”</i></div><div>Căn bệnh trầm cảm dường như cũng “lây lan” như dịch bệnh, căn bệnh mà mầm mống của nó dường như không thể bị dập tắt. Đời ông/bà, đời cha/mẹ, đời con, đời cháu,… cứ thế duy trì những bất ổn trong tinh thần. Rồi từ một thành viên trong gia đình, trầm cảm hủy hoại cuộc sống của tất cả những người xung quanh. Tựa như một giọt dầu loang trên mặt nước, trầm cảm cứ thế nuốt chửng lấy những ánh sáng thoi thóp của ngày tàn:&nbsp;</div><div>Thành, 29 tuổi, là một nhân viên văn phòng, anh chống chọi với căn bệnh trầm cảm trong nhiều năm. Có lẽ nhiều người không thể hiểu được cảm giác mà Thành và gia đình phải chịu đựng.&nbsp;Khi đi tìm nguồn cơn của căn bệnh, Thành nhận ra căn bệnh đang giày vò anh hàng ngày hàng giờ đã từng giày vò ông, cha mình.&nbsp;</div><div>Thành nhớ về những gì được biết về người ông.&nbsp;Bố Thành như bản sao của ông nội và Thành cũng đau đớn nhận ra, anh là người lưu giữ “vật chất di truyền” đầy trái ngang ấy. Không chỉ ông nội và cha, Thành cũng có một người mẹ chịu nhiều thương tổn, chỉ khác là mẹ của Thành có lẽ chưa phải một người trầm cảm hay có các vấn đề về tâm thần khác.</div><div><i>“Mẹ anh lớn lên với nhiều đòn roi từ bà ngoại mà lại ít sự chỉ bảo, và trở thành một kẻ phụ thuộc và nhu nhược. Đến khi đi lấy chồng, mẹ anh vẫn không phân biệt được các loại thịt. Cái điều khiển ti vi mẹ cũng chỉ biết duy nhất cái nút tắt bật và tiến lùi, và tới giờ bà vẫn không biết đi xe máy.</i></div></div><div><i><br></i></div><div><i><img src=\"https://reviewsach.net/wp-content/uploads/2022/03/reviewsach.net-dang-hoang-giang-dai-duong-den.jpeg\" align=\"left\"><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><i><br></i></div><div><div>Trầm cảm không phải bẩm sinh, những nạn nhân trầm cảm cũng không đối diện với nó theo một mô thức giống nhau. Nhưng kì lạ thay, giữa những con người có những phản ứng trái chiều đối với tổn thương trong quá khứ lại nảy sinh sự hòa hợp đầy “bạo lực và phá hủy”. Bố Thành đập phá cửa nhà, mẹ Thành làm như không rồi hàn gắn những đổ vỡ. Bố Thành “điên loạn”, phá phách, mẹ Thành nhẫn nhục, chịu đựng. Nỗi đau của bệnh nhân trầm cảm là một, nỗi đau của những người thân, gia đình và xã hội là mười.&nbsp;</div><div>Những đoạn văn đầy tăm tối có thể khiến bạn đọc bị kích động mạnh. Nhưng có lẽ, đó là cách duy nhất để mỗi chúng ta có cái nhìn thực tế, khách quan, toàn diện hơn về thế giới của người trầm cảm. Tác giả làm tất cả điều đó với mong muốn kêu gọi mọi người có cái nhìn chân thật, có sự đồng cảm với hoàn cảnh của họ.&nbsp;</div><div>Không chỉ đưa ra những câu chuyện thực tế, Đặng Hoàng Giang còn dày công nghiên cứu, tổng hợp kiến thức từ nhiều nguồn để xây dựng phần hai với những kiến thức cơ bản, thực tiễn, cần thiết cho tất cả mọi người. Suy cho cùng, xã hội đang chung sống với căn bệnh trầm cảm – bạn trung thành của Thần Chết. Trầm cảm không miễn trừ cho bất cứ ai và khi nó đến sẽ như một cơn bão vô hình, hủy diệt và cuốn trôi tất cả.&nbsp;</div><div>Tựa như một bác sĩ với con dao lam sắc nhọn trong tay, Đặng Hoàng Giang dũng cảm mổ xẻ những vấn đề gai góc nhất, khó nhằn nhất của xã hội bằng ngôn từ đầy khoa học, khách quan mà dễ hiểu.&nbsp;</div><div>Tôi không có nhiều kiến thức về tâm lí học, cũng không có nhiều trải nghiệm với bệnh nhân trầm cảm, nhưng tôi tiếp nhận cuốn sách với tất cả sự cảm thông và trân trọng đối với những bệnh nhân, người nhà của họ, và đặc biệt là tác giả cùng đội ngũ của ông. Trầm cảm nguy hại đến sức khỏe tinh thần, đe dọa trực tiếp đến tính mạng của bệnh nhân và những người xung quanh.</div></div><div><br></div><div><img src=\"https://reviewsach.net/wp-content/uploads/2022/03/reviewsach.net-dai-duong-den-by-dang-hoang-giang.jpeg\" align=\"left\"><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><div>Ông vì thế viết nên cuốn sách này bằng giọng văn vừa sâu sắc, cảm thương, vừa khoa học, chính xác, có gì đó khác với các tác phẩm trước đó – phần nhiều là bình luận, phê phán, lên án những hiện tượng, sự kiện, con người xã hội. Thật cảm phục cho sự nhẫn nại, khoan dung của tác giả khi lắng tai nghe mọi thanh âm của cuộc sống, dũng cảm cất tiếng nói thay những người yếu thế, cảnh tỉnh xã hội về một căn bệnh sinh ra bởi chính nó. Người đọc buộc phải nhìn rất thẳng, rất sâu vào vấn đề được đặt ra, vì đối mặt và chống lại trầm cảm là nghĩa vụ của tất cả chúng ta.&nbsp;</div><div>Tiến sĩ Đặng Hoàng Giang cũng là người khởi xướng đường dây nóng Ngày Mai, một hoạt động phi lợi nhuận nhằm cung cấp miển phí tham vấn tâm lý cho người trầm cảm, và nâng cao nhận thức của cộng đồng về sức khỏe tâm thần. Cuốn sách vì thế có giá trị thực tiễn rất cao.&nbsp;</div><div>Có thể một số người có đủ sức vượt qua trầm cảm và sống một cuộc sống bình thản, an yên, hạnh phúc. Nhưng ai cũng biết điều đó là rất khó, phần nhiều, cuộc sống của những bệnh nhân trầm cảm sẽ mãi chìm trong đại dương tăm tối nếu không có ai đó tìm đến và lắng nghe câu chuyện của họ, cố gắng cứu lấy họ khi đang chấp chới. Sự ra đời của cuốn sách và sự đón nhận nhiệt liệt của độc giả có lẽ là tín hiệu đáng mừng, thể hiện sự quan tâm của mọi người đến căn bệnh trầm cảm. Dù chỉ le lói, ánh sáng của tình yêu thương, lòng vị tha hẳn vẫn tồn tại trong xã hội hối hả mà sự bận rộn của cuộc sống khiến chúng ta ít khi nói về nó.&nbsp;&nbsp;</div><div>Không ai biết được cái kết của những nhân vật trong sách, cũng không ai có thể đảm bảo rằng, những phương pháp trị liệu được gợi ý sẽ có tác động thực tế hay không, đường dây nóng Ngày Mai sẽ giúp ích cho bao nhiêu người. Nhưng có một điều là chắc chắn: Chúng ta có thể ngăn chặn và khắc phục những hậu quả kinh hoàng của trầm cảm bằng nhiều cách khác nhau. Thiết nghĩ, cách tốt nhất là thể hiện sự quan tâm, yêu thương của mình đến mọi người xung quanh, đặc biệt là những người thân trong gia đình. Căn bệnh nào cũng cần được chữa trị. Ai ai cũng cần được lắng nghe, được yêu thương và giúp đỡ.&nbsp;</div></div>");
+		blog1.setImage(imageThumbnail1);
 		blogRepository.save(blog1);
-		
+
 		Blog blog2 = new Blog();
 		blog2.setTitle("Cho em 9 điểm nha cô");
+		blog2.setSubTitle("Nhaaaaaaaaaaaaaaaaaaaa");
 		blog2.setContent("Cho em 9 điểm đi mà");
+		blog2.setImage(imageThumbnail2);
 		blogRepository.save(blog2);
-		
+
 		Blog blog3 = new Blog();
 		blog3.setTitle("Cho em 8 điểm nha cô");
+		blog3.setSubTitle("Nhaaaaaaaaaaaaaaaaaaaaaa");
 		blog3.setContent("Cho em 8 điểm đi mà");
+		blog3.setImage(imageThumbnail3);
 		blogRepository.save(blog3);
 	}
 // if fetch type = lazy, we can get that objects using get. Only able with eager type.
 // ToString is the thing cause stackoverflow, 
-	
+
 //	@Test
 //	public void testStackOverFlow() {
 //		List<com.metis.book.model.order.Order> orders = orderRepository.findAll();

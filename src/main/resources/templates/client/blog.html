@@ -21,12 +21,18 @@
 				<div class="row">
 
 					<div class="col">
-						<a href="#"><img th:src="@{${'/uploads/blogs/'+blog.image.title}}" class="img-fluid d-block mx-auto" /></a>
+						<a href="#">
+							<img th:if ="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}" class="img-fluid d-block mx-auto" />
+							<img th:if ="${blog.image.thumbnailName!=null && blog.image.title == null }" th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
+										class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;"
+										id="avatar" />
+						</a>
+						
 					</div>
 					<!-- Post preview-->
 					<div class="post-preview col-8">
 						<a th:href="@{/blog/blog-detail(blogId=${blog.id})}">
-							<h2 class="font-weight-bold" style="font-size:45px">[[${blog.title}]]</h2>
+							<h2 class="font-weight-bold" style="font-size:35px">[[${blog.title}]]</h2>
 							<h3 class="post-subtitle" style="font-size:25px">[[${blog.subTitle}]]</h3>
 						</a>
 						<i class="post-meta">

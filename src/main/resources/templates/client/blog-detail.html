@@ -19,7 +19,10 @@
 		<div id="slides-shop" class="cover-slides">
 			<ul class="slides-container">
 				<li class="text-left">
-					<img th:src="@{${'/uploads/blogs/'+blog.image.title}}" alt="">
+					<img th:if ="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}" alt="">
+					<img th:if ="${blog.image.thumbnailName!=null && blog.image.title == null }" th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
+										class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;"
+										id="avatar" />
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
@@ -34,7 +37,10 @@
 					</div>
 				</li>
 				<li class="text-center">
-					<img th:src="@{${'/uploads/blogs/'+blog.image.title}}" alt="">
+					<img th:if ="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}" alt="">
+					<img th:if ="${blog.image.thumbnailName!=null && blog.image.title == null }" th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
+										class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;"
+										id="avatar" />
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">

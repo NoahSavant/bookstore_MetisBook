@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,7 +69,7 @@ public class BookServiceImpl implements IBookService{
 		
 		
 		Book bookSaved =  bookRepository.save(book);
-		if(!Objects.isNull(bookForm.getFile())) {
+		if(!bookForm.getFile().isEmpty()) {
 			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(),bookSaved.getId());
 			Image image = new Image();
 			image.setTitle(bookSaved.getId().toString()+".png");
