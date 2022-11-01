@@ -9,5 +9,6 @@ import com.metis.book.model.Book;
 public interface BookRepository extends JpaRepository<Book, Long>{
 
 	Book findByTitle(String string);
-
+	
+	
 }

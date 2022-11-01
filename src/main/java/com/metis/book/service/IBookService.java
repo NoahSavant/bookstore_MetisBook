@@ -25,4 +25,7 @@ public interface IBookService {
 
 	Long getNumAllBooks();
 
+	List<BookForm> getBookShows();
+	
+
 }

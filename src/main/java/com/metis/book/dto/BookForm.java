@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookForm {
 
+	private String id;
 	@NotEmpty(message = "Tựa sách không thể trống!")
 	@Size(max = 100, message = "Độ dài tựa sách không quá 100 ký tự")
 	private String title;
@@ -40,6 +41,7 @@ public class BookForm {
 	private String category;
 	
 	private MultipartFile file;
+	private String available;
 	
 	private List<String> authors;
 	
