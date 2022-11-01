@@ -122,8 +122,12 @@
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Tiêu đề</th>
-											<th>Nội dung</th>
+											<th >Tiêu đề</th>
+											<th width="10%">Nội dung</th>
+											<th width="15%">Ngày tạo</th>
+											<th>Tạo</th>
+											<th width="15%">Ngày cập nhật</th>
+											<th width="10%">Cập nhật</th>
 											<th>Xóa</th>
 											<th>Sửa</th>
 										</tr>
@@ -133,7 +137,11 @@
 										<tr th:each="blog : ${blogs}">
 											<td>[[${blog.id}]]</td>
 											<td>[[${blog.title}]]</td>
-											<td>[[${blog.content}]]</td>
+											<td><div style="height:100px;overflow:auto;">[[${blog.content}]]</div></td>
+											<td>[[${blog.createdAt}]]</td>
+											<td>[[${blog.createdUser}]]</td>
+											<td>[[${blog.updatedAt}]]</td>
+											<td>[[${blog.updatedUser}]]</td>
 											<td><input type="button" class="btn btn-danger" value="Xóa"
 													th:onclick="deleteRow([[${blog.id}]])"></td>
 											<td>

@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.metis.book.model.audit.UserDateAudit;
 
@@ -31,6 +33,19 @@ public class Blog extends UserDateAudit {
 	@Column(name = "title")
 	private String title;
 	
-	@Column(name = "conent")
+	@Column(name = "content")
+	@Lob
 	private String content;
+	
+	@Transient
+	private String createdUser;
+	
+	@Transient
+	private String updatedUser;
+
+
+
+	
+	
+	
 }
