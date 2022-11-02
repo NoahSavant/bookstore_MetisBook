@@ -34,7 +34,7 @@ public class BlogServiceImpl implements IBlogService {
 	ImageRepository imageRepository;
 	
 	@Override
-	public List<Blog> getAllBlogs() {
+	public List<Blog> getAllBlogs(){
 		return blogRepository.findAll();
 	}
 

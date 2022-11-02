@@ -3,205 +3,202 @@
 <!-- Basic -->
 
 <head>
-    <div th:replace="client/fragments/header :: header"></div>
-	 	<div>
-	 		<title>Giỏ hàng</title>
-		    <meta name="keywords" content="">
-		    <meta name="description" content="">
-		    <meta name="author" content="">
-	 	</div>
+	<div th:replace="client/fragments/header :: header"></div>
+	<div>
+		<title>Giỏ hàng</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	</div>
 </head>
 
 <body>
 
-    
 
- 	<div th:replace="client/fragments/main-top :: mainTop"></div>
 
-    <!-- Start All Title Box -->
-    <div class="all-title-box">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2>Cart</h2>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">Cart</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End All Title Box -->
+	<div th:replace="client/fragments/main-top :: mainTop"></div>
 
-    <!-- Start Cart  -->
-    <div class="cart-box-main">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="table-main table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Images</th>
-                                    <th>Product Name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="images/img-pro-01.jpg" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="images/img-pro-02.jpg" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 60.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="images/img-pro-03.jpg" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 30.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+	<!-- Start All Title Box -->
+	<div class="all-title-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2>Cart</h2>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Mua hàng</a></li>
+						<li class="breadcrumb-item active">Giỏ hàng</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Title Box -->
 
-            <div class="row my-5">
-                <div class="col-lg-6 col-sm-6">
-                    <div class="coupon-box">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control" placeholder="Enter your coupon code" aria-label="Coupon code" type="text">
-                            <div class="input-group-append">
-                                <button class="btn btn-theme" type="button">Apply Coupon</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6">
-                    <div class="update-box">
-                        <input value="Update Cart" type="submit">
-                    </div>
-                </div>
-            </div>
+	<!-- Start Cart  -->
+	<div class="cart-box-main">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="table-main table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Hình</th>
+									<th>Tựa sách</th>
+									<th>Giá</th>
+									<th>Số lượng</th>
+									<th>Tổng cộng</th>
+									<th>Xóa</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="cartItem : ${cartItems}">
+									<td class="thumbnail-img">
+										<a href="#">
+										<img th:if ="${cartItem.book.image.title}" th:src="@{${'/uploads/books/'+cartItem.book.image.title}}" class="img-fluid" />
+										<img th:if ="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }" th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
+											class="img-fluid"/>
+										</a>
+									</td>
+									<td class="name-pr">
+										<a href="#">
+											[[${cartItem.book.title}]]
+										</a>
+									</td>
+									<td class="price-pr">
+										<p>[[${cartItem.book.price}]] VNĐ</p>
+									</td>
+									<td class="quantity-box">
+										<input type="number" size="4" th:value="${cartItem.quantity}" min="0" step="1"
+												onfocus="this.oldValue = this.value;" th:onchange="updatePrice([[${cartItem.id}]],[[${cartItem.book.price}]],this)" class="c-input-text qty text">
+											<p></p>
+									</td>
+									<td th:id="'total-pr' + ${cartItem.id}">
+										<p>[[${cartItem.getTotalPrice()}]] VNĐ</p>
+									</td>
+									<td class="remove-pr">
+										<span class="btn" th:onclick="deleteCartItem([[${cartItem.id}]])">
+											<i class="fas fa-times "></i>
+										</span>
+									</td>
+								</tr>
+							
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 
-            <div class="row my-5">
-                <div class="col-lg-8 col-sm-12"></div>
-                <div class="col-lg-4 col-sm-12">
-                    <div class="order-box">
-                        <h3>Order summary</h3>
-                        <div class="d-flex">
-                            <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold"> $ 130 </div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Discount</h4>
-                            <div class="ml-auto font-weight-bold"> $ 40 </div>
-                        </div>
-                        <hr class="my-1">
-                        <div class="d-flex">
-                            <h4>Coupon Discount</h4>
-                            <div class="ml-auto font-weight-bold"> $ 10 </div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Tax</h4>
-                            <div class="ml-auto font-weight-bold"> $ 2 </div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Shipping Cost</h4>
-                            <div class="ml-auto font-weight-bold"> Free </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex gr-total">
-                            <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> $ 388 </div>
-                        </div>
-                        <hr> </div>
-                </div>
-                <div class="col-12 d-flex shopping-box"><a href="checkout.html" class="ml-auto btn hvr-hover">Checkout</a> </div>
-            </div>
+			<div class="row my-5">
+				<div class="col-lg-6 col-sm-6">
+					<div class="coupon-box">
+						<div class="input-group input-group-sm">
+							<input class="form-control" placeholder="Enter your coupon code" aria-label="Coupon code"
+								type="text">
+							<div class="input-group-append">
+								<button class="btn btn-theme" type="button">Apply Coupon</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<div class="update-box">
+						<input value="Update Cart" type="submit">
+					</div>
+				</div>
+			</div>
 
-        </div>
-    </div>
-    <!-- End Cart -->
+			<div class="row my-5">
+				<div class="col-lg-8 col-sm-12"></div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="order-box">
+						<h3>Chi tiết đơn hàng</h3>
+						<div class="d-flex">
+							<h4>Tổng tiền</h4>
+							<div id="cart-price" class="ml-auto font-weight-bold"> [[${cart.getTotalPrice()}]]</div> <span class="font-weight-bold ml-1"> VNĐ </span>
+						</div>
+						<div class="d-flex">
+							<h4>Giảm giá</h4>
+							<div class="ml-auto font-weight-bold"> 0 VNĐ </div>
+						</div>
+						<hr class="my-1">
+						<div class="d-flex">
+							<h4>Phí vận chuyển</h4>
+							<div class="ml-auto font-weight-bold"> Miễn Phí </div>
+						</div>
+						<hr>
+						<div class="d-flex gr-total">
+							<h5>Tiền phải trả</h5>
+							<div class="ml-auto h5"> [[${cart.getTotalPrice()}]] VNĐ </div>
+						</div>
+						<hr>
+					</div>
+				</div>
+				<div class="col-12 d-flex shopping-box"><a href="checkout.html"
+						class="ml-auto btn hvr-hover">Thanh toán</a> </div>
+			</div>
 
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
+		</div>
+	</div>
+	<!-- End Cart -->
+
+	<!-- Start Instagram Feed  -->
+	<div class="instagram-box">
 		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
 	</div>
-    <!-- End Instagram Feed  -->
+	<!-- End Instagram Feed  -->
 
 
-    <!-- Start Footer  -->
-    <footer>
-        <div th:replace="client/fragments/footer :: footer"></div>
-    </footer>
-    <!-- End Footer  -->
+	<!-- Start Footer  -->
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+	</footer>
+	<!-- End Footer  -->
 
-  
+	<script>
+		function updatePrice(id,price,element){
+			var currItemNum = element.value;
+			var oldItemNum = element.oldValue;
+			document.getElementById('total-pr'+id).innerText = price*currItemNum + 'VNĐ';
+			console.log(currItemNum+" old: "+oldItemNum);
+			// Change total cart price
+			var amountPriceChange = currItemNum*price - oldItemNum*price;
+			var oldTotalPrice = parseInt(document.getElementById('cart-price').innerText);
+			var newTotalPrice = oldTotalPrice + amountPriceChange;
+			console.log(amountPriceChange+" and "+oldTotalPrice+" and " + newTotalPrice);
+			document.getElementById('cart-price').innerText = newTotalPrice;
+			
+			// set old is curr value
+			element.oldValue = element.value;
+		$.ajax({
+				url: "/member/cart/update",
+				type: "POST",
+				data: {
+					'itemId': id,
+					'currItemNum': currItemNum
+				}
+			})
+			
+		}
+		function deleteCartItem(itemId){
+			$.ajax({
+				url: "/member/cart/delete",
+				type: "DELETE",
+				data: {
+					'itemId': itemId
+				},
+				success: function () {
+					location.reload();
+					alert("Xóa thành công!");
+
+				},
+				error: function (e) {
+					alert('Xóa thất bại!!, message: ' + e);
+				}
+			})
+		}
+	
+	</script>
 
 
 </body>

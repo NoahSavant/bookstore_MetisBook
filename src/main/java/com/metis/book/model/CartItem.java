@@ -2,6 +2,7 @@ package com.metis.book.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,11 @@ public class CartItem extends UserDateAudit{
 	private Book book;
 	
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cart_id", referencedColumnName = "id")
 	private Cart cart;
+	
+	public Long getTotalPrice() {
+		return quantity * book.getPrice();
+	}
 }

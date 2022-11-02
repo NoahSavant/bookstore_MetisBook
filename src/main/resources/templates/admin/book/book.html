@@ -13,69 +13,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/index.html}">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Metis Admin</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/index.html}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <div class="sidebar-heading">
-                Menu
-            </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" th:href="@{/#}" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>User</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        
-                        <a class="collapse-item" th:href="@{/staff.html}">Nhân viên</a>
-                        <a class="collapse-item" th:href="@{/customer.html}">Khách hàng</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/book.html}">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Sách</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/order.html}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Đơn hàng</span></a>
-            </li>
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/charts.html}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Biểu đồ</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
+        <div th:replace="admin/fragments/sidebar :: sidebar"></div>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -91,18 +29,12 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div class="row">
                                 <div class="col-sm-10">
-                                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Thông tin sách</h6>
                                 </div>
                                 <div class="col-sm-2">
                                 	<a th:href="@{/admin/book/insert}">
@@ -119,32 +51,32 @@
                                 <table class="table table-bordered" id="book" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Tựa sách</th>
-                                            <th>Giá sách</th>
-                                            <th>Nhà xuất bản</th>
-                                            <th>Mô tả</th>
+                                            <th width="5%">ID</th>
+                                            <th width="20%">Tựa sách</th>
+                                            <th width="10%">Giá sách</th>
+                                            <th width="10%">Nhà xuất bản</th>
+                                            <th width="10%">Mô tả</th>
                                             <th width="15%">Ngày xuất bản</th>
-                                            <th>Ngôn ngữ</th>
-                                            <th>Tác giả</th>
-                                            <th>Số lượng</th>
-                                            <th>Trạng thái</th>
-                                            <th>Sửa</th>
+                                            <th width="10%">Ngôn ngữ</th>
+                                            <th width="10%">Tác giả</th>
+                                            <th width="15%">Số lượng</th>
+                                            <th width="15%">Trạng thái</th>
+                                            <th width="5%">Sửa</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Tựa sách</th>
-                                            <th>Giá sách</th>
-                                            <th>Nhà xuất bản</th>
-                                            <th>Mô tả</th>
-                                            <th>Ngày xuất bản</th>
-                                            <th>Ngôn ngữ</th>
-                                            <th>Tác giả</th>
-                                            <th>Số lượng</th>
-                                            <th>Trạng thái</th>
-                                            <th>Sửa</th>
+                                            <th width="5%">ID</th>
+                                            <th width="20%">Tựa sách</th>
+                                            <th width="10%">Giá sách</th>
+                                            <th width="10%">Nhà xuất bản</th>
+                                            <th width="10%">Mô tả</th>
+                                            <th width="15%">Ngày xuất bản</th>
+                                            <th width="10%">Ngôn ngữ</th>
+                                            <th width="10%">Tác giả</th>
+                                            <th width="15%">Số lượng</th>
+                                            <th width="15%">Trạng thái</th>
+                                            <th width="5%">Sửa</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -154,7 +86,7 @@
                                            	<td>[[${book.price}]]</td>
                                            	<td>[[${book.publisherName}]]</td>
                                            	<td>
-	                                           	<div style="height:70px; overflow: auto;">
+	                                           	<div style="height:70px; width:100px; overflow: auto;">
 	                                           		[[${book.description}]]
 	                                           	</div>
                                            	</td>
@@ -206,25 +138,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" th:href="@{/login.html}">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <div th:replace="admin/fragments/footer :: footer"></div>
 
@@ -240,14 +154,13 @@
 					"sLengthMenu": "Liệt kê _MENU_ dòng",
 					"sInfo": "Liệt kê dòng _START_ - _END_ trong _TOTAL_ dòng",
 					"sZeroRecords": "Không tìm thấy dữ liệu",
-					
-				},
-				oPaginate: {
+					oPaginate: {
 						"sFirst": "Đầu",
 						"sLast": "Cuối",
 						"sNext": "Tiếp",
 						"sPrevious": "Trước"
-				}
+					}
+				},
 			});
 		}
 

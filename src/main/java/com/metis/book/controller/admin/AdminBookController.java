@@ -42,11 +42,10 @@ public class AdminBookController {
 	@Autowired
 	ICategoryService categoryService;
 
-	@GetMapping("/")
+	@GetMapping
 	public ModelAndView bookView() {
 		ModelAndView mav = new ModelAndView();
 		List<BookForm> bookForms = bookService.getBookShows();
-		log.info(bookForms.get(0).toString());
 		mav.addObject("books", bookForms);
 		mav.setViewName("/admin/book/book.html");
 		return mav;
@@ -104,7 +103,6 @@ public class AdminBookController {
 		List<Author> authors = authorService.getAllAuthors();
 		mav.addObject("authors", authors);
 		mav.addObject("bookForm", bookForm);
-		log.info(bookForm.getAuthors().get(0));
 		mav.setViewName("/admin/book/formEditBook.html");
 		return mav;
 	}

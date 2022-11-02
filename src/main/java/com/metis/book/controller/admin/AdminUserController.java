@@ -8,14 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/user")
 @Slf4j
-public class AdminHomeController {
-
-	@GetMapping
-	public ModelAndView home() {
+public class AdminUserController {
+	@GetMapping("/")
+	public ModelAndView bookView() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/admin/index");
+		mav.setViewName("/admin/user.html");
 		return mav;
 	}
+
 }
