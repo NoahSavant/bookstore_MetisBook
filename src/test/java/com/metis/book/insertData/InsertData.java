@@ -1,12 +1,9 @@
 package com.metis.book.insertData;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -172,7 +169,7 @@ public class InsertData {
 		Category categoryTrinhTham = categoryRepository.findByName("Trinh thám");
 		if (Objects.isNull(categoryCungDau)) {
 			log.error(AppConstant.CATEGORY_NOT_FOUND + "Trinh thám");
-		} 
+		}
 		// Get language
 		Language language = languageRepository.findByName("Tiếng Việt");
 		if (Objects.isNull(language)) {
@@ -209,37 +206,59 @@ public class InsertData {
 		inventoryForBook4.setBook(null);
 		Inventory inventorySaved4 = inventoryRepository.save(inventoryForBook4);
 
+		// Create new Thumbnail for Book1
+		Image imageThumbnail1 = new Image();
+		imageThumbnail1.setThumbnailName("BookThumbnail.png");
+		imageThumbnail1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(imageThumbnail1);
+
+		// Create new Thumbnail for Book2
+		Image imageThumbnail2 = new Image();
+		imageThumbnail2.setThumbnailName("BookThumbnail.png");
+		imageThumbnail2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(imageThumbnail2);
+
+		// Create new Thumbnail for Book3
+		Image imageThumbnail3 = new Image();
+		imageThumbnail3.setThumbnailName("BookThumbnail.png");
+		imageThumbnail3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(imageThumbnail3);
+
+		// Create new Thumbnail for Book4
+		Image imageThumbnail4 = new Image();
+		imageThumbnail4.setThumbnailName("BookThumbnail.png");
+		imageThumbnail4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(imageThumbnail4);
+
 		// Create Book 1
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE).price(50000L)
 				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
 				.publicationDate(new Date()).publisherName("Kim Đồng").inventory(inventorySaved1)
-				.authors(Arrays.asList(author)).build();
+				.authors(Arrays.asList(author)).image(imageThumbnail1).build();
 		bookRepository.save(book1);
 
 		// Create Book 2
 
-
-		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTieuThuyet)
-				.price(45000L)
+		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTrinhTham).price(45000L)
 				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(new Date())
-				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author)).build();
+				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author))
+				.image(imageThumbnail2).build();
 		bookRepository.save(book2);
 
 		// Create Book 3
 
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
-				.price(58000L)
-				.description("Một cuốn sách về cung đấu").language(language).publicationDate(new Date())
-				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author)).build();
+				.price(58000L).description("Một cuốn sách về cung đấu").language(language).publicationDate(new Date())
+				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author))
+				.image(imageThumbnail3).build();
 		bookRepository.save(book3);
 
 		// Create Book 4
 
-
-		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh)
-				.price(26000L)
+		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh).price(26000L)
 				.description("Một cuốn sách ngôn tình").language(language).publicationDate(new Date())
-				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author)).build();
+				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author))
+				.image(imageThumbnail4).build();
 		bookRepository.save(book4);
 	}
 
@@ -492,7 +511,7 @@ public class InsertData {
 	}
 // if fetch type = lazy, we can get that objects using get. Only able with eager type.
 // ToString is the thing cause stackoverflow, 
-	
+
 	public void createCustomer() {
 
 		// Create new Cart

@@ -107,7 +107,6 @@ public class AdminBlogController {
 		if(blog.getImage()!=null) {
 			blogForm.setImageName(blog.getImage().getTitle());
 		}
-		
 		return blogForm;
 	}
 	

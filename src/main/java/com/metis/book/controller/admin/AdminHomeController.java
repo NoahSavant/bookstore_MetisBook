@@ -12,9 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminHomeController {
 
-	@GetMapping("/")
+	@GetMapping
 	public ModelAndView home() {
-		log.info("aaaaaaaaaaaaa");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/admin/index");
 		return mav;

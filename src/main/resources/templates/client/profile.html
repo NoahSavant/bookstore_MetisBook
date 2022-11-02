@@ -233,7 +233,9 @@
 								
 								<tr th:each="orderItem : ${order.orderItems}">
 									<td width="100">
-										<img th:src="@{/uploads/books/GOT.png}" class="border img-fluid" >
+									<img th:if ="${orderItem.book.image.title}" th:src="@{${'/uploads/books/'+orderItem.book.image.title}}" class="border img-fluid" />
+									<img th:if ="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }" th:src="@{${'/uploads/'+orderItem.book.image.thumbnailName}}"
+										class="border img-fluid"/>
 									</td>
 									<td>
 										<p class="title mb-0">[[${orderItem.book.title}]]</p>

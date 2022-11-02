@@ -79,6 +79,14 @@ public class BookServiceImpl implements IBookService{
 			Image imageSaved = imageRepository.save(image);
 			bookSaved.setImage(imageSaved);
 			bookRepository.save(bookSaved);
+		}else {
+			// Create thumbnail image 1
+			Image imageThumbnail = new Image();
+			imageThumbnail.setThumbnailName("BookThumbnail.png");
+			imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+			imageRepository.save(imageThumbnail);
+			bookSaved.setImage(imageThumbnail);
+			bookRepository.save(bookSaved);
 		}
 
 		
