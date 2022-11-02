@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li th:classappend = "${#httpServletRequest.requestURI=='/' ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/}">TRANG CHỦ</a></li>
-                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/shop') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/shop}">TẤT CẢ</a></li>
+                        <li th:classappend = "${#httpServletRequest.requestURI.contains('/shop') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/shop/Tatca?page=1}">TẤT CẢ</a></li>
                         <li th:classappend = "${#httpServletRequest.requestURI.contains('/blog') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/blog}">BÀI VIẾT</a></li>
                         <li th:classappend = "${#httpServletRequest.requestURI.contains('/contact') ? 'active' : ''}" class="nav-item"><a class="nav-link" th:href="@{/contact}">LIÊN HỆ</a></li>
                         <li th:classappend = "${#httpServletRequest.requestURI.contains('/request') ? 'active' : ''}" class="nav-item"><a class="nav-link" href="#">YÊU CẦU SÁCH</a></li>

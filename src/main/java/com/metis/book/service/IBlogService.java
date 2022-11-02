@@ -22,5 +22,7 @@ public interface IBlogService {
 
 	void updateImage(MultipartFile file);
 
+	List<Blog> getLatestBlogs();
+
 
 }

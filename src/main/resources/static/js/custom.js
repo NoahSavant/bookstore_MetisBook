@@ -191,12 +191,12 @@
 	   ................................................. */
 
 	$(function() {
-		var max = document.getElementById("maxPrice").value;
+		var maxPrice = document.getElementById("maxPrice").value;
 		$("#slider-range").slider({
 			range: true,
 			min: 0,
-			max: max,
-			values: [0, max],
+			max: maxPrice,
+			values: [document.getElementById("min").value, document.getElementById("max").value],
 			slide: function(event, ui) {
 				$("#amount").val(ui.values[0] + " VNĐ - " + ui.values[1] + " VNĐ");
 				document.getElementById("min").value = ui.values[0];
@@ -218,3 +218,18 @@
 	
 	
 }(jQuery));
+
+function loadPage(last_page, cur_page, size) {
+	alert("hahahahahah");
+	var start = (cur_page - 1) * 9;
+	var end = Math.min(size, cur_page * 9);
+	for(let i = start; i < end; i++) {
+		document.getElementById("book" + i).style.display = "block";
+	}
+	
+	var start = (last_page - 1) * 9;
+	var end = Math.min(books.legth, cur_page * 9);
+	for(let i = start; i < end; i++) {
+		document.getElementById("book" + i).style.display = "none";
+	}
+}

@@ -49,19 +49,20 @@
                                 <h3>Danh mục</h3>
                             </div>
                             <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
-                            	<a th:styleappend="${#httpServletRequest.requestURI=='/shop' ? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop}" class="list-group-item list-group-item-action"> Tất cả <small class="text-muted"> ([[${numAllBooks}]]) </small></a>                                                       
-                                <a th:each="category:${categories}" th:styleappend="${#httpServletRequest.requestURI.contains(category.getDomain())? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop/{categoryName}(categoryName=${category.getDomain()})}" class="list-group-item list-group-item-action"> [[${category.name}]] <small class="text-muted"> ([[${#lists.size(category.books)}]]) </small></a>          
+                            	<a th:styleappend="${cur_category=='Tatca'? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop/Tatca?page=1}" class="list-group-item list-group-item-action"> Tất cả <small class="text-muted"> ([[${numAllBooks}]]) </small></a>                                                       
+                                <a th:each="category:${categories}" th:styleappend="${cur_category==category.getDomain()? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop/{categoryName}?page=1(categoryName=${category.getDomain()})}" class="list-group-item list-group-item-action"> [[${category.name}]] <small class="text-muted"> ([[${#lists.size(category.books)}]]) </small></a>          
                             </div>
                         </div>
-                        <form action="" method="">
+                        <form action="#" th:action="@{/shop/{categoryName}?page=1(categoryName=${cur_category})}" th:object="${filterForm}" method="post">
+
                         <div class="filter-price-left">
                             <div class="title-left">
                                 <h3>Giá</h3>
                             </div>
-                            <div class="price-box-slider">
-                            	<input hidden id="maxPrice" th:value="${maxPrice}"/>
-                            	<input hidden id="min" value="0"/>
-                            	<input hidden id="max" th:value="${maxPrice}"/>
+                            <div class="price-box-slider" th:field="*{maxPrice}">
+                            	<input hidden id="maxPrice" th:value="${maxP}"/>
+                            	<input hidden id="min" th:field="*{minPrice}"/>
+                            	<input hidden id="max" th:field="*{maxPrice}"/>
                                 <div id="slider-range"></div>
                                 <p>
                                     <input type="text" id="amount" readonly style="border:0; color:#fbb714; font-weight:bold;"/>
@@ -76,18 +77,18 @@
                                 <ul>
                                 	<li>
                                         <div class="radio radio-danger">
-                                            <input name="survey" id="Radios1" value="Yes" type="radio" checked>
+                                            <input name="survey" id="Radios1" th:field="*{publisherName}" value="Tất cả" type="radio" th:checked="${publisherName}=='Tất cả' ? 'checked'">
                                             <label for="Radios1"> Tất cả </label>
                                         </div>
                                     </li>
                                     <li th:each="publisher:${publishers}">
                                         <div class="radio radio-danger" >
-                                            <input name="survey" id="${'Radios' + publisherStat.index + 2}" value="Yes" type="radio">
-                                            <label for="${'Radios' + publisherStat.index + 2}"> [[${publisher}]] </label>
+                                            <input name="survey" th:id="${'Radios' + publisherStat.index + 2}" th:field="*{publisherName}" th:value="${publisher}" type="radio" th:checked="${publisherName == publisher}">
+                                            <label th:for="${'Radios' + publisherStat.index + 2}"> [[${publisher}]] </label>
                                         </div>
                                     </li>
                                 </ul>
-                                <button class="btn hvr-hover" type="submit">Lọc</button>
+                                <button class="btn hvr-hover" type="submit" style="color: white;">Lọc</button>
                             </div>
                         </div>
 						
@@ -108,7 +109,7 @@
 									<option value="4">Giá giảm dần</option>
 								</select>
                                 </div>
-                                <p>Tất cả [[${#lists.size(books)}]] sản phẩm</p>
+                                <p>Tất cả [[${totalFindOut}]] sản phẩm</p>
                             </div>
                             <div class="col-12 col-sm-4 text-center text-sm-right">
                                 <ul class="nav nav-tabs ml-auto">
@@ -141,14 +142,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
-                                                    <h3><b>[[${book.title}]]</b></h3>
+                                                    <h3 class="collapse-shorttitle"><b>[[${book.title}]]</b></h3>
 		                            				<h5><small>[[${book.price}]] VNĐ</small></h5>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="list-view">
+                                <div role="tabpanel" class="tab-pane fade tab-pane-custom" id="list-view">
                                     <div class="list-view-box" th:each="book:${books}">
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
@@ -170,7 +171,7 @@
                                                 <div class="why-text full-width">
                                                     <h4>[[${book.title}]]</h4>
                                                     <h5> <del></del> [[${book.price}]] VNĐ</h5>
-                                                    <p>[[${book.description}]]</p>
+                                                    <p class="collapse-description">[[${book.description}]]</p>
                                                     <a class="btn hvr-hover" href="#">Add to Cart</a>
                                                 </div>
                                             </div>
@@ -178,6 +179,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <form action="#" th:object="${filterForm}" method="post">
+                            <div class="container pagination-custom">
+							  <ul class="pagination" >
+							    <li type="submit" class="page-item"><a class="page-link-custom page-link" href="@{/shop/{categoryName}/page=${pageNum-1}(categoryName=${cur_category})}">Trước</a></li>
+							    <li type="submit" th:each="pageNum:${pageNumList}" class="page-item"><a class="page-link-custom page-link" th:href="@{/shop/{categoryName}?page={pageNum}(categoryName=${cur_category}, pageNum=${pageNum})}">[[${pageNum}]]</a></li>						    
+							    <li type="submit" class="page-item"><a class="page-link-custom page-link" href="@{/shop/{categoryName}/page=${pageNum+1}(categoryName=${cur_category})}">Sau</a></li>
+							  </ul>
+							</div>
+                            </form>
                         </div>
 
                     </div>

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.metis.book.dto.BookForm;
+import com.metis.book.dto.FilterForm;
 import com.metis.book.model.Author;
 import com.metis.book.model.Book;
 import com.metis.book.model.Image;
@@ -96,9 +97,7 @@ public class BookServiceImpl implements IBookService{
 	public List<Book> getTopFeatured() {
 		List<Book> topFeatured = new ArrayList<>();
 		List<Book> books = bookRepository.findAll();
-		log.info("aaaaaaaaaaa");
 		if(!books.isEmpty()) {
-			log.info("bbbbbbbbbb");
 			topFeatured.add(books.get(0));
 			topFeatured.add(books.get(1));
 		}
@@ -287,6 +286,51 @@ public class BookServiceImpl implements IBookService{
 		
 	}
 
+	public List<Integer> pageNumList(double total, int curPage) {
+		List<Integer> pages = new ArrayList<>();
+		int maxPage = (int) Math.ceil(total/2);
+		pages.add(1);
+		if(maxPage == 1) {
+			return pages;
+		}
+		for(int i=2; i < maxPage; i++) {
+			if(Math.abs(curPage - i) <= 1 && pages.contains(i) == false) {
+				pages.add(i);
+			}
+		}
+		pages.add(maxPage);
+		return pages;
+	}
+	
+	public List<Book> getPage(List<Book> books, int pageNum) {
+		int start = (pageNum - 1) * 2;
+		int end = Math.min(books.size(), pageNum * 2);
+		List<Book> pageBooks = new ArrayList<>();
+		for(int i = start; i < end; i++) {
+			pageBooks.add(books.get(i));
+		}
+		return pageBooks;
+	}
 
+	@Override
+	public List<Book> filter(List<Book> books, FilterForm filterForm) {
+		List<Book> filterBooks = new ArrayList<>();
+		for(Book book: books) {
+			if(book.getPrice() >= filterForm.getMinPrice() && book.getPrice() <= filterForm.getMaxPrice()) {
+				filterBooks.add(book);
+			}
+		}
+		if (filterForm.getPublisherName().compareTo("Tất cả") != 0) {
+			books = filterBooks;
+			filterBooks.clear();
+			for(Book book: books) {
+				if (book.getPublisherName().compareTo(filterForm.getPublisherName()) == 0) {
+					filterBooks.add(book);
+				}
+			}
+		}
+		
+		return filterBooks;
+	}
 
 }

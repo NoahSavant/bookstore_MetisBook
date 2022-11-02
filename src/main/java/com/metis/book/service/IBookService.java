@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import com.metis.book.dto.BookForm;
+import com.metis.book.dto.FilterForm;
 import com.metis.book.model.Book;
 
 public interface IBookService {
@@ -35,4 +36,9 @@ public interface IBookService {
 
 	void updateBook(BookForm bookForm) throws ParseException, IOException;
 	
+	List<Integer> pageNumList(double total, int curPage);
+	
+	List<Book> getPage(List<Book> books, int pageNum);
+
+	List<Book> filter(List<Book> books, FilterForm filterForm);
 }
