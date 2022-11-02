@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.dto.AuthorForm;
 import com.metis.book.dto.BookForm;
+import com.metis.book.dto.CategoryForm;
+import com.metis.book.dto.LanguageForm;
 import com.metis.book.model.Author;
 import com.metis.book.model.Category;
 import com.metis.book.model.Language;
@@ -67,7 +70,6 @@ public class AdminBookController {
 	}
 	@PostMapping("/add")
 	public ModelAndView insert(@Valid @ModelAttribute("bookForm") BookForm bookForm, BindingResult result) throws ParseException, IOException {
-		log.info(bookForm.toString());
 		ModelAndView mav = new ModelAndView();
 		
 		if (result.hasErrors()) {
@@ -116,5 +118,49 @@ public class AdminBookController {
 		mav.setViewName("redirect:/admin/book/");
 		return mav;
 	}
-	
+	@GetMapping("/category/add")
+	public ModelAndView viewInsertCategory() {
+		ModelAndView mav = new ModelAndView();
+		CategoryForm categoryForm = new CategoryForm();
+		mav.addObject("category", categoryForm);
+		mav.setViewName("/admin/book/formAddCategory.html");
+		return mav;
+	}
+	@PostMapping("/category/add")
+	public ModelAndView insertCategory(@Valid @ModelAttribute("category") CategoryForm category, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		categoryService.insert(category);
+		mav.setViewName("redirect:/admin/book/");
+		return mav;
+	}
+	@GetMapping("/author/add")
+	public ModelAndView viewInsertAuthor() {
+		ModelAndView mav = new ModelAndView();
+		AuthorForm authorForm = new AuthorForm();
+		mav.addObject("author", authorForm);
+		mav.setViewName("/admin/book/formAddAuthor.html");
+		return mav;
+	}
+	@PostMapping("/author/add")
+	public ModelAndView insertAuthor(@Valid @ModelAttribute("author") AuthorForm author, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		authorService.insert(author);
+		mav.setViewName("redirect:/admin/book/");
+		return mav;
+	}
+	@GetMapping("/language/add")
+	public ModelAndView viewInsertLanguage() {
+		ModelAndView mav = new ModelAndView();
+		LanguageForm languageForm = new LanguageForm();
+		mav.addObject("language", languageForm);
+		mav.setViewName("/admin/book/formAddLanguage.html");
+		return mav;
+	}
+	@PostMapping("/language/add")
+	public ModelAndView insertLanguage(@Valid @ModelAttribute("language") LanguageForm language, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		languageService.insert(language);
+		mav.setViewName("redirect:/admin/book/");
+		return mav;
+	}
 }
