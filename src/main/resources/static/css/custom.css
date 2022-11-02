@@ -1,2 +1,32 @@
 
 /** ADD YOUR AWESOME CODES HERE **/
+.collapse-content {
+overflow: hidden;
+height: 320px;
+}
+
+.collapse-description {
+overflow: hidden;
+height: 155px;
+}
+
+.collapse-shorttitle {
+overflow: hidden;
+width: 220px;
+height: 50px;
+}
+
+.pagination-custom{
+	margin-left: 300px;
+}
+
+.page-link {
+	color: #d33b33;
+	font-weight: 500;
+}
+
+.tab-pane-custom {
+	max-height: 1050px;
+	overflow: auto;
+	overflow-x: hidden;
+}

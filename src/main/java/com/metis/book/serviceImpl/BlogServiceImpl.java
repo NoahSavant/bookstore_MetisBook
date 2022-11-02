@@ -2,8 +2,11 @@ package com.metis.book.serviceImpl;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,6 +113,17 @@ public class BlogServiceImpl implements IBlogService {
 	public void updateImage(MultipartFile file) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Blog> getLatestBlogs() {
+		List<Blog> blogs = blogRepository.findAll();
+		List<Blog> lastestBlogs = new ArrayList<>();
+		int index = Math.min(3, blogs.size());
+		for(int i = 0; i < index; i++) {
+			lastestBlogs.add(blogs.get(i));
+		}
+		return lastestBlogs;
 	}
 
 }

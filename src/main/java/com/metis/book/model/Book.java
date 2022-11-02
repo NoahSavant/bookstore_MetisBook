@@ -80,6 +80,9 @@ public class Book extends UserDateAudit {
 	private Image image;
 	
 	@OneToMany(mappedBy = "book")
+	private List<Feedback> feedbacks;
+	
+	@OneToMany(mappedBy = "book")
 	private List<CartItem> carts;
 	
 	@ManyToOne
@@ -97,6 +100,7 @@ public class Book extends UserDateAudit {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		if(orderItems == null) {
 			this.orderItems = null;
+			return;
 		}
 		this.orderItems = orderItems;
 	}
@@ -108,6 +112,7 @@ public class Book extends UserDateAudit {
 	public void setCarts(List<CartItem> carts) {
 		if(carts == null) {
 			this.carts = null;
+			return;
 		}
 		this.carts = carts;
 	}
@@ -119,11 +124,22 @@ public class Book extends UserDateAudit {
 	public void setAuthors(List<Author> authors) {
 		if(authors == null) {
 			this.authors = null;
+			return;
 		}
 		this.authors = authors;
 	}
 	
-	
+	public List<Feedback> getFeedbacks() {
+		return feedbacks == null ? null : new ArrayList<Feedback>(this.feedbacks);
+	}
+
+	public void setFeedbacks(List<Feedback> feedbacks) {
+		if(feedbacks == null) {
+			this.feedbacks = null;
+			return;
+		}
+		this.feedbacks = feedbacks;
+	}
 	
 	
 	
