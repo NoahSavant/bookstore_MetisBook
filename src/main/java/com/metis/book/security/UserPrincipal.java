@@ -16,8 +16,10 @@ import com.metis.book.model.user.Role;
 import com.metis.book.model.user.User;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
+@Slf4j
 public class UserPrincipal implements UserDetails, OAuth2User {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +32,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 	private String lastName;
 	private Integer gender;
 	private String phoneNumber;
+	private String cartItemNum;
 	private LocalDate birthday;
 	private Boolean enabled;
 	private Image image;
@@ -77,10 +80,11 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 		for (Role r : user.getRoles()) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + r.getName()));
 		}
-
+		int itemNum = user.getCart().getCartItems().size();
+		log.info(String.valueOf(itemNum));
 		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(),
 				user.getFirstName(), user.getLastName(), user.getGender(), user.getPhoneNumber(), user.getBirthday(),
-				user.getEnabled(), user.getImage(), authorities); // roles
+				user.getEnabled(), user.getImage(), authorities, String.valueOf(itemNum)); // roles
 
 	}
 
@@ -109,7 +113,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 	}
 
 	public UserPrincipal(Long id, String username, String password, String email, String firstName, String lastName,
-			Integer gender, String phoneNumber, LocalDate birthday, Boolean enabled, Image image, List<GrantedAuthority> authorities) {
+			Integer gender, String phoneNumber, LocalDate birthday, Boolean enabled, Image image, List<GrantedAuthority> authorities,String cartItemNum) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -123,6 +127,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 		this.enabled = enabled;
 		this.image = image;
 		this.authorities = authorities;
+		this.cartItemNum = cartItemNum;
 	}
 
 }

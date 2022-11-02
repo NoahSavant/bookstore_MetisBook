@@ -12,6 +12,7 @@ public class AppConstant {
 	public static final String AUTHOR_NOT_FOUND = "Not found author with name: ";
 	public static final String USER_NOT_FOUND = "Not found user with username: ";
 	public static final String CART_NOT_FOUND = "Not found cart with user: ";
+	public static final String CART_ITEM_NOT_FOUND = "Not found cart item with id: ";
 	public static final String BOOK_NOT_FOUND = "Not found book with title: ";
 	public static final String BLOG_NOT_FOUND = "Not found blog with id: ";
 }
