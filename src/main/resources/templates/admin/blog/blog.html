@@ -50,11 +50,11 @@
 									<thead>
 										<tr>
 											<th width="5%">Id</th>
-											<th width="10%">Tiêu đề 1</th>
+											<th width="20%">Tiêu đề 1</th>
 											<th width="10%">Tiêu đề 2</th>
 											<th width="10%">Nội dung</th>
 											<th width="10%">Ngày tạo</th>
-											<th width="5%">Tác giả</th>
+											<th width="10%">Tác giả</th>
 											<th width="10%">Ngày cập nhật</th>
 											<th width="10%">Cập nhật</th>
 											<th width="5%">Xem</th>
@@ -65,11 +65,11 @@
 									<tfoot>
 										<tr>
 											<th width="5%">Id</th>
-											<th width="10%">Tiêu đề 1</th>
+											<th width="20%">Tiêu đề 1</th>
 											<th width="10%">Tiêu đề 2</th>
 											<th width="10%">Nội dung</th>
 											<th width="10%">Ngày tạo</th>
-											<th width="5%">Tác giả</th>
+											<th width="10%">Tác giả</th>
 											<th width="10%">Ngày cập nhật</th>
 											<th width="10%">Cập nhật</th>
 											<th width="5%">Xem</th>
@@ -84,7 +84,7 @@
 											<td>[[${blog.title}]]</td>
 											<td>[[${blog.subTitle}]]</td>
 											<td>
-												<div style="height:70px; width:300px;overflow:auto;">
+												<div style="height:70px; width:100px;overflow:auto;">
 													[[${blog.content}]]</div>
 											</td>
 											<td>[[${blog.createdAt}]]</td>
@@ -150,7 +150,7 @@
 					'blogId': blogId
 				},
 				success: function () {
-					//location.reload();
+					location.reload();
 					alert("Xóa thành công!");
 
 				},

@@ -93,7 +93,7 @@ public class User extends UserDateAudit  {
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "cart_id", referencedColumnName = "id")
 	private Cart cart;
 	

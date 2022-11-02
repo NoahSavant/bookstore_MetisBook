@@ -1,14 +1,19 @@
 package com.metis.book.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.metis.book.model.user.User;
 
@@ -23,11 +28,35 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	private Long id;
 	
-	@OneToMany(mappedBy = "cart")
+	@OneToMany(mappedBy = "cart",fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CartItem> cartItems;
 	
-	@OneToOne(mappedBy = "cart")
+	@OneToOne(mappedBy = "cart", fetch = FetchType.LAZY)
 	private User user;
+
+	public Long getTotalPrice() {
+		Long total = 0L;
+		if(this.cartItems.size()>0) {
+			for (CartItem item : cartItems) {
+				total = total + item.getTotalPrice();
+			}
+		}
+		return total;
+	}
+	
+	public List<CartItem> getCartItems() {
+		return cartItems==null?null:new ArrayList<>(this.cartItems);
+	}
+
+	public void setCartItems(List<CartItem> cartItems) {
+		if(cartItems==null) {
+			this.cartItems = null;
+			return;
+		}
+		this.cartItems = cartItems;
+	}
+	
 	
 	
 }

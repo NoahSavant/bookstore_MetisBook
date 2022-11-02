@@ -23,11 +23,11 @@
 			<div class="sidebar-heading">
 				Menu
 			</div>
-			<li class="nav-item">
+			<li class="nav-item" th:classappend = "${#httpServletRequest.requestURI.contains('/admin/user') ? 'active' : ''}">
 				<a class="nav-link collapsed" th:href="@{/#}" data-toggle="collapse" data-target="#collapseTwo"
 					aria-expanded="true" aria-controls="collapseTwo">
 					<i class="fas fa-fw fa-cog"></i>
-					<span>User</span>
+					<span>Tài khoản</span>
 				</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
@@ -37,17 +37,17 @@
 					</div>
 				</div>
 			</li>
-			<li class="nav-item active">
+			<li class="nav-item" th:classappend = "${#httpServletRequest.requestURI.contains('/admin/book') ? 'active' : ''}">
 				<a class="nav-link" th:href="@{/admin/book}">
 					<i class="fas fa-fw fa-book"></i>
 					<span>Sách</span></a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item" th:classappend = "${#httpServletRequest.requestURI.contains('/admin/blog') ? 'active' : ''}">
 				<a class="nav-link" th:href="@{/admin/blog}">
 					<i class="fas fa-fw fa-table"></i>
 					<span>Bài viết</span></a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item" th:classappend = "${#httpServletRequest.requestURI.contains('/admin/order') ? 'active' : ''}">
 				<a class="nav-link" th:href="@{/order.html}">
 					<i class="fas fa-fw fa-table"></i>
 					<span>Đơn hàng</span></a>

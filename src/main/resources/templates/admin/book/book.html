@@ -51,32 +51,32 @@
                                 <table class="table table-bordered" id="book" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Tựa sách</th>
-                                            <th>Giá sách</th>
-                                            <th>Nhà xuất bản</th>
-                                            <th>Mô tả</th>
+                                            <th width="5%">ID</th>
+                                            <th width="20%">Tựa sách</th>
+                                            <th width="10%">Giá sách</th>
+                                            <th width="10%">Nhà xuất bản</th>
+                                            <th width="10%">Mô tả</th>
                                             <th width="15%">Ngày xuất bản</th>
-                                            <th>Ngôn ngữ</th>
-                                            <th>Tác giả</th>
-                                            <th>Số lượng</th>
-                                            <th>Trạng thái</th>
-                                            <th>Sửa</th>
+                                            <th width="10%">Ngôn ngữ</th>
+                                            <th width="10%">Tác giả</th>
+                                            <th width="15%">Số lượng</th>
+                                            <th width="15%">Trạng thái</th>
+                                            <th width="5%">Sửa</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Tựa sách</th>
-                                            <th>Giá sách</th>
-                                            <th>Nhà xuất bản</th>
-                                            <th>Mô tả</th>
-                                            <th>Ngày xuất bản</th>
-                                            <th>Ngôn ngữ</th>
-                                            <th>Tác giả</th>
-                                            <th>Số lượng</th>
-                                            <th>Trạng thái</th>
-                                            <th>Sửa</th>
+                                            <th width="5%">ID</th>
+                                            <th width="20%">Tựa sách</th>
+                                            <th width="10%">Giá sách</th>
+                                            <th width="10%">Nhà xuất bản</th>
+                                            <th width="10%">Mô tả</th>
+                                            <th width="15%">Ngày xuất bản</th>
+                                            <th width="10%">Ngôn ngữ</th>
+                                            <th width="10%">Tác giả</th>
+                                            <th width="15%">Số lượng</th>
+                                            <th width="15%">Trạng thái</th>
+                                            <th width="5%">Sửa</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -86,7 +86,7 @@
                                            	<td>[[${book.price}]]</td>
                                            	<td>[[${book.publisherName}]]</td>
                                            	<td>
-	                                           	<div style="height:70px; overflow: auto;">
+	                                           	<div style="height:70px; width:100px; overflow: auto;">
 	                                           		[[${book.description}]]
 	                                           	</div>
                                            	</td>
@@ -154,14 +154,13 @@
 					"sLengthMenu": "Liệt kê _MENU_ dòng",
 					"sInfo": "Liệt kê dòng _START_ - _END_ trong _TOTAL_ dòng",
 					"sZeroRecords": "Không tìm thấy dữ liệu",
-					
-				},
-				oPaginate: {
+					oPaginate: {
 						"sFirst": "Đầu",
 						"sLast": "Cuối",
 						"sNext": "Tiếp",
 						"sPrevious": "Trước"
-				}
+					}
+				},
 			});
 		}
 

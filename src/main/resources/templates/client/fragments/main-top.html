@@ -33,7 +33,7 @@
                         <li >
                             <a th:href="@{/member/cart}">
                                 <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">0</span>
+                                <span class="badge" style="color: red;" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getCartItemNum()}"></span>
                             </a>
                         </li>
                     </ul>

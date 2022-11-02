@@ -334,13 +334,14 @@ public class InsertData {
 	public void testCreateCartItem() {
 
 		// get User
-		User user = userRepository.findByUsername("kiet");
-		if (Objects.isNull(user)) {
+		User userKiet = userRepository.findByUsername("kiet");
+		if (Objects.isNull(userKiet)) {
 			log.error(AppConstant.USER_NOT_FOUND + "kiet");
 		}
+		
 
 		// get Cart
-		Cart cart = user.getCart();
+		Cart cartKiet = userKiet.getCart();
 
 		// get Book 1
 		Book book1 = bookRepository.findByTitle("Tôi thấy hoa vàng trên cỏ xanh");
@@ -354,17 +355,17 @@ public class InsertData {
 			log.error(AppConstant.BOOK_NOT_FOUND + "Mắt biếc");
 		}
 
-		// Create cartItem1
+		// Create cartItem1 for user kiet
 		CartItem cartItem1 = new CartItem();
 		cartItem1.setQuantity(1);
-		cartItem1.setCart(cart);
+		cartItem1.setCart(cartKiet);
 		cartItem1.setBook(book1);
 		cartItemReposirory.save(cartItem1);
 
-		// Create cartItem2
+		// Create cartItem2 for user Kiet
 		CartItem cartItem2 = new CartItem();
 		cartItem2.setQuantity(3);
-		cartItem2.setCart(cart);
+		cartItem2.setCart(cartKiet);
 		cartItem2.setBook(book2);
 		cartItemReposirory.save(cartItem2);
 
@@ -547,6 +548,13 @@ public class InsertData {
 
 	public void createAdmin() {
 
+		// Create new Cart
+		Cart cart = new Cart();
+		cart.setCartItems(null);
+		cart.setUser(null);
+		Cart cartSaved = cartReposiroty.save(cart);
+
+		
 		// get admin role
 		Role roleAdmin = roleRepository.findByName(RoleName.ADMIN);
 
@@ -572,7 +580,7 @@ public class InsertData {
 				.email("duckhailinux@gmail.com").firstName("khai").lastName("Nguyen")
 				.birthday(LocalDate.of(2002, 06, 06)).gender(1) // 1: male, 2: female, 3: Not know
 				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleAdmin, roleUser)).cart(null)
-				.addresses(null).image(imageThumbnail).build();
+				.addresses(null).image(imageThumbnail).cart(cartSaved).build();
 		userRepository.save(user);
 
 	}
