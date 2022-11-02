@@ -32,9 +32,11 @@ public class ContactController {
 	
 	@PostMapping
 	public ModelAndView addContact(ModelAndView mav, @ModelAttribute("contact") Contact contact) {
-		log.info("aaaa");
 		log.info(contact.toString());
-		//mav.setViewName("/client/contact-us.html");
+		contactService.insertContact(contact);
+		mav.setViewName("/client/contact-us.html");
+		mav.addObject("isSucceed", true);
+		mav.addObject("contact", new Contact());
 		return mav;
 	}
 }
