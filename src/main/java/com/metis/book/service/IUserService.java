@@ -49,9 +49,4 @@ public interface IUserService {
 
 	void updateCheckout(CheckoutForm checkoutForm);
 
-
-
-
-	
-
 }
