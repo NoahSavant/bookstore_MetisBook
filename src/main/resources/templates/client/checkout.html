@@ -49,16 +49,7 @@
 							<div th:if="${lackInfo}" class="alert alert-warning mt-3 mb-3">
 								Vui lòng cập nhật đầy đủ thông tin để tiến hành thanh toán
 							</div>
-							<div class="row">
-								<div class="col">Tên đăng nhập:</div>
-								<div class="col-9">[[${checkoutForm.username}]]</div>
-							</div>
-
-							<div class="row">
-								<div class="col">Email:</div>
-								<div class="col-9">[[${checkoutForm.email}]]</div>
-							</div>
-							<hr class="mb-4">
+							
 							<div class="row">
 								<div class="col-md-6 mb-3">
 									<label class="mt-3 mb-3" for="firstName">Tên *</label>
@@ -83,14 +74,18 @@
 									oninput="this.setCustomValidity('')">
 							</div>
 							<div class="mb-3" id="selectAddress" th:if="${addresses}">
-								<label class="mt-3 mb-3">Chọn địa chỉ giao hàng *</label>
-								<select id="categoryBook" th:field="*{fullAddress}" class="form-control">
-									<option th:value="${address.id}" th:each="address : ${addresses}">
+								<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
+								<select  th:field="*{fullAddress}" class="form-control">
+									<option th:value="''">--Chọn địa chỉ--</option>
+									<th:block th:each="address : ${addresses}">
+										<option th:value="${address.id}" >
 										[[${address.fullAddress}]]</option>
+									</th:block>
+									
 								</select>
 							</div>
-							<div id="address-spec" hidden>
-								<div class="mb-3 row">
+							<div id="address-spec" class="pt-3" hidden>
+								<div class="mb-3">
 									<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
 									<input type="text" class="form-control user-info" th:field="*{newAddress}"
 										placeholder="" required
@@ -146,7 +141,7 @@
 							<div class="col-12 d-flex shopping-box">
 								<a href="#" id="showEditBtn" th:onclick="return editForm();"
 									class="ml-auto btn hvr-hover">Thêm
-									thông tin giao hàng</a>
+									địa chỉ giao hàng</a>
 							</div>
 
 

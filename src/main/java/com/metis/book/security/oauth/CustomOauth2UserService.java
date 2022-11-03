@@ -1,5 +1,6 @@
 package com.metis.book.security.oauth;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.metis.book.exception.OAuth2AuthenticationProcessingException;
+import com.metis.book.model.Image;
 import com.metis.book.model.user.AuthProvider;
 import com.metis.book.model.user.User;
+import com.metis.book.repository.ImageRepository;
 import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IUserService;
 
@@ -25,6 +28,9 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	ImageRepository imageRepository;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) {
@@ -42,7 +48,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 	}
 
 	private OAuth2User processOAuth2User(OAuth2UserRequest userRequest,
-			OAuth2User oAuth2User) {
+			OAuth2User oAuth2User) throws IOException {
 		String email = oAuth2User.getAttribute("email");
 		log.info(oAuth2User.getAttributes().toString());
 
@@ -71,7 +77,13 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 		return UserPrincipal.create(user, oAuth2User.getAttributes());
 	}
 	
-	private User registerNewUser(OAuth2UserRequest userRequest, OAuth2User oauth2User) {
+	private User registerNewUser(OAuth2UserRequest userRequest, OAuth2User oauth2User){
+
+		Image imageThumbnail = new Image();
+		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
+		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.jpg");
+		imageRepository.save(imageThumbnail);
+		
 		User user = new User();
 
 		AuthProvider provider = AuthProvider.valueOf(userRequest.getClientRegistration().getRegistrationId());
@@ -80,6 +92,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 		user.setLastName(oauth2User.getAttribute("family_name"));
 		user.setEmail(oauth2User.getAttribute("email"));
 		user.setUsername(oauth2User.getAttribute("email"));
+		user.setImage(imageThumbnail);
 		user.setEnabled(true);
 		return userService.createNewUserOAuth2(user);
 	}
@@ -94,10 +107,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
 	@ExceptionHandler(OAuth2AuthenticationProcessingException.class)
 	public OAuth2User viewLoginPageWithError(
-//			HttpServletRequest request,
-//			HttpServletResponse response,
 			OAuth2AuthenticationProcessingException e) {
-		log.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		return null;
 //		request.getSession().setAttribute("errorMessage", e.getMessage());
 //		response.sendRedirect("/auth/login?error=true");
