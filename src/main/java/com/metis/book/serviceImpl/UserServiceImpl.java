@@ -93,12 +93,20 @@ public class UserServiceImpl implements IUserService {
 		if (Objects.isNull(role)) {
 			log.error(AppConstant.ROLE_NOT_FOUND + "USER");
 		}
-		log.info(role.getName().toString());
+		
+		// Create new Image
+		Image imageThumbnail = new Image();
+		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
+		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.jpg");
+		imageRepository.save(imageThumbnail);
+		
+		
 		// Create new User
 		User user = User.builder().username(registerRequest.getUsername())
 				.password(passwordEncoder.encode(registerRequest.getPassword())).email(registerRequest.getEmail())
 				.firstName(registerRequest.getFirstName()).lastName(registerRequest.getLastName())
 				.phoneNumber(registerRequest.getPhoneNumber())
+				.image(imageThumbnail)
 				.birthday(
 						registerRequest.getBirthday().isEmpty() ? null : LocalDate.parse(registerRequest.getBirthday()))
 				.enabled(false) // true when click on verification link
@@ -153,6 +161,8 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User createNewUserOAuth2(User user) {
+
+		
 		
 		// Create new Cart for user
 		Cart cart = new Cart();
@@ -168,7 +178,9 @@ public class UserServiceImpl implements IUserService {
 		user.setCart(cartSaved);
 		user.setRoles(Arrays.asList(role));
 		
-		return userRepository.save(user);
+		User userSaved =  userRepository.save(user);
+		
+		return userSaved;
 	}
 
 	@Override
@@ -314,7 +326,7 @@ public class UserServiceImpl implements IUserService {
 	
 	private void updateAddress(User user, CheckoutForm checkoutForm) {
 		Address address = new Address();
-		address.setIsPrimary(true); // set primary is true
+
 		address.setProvince(checkoutForm.getProvince());
 		address.setDistrict(checkoutForm.getDistrict());
 		address.setSubDistrict(checkoutForm.getSubDistrict());
@@ -323,6 +335,7 @@ public class UserServiceImpl implements IUserService {
 		address.setStreet(checkoutForm.getStreet());
 		
 		if(checkoutForm.getIsPrimary()) {
+			address.setIsPrimary(true); // set primary is true
 			// find all address of user in db and change primary status
 			List<Address> addresses = addressRepository.findByUser(user);
 			for (Address savedAddress : addresses) {
@@ -332,6 +345,8 @@ public class UserServiceImpl implements IUserService {
 					break;
 				}
 			}
+		}else {
+			address.setIsPrimary(false); // set primary is false
 		}
 		
 		
