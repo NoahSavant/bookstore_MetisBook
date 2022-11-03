@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -80,8 +81,11 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 		for (Role r : user.getRoles()) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + r.getName()));
 		}
-		int itemNum = user.getCart().getCartItems().size();
-		log.info(String.valueOf(itemNum));
+		int itemNum = 0;
+		if(Objects.nonNull(user.getCart().getCartItems())) {
+			itemNum = user.getCart().getCartItems().size();
+		}
+		
 		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(),
 				user.getFirstName(), user.getLastName(), user.getGender(), user.getPhoneNumber(), user.getBirthday(),
 				user.getEnabled(), user.getImage(), authorities, String.valueOf(itemNum)); // roles

@@ -37,6 +37,7 @@ public class CartController {
 	@GetMapping
 	public ModelAndView viewCartPage(ModelAndView mav) {
 
+		log.info("in cart page");
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		

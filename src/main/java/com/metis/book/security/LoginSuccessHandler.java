@@ -16,10 +16,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Component
-@Slf4j
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
@@ -31,15 +28,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		// check if user have previous request
 		SavedRequest savedRequest =  requestCache.getRequest(request, response);
-		if(!Objects.isNull(savedRequest)) {
-			log.info("aaaaaaaaaaaaaaaaa");
+		if(!Objects.isNull(savedRequest) && !savedRequest.getRedirectUrl().contains("/admin")) {
 			response.sendRedirect(savedRequest.getRedirectUrl());
 			return;
 		}
+		
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect("/admin/"); // admin page
         }else if (roles.contains("ROLE_USER")) {
+        	
         	response.sendRedirect("/"); //home page for user
         }
         
