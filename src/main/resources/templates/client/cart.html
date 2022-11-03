@@ -55,9 +55,12 @@
 								<tr th:each="cartItem : ${cartItems}">
 									<td class="thumbnail-img">
 										<a href="#">
-										<img th:if ="${cartItem.book.image.title}" th:src="@{${'/uploads/books/'+cartItem.book.image.title}}" class="img-fluid" />
-										<img th:if ="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }" th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
-											class="img-fluid"/>
+											<img th:if="${cartItem.book.image.title}"
+												th:src="@{${'/uploads/books/'+cartItem.book.image.title}}"
+												class="img-fluid" />
+											<img th:if="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }"
+												th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
+												class="img-fluid" />
 										</a>
 									</td>
 									<td class="name-pr">
@@ -70,8 +73,10 @@
 									</td>
 									<td class="quantity-box">
 										<input type="number" size="4" th:value="${cartItem.quantity}" min="0" step="1"
-												onfocus="this.oldValue = this.value;" th:onchange="updatePrice([[${cartItem.id}]],[[${cartItem.book.price}]],this)" class="c-input-text qty text">
-											<p></p>
+											onfocus="this.oldValue = this.value;"
+											th:onchange="updatePrice([[${cartItem.id}]],[[${cartItem.book.price}]],this)"
+											class="c-input-text qty text">
+										<p></p>
 									</td>
 									<td th:id="'total-pr' + ${cartItem.id}">
 										<p>[[${cartItem.getTotalPrice()}]] VNĐ</p>
@@ -82,7 +87,7 @@
 										</span>
 									</td>
 								</tr>
-							
+
 							</tbody>
 						</table>
 					</div>
@@ -103,7 +108,9 @@
 				</div>
 				<div class="col-lg-6 col-sm-6">
 					<div class="update-box">
-						<input value="Update Cart" type="submit">
+						<a th:href="@{/shop/Tatca?page=1}">
+							<input value="Mua thêm" type="submit">
+						</a>
 					</div>
 				</div>
 			</div>
@@ -115,7 +122,8 @@
 						<h3>Chi tiết đơn hàng</h3>
 						<div class="d-flex">
 							<h4>Tổng tiền</h4>
-							<div id="cart-price" class="ml-auto font-weight-bold"> [[${cart.getTotalPrice()}]]</div> <span class="font-weight-bold ml-1"> VNĐ </span>
+							<div id="cart-price" class="ml-auto font-weight-bold"> [[${cart.getTotalPrice()}]]</div>
+							<span class="font-weight-bold ml-1"> VNĐ </span>
 						</div>
 						<div class="d-flex">
 							<h4>Giảm giá</h4>
@@ -134,8 +142,9 @@
 						<hr>
 					</div>
 				</div>
-				<div class="col-12 d-flex shopping-box"><a href="checkout.html"
-						class="ml-auto btn hvr-hover">Thanh toán</a> </div>
+				<div class="col-12 d-flex shopping-box">
+					<a th:href="@{/checkout}" class="ml-auto btn hvr-hover">Thanh toán</a>
+				</div>
 			</div>
 
 		</div>
@@ -156,21 +165,21 @@
 	<!-- End Footer  -->
 
 	<script>
-		function updatePrice(id,price,element){
+		function updatePrice(id, price, element) {
 			var currItemNum = element.value;
 			var oldItemNum = element.oldValue;
-			document.getElementById('total-pr'+id).innerText = price*currItemNum + 'VNĐ';
-			console.log(currItemNum+" old: "+oldItemNum);
+			document.getElementById('total-pr' + id).innerText = price * currItemNum + 'VNĐ';
+			console.log(currItemNum + " old: " + oldItemNum);
 			// Change total cart price
-			var amountPriceChange = currItemNum*price - oldItemNum*price;
+			var amountPriceChange = currItemNum * price - oldItemNum * price;
 			var oldTotalPrice = parseInt(document.getElementById('cart-price').innerText);
 			var newTotalPrice = oldTotalPrice + amountPriceChange;
-			console.log(amountPriceChange+" and "+oldTotalPrice+" and " + newTotalPrice);
+			console.log(amountPriceChange + " and " + oldTotalPrice + " and " + newTotalPrice);
 			document.getElementById('cart-price').innerText = newTotalPrice;
-			
+
 			// set old is curr value
 			element.oldValue = element.value;
-		$.ajax({
+			$.ajax({
 				url: "/member/cart/update",
 				type: "POST",
 				data: {
@@ -178,9 +187,9 @@
 					'currItemNum': currItemNum
 				}
 			})
-			
+
 		}
-		function deleteCartItem(itemId){
+		function deleteCartItem(itemId) {
 			$.ajax({
 				url: "/member/cart/delete",
 				type: "DELETE",
@@ -197,7 +206,7 @@
 				}
 			})
 		}
-	
+
 	</script>
 
 

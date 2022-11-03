@@ -79,8 +79,8 @@
 		            <div class="row">
 		                <div class="col-lg-12">
 		                    <div class="title-all text-center">
-		                        <h1>Featured Products</h1>
-		                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+		                        <h1>Sách hot</h1>
+		                        <p>Những cuốn sách hay nhất</p>
 		                    </div>
 		                </div>
 		            </div>
@@ -88,9 +88,9 @@
 		                <div class="col-lg-12">
 		                    <div class="special-menu text-center">
 		                        <div class="button-group filter-button-group">
-		                            <button class="active" data-filter="*">All</button>
-		                            <button data-filter=".top-featured">Top featured</button>
-		                            <button data-filter=".best-seller">Best seller</button>
+		                            <button class="active" data-filter="*">Tất cả</button>
+		                            <button data-filter=".top-featured">Xu hướng</button>
+		                            <button data-filter=".best-seller">Bán chạy</button>
 		                        </div>
 		                    </div>
 		                </div>
@@ -101,14 +101,16 @@
 		                    <div class="products-single fix">
 		                        <div class="box-img-hover">
 		                            <div class="type-lb">
-		                                <p class="sale">Sale</p>
+		                                <p class="sale">Còn bán</p>
 		                            </div>
-		                            <img th:src="@{/images/Zero-To-One-by-Peter-Thiel-400x600.jpg}" class="img-fluid" alt="Image">
+		                            <img th:if ="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}" class="img-fluid" />
+									<img th:if ="${item.image.thumbnailName!=null && item.image.title == null }" th:src="@{${'/uploads/'+item.image.thumbnailName}}"
+									class="img-fluid"/>
 		                            <div class="mask-icon">
 		                                <ul>
 		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 		                                </ul>
-		                                <a class="cart" href="#">Add to Cart</a>
+		                                <a class="cart" href="#">Thêm vào giỏ hàng</a>
 		                            </div>
 		                        </div>
 		                        <div class="why-text">
@@ -122,14 +124,16 @@
 		                    <div class="products-single fix">
 		                        <div class="box-img-hover">
 		                            <div class="type-lb">
-		                                <p class="sale">Sale</p>
+		                                <p class="sale">Còn bán</p>
 		                            </div>
-		                            <img th:src="@{/images/Zero-To-One-by-Peter-Thiel-400x600.jpg}" class="img-fluid" alt="Image">
+		                            <img th:if ="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}" class="img-fluid" />
+									<img th:if ="${item.image.thumbnailName!=null && item.image.title == null }" th:src="@{${'/uploads/'+item.image.thumbnailName}}"
+									class="img-fluid"/>
 		                            <div class="mask-icon">
 		                                <ul>
 		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 		                                </ul>
-		                                <a class="cart" href="#">Add to Cart</a>
+		                                <a class="cart" href="#">Thêm vào giỏ hàng</a>
 		                            </div>
 		                        </div>
 		                        <div class="why-text">
@@ -149,7 +153,7 @@
 		            <div class="row">
 		                <div class="col-lg-12">
 		                    <div class="title-all text-center">
-		                        <h1>Latest blog</h1>
+		                        <h1>Nhũng bài viết gần đây</h1>
 		                        <p><strong>“A room without books is like a body without a soul.” – Cicero</strong></p>
 		                    </div>
 		                </div>

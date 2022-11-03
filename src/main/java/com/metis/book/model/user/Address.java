@@ -52,5 +52,35 @@ public class Address extends UserDateAudit{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+
+	public String getFullAddress() {
+		
+		if(this.fullAddress!="") {
+			return this.fullAddress;
+		}
+		
+		String fullAddress = "";
+		if(this.street!="") {
+			fullAddress = fullAddress + this.street+", ";
+		}
+		if(this.subDistrict!="") {
+			fullAddress = fullAddress + this.subDistrict+", ";
+		}
+		if(this.district!="") {
+			fullAddress = fullAddress + this.district+", ";
+		}
+		if(this.province!="") {
+			fullAddress = fullAddress + this.province;
+		}
+		String lastChar = fullAddress.substring(fullAddress.length() - 1);
+		
+		// check if last char is ',' then delete it
+		if(lastChar.equals(",")) {
+			fullAddress = fullAddress.substring(0, fullAddress.length() - 1);  
+		}
+		return fullAddress;
+	}
+
+	
 	
 }
