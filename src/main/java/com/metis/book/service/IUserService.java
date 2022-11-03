@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.PasswordResetToken;
@@ -45,6 +46,8 @@ public interface IUserService {
 	void updateImage(MultipartFile file) throws IOException;
 
 	String getUsernameById(Long createBy);
+
+	void updateCheckout(CheckoutForm checkoutForm);
 
 
 

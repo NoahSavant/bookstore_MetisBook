@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
 import com.metis.book.model.Cart;
@@ -293,7 +294,51 @@ public class UserServiceImpl implements IUserService {
 		}
 		return user.getUsername();
 	}
+
+	@Override
+	public void updateCheckout(CheckoutForm checkoutForm) {
+		User user = userRepository.findByEmail(checkoutForm.getEmail());
+		if(Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND);
+			return;
+		}
+		user.setFirstName(checkoutForm.getFirstName());
+		user.setLastName(checkoutForm.getLastName());
+		user.setPhoneNumber(checkoutForm.getPhoneNumber());
+		
+		if(checkoutForm.getNewAddress()!=null) {
+			updateAddress(user,checkoutForm);
+		}
+
+	}
 	
+	private void updateAddress(User user, CheckoutForm checkoutForm) {
+		Address address = new Address();
+		address.setIsPrimary(true); // set primary is true
+		address.setProvince(checkoutForm.getProvince());
+		address.setDistrict(checkoutForm.getDistrict());
+		address.setSubDistrict(checkoutForm.getSubDistrict());
+		address.setFullAddress(checkoutForm.getNewAddress());
+		address.setUser(user);
+		address.setStreet(checkoutForm.getStreet());
+		
+		if(checkoutForm.getIsPrimary()) {
+			// find all address of user in db and change primary status
+			List<Address> addresses = addressRepository.findByUser(user);
+			for (Address savedAddress : addresses) {
+				if(savedAddress.getIsPrimary().equals(true)) {
+					savedAddress.setIsPrimary(false);
+					addressRepository.save(savedAddress);
+					break;
+				}
+			}
+		}
+		
+		
+		
+		// save new address
+		addressRepository.save(address);
+	}
 
 
 }
