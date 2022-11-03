@@ -168,7 +168,79 @@
 	/* ..............................................
 	   Scroll
 	   ................................................. */
-
+	$(".page-item").click(function() {
+		pageChange(this.firstChild.id);
+	});
+	
+	function pageChange(event) {
+		var controller = document.getElementById("cur_page");
+		var cur_page = controller.value;
+		var last_page = cur_page;
+		if(event == 'p-before' && cur_page > 1){
+			cur_page = cur_page - 1;
+		}else if(event == "p-after" && cur_page < Math.ceil(document.getElementById("size").value/2)) {
+			cur_page = cur_page + 1;
+		}else {
+			cur_page = event.split("-")[1];
+		}
+		if(last_page == cur_page) {
+			return;
+		}
+		controller.value = cur_page;
+		var url = window.location.href.split("=")[0] + "=" + cur_page;
+		history.pushState({}, "", url);
+		console.log(window.location.href);
+		getPageList(last_page);
+	}
+	
+	function getPageList(last_page) {
+		var pagination = document.getElementById("pagination");
+		var children = document.getElementsByName("temp");
+		var cur_page = document.getElementById("cur_page").value;
+		for(const child of children) {
+			pagination.removeChild(child);
+		}
+		var size = document.getElementById("size").value;
+		var maxPage = Math.ceil(size/2);		
+		if(maxPage == 1) {
+			return;
+		} else {
+			var page_item = document.getElementById("last-page");
+			for(let i = 2; i <= maxPage; i++) {
+				if(Math.abs(cur_page -i) <= 1 || i == maxPage) {
+					var newPage = page_item.cloneNode(true);
+					newPage.setAttribute('name', 'temp');
+					newPage.removeAttribute('id');
+					newPage.firstChild.setAttribute('id', 'p-' + i.toString());
+					newPage.firstChild.innerHTML = i;
+					newPage.addEventListener("click", function(){pageChange(this.firstChild.id)});
+					pagination.insertBefore(newPage, page_item);
+				}
+			}
+		}
+		document.getElementById('p-' + cur_page).innerHTML = '<u>' + cur_page + '</u>'; 
+		
+		if(last_page != 0) {
+			let last = document.getElementById('p-' + last_page);
+			if(last != null) {
+				last.innerHTML = last_page;
+			}
+			let start =  (last_page - 1) * 2;
+			let end = Math.min(size, last_page * 2);
+			for(let i = start; i < end; i++) {
+				document.getElementById('short' + i.toString()).style.display = "none";
+				document.getElementById('long' + i.toString()).style.display = "none";
+			}
+		}
+		
+		let start =  (cur_page - 1) * 2;
+		let end = Math.min(size, cur_page * 2);
+		for(let i = start; i < end; i++) {
+			document.getElementById('short' + i.toString()).style.display = "block";
+			document.getElementById('long' + i.toString()).style.display = "block";
+		}
+	}
+	
 	$(document).ready(function() {
 		$(window).on('scroll', function() {
 			if ($(this).scrollTop() > 100) {
@@ -183,8 +255,8 @@
 			}, 600);
 			return false;
 		});
+		getPageList(0);
 	});
-
 
 	/* ..............................................
 	   Slider Range
@@ -214,22 +286,8 @@
 
 	$(".brand-box").niceScroll({
 		cursorcolor: "#9b9b9c",
-	});
+	}); 
 	
 	
 }(jQuery));
 
-function loadPage(last_page, cur_page, size) {
-	alert("hahahahahah");
-	var start = (cur_page - 1) * 9;
-	var end = Math.min(size, cur_page * 9);
-	for(let i = start; i < end; i++) {
-		document.getElementById("book" + i).style.display = "block";
-	}
-	
-	var start = (last_page - 1) * 9;
-	var end = Math.min(books.legth, cur_page * 9);
-	for(let i = start; i < end; i++) {
-		document.getElementById("book" + i).style.display = "none";
-	}
-}

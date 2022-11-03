@@ -35,10 +35,6 @@ public interface IBookService {
 	BookForm getById(Long parseLong);
 
 	void updateBook(BookForm bookForm) throws ParseException, IOException;
-	
-	List<Integer> pageNumList(double total, int curPage);
-	
-	List<Book> getPage(List<Book> books, int pageNum);
 
 	List<Book> filter(List<Book> books, FilterForm filterForm);
 }

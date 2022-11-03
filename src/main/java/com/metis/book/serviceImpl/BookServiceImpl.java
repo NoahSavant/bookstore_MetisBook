@@ -286,32 +286,6 @@ public class BookServiceImpl implements IBookService{
 		
 	}
 
-	public List<Integer> pageNumList(double total, int curPage) {
-		List<Integer> pages = new ArrayList<>();
-		int maxPage = (int) Math.ceil(total/2);
-		pages.add(1);
-		if(maxPage == 1) {
-			return pages;
-		}
-		for(int i=2; i < maxPage; i++) {
-			if(Math.abs(curPage - i) <= 1 && pages.contains(i) == false) {
-				pages.add(i);
-			}
-		}
-		pages.add(maxPage);
-		return pages;
-	}
-	
-	public List<Book> getPage(List<Book> books, int pageNum) {
-		int start = (pageNum - 1) * 2;
-		int end = Math.min(books.size(), pageNum * 2);
-		List<Book> pageBooks = new ArrayList<>();
-		for(int i = start; i < end; i++) {
-			pageBooks.add(books.get(i));
-		}
-		return pageBooks;
-	}
-
 	@Override
 	public List<Book> filter(List<Book> books, FilterForm filterForm) {
 		List<Book> filterBooks = new ArrayList<>();

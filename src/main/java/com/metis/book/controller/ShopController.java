@@ -40,9 +40,6 @@ public class ShopController {
 		}else {
 			books = bookService.getBooksByCategory(category);
 		}
-		List<Integer> pageNumList = bookService.pageNumList(books.size(), page);
-		int totalFindOut = books.size();
-		books = bookService.getPage(books, page);
 		List<String> publishers = bookService.getAllPublishers();
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();
@@ -56,11 +53,9 @@ public class ShopController {
 		mav.addObject("categories", categories);
 		mav.addObject("filterForm", filterForm);
 		mav.addObject("numAllBooks", numAllBooks);
-		mav.addObject("pageNumList", pageNumList);
 		mav.addObject("cur_category", category);
 		mav.addObject("maxP", bookService.getMaxPrice());
 		mav.addObject("cur_page", page);
-		mav.addObject("totalFindOut", totalFindOut);
 		mav.setViewName("/client/shop");
 		return mav;
 	}
@@ -76,9 +71,6 @@ public class ShopController {
 		}
 		books = bookService.filter(books, filterForm);
 		System.out.print(filterForm.getMinPrice() + " aaaa " + filterForm.getMaxPrice() + " aaa " + filterForm.getPublisherName());
-		List<Integer> pageNumList = bookService.pageNumList(books.size(), page);
-		int totalFindOut = books.size();
-		books = bookService.getPage(books, page);
 		List<String> publishers = bookService.getAllPublishers();
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();
@@ -88,11 +80,9 @@ public class ShopController {
 		mav.addObject("categories", categories);
 		mav.addObject("filterForm", filterForm);
 		mav.addObject("numAllBooks", numAllBooks);
-		mav.addObject("pageNumList", pageNumList);
 		mav.addObject("cur_category", category);
 		mav.addObject("cur_page", page);
 		mav.addObject("maxP", bookService.getMaxPrice());
-		mav.addObject("totalFindOut", totalFindOut);
 		mav.setViewName("/client/shop");
 		return mav;
 	}

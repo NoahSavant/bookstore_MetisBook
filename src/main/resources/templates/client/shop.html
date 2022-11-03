@@ -109,7 +109,7 @@
 									<option value="4">Giá giảm dần</option>
 								</select>
                                 </div>
-                                <p>Tất cả [[${totalFindOut}]] sản phẩm</p>
+                                <p>Tất cả [[${#lists.size(books)}]] sản phẩm</p>
                             </div>
                             <div class="col-12 col-sm-4 text-center text-sm-right">
                                 <ul class="nav nav-tabs ml-auto">
@@ -127,7 +127,7 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                     <div class="row">
-                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4" th:each="book:${books}">
+                                        <div style="display: none;" th:id="${'short' + bookStat.index}" class="col-sm-6 col-md-6 col-lg-4 col-xl-4" th:each="book:${books}">
                                             <div class="products-single fix">
                                                 <div class="box-img-hover">
                                                     <div class="type-lb">
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade tab-pane-custom" id="list-view">
-                                    <div class="list-view-box" th:each="book:${books}">
+                                    <div style="display: none;" class="list-view-box" th:each="book:${books}" th:id="${'long' + bookStat.index}">
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                                 <div class="products-single fix">
@@ -179,17 +179,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="#" th:object="${filterForm}" method="post">
                             <div class="container pagination-custom">
-							  <ul class="pagination" >
-							    <li type="submit" class="page-item"><a class="page-link-custom page-link" href="@{/shop/{categoryName}/page=${pageNum-1}(categoryName=${cur_category})}">Trước</a></li>
-							    <li type="submit" th:each="pageNum:${pageNumList}" class="page-item"><a class="page-link-custom page-link" th:href="@{/shop/{categoryName}?page={pageNum}(categoryName=${cur_category}, pageNum=${pageNum})}">[[${pageNum}]]</a></li>						    
-							    <li type="submit" class="page-item"><a class="page-link-custom page-link" href="@{/shop/{categoryName}/page=${pageNum+1}(categoryName=${cur_category})}">Sau</a></li>
+                            	<input hidden id="cur_page" th:value="1">
+                            	<input hidden id="size" th:value="${#lists.size(books)}">
+							  <ul id="pagination" class="pagination" >
+							    <li class="page-item"><a class="page-link-custom page-link" id="p-before">Trước</a></li>
+							    <li class="page-item"><a class="page-link-custom page-link" id="p-1">1</a></li>							    	    
+							    <li id="last-page" class="page-item"><a class="page-link-custom page-link" id="p-after">Sau</a></li>
 							  </ul>
 							</div>
-                            </form>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -209,6 +208,11 @@
        <div th:replace="client/fragments/footer :: footer"></div>
    	   <script th:src="@{/js/jquery-ui.js}"></script>
        <script th:src="@{/js/jquery.nicescroll.min.js}"></script>
+       <script>
+       		function reload() {
+				   alert(window.location.href);
+			   }
+       </script>
     </footer>
     <!-- End Footer  -->
 
