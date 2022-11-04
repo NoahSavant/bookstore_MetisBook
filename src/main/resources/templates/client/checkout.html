@@ -36,20 +36,19 @@
 
 	<!-- Start Cart  -->
 	<div class="cart-box-main">
-		<div class="container">
+		<div class="container" th:object="${checkoutForm}">
 			<div class="row">
 				<div class="col-sm-6 col-lg-6 mb-3">
 					<div class="checkout-address">
 						<div class="title-left">
 							<h3>Địa chỉ giao hàng</h3>
 						</div>
-						<form class="needs-validation" th:action="@{/checkout/update}" method="post" id="checkout-form"
-							th:object="${checkoutForm}">
+						<form class="needs-validation" th:action="@{/member/checkout/update}" method="post" id="checkout_form">
 							<input hidden th:field="*{email}" />
 							<div th:if="${lackInfo}" class="alert alert-warning mt-3 mb-3">
 								Vui lòng cập nhật đầy đủ thông tin để tiến hành thanh toán
 							</div>
-							
+
 							<div class="row">
 								<div class="col-md-6 mb-3">
 									<label class="mt-3 mb-3" for="firstName">Tên *</label>
@@ -75,13 +74,11 @@
 							</div>
 							<div class="mb-3" id="selectAddress" th:if="${addresses}">
 								<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
-								<select  th:field="*{fullAddress}" class="form-control">
-									<option th:value="''">--Chọn địa chỉ--</option>
-									<th:block th:each="address : ${addresses}">
-										<option th:value="${address.id}" >
+								<select id="test" class="form-control" th:field="*{fullAddress}">
+									<option th:value="${address.id}" th:each="address : ${addresses}">
 										[[${address.fullAddress}]]</option>
-									</th:block>
-									
+
+
 								</select>
 							</div>
 							<div id="address-spec" class="pt-3" hidden>
@@ -152,15 +149,15 @@
 										class="ml-auto btn hvr-hover">Trở về</a>
 								</div>
 								<div class="col d-flex shopping-box">
-									<button  type="submit" style="color:white" 
-										class="ml-auto btn hvr-hover">Cập
-										nhật</a>
+									<button type="submit" style="color:white" class="ml-auto btn hvr-hover">Cập
+										nhật</button>
 								</div>
 							</div>
 
-						</form>
+
 					</div>
 				</div>
+
 				<div class="col-sm-6 col-lg-6 mb-3">
 					<div class="row">
 						<div class="col-md-12 col-lg-12">
@@ -171,25 +168,43 @@
 								<div class="mb-4">
 									<div class="custom-control custom-radio">
 										<input id="shippingOption1" name="shipping-option" class="custom-control-input"
-											checked="checked" type="radio">
+											checked="checked" type="radio" th:field="*{deliverMethod}" value="Standard">
 										<label class="custom-control-label pl-4" for="shippingOption1">Thông thường (3-7
 											ngày)</label>
 										<span class="float-right font-weight-bold">Miễn Phí</span>
 									</div>
 									<div class="custom-control custom-radio">
-										<input id="shippingOption2" name="shipping-option" class="custom-control-input"
-											type="radio">
+										<input id="shippingOption2" name="shipping-option" th:field="*{deliverMethod}"
+											value="Fast" class="custom-control-input" type="radio">
 										<label class="custom-control-label pl-4" for="shippingOption2">Nhanh (2-4
 											ngày)</label>
 										<span class="float-right font-weight-bold">20000 VNĐ</span>
 									</div>
 									<div class="custom-control custom-radio">
 										<input id="shippingOption3" name="shipping-option" class="custom-control-input"
-											type="radio">
+											type="radio" th:field="*{deliverMethod}" value="VeryFast">
 										<label class="custom-control-label pl-4" for="shippingOption3">Hỏa tốc (1
 											ngày)</label>
 										<span class="float-right font-weight-bold">40000 VNĐ</span>
 									</div>
+								</div>
+							</div>
+							<div class="title-left">
+								<h3>Phương thức thanh toán</h3>
+							</div>
+							<div class="d-block my-3">
+								<div class="custom-control custom-radio">
+									<input id="credit" name="paymentMethod" th:field="*{paymentMethod}" value="Cash"
+										type="radio" class="custom-control-input" checked required>
+									<label class="custom-control-label pl-4" for="credit"> Thanh toán khi nhận
+										hàng</label>
+								</div>
+
+								<div class="custom-control custom-radio mt-3">
+									<input id="debit" name="paymentMethod" type="radio" th:field="*{paymentMethod}"
+										value="Momo" class=" custom-control-input " required>
+									<label class="custom-control-label pl-4" for="debit"><img
+											src="https://developers.momo.vn/v3/vi/img/logo.svg">Momo</img></label>
 								</div>
 							</div>
 						</div>
@@ -200,6 +215,7 @@
 								</div>
 								<div class="rounded p-2 bg-light">
 									<div class="media mb-2 border-bottom row pb-3" th:each="cartItem: ${cartItems}">
+									<input hidden th:field="*{checkoutItems}"/>
 										<div class="col-2">
 											<a href="#">
 												<img style="max-width:100%;" th:if="${cartItem.book.image.title}"
@@ -253,11 +269,12 @@
 								<hr>
 							</div>
 						</div>
-						<div class="col-12 d-flex shopping-box"> <a href="checkout.html"
-								class="ml-auto btn hvr-hover">Place
-								Order</a> </div>
+						<div class="col-12 d-flex shopping-box">
+							<a href="#" th:onclick="return submitDiff();" class="ml-auto btn hvr-hover">Thanh toán</a>
+						</div>
 					</div>
 				</div>
+				</form>
 			</div>
 
 		</div>
@@ -284,14 +301,22 @@
 			return false;
 		}
 
-		function back(){
+		function back() {
 			$('.user-info').prop("disabled", true);
 			$('#editBtn').prop("hidden", true);
-			$('#showEditBtn').attr("hidden",false);
+			$('#showEditBtn').attr("hidden", false);
 			$('#address-spec').prop("hidden", true);
 			$('#selectAddress').prop("hidden", false);
 		}
 
+		function submitDiff(){
+			var frm = document.getElementById("checkout_form");
+			frm.action = "/member/checkout/pay";
+			frm.submit(); //Submit action performed
+			return false;
+
+
+		}
 
 	</script>
 

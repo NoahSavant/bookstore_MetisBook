@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
+import com.metis.book.model.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,6 +44,9 @@ public class Order extends UserDateAudit {
 	@Column(name = "payment_method")
 	private String paymentMethod;
 	
+	@Column(name = "deliver_method")
+	private String deliverMethod;
+	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<OrderItem> orderItems;	
 	
@@ -50,6 +54,10 @@ public class Order extends UserDateAudit {
 	@JoinColumn(name = "order_track_id", referencedColumnName = "id", nullable = false)
 	private OrderTrack orderTrack;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+	
 	public Long getTotalPrice() {
 		Long total = 0L;
 		if(this.orderItems.size()>0) {
@@ -67,8 +75,10 @@ public class Order extends UserDateAudit {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		if(orderItems == null) {
 			this.orderItems = null;
+		}else {
+			this.orderItems = orderItems;
 		}
-		this.orderItems = orderItems;
+		
 	}
 	
 	

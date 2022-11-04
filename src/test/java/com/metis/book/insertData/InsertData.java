@@ -396,6 +396,12 @@ public class InsertData {
 	@Order(10)
 	public void testCreateOrder() {
 
+		// get User
+		User user = userRepository.findByUsername("kiet");
+		if (Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND + "kiet");
+		}
+		
 		// get order track
 		OrderTrack trackDelivering = orderTrackRepository.findByStatus("Đang giao");
 
@@ -404,12 +410,14 @@ public class InsertData {
 		order1.setOrderDate(new Date());
 		order1.setOrderTrack(trackDelivering);
 		order1.setPaymentMethod("paypal");
+		order1.setUser(user);
 		orderRepository.save(order1);
 
 		com.metis.book.model.order.Order order2 = new com.metis.book.model.order.Order();
 		order2.setOrderDate(new Date());
 		order2.setOrderTrack(trackDelivering);
 		order2.setPaymentMethod("momo");
+		order2.setUser(user);
 		orderRepository.save(order2);
 	}
 

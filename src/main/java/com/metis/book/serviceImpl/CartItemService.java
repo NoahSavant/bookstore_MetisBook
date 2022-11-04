@@ -35,4 +35,13 @@ public class CartItemService implements ICartItemService {
 		cartItemReposirory.save(item);
 	}
 
+	@Override
+	public CartItem getItemById(long itemId) {
+		CartItem item = cartItemReposirory.findById(itemId).get();
+		if(Objects.isNull(item)) {
+			log.info(AppConstant.CART_ITEM_NOT_FOUND+itemId);
+		}
+		return item;
+	}
+
 }

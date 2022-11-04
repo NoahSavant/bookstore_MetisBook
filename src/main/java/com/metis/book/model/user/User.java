@@ -24,6 +24,7 @@ import javax.persistence.UniqueConstraint;
 import com.metis.book.model.Cart;
 import com.metis.book.model.Image;
 import com.metis.book.model.audit.UserDateAudit;
+import com.metis.book.model.order.Order;
 
 import groovy.transform.ToString;
 import lombok.AllArgsConstructor;
@@ -78,6 +79,9 @@ public class User extends UserDateAudit  {
 	
 	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)	
 	private List<Address> addresses;
+	
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<Order> orders;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -122,5 +126,20 @@ public class User extends UserDateAudit  {
 		}
 		this.roles = roles;
 	}
+
+	public List<Order> getOrders() {
+		return orders==null?null:new ArrayList<>(this.orders);
+	}
+
+	public void setOrders(List<Order> orders) {
+		if(orders == null) {
+			this.orders = null;
+		}else {
+			this.orders = orders;
+		}
+		
+	}
+	
+	
 
 }

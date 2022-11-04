@@ -58,7 +58,7 @@ public class ProfileController {
 	public ModelAndView uploadImage(
 			ModelAndView mav,
 			@RequestParam("image") MultipartFile file) throws IOException {
-
+		log.info("vvvvvvvvvvvvvvvvvaaaaaaaaa");
 		userService.updateImage(file);
 		mav.setViewName("redirect:/member/profile");
 		return mav;
@@ -161,19 +161,19 @@ public class ProfileController {
 
 		
 		ProfileForm profileForm = ProfileForm.builder()
-				.username(user.getUsername())
-				.firstName(user.getFirstName())
-				.lastName(user.getLastName())
-				.email(user.getEmail())
+				.username(user.getUsername()==null?null:user.getUsername())
+				.firstName(user.getFirstName()==null?null:user.getFirstName())
+				.lastName(user.getLastName()==null?null:user.getLastName())
+				.email(user.getEmail()==null?null:user.getEmail())
 				.imageName(user.getImage()==null?null:user.getImage().getTitle())
 				.thumbnailName(user.getImage()==null?null:user.getImage().getThumbnailName())
-				.gender(user.getGender().toString())
-				.birthday(user.getBirthday().toString())
-				.phoneNumber(user.getPhoneNumber())
-				.province(address.getProvince())
-				.district(address.getDistrict())
-				.subDistrict(address.getSubDistrict())
-				.street(address.getStreet())
+				.gender(user.getGender()==null?null:user.getGender().toString())
+				.birthday(user.getBirthday()==null?null:user.getBirthday().toString())
+				.phoneNumber(user.getPhoneNumber()==null?null:user.getPhoneNumber())
+				.province(address==null?null:address.getProvince())
+				.district(address==null?null:address.getDistrict())
+				.subDistrict(address==null?null:address.getSubDistrict())
+				.street(address==null?null:address.getStreet())
 				.build();
 		
 		return profileForm;

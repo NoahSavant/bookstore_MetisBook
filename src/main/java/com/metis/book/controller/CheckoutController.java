@@ -1,12 +1,13 @@
 package com.metis.book.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,13 @@ import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IAddressService;
 import com.metis.book.service.ICartItemService;
 import com.metis.book.service.ICartService;
+import com.metis.book.service.IOrderService;
 import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping(value =  "/checkout")
+@RequestMapping(value =  "member/checkout")
 @Slf4j
 public class CheckoutController {
 
@@ -42,43 +44,77 @@ public class CheckoutController {
 	@Autowired
 	IAddressService addressService;
 	
-	@GetMapping
-	public ModelAndView viewOrderPage(ModelAndView mav) {
+	
+	@Autowired
+	IOrderService orderService;
+	
+	@PostMapping
+	public ModelAndView viewCheckoutPage(
+			ModelAndView mav,
+			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm) {
 		
+		if(Objects.isNull(checkoutForm) || checkoutForm.getCheckoutItems().size()<=0) {
+			mav.setViewName("redirect:/member/cart?error=true");
+			return mav;
+		}
+		
+		log.info(checkoutForm.toString());
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		
-		renderObject(mav,userPrincipal.getId());
+		renderObject(mav,userPrincipal.getId(),checkoutForm);
+		
 		mav.setViewName("/client/checkout.html");
 		return mav;
 	}
 	
 	@PostMapping(path = "/update")
-	public ModelAndView viewUpdateSection(
+	public ModelAndView updateCheckoutInfo(
 			ModelAndView mav,
 			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
 			BindingResult result) {
+		log.info("aaaaaaaaaaaaaaaaaaS");
 		log.info(checkoutForm.toString());
 		userService.updateCheckout(checkoutForm);
 		mav.setViewName("redirect:/checkout");
 		return mav;
 	}
-	private void renderObject(ModelAndView mav, Long userId) {
+	
+	@PostMapping("/pay")
+	public ModelAndView paymentProcessing(
+			ModelAndView mav,
+			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm) {
+		log.info("aaaaaaaaaaaaa");
+		log.info(checkoutForm.toString());
+		orderService.createOrder(checkoutForm);
+		mav.setViewName("redirect:/checkout");
+		return mav;
+	}
+	
+	private void renderObject(ModelAndView mav, Long userId,CheckoutForm checkoutForm) {
 		Cart cart = cartService.getCartByUser(userId);
 		User user = userService.getUserById(userId);
 		List<Address> addresses = addressService.getAddressByUser(user);
-		CheckoutForm checkoutForm = convert(user);
-		List<CartItem> cartItems = cart.getCartItems();
+		CheckoutForm checkoutFormValid = convert(user);
 		
-		
-		if(lackOfInfo(checkoutForm)) {
+		if(lackOfInfo(checkoutFormValid)) {
 			mav.addObject("lackInfo",true);
+		}
+		
+		List<String> itemId = checkoutForm.getCheckoutItems();
+		List<CartItem> cartItems = new ArrayList<>();
+		for (String item : itemId) {
+			CartItem cartItem =  cartItemService.getItemById(Long.parseLong(item));
+			if(Objects.nonNull(cartItems)) {
+				cartItems.add(cartItem);
+			}
 		}
 		
 		mav.addObject("addresses",addresses);
 		mav.addObject("checkoutForm",checkoutForm);
 		mav.addObject("cart",cart);
 		mav.addObject("cartItems",cartItems);
+		
 	}
 	
 	private CheckoutForm convert(User user) {
@@ -87,12 +123,11 @@ public class CheckoutController {
 		checkoutForm.setLastName(user.getLastName());
 		checkoutForm.setEmail(user.getEmail());
 		checkoutForm.setUsername(user.getUsername());
+		checkoutForm.setPaymentMethod("Cash");
+		checkoutForm.setDeliverMethod("Standard");
 		List<Address> addresses = addressService.getAddressByUser(user);
-		log.info("before address");
 		for (Address address : addresses) {
-			log.info("In address");
 			if(address.getIsPrimary()) {
-				log.info("In primary address");
 				checkoutForm.setFullAddress(address.getFullAddress());
 				checkoutForm.setDistrict(address.getDistrict());
 				checkoutForm.setSubDistrict(address.getSubDistrict());

@@ -1,5 +1,7 @@
 package com.metis.book.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -16,5 +18,8 @@ public class CheckoutForm {
 	private String district;
 	private String subDistrict;
 	private String province;
+	private String paymentMethod;
+	private String deliverMethod;
+	private List<String> checkoutItems;
 	private Boolean isPrimary;
 }

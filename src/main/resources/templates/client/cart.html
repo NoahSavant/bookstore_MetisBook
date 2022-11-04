@@ -39,10 +39,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
+				
 					<div class="table-main table-responsive">
+					<div th:if="${notChecked}" class="alert alert-warning mt-3 mb-3">
+								Vui lòng chọn sản phẩm để tiến hành thanh toán
+							</div>
 						<table class="table">
 							<thead>
 								<tr>
+									<th>Chọn</th>
 									<th>Hình</th>
 									<th>Tựa sách</th>
 									<th>Giá</th>
@@ -51,44 +56,54 @@
 									<th>Xóa</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr th:each="cartItem : ${cartItems}">
-									<td class="thumbnail-img">
-										<a href="#">
-											<img th:if="${cartItem.book.image.title}"
-												th:src="@{${'/uploads/books/'+cartItem.book.image.title}}"
-												class="img-fluid" />
-											<img th:if="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }"
-												th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
-												class="img-fluid" />
-										</a>
-									</td>
-									<td class="name-pr">
-										<a href="#">
-											[[${cartItem.book.title}]]
-										</a>
-									</td>
-									<td class="price-pr">
-										<p>[[${cartItem.book.price}]] VNĐ</p>
-									</td>
-									<td class="quantity-box">
-										<input type="number" size="4" th:value="${cartItem.quantity}" min="0" step="1"
-											onfocus="this.oldValue = this.value;"
-											th:onchange="updatePrice([[${cartItem.id}]],[[${cartItem.book.price}]],this)"
-											class="c-input-text qty text">
-										<p></p>
-									</td>
-									<td th:id="'total-pr' + ${cartItem.id}">
-										<p>[[${cartItem.getTotalPrice()}]] VNĐ</p>
-									</td>
-									<td class="remove-pr">
-										<span class="btn" th:onclick="deleteCartItem([[${cartItem.id}]])">
-											<i class="fas fa-times "></i>
-										</span>
-									</td>
-								</tr>
-
-							</tbody>
+							
+							<form method="POST", th:action="@{/member/checkout}" th:object="${checkoutForm}" id="cart">
+								<tbody >
+									<tr th:each="cartItem : ${cartItems}">
+										<td>
+											<div class="form-check form-switch">
+											  <input class="form-check-input item-cb" 
+											  	th:value="${cartItem.id}" th:field="*{checkoutItems}"
+											   type="checkbox" style="width: 30px; height: 30px;">
+											</div>
+										</td>
+										<td class="thumbnail-img">
+											<a href="#">
+												<img th:if="${cartItem.book.image.title}"
+													th:src="@{${'/uploads/books/'+cartItem.book.image.title}}"
+													class="img-fluid" />
+												<img th:if="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }"
+													th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
+													class="img-fluid" />
+											</a>
+										</td>
+										<td class="name-pr">
+											<a href="#">
+												[[${cartItem.book.title}]]
+											</a>
+										</td>
+										<td class="price-pr">
+											<p>[[${cartItem.book.price}]] VNĐ</p>
+										</td>
+										<td class="quantity-box">
+											<input type="number" size="4" th:value="${cartItem.quantity}" min="0" step="1"
+												onfocus="this.oldValue = this.value;"
+												th:onchange="updatePrice([[${cartItem.id}]],[[${cartItem.book.price}]],this)"
+												class="c-input-text qty text">
+											<p></p>
+										</td>
+										<td th:id="'total-pr' + ${cartItem.id}">
+											<p>[[${cartItem.getTotalPrice()}]] VNĐ</p>
+										</td>
+										<td class="remove-pr">
+											<span class="btn" th:onclick="deleteCartItem([[${cartItem.id}]])">
+												<i class="fas fa-times "></i>
+											</span>
+										</td>
+									</tr>
+	
+								</tbody>
+							</form>
 						</table>
 					</div>
 				</div>
@@ -142,8 +157,10 @@
 						<hr>
 					</div>
 				</div>
-				<div class="col-12 d-flex shopping-box">
-					<a th:href="@{/checkout}" class="ml-auto btn hvr-hover">Thanh toán</a>
+				<div class="col-12 d-flex shopping-box" title="Phải có ít nhất một sản phẩm để thanh toán">
+					<a th:classappend="${cartItems.size()<=0?'disabled':''}" 
+						href="#" th:onclick = "return submitItem()" class="ml-auto btn hvr-hover">Đặt hàng</a>
+					
 				</div>
 			</div>
 
@@ -165,6 +182,12 @@
 	<!-- End Footer  -->
 
 	<script>
+	
+		function submitItem(){
+			$('#cart').submit();
+			return false;
+		}
+	
 		function updatePrice(id, price, element) {
 			var currItemNum = element.value;
 			var oldItemNum = element.oldValue;

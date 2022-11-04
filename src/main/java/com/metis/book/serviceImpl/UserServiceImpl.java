@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -178,6 +179,11 @@ public class UserServiceImpl implements IUserService {
 		user.setCart(cartSaved);
 		user.setRoles(Arrays.asList(role));
 		
+		int int_random = ThreadLocalRandom.current().nextInt();
+		while(userRepository.existsByUsername(String.valueOf(int_random))){
+			int_random = ThreadLocalRandom.current().nextInt();
+		}
+		user.setUsername(String.valueOf(int_random));
 		User userSaved =  userRepository.save(user);
 		
 		return userSaved;
@@ -283,19 +289,20 @@ public class UserServiceImpl implements IUserService {
 			
 			user.setImage(newImage);
 			userRepository.save(user);
+			userPrincipal.setImage(newImage);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}else {
-			
 			// if user already have image
 			image.setTitle(user.getId().toString()+".png");
 			image.setUrl(fileNameAndPath.toString());
 			imageRepository.save(image);
+			
+			// update authenticated user 
+			userPrincipal.setImage(image);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 
-		imageRepository.save(image);
 		
-		// update authenticated user 
-		userPrincipal.setImage(image);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	@Override

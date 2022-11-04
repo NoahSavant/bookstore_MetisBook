@@ -1,6 +1,7 @@
 package com.metis.book.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.dto.CheckoutForm;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
 import com.metis.book.security.UserPrincipal;
@@ -35,8 +37,14 @@ public class CartController {
 	private ICartItemService cartItemService;
 	
 	@GetMapping
-	public ModelAndView viewCartPage(ModelAndView mav) {
+	public ModelAndView viewCartPage(
+			ModelAndView mav,
+			@RequestParam(name = "error" ,required = false) String error) {
 
+		if(Objects.nonNull(error) && error.equals("true")) {
+			mav.addObject("notChecked",true);
+		}
+		
 		log.info("in cart page");
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
@@ -77,6 +85,7 @@ public class CartController {
 	private void renderObject(ModelAndView mav, Long userId) {
 		Cart cart = cartService.getCartByUser(userId);
 		List<CartItem> cartItems = cart.getCartItems();
+		mav.addObject("checkoutForm",new CheckoutForm());
 		mav.addObject("cart",cart);
 		mav.addObject("cartItems",cartItems);
 	}

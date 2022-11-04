@@ -199,6 +199,22 @@
 														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
 													</div>
 												</div>
+												
+												<div th:if="${profile.gender==null}">
+													<label class="custom-control custom-radio custom-control-inline">
+														<input class="custom-control-input" disabled type="radio"
+															th:field="*{gender}" value="1">
+														<span class="custom-control-label"> Nam </span>
+													</label>
+													<label class="custom-control custom-radio custom-control-inline">
+														<input class="custom-control-input" disabled checked=""
+															type="radio" th:field="*{gender}" value="2">
+														<span class="custom-control-label"> Nữ </span>
+													</label>
+													<div class="alert alert-warning mt-3 mb-3"
+														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
+													</div>
+												</div>
 
 
 											</div>
