@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.metis.book.dto.CheckoutForm;
@@ -19,6 +21,7 @@ import com.metis.book.repository.OrderItemRepository;
 import com.metis.book.repository.OrderRepository;
 import com.metis.book.repository.OrderTrackRepository;
 import com.metis.book.repository.UserRepository;
+import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IOrderService;
 import com.metis.book.utils.AppConstant;
 
@@ -83,7 +86,13 @@ public class OrderServiceImpl implements IOrderService{
 		List<OrderItem> orderItems = convertToOrderItem(order,cartItems);
 		orderItemRepository.saveAll(orderItems);
 		
-
+		
+		// update cart item
+		Authentication authentication = SecurityContextHolder
+				.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		userPrincipal.setCartItemNum(String.valueOf(checkoutForm.getCheckoutItems().size()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 	}
 

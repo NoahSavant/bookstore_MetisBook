@@ -73,14 +73,17 @@ public class CheckoutController {
 			ModelAndView mav,
 			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
 			BindingResult result) {
-		log.info(checkoutForm.toString());
-		userService.updateCheckout(checkoutForm);
-		
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		
 		renderObject(mav,userPrincipal.getId(),checkoutForm);
 		mav.setViewName("/client/checkout.html");
+		if(checkoutForm.getRecievePhoneNumber()==null||checkoutForm.getNewAddress()==null) {
+			mav.addObject("lackInfo",true);
+			return mav;
+		}
+		userService.updateCheckout(checkoutForm);
+	
 		return mav;
 	}
 	
@@ -88,9 +91,18 @@ public class CheckoutController {
 	public ModelAndView paymentProcessing(
 			ModelAndView mav,
 			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm) {
-		log.info("aaaaaaaaaaaaa");
-		log.info(checkoutForm.toString());
+		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		if(lackOfInfo(checkoutForm)) {
+			
+			// bug when payment not refresh, bug in oauth not update address, bug in UUID
+			renderObject(mav,userPrincipal.getId(),checkoutForm);
+			mav.setViewName("/client/checkout.html");
+			return mav;
+		}
 		orderService.createOrder(checkoutForm);
+		
+		
 		mav.setViewName("redirect:/member/cart");
 		return mav;
 	}
@@ -127,8 +139,13 @@ public class CheckoutController {
 		checkoutForm.setLastName(user.getLastName());
 		checkoutForm.setEmail(user.getEmail());
 		checkoutForm.setUsername(user.getUsername());
-		checkoutForm.setPaymentMethod("Cash");
-		checkoutForm.setDeliverMethod("Standard");
+		if(checkoutForm.getDeliverMethod()==null) {
+			checkoutForm.setPaymentMethod("Cash");
+		}
+		if(checkoutForm.getDeliverMethod()==null) {
+			checkoutForm.setDeliverMethod("Standard");
+		}
+		
 		
 		List<Address> addresses = addressService.getAddressByUser(user);
 		for (Address address : addresses) {
@@ -149,7 +166,8 @@ public class CheckoutController {
 	
 	private Boolean lackOfInfo(CheckoutForm checkoutForm) {
 		
-		if(checkoutForm.getFullAddress()==null || checkoutForm.getPhoneNumber()==null) {
+		if(checkoutForm.getFullAddress()==null || checkoutForm.getFullAddress().equals("-1")) {
+
 			return true;
 		}
 		return false;

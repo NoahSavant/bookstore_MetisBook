@@ -520,8 +520,6 @@ public class InsertData {
 		blog3.setImage(imageThumbnail3);
 		blogRepository.save(blog3);
 	}
-// if fetch type = lazy, we can get that objects using get. Only able with eager type.
-// ToString is the thing cause stackoverflow, 
 
 	public void createCustomer() {
 
@@ -547,12 +545,9 @@ public class InsertData {
 		User user = User.builder().username("kiet").password(passwordEncoder.encode("456"))
 				.email("kietle1709@gmail.com").firstName("kiet").lastName("Le Nguyen Tuan")
 				.birthday(LocalDate.of(2002, 9, 17)).gender(1) // 1: male, 2: female, 3: Not know
-				.phoneNumber("01255145165").enabled(Boolean.TRUE).roles(Arrays.asList(roleUser)).cart(cartSaved)
+				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleUser)).cart(cartSaved)
 				.addresses(null).image(imageThumbnail).build();
 		userRepository.save(user);
-
-//		// Map user to cart because user not exits
-//		userSaved.getCart().setUser(userSaved);
 
 	}
 

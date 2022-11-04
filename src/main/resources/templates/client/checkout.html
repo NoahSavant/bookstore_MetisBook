@@ -83,6 +83,7 @@
 							<div class="mb-3" id="selectAddress" th:if="${addresses}">
 								<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
 								<select id="test" class="form-control" th:field="*{fullAddress}">
+									<option value="-1">--Chọn địa chỉ--</option>
 									<option th:value="${address.id}" th:each="address : ${addresses}">
 										[[${address.recievePhoneNumber}]] | [[${address.fullAddress}]]</option>
 
@@ -94,7 +95,7 @@
 									<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
 									<input type="text" class="form-control user-info" th:field="*{newAddress}"
 										placeholder="" required
-										oninvalid="this.setCustomValidity('Đại chỉ Không thể bỏ trống')"
+										oninvalid="this.setCustomValidity('Điạ chỉ Không thể bỏ trống')"
 										oninput="this.setCustomValidity('')">
 								</div>
 								<div class="row">

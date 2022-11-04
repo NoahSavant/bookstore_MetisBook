@@ -322,10 +322,7 @@ public class UserServiceImpl implements IUserService {
 			log.error(AppConstant.USER_NOT_FOUND);
 			return;
 		}
-		user.setFirstName(checkoutForm.getFirstName());
-		user.setLastName(checkoutForm.getLastName());
-		user.setPhoneNumber(checkoutForm.getPhoneNumber());
-		
+
 		if(checkoutForm.getNewAddress()!=null) {
 			updateAddress(user,checkoutForm);
 		}
