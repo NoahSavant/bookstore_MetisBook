@@ -174,12 +174,19 @@
 	
 	function pageChange(event) {
 		var controller = document.getElementById("cur_page");
-		var cur_page = controller.value;
+		var cur_page = parseInt(controller.value);
 		var last_page = cur_page;
-		if(event == 'p-before' && cur_page > 1){
+		if(event == 'p-before'){
+			if(cur_page == 1) {
+				return;
+			}
 			cur_page = cur_page - 1;
-		}else if(event == "p-after" && cur_page < Math.ceil(document.getElementById("size").value/2)) {
+		}else if(event == "p-after") {
+			if(cur_page == Math.ceil(document.getElementById("size").value/2)) {
+				return;
+			}
 			cur_page = cur_page + 1;
+			console.log(cur_page);
 		}else {
 			cur_page = event.split("-")[1];
 		}
@@ -187,9 +194,8 @@
 			return;
 		}
 		controller.value = cur_page;
-		var url = window.location.href.split("=")[0] + "=" + cur_page;
+		var url = window.location.href.split("=")[0] + "=" + cur_page.toString();
 		history.pushState({}, "", url);
-		console.log(window.location.href);
 		getPageList(last_page);
 	}
 	
