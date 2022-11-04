@@ -20,6 +20,7 @@ public class CheckoutForm {
 	private String province;
 	private String paymentMethod;
 	private String deliverMethod;
+	private String recievePhoneNumber;
 	private List<String> checkoutItems;
 	private Boolean isPrimary;
 }

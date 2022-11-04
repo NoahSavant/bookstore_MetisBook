@@ -259,6 +259,7 @@ public class UserServiceImpl implements IUserService {
 		address.setSubDistrict(profileForm.getSubDistrict());
 		address.setProvince(profileForm.getProvince());
 		address.setStreet(profileForm.getStreet());
+		address.setRecievePhoneNumber(user.getPhoneNumber());
 		addressRepository.save(address);
 		
 		user.setFirstName(profileForm.getFirstName());
@@ -340,7 +341,7 @@ public class UserServiceImpl implements IUserService {
 		address.setFullAddress(checkoutForm.getNewAddress());
 		address.setUser(user);
 		address.setStreet(checkoutForm.getStreet());
-		
+		address.setRecievePhoneNumber(checkoutForm.getRecievePhoneNumber());
 		if(checkoutForm.getIsPrimary()) {
 			address.setIsPrimary(true); // set primary is true
 			// find all address of user in db and change primary status

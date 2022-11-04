@@ -49,6 +49,9 @@ public class Address extends UserDateAudit{
 	@Column(name = "is_primary")
 	private Boolean isPrimary;
 	
+	@Column(name = "recieve_phone")
+	private String recievePhoneNumber;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;

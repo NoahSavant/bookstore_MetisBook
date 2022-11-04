@@ -168,9 +168,9 @@
 											<div class="form-group col-md-6">
 												<label>Giới tính</label>
 
-												<div th:if="${profile.gender=='1'}">
+												<div >
 													<label class="custom-control custom-radio custom-control-inline">
-														<input class="custom-control-input" disabled checked=""
+														<input class="custom-control-input" disabled
 															type="radio" th:field="*{gender}" value="1">
 														<span class="custom-control-label"> Nam </span>
 													</label>
@@ -179,50 +179,29 @@
 															th:field="*{gender}" value="2">
 														<span class="custom-control-label"> Nữ </span>
 													</label>
-													<div class="alert alert-warning mt-3 mb-3"
-														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
-													</div>
-												</div>
-
-												<div th:if="${profile.gender=='2'}">
 													<label class="custom-control custom-radio custom-control-inline">
 														<input class="custom-control-input" disabled type="radio"
-															th:field="*{gender}" value="1">
-														<span class="custom-control-label"> Nam </span>
-													</label>
-													<label class="custom-control custom-radio custom-control-inline">
-														<input class="custom-control-input" disabled checked=""
-															type="radio" th:field="*{gender}" value="2">
-														<span class="custom-control-label"> Nữ </span>
+															th:field="*{gender}" value="0">
+														<span class="custom-control-label"> Khác </span>
 													</label>
 													<div class="alert alert-warning mt-3 mb-3"
 														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
 													</div>
 												</div>
-												
-												<div th:if="${profile.gender==null}">
-													<label class="custom-control custom-radio custom-control-inline">
-														<input class="custom-control-input" disabled type="radio"
-															th:field="*{gender}" value="1">
-														<span class="custom-control-label"> Nam </span>
-													</label>
-													<label class="custom-control custom-radio custom-control-inline">
-														<input class="custom-control-input" disabled checked=""
-															type="radio" th:field="*{gender}" value="2">
-														<span class="custom-control-label"> Nữ </span>
-													</label>
-													<div class="alert alert-warning mt-3 mb-3"
-														th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">
-													</div>
-												</div>
-
 
 											</div>
 											<div class="col-md-6">
 												<button id="profileChange" type="button" onclick="enableInput()"
 													class="btn btn-outline-primary">Chỉnh Sửa</button>
-												<button id="profileSave" hidden type="submit"
+													
+												<div id="profileSave" hidden>
+													<button  type="button" onclick="back()"
+													class="btn btn-outline-primary">Trở về</button>
+													<button  type="submit"
 													class="btn btn-outline-primary">Lưu</button>
+													
+												</div>
+												
 											</div>
 
 
@@ -314,7 +293,19 @@
 
 			var buttonSave = document.getElementById("profileSave");
 			buttonSave.removeAttribute("hidden");
-
+		}
+		
+		function back(){
+			
+			var element = document.getElementsByTagName("input");
+			for (var i = 0; i < element.length; i++) {
+				element[i].disabled = true;
+			}
+			var buttonSave = document.getElementById("profileSave");
+			buttonSave.setAttribute("hidden", true);
+			
+			var buttonChange = document.getElementById("profileChange");
+			buttonChange.style.display = 'block';
 		}
 
 	</script>

@@ -73,10 +73,14 @@ public class CheckoutController {
 			ModelAndView mav,
 			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
 			BindingResult result) {
-		log.info("aaaaaaaaaaaaaaaaaaS");
 		log.info(checkoutForm.toString());
 		userService.updateCheckout(checkoutForm);
-		mav.setViewName("redirect:/checkout");
+		
+		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		
+		renderObject(mav,userPrincipal.getId(),checkoutForm);
+		mav.setViewName("/client/checkout.html");
 		return mav;
 	}
 	
@@ -87,7 +91,7 @@ public class CheckoutController {
 		log.info("aaaaaaaaaaaaa");
 		log.info(checkoutForm.toString());
 		orderService.createOrder(checkoutForm);
-		mav.setViewName("redirect:/checkout");
+		mav.setViewName("redirect:/member/cart");
 		return mav;
 	}
 	
@@ -95,9 +99,9 @@ public class CheckoutController {
 		Cart cart = cartService.getCartByUser(userId);
 		User user = userService.getUserById(userId);
 		List<Address> addresses = addressService.getAddressByUser(user);
-		CheckoutForm checkoutFormValid = convert(user);
+		checkoutForm = convert(user,checkoutForm);
 		
-		if(lackOfInfo(checkoutFormValid)) {
+		if(lackOfInfo(checkoutForm)) {
 			mav.addObject("lackInfo",true);
 		}
 		
@@ -117,14 +121,15 @@ public class CheckoutController {
 		
 	}
 	
-	private CheckoutForm convert(User user) {
-		CheckoutForm checkoutForm = new CheckoutForm();
+	private CheckoutForm convert(User user, CheckoutForm checkoutForm) {
+
 		checkoutForm.setFirstName(user.getFirstName());
 		checkoutForm.setLastName(user.getLastName());
 		checkoutForm.setEmail(user.getEmail());
 		checkoutForm.setUsername(user.getUsername());
 		checkoutForm.setPaymentMethod("Cash");
 		checkoutForm.setDeliverMethod("Standard");
+		
 		List<Address> addresses = addressService.getAddressByUser(user);
 		for (Address address : addresses) {
 			if(address.getIsPrimary()) {
@@ -133,6 +138,7 @@ public class CheckoutController {
 				checkoutForm.setSubDistrict(address.getSubDistrict());
 				checkoutForm.setStreet(address.getStreet());
 				checkoutForm.setProvince(address.getProvince());
+				checkoutForm.setRecievePhoneNumber(address.getRecievePhoneNumber());
 				break;
 			}
 		}

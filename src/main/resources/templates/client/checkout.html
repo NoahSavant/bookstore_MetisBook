@@ -40,43 +40,51 @@
 			<div class="row">
 				<div class="col-sm-6 col-lg-6 mb-3">
 					<div class="checkout-address">
+					
+					
 						<div class="title-left">
+							<h3>Thông tin tài khoản</h3>
+						</div>
+						<div class="contact-info-left  mr-3 w-100 mb-5">
+								<ul>	
+									<li>
+										<p><i class="fas fa-user-circle "></i>Tên đăng nhập: <a
+												href="mailto:metisbook@gmail.com ">[[${checkoutForm.username}]]</a></p>
+									</li>	
+									<li>
+										<p><i class="fas fa-user "></i>Họ tên: <a
+												href="mailto:metisbook@gmail.com ">[[${checkoutForm.firstName}]] [[${checkoutForm.lastName}]]</a></p>
+									</li>	
+									<li>
+										<p><i class="fas fa-phone-square "></i>Điện thoại: <a href="tel:+84 123456789">
+												[[${checkoutForm.phoneNumber}]]</a></p>
+									</li>
+									<li>
+										<p><i class="fas fa-envelope "></i>Email: <a
+												href="mailto:metisbook@gmail.com ">[[${checkoutForm.email}]]</a></p>
+									</li>
+								</ul>
+							</div>
+					
+						<div class="title-left pt-3">
 							<h3>Địa chỉ giao hàng</h3>
 						</div>
-						<form class="needs-validation" th:action="@{/member/checkout/update}" method="post" id="checkout_form">
+						<form class="needs-validation" th:action="@{/member/checkout/update}" method="post"
+							id="checkout_form">
 							<input hidden th:field="*{email}" />
 							<div th:if="${lackInfo}" class="alert alert-warning mt-3 mb-3">
 								Vui lòng cập nhật đầy đủ thông tin để tiến hành thanh toán
 							</div>
 
 							<div class="row">
-								<div class="col-md-6 mb-3">
-									<label class="mt-3 mb-3" for="firstName">Tên *</label>
-									<input type="text" class="form-control user-info" th:field="*{firstName}" disabled
-										placeholder="" value="" required
-										oninvalid="this.setCustomValidity('Tên Không thể bỏ trống')"
-										oninput="this.setCustomValidity('')">
-								</div>
-								<div class="col-md-6 mb-3">
-									<label class="mt-3 mb-3" for="lastName">Họ *</label>
-									<input type="text" class="form-control user-info" th:field="*{lastName}" disabled
-										placeholder="" value="" required
-										oninvalid="this.setCustomValidity('Họ Không thể bỏ trống')"
-										oninput="this.setCustomValidity('')">
-								</div>
-							</div>
-							<div class="mb-3">
-								<label class="mt-3 mb-3" for="email">Số điện thoại *</label>
-								<input type="text" class="form-control user-info" th:field="*{phoneNumber}" disabled
-									placeholder="" required
-									oninvalid="this.setCustomValidity('Số điện thoại Không thể bỏ trống')"
-									oninput="this.setCustomValidity('')">
+						
+								
 							</div>
 							<div class="mb-3" id="selectAddress" th:if="${addresses}">
 								<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
 								<select id="test" class="form-control" th:field="*{fullAddress}">
 									<option th:value="${address.id}" th:each="address : ${addresses}">
-										[[${address.fullAddress}]]</option>
+										[[${address.recievePhoneNumber}]] | [[${address.fullAddress}]]</option>
 
 
 								</select>
@@ -116,6 +124,13 @@
 										<input type="text" class="form-control user-info" th:field="*{street}" disabled
 											placeholder="" required
 											oninvalid="this.setCustomValidity('Số nhà Không thể bỏ trống')"
+											oninput="this.setCustomValidity('')">
+									</div>
+									<div class="col-md-5 mb-3">
+										<label class="mt-3 mb-3">Số điện thoại nhận hàng *</label>
+										<input type="text" class="form-control user-info"
+											th:field="*{recievePhoneNumber}" disabled placeholder="" required
+											oninvalid="this.setCustomValidity('Số điện thoại nhận hàng Không thể bỏ trống')"
 											oninput="this.setCustomValidity('')">
 									</div>
 
@@ -215,7 +230,7 @@
 								</div>
 								<div class="rounded p-2 bg-light">
 									<div class="media mb-2 border-bottom row pb-3" th:each="cartItem: ${cartItems}">
-									<input hidden th:field="*{checkoutItems}"/>
+										<input hidden th:field="*{checkoutItems}" />
 										<div class="col-2">
 											<a href="#">
 												<img style="max-width:100%;" th:if="${cartItem.book.image.title}"
@@ -309,7 +324,7 @@
 			$('#selectAddress').prop("hidden", false);
 		}
 
-		function submitDiff(){
+		function submitDiff() {
 			var frm = document.getElementById("checkout_form");
 			frm.action = "/member/checkout/pay";
 			frm.submit(); //Submit action performed

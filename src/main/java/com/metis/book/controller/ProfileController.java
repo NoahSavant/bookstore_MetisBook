@@ -58,7 +58,6 @@ public class ProfileController {
 	public ModelAndView uploadImage(
 			ModelAndView mav,
 			@RequestParam("image") MultipartFile file) throws IOException {
-		log.info("vvvvvvvvvvvvvvvvvaaaaaaaaa");
 		userService.updateImage(file);
 		mav.setViewName("redirect:/member/profile");
 		return mav;
@@ -72,14 +71,12 @@ public class ProfileController {
 
 		mav = getFormErrors(profileForm);
 		if(!mav.isEmpty()) {
-			mav.addObject("profile",profileForm);
-			mav.setViewName("client/profile");
+			mav = renderObjects();
 			return mav;
 		}
 		
 		// get required objects
-		mav.addObject("profile",profileForm);
-		mav.setViewName("client/profile");
+		mav = renderObjects();
 		
 		if(result.hasErrors()) {
 			log.info(result.getAllErrors().toString());

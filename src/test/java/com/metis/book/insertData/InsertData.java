@@ -307,6 +307,7 @@ public class InsertData {
 		address.setDistrict("Thuận An");
 		address.setProvince("Bình Dương");
 		address.setIsPrimary(Boolean.TRUE);
+		address.setRecievePhoneNumber(userAdmin.getPhoneNumber());
 		address.setUser(userAdmin);
 		addressRepository.save(address);
 
@@ -325,6 +326,7 @@ public class InsertData {
 		addressCustomer.setDistrict("Thủ Đức");
 		addressCustomer.setProvince("Hồ Chí Minh");
 		addressCustomer.setIsPrimary(Boolean.TRUE);
+		addressCustomer.setRecievePhoneNumber(userCustomer.getPhoneNumber());
 		addressCustomer.setUser(userCustomer);
 		addressRepository.save(addressCustomer);
 	}
