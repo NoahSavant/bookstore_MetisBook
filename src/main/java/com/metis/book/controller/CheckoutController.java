@@ -94,8 +94,7 @@ public class CheckoutController {
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		if(lackOfInfo(checkoutForm)) {
-			
-			// bug when payment not refresh, bug in oauth not update address, bug in UUID
+			mav.addObject("lackInfo",true);
 			renderObject(mav,userPrincipal.getId(),checkoutForm);
 			mav.setViewName("/client/checkout.html");
 			return mav;
@@ -103,7 +102,7 @@ public class CheckoutController {
 		orderService.createOrder(checkoutForm);
 		
 		
-		mav.setViewName("redirect:/member/cart");
+		mav.setViewName("/client/order-detail.html");
 		return mav;
 	}
 	

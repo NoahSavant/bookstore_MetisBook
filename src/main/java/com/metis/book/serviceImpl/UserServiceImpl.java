@@ -179,7 +179,7 @@ public class UserServiceImpl implements IUserService {
 		user.setCart(cartSaved);
 		user.setRoles(Arrays.asList(role));
 		
-		int int_random = ThreadLocalRandom.current().nextInt();
+		int int_random = Math.abs(ThreadLocalRandom.current().nextInt());
 		while(userRepository.existsByUsername(String.valueOf(int_random))){
 			int_random = ThreadLocalRandom.current().nextInt();
 		}
