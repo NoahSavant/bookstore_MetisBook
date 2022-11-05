@@ -16,103 +16,188 @@
 
 <body>
 	<div th:replace="client/fragments/main-top :: mainTop"></div>
-	<div class="container">
+	<div class="container-fluid mt-3 mb-3">
 
-		<section class="h-100 h-custom" style="background-color: #eee;">
-			<div class="container py-5 h-100">
+
+		
+		<section class="h-100 gradient-custom">
+			<div class="container-fluid py-5 h-100">
+				
 				<div class="row d-flex justify-content-center align-items-center h-100">
-					<div class="col-lg-8 col-xl-6">
-						<div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
-							<div class="card-body p-5">
+					<div class="col-lg-10 col-xl-8">
+						<div class="card" style="border-radius: 10px;">
+						
+							<div class="card-header px-4 py-5">
 
-								<p class="lead fw-bold mb-5" style="color: #f37a27;">Purchase Reciept</p>
+								<h5 class="text-muted mb-0">Cảm ơn vì đã đặt hàng,&emsp; <span
+										style="color: #a8729a;" th:text="${#authentication.getPrincipal().getUsername()}"></span>!</h5>
+							</div>
+							<div class="card-body p-4">
+								<div class="d-flex justify-content-between align-items-center mb-4">
+									<p class="lead fw-normal mb-0" style="color: #a8729a;">Đơn hàng</p>
+								</div>
+								<div class="card shadow-0 border mb-4">
+									<div class="card-body">
+										<div class="row">
+											<table class="table">
+												<thead>
+													<tr>
+														<th width="5%">Hình</th>
+														<th width="20%">Tựa sách</th>
+														<th width="10%">Giá</th>
+														<th width="10%">Số lượng</th>
+														<th width="10%">Tổng cộng</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="orderItem : ${order.orderItems}">
+														<td class="thumbnail-img">
+															<a href="#">
+																<img th:if="${orderItem.book.image.title}"
+																	th:src="@{${'/uploads/books/'+orderItem.book.image.title}}"
+																	class="img-fluid" />
+																<img th:if="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }"
+																	th:src="@{${'/uploads/'+orderItem.book.image.thumbnailName}}"
+																	class="img-fluid" />
+															</a>
+														</td>
+														<td class="name-pr">
+															<div style="height:70px; width:400px;overflow:auto;">
+																[[${orderItem.book.title}]]
+															</div>
+														</td>
+														<td class="price-pr">
+															<p>[[${orderItem.book.price}]] VNĐ</p>
+														</td>
+														<td class="quantity-box">
+															<p>[[${orderItem.quantity}]]</p>
+														</td>
+														<td>
+															<p>[[${orderItem.getTotalPrice()}]] VNĐ</p>
+														</td>
+													</tr>
 
-								<div class="row">
-									<div class="col mb-3">
-										<p class="small text-muted mb-1">Date</p>
-										<p>10 April 2021</p>
-									</div>
-									<div class="col mb-3">
-										<p class="small text-muted mb-1">Order No.</p>
-										<p>012j1gvs356c</p>
+												</tbody>
+											</table>
+										</div>
+										<hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+										<div class="d-flex flex-row justify-content-between align-items-center align-content-center">
+											<span th:if="${!order.orderTrack.status.equals('Đang chuẩn bị')}" class="dot"></span>
+											<span th:if="${order.orderTrack.status.equals('Đang chuẩn bị')}" class="d-flex justify-content-center 
+												align-items-center big-dot dot">
+													<i class="fa fa-check text-white"></i>
+												</span>
+											<hr class="flex-fill track-line">
+											
+											<span th:if="${!order.orderTrack.status.equals('Đang giao')}" class="dot"></span>
+											<span th:if="${order.orderTrack.status.equals('Đang giao')}" class="d-flex justify-content-center 
+												align-items-center big-dot dot">
+													<i class="fa fa-check text-white"></i>
+												</span>
+											<hr class="flex-fill track-line">
+											
+											<span th:if="${!order.orderTrack.status.equals('Đã giao')}" class="dot"></span>
+											<span th:if="${order.orderTrack.status.equals('Đã giao')}" class="d-flex justify-content-center 
+												align-items-center big-dot dot">
+													<i class="fa fa-check text-white"></i>
+												</span>
+										</div>
+
+										<div class="d-flex flex-row justify-content-between align-items-center">
+											<div class="d-flex flex-column align-items-start">
+												<span>Đang chuẩn bị</span>
+											</div>
+											<div class="d-flex flex-column justify-content-center"><span>Đang
+													giao</span></div>
+											<div class="d-flex flex-column justify-content-center align-items-center">
+												<span>Đã giao</span>
+											</div>
+										</div>
 									</div>
 								</div>
 
-								<div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
-									<div class="row">
-										<div class="col-md-8 col-lg-9">
-											<p>BEATS Solo 3 Wireless Headphones</p>
-										</div>
-										<div class="col-md-4 col-lg-3">
-											<p>£299.99</p>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-8 col-lg-9">
-											<p class="mb-0">Shipping</p>
-										</div>
-										<div class="col-md-4 col-lg-3">
-											<p class="mb-0">£33.00</p>
-										</div>
-									</div>
+								<div class="d-flex justify-content-between pt-2">
+									<p class="fw-bold mb-0">Chi tiết đơn hàng</p>
+									<p class="text-muted mb-0"><span class="fw-bold me-4">Tổng</span>
+										[[${order.getTotalPrice()}]] VNĐ</p>
 								</div>
 
-								<div class="row my-4">
-									<div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-										<p class="lead fw-bold mb-0" style="color: #f37a27;">£262.99</p>
-									</div>
+								<div class="d-flex justify-content-between">
+									<p class="text-muted mb-0">Mã đơn hàng : [[${order.id}]]</p>
+									<p class="text-muted mb-0"><span class="fw-bold me-4">Giảm giá:</span> 0 VNĐ</p>
 								</div>
 
-								<p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">Tracking Order</p>
-
-								<div class="row">
-									<div class="col-lg-12">
-
-										<div class="horizontal-timeline">
-
-											<ul class="list-inline items d-flex justify-content-between">
-												<li class="list-inline-item items-list">
-													<p class="py-1 px-2 rounded text-white"
-														style="background-color: #f37a27;">Ordered</p>
-												</li>
-												<li class="list-inline-item items-list">
-													<p class="py-1 px-2 rounded text-white"
-														style="background-color: #f37a27;">Shipped</p>
-												</li>
-												<li class="list-inline-item items-list">
-													<p class="py-1 px-2 rounded text-white"
-														style="background-color: #f37a27;">On the way
-													</p>
-												</li>
-												<li class="list-inline-item items-list text-end"
-													style="margin-right: 8px;">
-													<p style="margin-right: -8px;">Delivered</p>
-												</li>
-											</ul>
-
-										</div>
-
-									</div>
+								<div class="d-flex justify-content-between">
+									<p class="text-muted mb-0">Ngày đặt hàng : [[${order.orderDate}]]</p>
+									<p class="text-muted mb-0"><span class="fw-bold me-4">VAT:</span> 0 VNĐ</p>
 								</div>
 
-								<p class="mt-4 pt-2 mb-0">Want any help? <a href="#!" style="color: #f37a27;">Please
-										contact
-										us</a></p>
-
+								<div class="d-flex justify-content-between mb-5">
+									<p class="text-muted mb-0"><span class="fw-bold me-4">Phí giao hàng:</span> Miễn phí
+									</p>
+								</div>
+								<div class="shopping-box">
+								 	<a th:href="@{/}" class="ml-auto btn hvr-hover ">Trang chủ</a>
+								 </div>
+							</div>
+							<div class="card-footer border-0 px-4 py-5"
+								style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+								<h5
+									class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+									Tiền phải trả:&emsp;&emsp; <span class="h2 mb-0 ms-2">[[${order.getTotalPrice()}]]
+										VNĐ</span></h5>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-	
+
 		<!-- Bootstrap core JavaScript-->
 
 	</div>
+
 	<footer>
-			<div th:replace="client/fragments/footer :: footer"></div>
-			
-		</footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+	</footer>
+
+	<style>
+		.track-line {
+			height: 2px !important;
+			background-color: #488978;
+			opacity: 1;
+		}
+
+		.dot {
+			height: 10px;
+			width: 10px;
+			margin-left: 3px;
+			margin-right: 3px;
+			margin-top: 0px;
+			background-color: #488978;
+			border-radius: 50%;
+			display: inline-block
+		}
+
+		.big-dot {
+			height: 25px;
+			width: 25px;
+			margin-left: 0px;
+			margin-right: 0px;
+			margin-top: 0px;
+			background-color: #488978;
+			border-radius: 50%;
+			display: inline-block;
+		}
+
+		.big-dot i {
+			font-size: 12px;
+		}
+
+		.card-stepper {
+			z-index: 0
+		}
+	</style>
 </body>
 
 </html>

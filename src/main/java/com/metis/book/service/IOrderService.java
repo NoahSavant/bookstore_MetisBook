@@ -11,4 +11,6 @@ public interface IOrderService {
 
 	void createOrder(CheckoutForm checkoutForm);
 
+	Order getOrderById(Long orderId);
+
 }

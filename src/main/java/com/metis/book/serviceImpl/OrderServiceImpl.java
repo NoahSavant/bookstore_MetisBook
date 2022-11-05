@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -109,5 +110,34 @@ public class OrderServiceImpl implements IOrderService{
 		}
 		return orderItems;
 		
+	}
+
+	@Override
+	public Order getOrderById(Long orderId) {
+		
+		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+										.getPrincipal();
+		
+		User user = userRepository.findById(userPrincipal.getId()).get();
+		if(Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND+ userPrincipal.getId());
+			return null;
+		}
+		
+		
+		// check if authenticated user has that order
+		Optional<Order> order = orderRepository.findById(orderId);
+		
+		if(order.isEmpty()) {
+			log.error("Not found order");
+			return null;
+		}else {
+			User userChecked  = userRepository.findByOrders(order.get());
+			if(!user.getId().equals(userChecked.getId())) {
+				log.error("Not found order");
+				return null;
+			}
+		}
+		return order.get();
 	}
 }

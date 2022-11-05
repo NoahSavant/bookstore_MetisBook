@@ -102,7 +102,7 @@ public class CheckoutController {
 		orderService.createOrder(checkoutForm);
 		
 		
-		mav.setViewName("/client/order-detail.html");
+		mav.setViewName("redirect:/member/order-detail");
 		return mav;
 	}
 	
