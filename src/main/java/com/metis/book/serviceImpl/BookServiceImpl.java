@@ -253,7 +253,7 @@ public class BookServiceImpl implements IBookService{
 		}
 		List<Author> authors = new ArrayList<>();
 		for (String author : bookForm.getAuthors()) {
-			authors.add(authorRepository.findById(Long.parseLong(author)).get());
+			authors.add(authorRepository.findByName(author));
 		}
 		
 		
