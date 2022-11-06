@@ -17,4 +17,7 @@ public class AppConstant {
 	public static final String BLOG_NOT_FOUND = "Not found blog with id: ";
 	public static final String CONTACT_NOT_FOUND = "Not found contact with id: ";
 	public static final String REQUEST_NOT_FOUND = "Not found request with id: ";
+	public static final Long STANDARD = 20000L;
+	public static final Long FAST = 40000L;
+	public static final Long VERY_FAST = 60000L;
 }

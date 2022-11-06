@@ -9,7 +9,7 @@ public interface IOrderService {
 
 	List<Order> getAllOrderByUser();
 
-	void createOrder(CheckoutForm checkoutForm);
+	Long createOrder(CheckoutForm checkoutForm);
 
 	Order getOrderById(Long orderId);
 

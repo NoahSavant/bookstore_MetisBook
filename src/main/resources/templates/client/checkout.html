@@ -184,24 +184,27 @@
 								<div class="mb-4">
 									<div class="custom-control custom-radio">
 										<input id="shippingOption1" name="shipping-option" class="custom-control-input"
-											checked="checked" type="radio" th:field="*{deliverMethod}" value="Standard">
-										<label class="custom-control-label pl-4" for="shippingOption1">Thông thường (3-7
+											checked="checked" type="radio" th:field="*{deliverMethod}" value="Tiêu chuẩn"
+											th:onclick="updateFee([[${Standard}]])">
+										<label class="custom-control-label pl-4" for="shippingOption1">Tiêu chuẩn (3-7
 											ngày)</label>
-										<span class="float-right font-weight-bold">Miễn Phí</span>
+										<span class="float-right font-weight-bold">[[${Standard}]] VNĐ</span>
 									</div>
 									<div class="custom-control custom-radio">
 										<input id="shippingOption2" name="shipping-option" th:field="*{deliverMethod}"
-											value="Fast" class="custom-control-input" type="radio">
+											value="Nhanh" class="custom-control-input" type="radio"
+											th:onclick="updateFee([[${Fast}]])">
 										<label class="custom-control-label pl-4" for="shippingOption2">Nhanh (2-4
 											ngày)</label>
-										<span class="float-right font-weight-bold">20000 VNĐ</span>
+										<span class="float-right font-weight-bold">[[${Fast}]] VNĐ</span>
 									</div>
 									<div class="custom-control custom-radio">
 										<input id="shippingOption3" name="shipping-option" class="custom-control-input"
-											type="radio" th:field="*{deliverMethod}" value="VeryFast">
+											type="radio" th:field="*{deliverMethod}" value="Rất nhanh"
+											th:onclick="updateFee([[${VeryFast}]])">
 										<label class="custom-control-label pl-4" for="shippingOption3">Hỏa tốc (1
 											ngày)</label>
-										<span class="float-right font-weight-bold">40000 VNĐ</span>
+										<span class="float-right font-weight-bold">[[${VeryFast}]] VNĐ</span>
 									</div>
 								</div>
 							</div>
@@ -275,12 +278,12 @@
 								<hr class="my-1">
 								<div class="d-flex">
 									<h4>Phí giao hàng</h4>
-									<div class="ml-auto font-weight-bold"> Free </div>
+									<div id="deliverFee" class="ml-auto font-weight-bold"> Free </div>
 								</div>
 								<hr>
 								<div class="d-flex gr-total">
 									<h5>Tiền phải trả</h5>
-									<div class="ml-auto h5"> [[${cart.getTotalPrice()}]] </div>
+									<div id = "payFee" class="ml-auto h5"> [[${cart.getTotalPrice(checkoutForm.deliverMethod)}]] VNĐ</div>
 								</div>
 								<hr>
 							</div>
@@ -306,7 +309,15 @@
 		<div th:replace="client/fragments/footer :: footer"></div>
 	</footer>
 
-	<script>
+	<script th:inline="javascript">
+
+		function updateFee(fee){
+			var totalPrice = /*[[${cart.getTotalPrice()}]]*/ "";
+			var deliveFee = document.getElementById('deliverFee');
+			deliveFee.innerText = fee + ' VNĐ';
+			var payFee = document.getElementById('payFee');
+			payFee.innerText =parseInt(totalPrice) + parseInt(fee) +' VNĐ';
+		}
 
 		function editForm() {
 			$('.user-info').prop("disabled", false);

@@ -53,7 +53,7 @@ public class OrderServiceImpl implements IOrderService{
 	}
 
 	@Override
-	public void createOrder(CheckoutForm checkoutForm) {
+	public Long createOrder(CheckoutForm checkoutForm) {
 		
 		User user = userRepository.findByEmail(checkoutForm.getEmail());
 		if(Objects.isNull(user)) {
@@ -78,16 +78,21 @@ public class OrderServiceImpl implements IOrderService{
 		
 		
 		Order order = new Order();
+		String deliverMethod = checkoutForm.getDeliverMethod();
 		order.setUser(user);
-		order.setDeliverMethod(checkoutForm.getDeliverMethod());
+		order.setDeliverMethod(deliverMethod);
 		order.setPaymentMethod(checkoutForm.getPaymentMethod());
 		order.setOrderTrack(orderTrack);
 		order.setOrderDate(new Date());
+		
 		orderRepository.save(order);
 		List<OrderItem> orderItems = convertToOrderItem(order,cartItems);
-		orderItemRepository.saveAll(orderItems);
+		List<OrderItem> orderItemsSaved = orderItemRepository.saveAll(orderItems);
 		
-		
+		order.setOrderItems(orderItemsSaved);
+		order.setTotalPrice(order.getTotalPrice(deliverMethod));
+		log.info(order.getTotalPrice().toString());
+		orderRepository.save(order);
 		// update cart item
 		Authentication authentication = SecurityContextHolder
 				.getContext().getAuthentication();
@@ -95,6 +100,7 @@ public class OrderServiceImpl implements IOrderService{
 		userPrincipal.setCartItemNum(String.valueOf(checkoutForm.getCheckoutItems().size()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
+		return order.getId();
 	}
 
 	
