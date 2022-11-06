@@ -24,6 +24,7 @@ import com.metis.book.service.ICartItemService;
 import com.metis.book.service.ICartService;
 import com.metis.book.service.IOrderService;
 import com.metis.book.service.IUserService;
+import com.metis.book.utils.AppConstant;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -99,10 +100,10 @@ public class CheckoutController {
 			mav.setViewName("/client/checkout.html");
 			return mav;
 		}
-		orderService.createOrder(checkoutForm);
+		Long orderId = orderService.createOrder(checkoutForm);
 		
 		
-		mav.setViewName("redirect:/member/order-detail");
+		mav.setViewName("redirect:/member/order-detail?orderId="+orderId);
 		return mav;
 	}
 	
@@ -124,12 +125,18 @@ public class CheckoutController {
 				cartItems.add(cartItem);
 			}
 		}
-		
+		renderDeliverFee(mav);
 		mav.addObject("addresses",addresses);
 		mav.addObject("checkoutForm",checkoutForm);
 		mav.addObject("cart",cart);
 		mav.addObject("cartItems",cartItems);
 		
+	}
+	
+	private void renderDeliverFee(ModelAndView mav) {
+		mav.addObject("Standard",AppConstant.STANDARD);
+		mav.addObject("Fast",AppConstant.FAST);
+		mav.addObject("VeryFast",AppConstant.VERY_FAST);
 	}
 	
 	private CheckoutForm convert(User user, CheckoutForm checkoutForm) {
@@ -142,7 +149,7 @@ public class CheckoutController {
 			checkoutForm.setPaymentMethod("Cash");
 		}
 		if(checkoutForm.getDeliverMethod()==null) {
-			checkoutForm.setDeliverMethod("Standard");
+			checkoutForm.setDeliverMethod("Tiêu chuẩn");
 		}
 		
 		

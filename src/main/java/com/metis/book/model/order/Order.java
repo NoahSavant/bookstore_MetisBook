@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
 import com.metis.book.model.user.User;
+import com.metis.book.utils.AppConstant;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,13 +59,25 @@ public class Order extends UserDateAudit {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
-	public Long getTotalPrice() {
+	@Column(name =  "total_price")
+	private Long totalPrice;
+	
+	
+	public Long getTotalPrice(String deliverMethod) {
 		Long total = 0L;
 		if(this.orderItems.size()>0) {
 			for (OrderItem item : orderItems) {
 				total = total + item.getTotalPrice();
 			}
 		}
+		if(deliverMethod.equals("Tiêu chuẩn")) {
+			total = total + AppConstant.STANDARD;
+		}else if(deliverMethod.equals("Nhanh")) {
+			total = total + AppConstant.FAST;
+		}else if(deliverMethod.equals("Rất nhanh")) {
+			total = total + AppConstant.VERY_FAST;
+		}
+		
 		return total;
 	}
 	

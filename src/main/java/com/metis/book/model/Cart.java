@@ -16,6 +16,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.metis.book.model.user.User;
+import com.metis.book.utils.AppConstant;
 
 import lombok.Data;
 
@@ -35,6 +36,23 @@ public class Cart {
 	@OneToOne(mappedBy = "cart", fetch = FetchType.LAZY)
 	private User user;
 
+	public Long getTotalPrice(String deliverMethod) {
+		Long total = 0L;
+		if(this.cartItems.size()>0) {
+			for (CartItem item : cartItems) {
+				total = total + item.getTotalPrice();
+			}
+		}
+		if(deliverMethod.equals("Tiêu chuẩn")) {
+			total = total + AppConstant.STANDARD;
+		}else if(deliverMethod.equals("Nhanh")) {
+			total = total + AppConstant.FAST;
+		}else if(deliverMethod.equals("Rất nhanh")) {
+			total = total + AppConstant.VERY_FAST;
+		}
+		return total;
+	}
+	
 	public Long getTotalPrice() {
 		Long total = 0L;
 		if(this.cartItems.size()>0) {
