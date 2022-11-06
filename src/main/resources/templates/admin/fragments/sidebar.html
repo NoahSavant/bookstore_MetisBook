@@ -64,6 +64,12 @@
 				<span>Liên hệ</span></a>
 		</li>
 		<li class="nav-item"
+			th:classappend="${#httpServletRequest.requestURI.contains('/admin/bookrequest') ? 'active' : ''}">
+			<a class="nav-link" th:href="@{/admin/bookrequest}">
+				<i class="fas fa-fw fa-table"></i>
+				<span>Yêu cầu sách</span></a>
+		</li>
+		<li class="nav-item"
 			th:classappend="${#httpServletRequest.requestURI.contains('/admin/order') ? 'active' : ''}">
 			<a class="nav-link" th:href="@{/order.html}">
 				<i class="fas fa-fw fa-table"></i>
