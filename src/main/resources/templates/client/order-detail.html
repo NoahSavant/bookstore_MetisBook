@@ -31,6 +31,20 @@
 
 								<h5 class="text-muted mb-0">Cảm ơn vì đã đặt hàng,&emsp; <span
 										style="color: #a8729a;" th:text="${#authentication.getPrincipal().getUsername()}"></span>!</h5>
+								<th:block th:if="${order.paymentMethod =='Momo' && order.orderTrack.status == 'Chờ thanh toán'}">
+								
+								<p>Vui lòng chuyển số tiền bên dưới vào tài khoản momo sau:</p>
+								<div class="contact-info-left mt-3" id="momo-info">
+									<ul>
+										<li>
+											<p>Số tài khoản: 0783511740</p>
+										</li>
+										<li>
+											<p>Chủ tài khoản: Nguyễn Đức Khải</p>
+										</li>
+									</ul>
+									</div></th:block>
+								
 							</div>
 							<div class="card-body p-4">
 								<div class="d-flex justify-content-between align-items-center mb-4">
@@ -82,6 +96,13 @@
 										</div>
 										<hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
 										<div class="d-flex flex-row justify-content-between align-items-center align-content-center">
+										
+											<span th:if="${!order.orderTrack.status.equals('Chờ thanh toán')}" class="dot"></span>
+											<span th:if="${order.orderTrack.status.equals('Chờ thanh toán')}" class="d-flex justify-content-center 
+												align-items-center big-dot dot">
+												</span>
+											<hr class="flex-fill track-line">
+											
 											<span th:if="${!order.orderTrack.status.equals('Đang chuẩn bị')}" class="dot"></span>
 											<span th:if="${order.orderTrack.status.equals('Đang chuẩn bị')}" class="d-flex justify-content-center 
 												align-items-center big-dot dot">
@@ -104,6 +125,9 @@
 										</div>
 
 										<div class="d-flex flex-row justify-content-between align-items-center">
+										<div class="d-flex flex-column align-items-start">
+												<span>Chờ thanh toán</span>
+											</div>
 											<div class="d-flex flex-column align-items-start">
 												<span>Đang chuẩn bị</span>
 											</div>
