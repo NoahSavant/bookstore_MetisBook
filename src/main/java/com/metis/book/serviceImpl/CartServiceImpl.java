@@ -47,7 +47,7 @@ public class CartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public void addToCart(User user, Long bookId) {
+	public void addToCart(User user, Long bookId, int quantity) {
 		
 		Cart cart = cartReposiroty.findByUser(user);
 		
@@ -61,7 +61,7 @@ public class CartServiceImpl implements ICartService {
 		for (CartItem cartItem : cartItems) {
 			if(bookId == cartItem.getBook().getId()) {
 				// increase if already have cartItem with current book id
-				cartItem.setQuantity(cartItem.getQuantity()+1);
+				cartItem.setQuantity(cartItem.getQuantity()+quantity);
 				cartItemReposirory.save(cartItem);
 				return;
 			}
@@ -77,7 +77,7 @@ public class CartServiceImpl implements ICartService {
 		}
 		CartItem cartItem = new CartItem();
 		cartItem.setBook(book);
-		cartItem.setQuantity(1);
+		cartItem.setQuantity(quantity);
 		cartItem.setCart(cart);
 		cartItemReposirory.save(cartItem);
 	}

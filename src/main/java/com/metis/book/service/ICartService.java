@@ -9,7 +9,7 @@ public interface ICartService {
 
 	Cart getCartByUser(Long userId);
 
-	void addToCart(User user, Long bookId);
+	void addToCart(User user, Long bookId, int quantity);
 
 	int getStatus(List<String> cartItems);
 

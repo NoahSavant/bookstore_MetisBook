@@ -3,8 +3,6 @@ package com.metis.book.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.metis.book.dto.FilterForm;
 import com.metis.book.model.Book;
 import com.metis.book.model.Category;
-import com.metis.book.model.user.User;
-import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IBookService;
-import com.metis.book.service.ICartService;
 import com.metis.book.service.ICategoryService;
-import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,11 +32,6 @@ public class ShopController {
 	@Autowired
 	private ICategoryService categoryService;
 
-	@Autowired
-	private IUserService userService;
-	
-	@Autowired
-	private ICartService cartService;
 	
 	@GetMapping("/{categoryName}")
 	public ModelAndView viewCartPage(@PathVariable(value = "categoryName") String category,
@@ -102,15 +91,5 @@ public class ShopController {
 		return mav;
 	}
 
-	@GetMapping("/add")
-	public ModelAndView addToCart(ModelAndView mav, @RequestParam("bookId") String bookId) {
-
-		// Get authenticated usser
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		User user = userService.getUserById(userPrincipal.getId());
-		cartService.addToCart(user,Long.parseLong(bookId));
-		mav.setViewName("redirect:/member/cart");
-		return mav;
-	}
+	
 }

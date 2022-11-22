@@ -12,19 +12,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.dto.BookForm;
 import com.metis.book.dto.CheckoutForm;
 import com.metis.book.model.Book;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
+import com.metis.book.model.user.User;
 import com.metis.book.security.UserPrincipal;
+import com.metis.book.service.IBookService;
 import com.metis.book.service.ICartItemService;
 import com.metis.book.service.ICartService;
+import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +43,12 @@ public class CartController {
 	
 	@Autowired
 	private ICartItemService cartItemService;
+	
+	@Autowired
+	private IBookService bookService;
+	
+	@Autowired
+	IUserService userService;
 	
 	@GetMapping
 	public ModelAndView viewCartPage(
@@ -115,5 +126,53 @@ public class CartController {
 		mav.addObject("checkoutForm",new CheckoutForm());
 		mav.addObject("cart",cart);
 		mav.addObject("cartItems",cartItems);
+	}
+	
+	@GetMapping("/add")
+	public ModelAndView addToCart(ModelAndView mav, 
+			@RequestParam("bookId") String bookId,
+			@RequestParam(value = "quantity", required = false) String quantity) {
+
+		// Get authenticated user
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		
+		if(Objects.isNull(quantity)) {
+			quantity = "1";
+		}
+		
+		cartService.addToCart(user,Long.parseLong(bookId),Integer.parseInt(quantity));
+		mav.setViewName("redirect:/member/cart");
+		return mav;
+	}
+	
+	@PostMapping("/add")
+	public ModelAndView addToCartWithQuantity(
+			ModelAndView mav,
+			@ModelAttribute("bookId") String bookId,
+			@ModelAttribute("quantity") String quantity) {
+
+		
+		BookForm book = bookService.getById(Long.parseLong(bookId));
+		if(Long.parseLong(book.getQuantity()) <= Long.parseLong(quantity)) {
+			mav.addObject("insufficient",true);
+			int sold = bookService.getSoldNumberById(Long.parseLong(bookId));
+			List<Book> topFeatured = bookService.getTopFeatured();
+			mav.addObject("topFeatured",topFeatured);
+			mav.addObject("sold",sold);
+			mav.addObject("book",book);
+			mav.setViewName("client/shop-detail");
+			return mav;
+		}
+		// Get authenticated user
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		
+		cartService.addToCart(user,Long.parseLong(bookId),
+				Integer.parseInt(quantity));
+		mav.setViewName("redirect:/member/cart");
+		return mav;
 	}
 }
