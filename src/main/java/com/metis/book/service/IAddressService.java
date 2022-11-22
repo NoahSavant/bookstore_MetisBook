@@ -9,4 +9,8 @@ public interface IAddressService {
 
 	List<Address> getAddressByUser(User user);
 
+	Address getAddressById(Long addressId);
+
+	void updateAddress(Address address, User user);
+
 }

@@ -214,16 +214,26 @@
 							<div class="d-block my-3">
 								<div class="custom-control custom-radio">
 									<input id="credit" name="paymentMethod" th:field="*{paymentMethod}" value="Cash"
-										type="radio" class="custom-control-input" checked required>
+										type="radio" class="custom-control-input" checked required onclick="document.getElementById('momo-info').hidden = true">
 									<label class="custom-control-label pl-4" for="credit"> Thanh toán khi nhận
 										hàng</label>
 								</div>
 
 								<div class="custom-control custom-radio mt-3">
 									<input id="debit" name="paymentMethod" type="radio" th:field="*{paymentMethod}"
-										value="Momo" class=" custom-control-input " required>
+										value="Momo" class=" custom-control-input " required onclick = "document.getElementById('momo-info').removeAttribute('hidden');">
 									<label class="custom-control-label pl-4" for="debit"><img
 											src="https://developers.momo.vn/v3/vi/img/logo.svg">Momo</img></label>
+									<div class="contact-info-left mt-3" hidden id="momo-info">
+									<ul>
+										<li>
+											<p>Số tài khoản: 0783511740</p>
+										</li>
+										<li>
+											<p>Chủ tài khoản: Nguyễn Đức Khải</p>
+										</li>
+									</ul>
+									</div>
 								</div>
 							</div>
 						</div>

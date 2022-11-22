@@ -75,10 +75,12 @@ public class OrderServiceImpl implements IOrderService{
 				cartItemRepository.deleteById(Long.parseLong(item));
 			}
 		}
-		
-		
-		OrderTrack orderTrack = trackRepository.findByStatus("Đang chuẩn bị");
-		
+		OrderTrack orderTrack ;
+		if(checkoutForm.getPaymentMethod().equals("Momo")) {
+			orderTrack = trackRepository.findByStatus("Chờ thanh toán");
+		}else {
+			orderTrack = trackRepository.findByStatus("Đang chuẩn bị");
+		}
 		
 		Order order = new Order();
 		String deliverMethod = checkoutForm.getDeliverMethod();

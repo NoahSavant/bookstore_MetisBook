@@ -110,7 +110,7 @@
 		                                <ul>
 		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
 		                                </ul>
-		                                <a class="cart" href="#">Thêm vào giỏ hàng</a>
+		                                <a class="cart" th:href="@{/member/cart/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
 		                            </div>
 		                        </div>
 		                        <div class="why-text">
@@ -131,9 +131,9 @@
 									class="img-fluid"/>
 		                            <div class="mask-icon">
 		                                <ul>
-		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+		                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Chi tiết"><i class="fas fa-eye"></i></a></li>
 		                                </ul>
-		                                <a class="cart" href="#">Thêm vào giỏ hàng</a>
+		                                <a class="cart" th:href="@{/member/cart/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
 		                            </div>
 		                        </div>
 		                        <div class="why-text">

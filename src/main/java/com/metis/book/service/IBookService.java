@@ -37,4 +37,6 @@ public interface IBookService {
 	void updateBook(BookForm bookForm) throws ParseException, IOException;
 
 	List<Book> filter(List<Book> books, FilterForm filterForm);
+
+	int getSoldNumberById(Long bookId);
 }
