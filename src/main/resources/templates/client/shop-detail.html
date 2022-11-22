@@ -84,9 +84,12 @@
 						<p>Những cuốn sách hay nhất</p>
 					</div>
 					<div class="featured-products-box owl-carousel owl-theme">
-						<div class="item mr-5" th:each="item:${topFeatured}">
+						<div class="item mr-3 ml-3" th:each="item:${topFeatured}">
 							<div class="products-single fix">
 								<div class="box-img-hover">
+									<div class="type-lb">
+		                                <p class="sale">Còn bán</p>
+		                            </div>
 									<img th:if="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}"
 										class="img-fluid" />
 									<img th:if="${item.image.thumbnailName!=null && item.image.title == null }"

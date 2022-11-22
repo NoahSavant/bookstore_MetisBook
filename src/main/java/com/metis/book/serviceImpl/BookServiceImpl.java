@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -19,13 +20,20 @@ import com.metis.book.model.Book;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.Image;
 import com.metis.book.model.Inventory;
+import com.metis.book.model.order.Order;
+import com.metis.book.model.order.OrderItem;
+import com.metis.book.model.order.OrderTrack;
 import com.metis.book.repository.AuthorRepository;
 import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
+import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.CategoryRepository;
 import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.LanguageRepository;
+import com.metis.book.repository.OrderItemRepository;
+import com.metis.book.repository.OrderRepository;
+import com.metis.book.repository.OrderTrackRepository;
 import com.metis.book.service.IBookService;
 import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
@@ -47,9 +55,11 @@ public class BookServiceImpl implements IBookService {
 	@Autowired
 	InventoryRepository inventoryRepository;
 	@Autowired
-	CartItemReposirory cartItemReposirory;
-	@Autowired
 	ImageRepository imageRepository;
+	@Autowired
+	OrderRepository orderRepository;
+	@Autowired
+	OrderItemRepository orderItemRepository;
 
 	@Override
 	public void insert(BookForm bookForm) throws ParseException, IOException {
@@ -310,10 +320,18 @@ public class BookServiceImpl implements IBookService {
 			log.error(AppConstant.BOOK_NOT_FOUND+bookId);
 			return -1;
 		}
-		List<CartItem> cartItems = cartItemReposirory.findByBook(book);
-		for (CartItem cartItem : cartItems) {
-			sold = sold + cartItem.getQuantity();
+		List<Order> orders = orderRepository.findAll();
+		for (Order order : orders) {
+			if(!order.getOrderTrack().getStatus().equals("Chờ thanh toán")) {
+				for(OrderItem orderItem : order.getOrderItems()) {
+					if(orderItem.getBook().getId() == bookId) {
+						sold = sold + orderItem.getQuantity();
+					}
+					
+				}
+			}
 		}
+		
 		return sold;
 	}
 
