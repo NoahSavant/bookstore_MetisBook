@@ -3,6 +3,7 @@ package com.metis.book.service;
 import java.util.List;
 
 import com.metis.book.dto.CheckoutForm;
+import com.metis.book.dto.OrderShow;
 import com.metis.book.model.order.Order;
 
 public interface IOrderService {
@@ -13,4 +14,5 @@ public interface IOrderService {
 
 	Order getOrderById(Long orderId);
 
+	List<OrderShow> getOrderShows();
 }

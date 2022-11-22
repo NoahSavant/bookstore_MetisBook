@@ -1,11 +1,13 @@
 package com.metis.book.serviceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.metis.book.dto.OrderShow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,9 +48,10 @@ public class OrderServiceImpl implements IOrderService{
 	
 	@Autowired
 	OrderTrackRepository trackRepository;
-	
+
 	@Override
 	public List<Order> getAllOrderByUser() {
+
 		return orderRepository.findAll();
 	}
 
@@ -145,5 +148,22 @@ public class OrderServiceImpl implements IOrderService{
 			}
 		}
 		return order.get();
+	}
+
+	@Override
+	public List<OrderShow> getOrderShows() {
+		List<User> users = userRepository.findAll();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		List<OrderShow> orderShows = new ArrayList<>();
+		for (User user: users) {
+			for (Order order: user.getOrders()) {
+				OrderShow orderShow = new OrderShow();
+				orderShow.setUsername(user.getUsername());
+				orderShow.setOrder(order);
+				orderShow.setOrderDate(formatter.format(order.getOrderDate()));
+				orderShows.add(orderShow);
+			}
+		}
+		return orderShows;
 	}
 }
