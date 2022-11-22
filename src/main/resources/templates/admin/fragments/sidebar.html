@@ -14,7 +14,7 @@
 		<hr class="sidebar-divider my-0">
 
 		<!-- Nav Item - Dashboard -->
-		<li class="nav-item">
+		<li class="nav-item" >
 			<a class="nav-link" th:href="@{/index.html}">
 				<i class="fas fa-fw fa-tachometer-alt"></i>
 				<span>Dashboard</span></a>
@@ -37,7 +37,7 @@
 				</div>
 			</div>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" th:classappend="${#httpServletRequest.requestURI.contains('/admin/book') ? 'active' : ''}">
 			<a class="nav-link collapsed" th:href="@{/#}" data-toggle="collapse" data-target="#collapseBook"
 				aria-expanded="true" aria-controls="collapseTwo">
 				<i class="fas fa-fw fa-book"></i>
@@ -71,7 +71,7 @@
 		</li>
 		<li class="nav-item"
 			th:classappend="${#httpServletRequest.requestURI.contains('/admin/order') ? 'active' : ''}">
-			<a class="nav-link" th:href="@{/order.html}">
+			<a class="nav-link" th:href="@{/admin/order}">
 				<i class="fas fa-fw fa-table"></i>
 				<span>Đơn hàng</span></a>
 		</li>
