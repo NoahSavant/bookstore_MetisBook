@@ -232,6 +232,7 @@ public class BookServiceImpl implements IBookService{
 		//bookForm.setFile(book.getImage());
 		if (!Objects.isNull(book.getImage())) {
 			bookForm.setImageName(book.getImage().getTitle());
+			bookForm.setThumbnailName(book.getImage().getThumbnailName());
 		}
 		bookForm.setId(bookId.toString());
 		bookForm.setLanguage(book.getLanguage().getName());

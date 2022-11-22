@@ -3,6 +3,9 @@ package com.metis.book.controller;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.CheckoutForm;
+import com.metis.book.model.Book;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
 import com.metis.book.security.UserPrincipal;
@@ -29,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CartController {
 
-	
 	@Autowired
 	private ICartService cartService;
 	
@@ -39,12 +42,10 @@ public class CartController {
 	@GetMapping
 	public ModelAndView viewCartPage(
 			ModelAndView mav,
-			@RequestParam(name = "error" ,required = false) String error) {
+			HttpServletRequest request,
+			HttpSession session) {
 
-		if(Objects.nonNull(error) && error.equals("true")) {
-			mav.addObject("notChecked",true);
-		}
-		
+		checkError(request,session,mav);
 		log.info("in cart page");
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
@@ -52,6 +53,32 @@ public class CartController {
 		renderObject(mav,userPrincipal.getId());
 		mav.setViewName("/client/cart");
 		return mav;
+	}
+	
+	private void checkError(HttpServletRequest request, HttpSession session, ModelAndView mav) {
+		session = request.getSession();
+		String error = "";
+		String bookId = "";
+		if(Objects.nonNull( session.getAttribute("error"))) {
+			error =  session.getAttribute("error").toString();
+			session.removeAttribute("error");
+		}
+		if(Objects.nonNull(session.getAttribute("error-bookId"))) {
+			bookId = session.getAttribute("error-bookId").toString();
+			session.removeAttribute("error-bookId");
+		}
+		if(Objects.nonNull(error) && error != "" && error.equals("true")) {
+			mav.addObject("notChecked",true);
+		}else if(Objects.nonNull(bookId) && bookId !="") {
+			Book book = cartItemService.getItemById(Long.parseLong(bookId)).getBook();
+			if(book.getAvailable() == false) {
+				mav.addObject("notAvailable",book.getTitle());
+			}else {
+				mav.addObject("insufficient", book.getTitle());
+				mav.addObject("inventory", book.getInventory().getQuantiy());
+			}
+		}
+		
 	}
 	
 	@DeleteMapping("/delete")

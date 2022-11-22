@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -52,10 +54,17 @@ public class CheckoutController {
 	@PostMapping
 	public ModelAndView viewCheckoutPage(
 			ModelAndView mav,
-			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm) {
+			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
+			HttpSession session) {
 		
 		if(Objects.isNull(checkoutForm) || checkoutForm.getCheckoutItems().size()<=0) {
-			mav.setViewName("redirect:/member/cart?error=true");
+			session.setAttribute("error","true");
+			mav.setViewName("redirect:/member/cart");
+			return mav;
+		}
+		if(getStatus(checkoutForm) != 0) {
+			session.setAttribute("error-bookId",getStatus(checkoutForm));
+			mav.setViewName("redirect:/member/cart");
 			return mav;
 		}
 		
@@ -68,6 +77,14 @@ public class CheckoutController {
 		mav.setViewName("/client/checkout.html");
 		return mav;
 	}
+	
+	private int getStatus(CheckoutForm checkoutForm) {
+		
+		List<String> cartItems = checkoutForm.getCheckoutItems();
+		return cartService.getStatus(cartItems);
+	}
+	
+	
 	
 	@PostMapping(path = "/update")
 	public ModelAndView updateCheckoutInfo(

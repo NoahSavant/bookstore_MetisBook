@@ -43,6 +43,7 @@ public class BookForm {
 	private MultipartFile file;
 	private String available;
 	private String ImageName;
+	private String thumbnailName;
 	private List<String> authors;
 	
 }

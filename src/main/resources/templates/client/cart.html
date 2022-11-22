@@ -44,6 +44,12 @@
 					<div th:if="${notChecked}" class="alert alert-warning mt-3 mb-3">
 								Vui lòng chọn sản phẩm để tiến hành thanh toán
 							</div>
+					<div th:if="${notAvailable}" class="alert alert-warning mt-3 mb-3">
+								Cuốn sách có tiêu đề "[[${notAvailable}]]" không còn bán nữa
+							</div>
+						<div th:if="${insufficient}" class="alert alert-warning mt-3 mb-3">
+								Cuốn sách có tiêu đề "[[${insufficient}]]" trong kho chỉ còn lại [[${inventory}]] cuốn
+							</div>	
 						<table class="table">
 							<thead>
 								<tr>

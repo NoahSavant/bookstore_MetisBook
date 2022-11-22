@@ -1,11 +1,10 @@
 package com.metis.book.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,25 +18,39 @@ import org.springframework.web.servlet.ModelAndView;
 import com.metis.book.dto.FilterForm;
 import com.metis.book.model.Book;
 import com.metis.book.model.Category;
+import com.metis.book.model.user.User;
+import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IBookService;
+import com.metis.book.service.ICartService;
 import com.metis.book.service.ICategoryService;
+import com.metis.book.service.IUserService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/shop")
+@Slf4j
 public class ShopController {
 
 	@Autowired
 	private IBookService bookService;
-	
+
 	@Autowired
 	private ICategoryService categoryService;
+
+	@Autowired
+	private IUserService userService;
+	
+	@Autowired
+	private ICartService cartService;
 	
 	@GetMapping("/{categoryName}")
-	public ModelAndView viewCartPage(@PathVariable(value = "categoryName") String category, @RequestParam(value = "page") int page) {
+	public ModelAndView viewCartPage(@PathVariable(value = "categoryName") String category,
+			@RequestParam(value = "page") int page) {
 		List<Book> books;
-		if(category.compareTo("Tatca") == 0) {
+		if (category.compareTo("Tatca") == 0) {
 			books = bookService.getAllBooks();
-		}else {
+		} else {
 			books = bookService.getBooksByCategory(category);
 		}
 		List<String> publishers = bookService.getAllPublishers();
@@ -59,18 +72,20 @@ public class ShopController {
 		mav.setViewName("/client/shop");
 		return mav;
 	}
-	
+
 	@PostMapping("/{categoryName}")
-	public ModelAndView viewCartPagePost(@PathVariable(value = "categoryName") String category, @RequestParam(value = "page") int page,
-			@ModelAttribute("filterForm") FilterForm filterForm, BindingResult result) {
+	public ModelAndView viewCartPagePost(@PathVariable(value = "categoryName") String category,
+			@RequestParam(value = "page") int page, @ModelAttribute("filterForm") FilterForm filterForm,
+			BindingResult result) {
 		List<Book> books;
-		if(category.compareTo("Tatca") == 0) {
+		if (category.compareTo("Tatca") == 0) {
 			books = bookService.getAllBooks();
-		}else {
+		} else {
 			books = bookService.getBooksByCategory(category);
 		}
 		books = bookService.filter(books, filterForm);
-		System.out.print(filterForm.getMinPrice() + " aaaa " + filterForm.getMaxPrice() + " aaa " + filterForm.getPublisherName());
+		System.out.print(filterForm.getMinPrice() + " aaaa " + filterForm.getMaxPrice() + " aaa "
+				+ filterForm.getPublisherName());
 		List<String> publishers = bookService.getAllPublishers();
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();
@@ -84,6 +99,18 @@ public class ShopController {
 		mav.addObject("cur_page", page);
 		mav.addObject("maxP", bookService.getMaxPrice());
 		mav.setViewName("/client/shop");
+		return mav;
+	}
+
+	@GetMapping("/add")
+	public ModelAndView addToCart(ModelAndView mav, @RequestParam("bookId") String bookId) {
+
+		// Get authenticated usser
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		cartService.addToCart(user,Long.parseLong(bookId));
+		mav.setViewName("redirect:/member/cart");
 		return mav;
 	}
 }
