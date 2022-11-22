@@ -15,4 +15,8 @@ public interface IOrderService {
 	Order getOrderById(Long orderId);
 
 	List<OrderShow> getOrderShows();
+
+    OrderShow getOrderShowById(Long orderID);
+
+    void updateOrder(OrderShow orderShow);
 }

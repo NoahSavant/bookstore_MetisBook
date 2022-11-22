@@ -168,4 +168,27 @@ public class OrderServiceImpl implements IOrderService{
 		}
 		return orderShows;
 	}
+
+	@Override
+	public OrderShow getOrderShowById(Long orderID) {
+		Order order = getOrderById(orderID);
+		OrderShow orderShow = new OrderShow();
+		orderShow.setOrder(order);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		orderShow.setOrderDate(order.getOrderDate().toString());
+		return orderShow;
+	}
+
+	@Override
+	public void updateOrder(OrderShow orderShow) {
+		Order order = orderRepository.findById(orderShow.getOrder().getId()).get();
+		if (Objects.isNull(order)) {
+			log.error(AppConstant.BOOK_NOT_FOUND + orderShow.getOrder().getId());
+		}
+		log.info("aaaaaaaaaaaaaaaaaa");
+		log.info(orderShow.getOrder().getOrderTrack().getStatus());
+		log.info("aaaaaaaaaaaaaaaaaa");
+		order.setOrderTrack(trackRepository.findById(orderShow.getOrder().getOrderTrack().getId()).get());
+		orderRepository.save(order);
+	}
 }

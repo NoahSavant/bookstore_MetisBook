@@ -80,7 +80,11 @@
                                             <td>[[${orderShow.order.paymentMethod}]]</td>
                                             <td>[[${orderShow.order.deliverMethod}]]</td>
                                             <td>[[${orderShow.order.orderTrack.status}]]</td>
-                                            <td><input type="button" class="btn btn-primary" value="Edit" onclick="deleteRow(this)"></td>
+                                            <td>
+                                                <a th:href="@{/admin/order/edit(orderId=${orderShow.order.id},username=${orderShow.username})}">
+                                                    <input type="button" class="btn btn-primary" value="Sửa">
+                                                </a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
