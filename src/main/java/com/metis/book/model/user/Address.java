@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Table(name = "addresses")
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class Address extends UserDateAudit{
 
 	private static final long serialVersionUID = 1L;
@@ -58,21 +60,21 @@ public class Address extends UserDateAudit{
 
 	public String getFullAddress() {
 		
-		if(this.fullAddress!="") {
+		if(this.fullAddress!="" && this.fullAddress != null) {
 			return this.fullAddress;
 		}
-		
 		String fullAddress = "";
-		if(this.street!="") {
+		if(this.street!="" && this.street!=null) {
+			System.out.println(this.street);
 			fullAddress = fullAddress + this.street+", ";
 		}
-		if(this.subDistrict!="") {
+		if(this.subDistrict!="" && this.subDistrict!=null) {
 			fullAddress = fullAddress + this.subDistrict+", ";
 		}
-		if(this.district!="") {
+		if(this.district!="" && this.district !=null) {
 			fullAddress = fullAddress + this.district+", ";
 		}
-		if(this.province!="") {
+		if(this.province!="" && this.province !=null) {
 			fullAddress = fullAddress + this.province;
 		}
 		String lastChar = fullAddress.substring(fullAddress.length() - 1);

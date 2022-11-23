@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import com.metis.book.service.ICartItemService;
 import com.metis.book.service.ICartService;
 import com.metis.book.service.IOrderService;
 import com.metis.book.service.IUserService;
+import com.metis.book.utils.AppConstant;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,10 +54,17 @@ public class CheckoutController {
 	@PostMapping
 	public ModelAndView viewCheckoutPage(
 			ModelAndView mav,
-			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm) {
+			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
+			HttpSession session) {
 		
 		if(Objects.isNull(checkoutForm) || checkoutForm.getCheckoutItems().size()<=0) {
-			mav.setViewName("redirect:/member/cart?error=true");
+			session.setAttribute("error","true");
+			mav.setViewName("redirect:/member/cart");
+			return mav;
+		}
+		if(getStatus(checkoutForm) != 0) {
+			session.setAttribute("error-bookId",getStatus(checkoutForm));
+			mav.setViewName("redirect:/member/cart");
 			return mav;
 		}
 		
@@ -67,6 +77,14 @@ public class CheckoutController {
 		mav.setViewName("/client/checkout.html");
 		return mav;
 	}
+	
+	private int getStatus(CheckoutForm checkoutForm) {
+		
+		List<String> cartItems = checkoutForm.getCheckoutItems();
+		return cartService.getStatus(cartItems);
+	}
+	
+	
 	
 	@PostMapping(path = "/update")
 	public ModelAndView updateCheckoutInfo(
@@ -94,16 +112,15 @@ public class CheckoutController {
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		if(lackOfInfo(checkoutForm)) {
-			
-			// bug when payment not refresh, bug in oauth not update address, bug in UUID
+			mav.addObject("lackInfo",true);
 			renderObject(mav,userPrincipal.getId(),checkoutForm);
 			mav.setViewName("/client/checkout.html");
 			return mav;
 		}
-		orderService.createOrder(checkoutForm);
+		Long orderId = orderService.createOrder(checkoutForm);
 		
 		
-		mav.setViewName("redirect:/member/cart");
+		mav.setViewName("redirect:/member/order-detail?orderId="+orderId);
 		return mav;
 	}
 	
@@ -125,12 +142,18 @@ public class CheckoutController {
 				cartItems.add(cartItem);
 			}
 		}
-		
+		renderDeliverFee(mav);
 		mav.addObject("addresses",addresses);
 		mav.addObject("checkoutForm",checkoutForm);
 		mav.addObject("cart",cart);
 		mav.addObject("cartItems",cartItems);
 		
+	}
+	
+	private void renderDeliverFee(ModelAndView mav) {
+		mav.addObject("Standard",AppConstant.STANDARD);
+		mav.addObject("Fast",AppConstant.FAST);
+		mav.addObject("VeryFast",AppConstant.VERY_FAST);
 	}
 	
 	private CheckoutForm convert(User user, CheckoutForm checkoutForm) {
@@ -143,7 +166,7 @@ public class CheckoutController {
 			checkoutForm.setPaymentMethod("Cash");
 		}
 		if(checkoutForm.getDeliverMethod()==null) {
-			checkoutForm.setDeliverMethod("Standard");
+			checkoutForm.setDeliverMethod("Tiêu chuẩn");
 		}
 		
 		

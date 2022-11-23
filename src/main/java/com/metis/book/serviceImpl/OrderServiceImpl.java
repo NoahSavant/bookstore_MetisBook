@@ -1,10 +1,13 @@
 package com.metis.book.serviceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
+import com.metis.book.dto.OrderShow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,14 +48,15 @@ public class OrderServiceImpl implements IOrderService{
 	
 	@Autowired
 	OrderTrackRepository trackRepository;
-	
+
 	@Override
 	public List<Order> getAllOrderByUser() {
+
 		return orderRepository.findAll();
 	}
 
 	@Override
-	public void createOrder(CheckoutForm checkoutForm) {
+	public Long createOrder(CheckoutForm checkoutForm) {
 		
 		User user = userRepository.findByEmail(checkoutForm.getEmail());
 		if(Objects.isNull(user)) {
@@ -71,22 +75,29 @@ public class OrderServiceImpl implements IOrderService{
 				cartItemRepository.deleteById(Long.parseLong(item));
 			}
 		}
-		
-		
-		OrderTrack orderTrack = trackRepository.findByStatus("Đang chuẩn bị");
-		
+		OrderTrack orderTrack ;
+		if(checkoutForm.getPaymentMethod().equals("Momo")) {
+			orderTrack = trackRepository.findByStatus("Chờ thanh toán");
+		}else {
+			orderTrack = trackRepository.findByStatus("Đang chuẩn bị");
+		}
 		
 		Order order = new Order();
+		String deliverMethod = checkoutForm.getDeliverMethod();
 		order.setUser(user);
-		order.setDeliverMethod(checkoutForm.getDeliverMethod());
+		order.setDeliverMethod(deliverMethod);
 		order.setPaymentMethod(checkoutForm.getPaymentMethod());
 		order.setOrderTrack(orderTrack);
 		order.setOrderDate(new Date());
+		
 		orderRepository.save(order);
 		List<OrderItem> orderItems = convertToOrderItem(order,cartItems);
-		orderItemRepository.saveAll(orderItems);
+		List<OrderItem> orderItemsSaved = orderItemRepository.saveAll(orderItems);
 		
-		
+		order.setOrderItems(orderItemsSaved);
+		order.setTotalPrice(order.getTotalPrice(deliverMethod));
+		log.info(order.getTotalPrice().toString());
+		orderRepository.save(order);
 		// update cart item
 		Authentication authentication = SecurityContextHolder
 				.getContext().getAuthentication();
@@ -94,6 +105,7 @@ public class OrderServiceImpl implements IOrderService{
 		userPrincipal.setCartItemNum(String.valueOf(checkoutForm.getCheckoutItems().size()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
+		return order.getId();
 	}
 
 	
@@ -109,5 +121,74 @@ public class OrderServiceImpl implements IOrderService{
 		}
 		return orderItems;
 		
+	}
+
+	@Override
+	public Order getOrderById(Long orderId) {
+		
+		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+										.getPrincipal();
+		
+		User user = userRepository.findById(userPrincipal.getId()).get();
+		if(Objects.isNull(user)) {
+			log.error(AppConstant.USER_NOT_FOUND+ userPrincipal.getId());
+			return null;
+		}
+		
+		
+		// check if authenticated user has that order
+		Optional<Order> order = orderRepository.findById(orderId);
+		
+		if(order.isEmpty()) {
+			log.error("Not found order");
+			return null;
+		}else {
+			User userChecked  = userRepository.findByOrders(order.get());
+			if(!user.getId().equals(userChecked.getId())) {
+				log.error("Not found order");
+				return null;
+			}
+		}
+		return order.get();
+	}
+
+	@Override
+	public List<OrderShow> getOrderShows() {
+		List<User> users = userRepository.findAll();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		List<OrderShow> orderShows = new ArrayList<>();
+		for (User user: users) {
+			for (Order order: user.getOrders()) {
+				OrderShow orderShow = new OrderShow();
+				orderShow.setUsername(user.getUsername());
+				orderShow.setOrder(order);
+				orderShow.setOrderDate(formatter.format(order.getOrderDate()));
+				orderShows.add(orderShow);
+			}
+		}
+		return orderShows;
+	}
+
+	@Override
+	public OrderShow getOrderShowById(Long orderID) {
+		Order order = getOrderById(orderID);
+		OrderShow orderShow = new OrderShow();
+		orderShow.setOrder(order);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		orderShow.setOrderDate(order.getOrderDate().toString());
+		return orderShow;
+	}
+
+	@Override
+	public void updateOrder(OrderShow orderShow) {
+		Order order = orderRepository.findById(orderShow.getOrder().getId()).get();
+		if (Objects.isNull(order)) {
+			log.error(AppConstant.BOOK_NOT_FOUND + orderShow.getOrder().getId());
+		}
+		log.info("aaaaaaaaaaaaaaaaaa");
+		log.info(orderShow.getOrder().getOrderTrack().getStatus());
+		log.info("aaaaaaaaaaaaaaaaaa");
+		order.setOrderTrack(trackRepository.findById(orderShow.getOrder().getOrderTrack().getId()).get());
+		orderRepository.save(order);
 	}
 }

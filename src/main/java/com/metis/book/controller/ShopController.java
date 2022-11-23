@@ -1,9 +1,6 @@
 package com.metis.book.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,22 +19,27 @@ import com.metis.book.model.Category;
 import com.metis.book.service.IBookService;
 import com.metis.book.service.ICategoryService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/shop")
+@Slf4j
 public class ShopController {
 
 	@Autowired
 	private IBookService bookService;
-	
+
 	@Autowired
 	private ICategoryService categoryService;
+
 	
 	@GetMapping("/{categoryName}")
-	public ModelAndView viewCartPage(@PathVariable(value = "categoryName") String category, @RequestParam(value = "page") int page) {
+	public ModelAndView viewCartPage(@PathVariable(value = "categoryName") String category,
+			@RequestParam(value = "page") int page) {
 		List<Book> books;
-		if(category.compareTo("Tatca") == 0) {
+		if (category.compareTo("Tatca") == 0) {
 			books = bookService.getAllBooks();
-		}else {
+		} else {
 			books = bookService.getBooksByCategory(category);
 		}
 		List<String> publishers = bookService.getAllPublishers();
@@ -60,18 +62,24 @@ public class ShopController {
 		mav.setViewName("/client/shop");
 		return mav;
 	}
-	
+
 	@PostMapping("/{categoryName}")
-	public ModelAndView viewCartPagePost(@PathVariable(value = "categoryName") String category, @RequestParam(value = "page") int page,
-			@ModelAttribute("filterForm") FilterForm filterForm, BindingResult result) {
+	public ModelAndView viewCartPagePost(@PathVariable(value = "categoryName") String category,
+			@RequestParam(value = "page") int page, @ModelAttribute("filterForm") FilterForm filterForm,
+			BindingResult result) {
 		List<Book> books;
-		if(category.compareTo("Tatca") == 0) {
+		if (category.compareTo("Tatca") == 0) {
 			books = bookService.getAllBooks();
-		}else {
+		} else {
 			books = bookService.getBooksByCategory(category);
 		}
 		books = bookService.filter(books, filterForm);
+<<<<<<< HEAD
 		System.out.println(books.size());
+=======
+		System.out.print(filterForm.getMinPrice() + " aaaa " + filterForm.getMaxPrice() + " aaa "
+				+ filterForm.getPublisherName());
+>>>>>>> c3b6d908473f90a01dfaaf8005a6378897ebde91
 		List<String> publishers = bookService.getAllPublishers();
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();
@@ -87,4 +95,6 @@ public class ShopController {
 		mav.setViewName("/client/shop");
 		return mav;
 	}
+
+	
 }

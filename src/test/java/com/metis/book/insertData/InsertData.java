@@ -319,16 +319,29 @@ public class InsertData {
 		}
 
 		// Create new address for customer
-		Address addressCustomer = new Address();
-		addressCustomer.setFullAddress("168 Trương Văn Bang, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
-		addressCustomer.setStreet("168 Trương Văn Bang");
-		addressCustomer.setSubDistrict("Thạnh Mỹ Lợi");
-		addressCustomer.setDistrict("Thủ Đức");
-		addressCustomer.setProvince("Hồ Chí Minh");
-		addressCustomer.setIsPrimary(Boolean.TRUE);
-		addressCustomer.setRecievePhoneNumber(userCustomer.getPhoneNumber());
-		addressCustomer.setUser(userCustomer);
-		addressRepository.save(addressCustomer);
+		Address addressCustomer1 = new Address();
+		addressCustomer1.setFullAddress("168 Trương Văn Bang, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
+		addressCustomer1.setStreet("168 Trương Văn Bang");
+		addressCustomer1.setSubDistrict("Thạnh Mỹ Lợi");
+		addressCustomer1.setDistrict("Thủ Đức");
+		addressCustomer1.setProvince("Hồ Chí Minh");
+		addressCustomer1.setIsPrimary(Boolean.TRUE);
+		addressCustomer1.setRecievePhoneNumber("0783511740");
+		addressCustomer1.setUser(userCustomer);
+		addressRepository.save(addressCustomer1);
+		
+
+		// Create new address for customer
+		Address addressCustomer2 = new Address();
+		addressCustomer2.setFullAddress("24 Hồ Văn Hà, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
+		addressCustomer2.setStreet("24 Hồ Văn Hà");
+		addressCustomer2.setSubDistrict("Thạnh Mỹ Lợi");
+		addressCustomer2.setDistrict("Thủ Đức");
+		addressCustomer2.setProvince("Hồ Chí Minh");
+		addressCustomer2.setIsPrimary(Boolean.FALSE);
+		addressCustomer2.setRecievePhoneNumber("0912145167");
+		addressCustomer2.setUser(userCustomer);
+		addressRepository.save(addressCustomer2);
 	}
 
 	@Test
@@ -377,6 +390,11 @@ public class InsertData {
 	@Order(9)
 	public void testCreateOrderTrack() {
 
+		// Payment process
+		OrderTrack trackPaymentProcess = new OrderTrack();
+		trackPaymentProcess.setStatus("Chờ thanh toán");
+		orderTrackRepository.save(trackPaymentProcess);
+		
 		// Delivery
 		OrderTrack trackDelivering = new OrderTrack();
 		trackDelivering.setStatus("Đang giao");

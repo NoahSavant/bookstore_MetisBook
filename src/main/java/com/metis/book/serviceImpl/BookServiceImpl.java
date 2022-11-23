@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,14 +19,23 @@ import com.metis.book.dto.BookForm;
 import com.metis.book.dto.FilterForm;
 import com.metis.book.model.Author;
 import com.metis.book.model.Book;
+import com.metis.book.model.CartItem;
 import com.metis.book.model.Image;
 import com.metis.book.model.Inventory;
+import com.metis.book.model.order.Order;
+import com.metis.book.model.order.OrderItem;
+import com.metis.book.model.order.OrderTrack;
 import com.metis.book.repository.AuthorRepository;
 import com.metis.book.repository.BookRepository;
+import com.metis.book.repository.CartItemReposirory;
+import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.CategoryRepository;
 import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.LanguageRepository;
+import com.metis.book.repository.OrderItemRepository;
+import com.metis.book.repository.OrderRepository;
+import com.metis.book.repository.OrderTrackRepository;
 import com.metis.book.service.IBookService;
 import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
@@ -34,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class BookServiceImpl implements IBookService{
+public class BookServiceImpl implements IBookService {
 
 	@Autowired
 	AuthorRepository authorRepository;
@@ -48,7 +59,11 @@ public class BookServiceImpl implements IBookService{
 	InventoryRepository inventoryRepository;
 	@Autowired
 	ImageRepository imageRepository;
-	
+	@Autowired
+	OrderRepository orderRepository;
+	@Autowired
+	OrderItemRepository orderItemRepository;
+
 	@Override
 	public void insert(BookForm bookForm) throws ParseException, IOException {
 		Book book = new Book();
@@ -56,8 +71,7 @@ public class BookServiceImpl implements IBookService{
 		for (String author : bookForm.getAuthors()) {
 			authors.add(authorRepository.findById(Long.parseLong(author)).get());
 		}
-		
-		
+
 		book.setAuthors(authors);
 		book.setLanguage(languageRepository.findById(Long.parseLong(bookForm.getLanguage())).get());
 		book.setDescription(bookForm.getDescription());
@@ -71,36 +85,35 @@ public class BookServiceImpl implements IBookService{
 		inventory.setQuantiy(Integer.parseInt(bookForm.getQuantity()));
 		inventoryRepository.save(inventory);
 		book.setInventory(inventory);
-		//log.info(book.toString());
-		
-		
-		Book bookSaved =  bookRepository.save(book);
-		if(!bookForm.getFile().isEmpty()) {
-			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(),bookSaved.getId());
+		// log.info(book.toString());
+
+		Book bookSaved = bookRepository.save(book);
+		if (!bookForm.getFile().isEmpty()) {
+			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(), bookSaved.getId());
 			Image image = new Image();
-			image.setTitle(bookSaved.getId().toString()+".png");
+			image.setTitle(bookSaved.getId().toString() + ".png");
 			image.setUrl(fileNameAndPath.toString());
 			Image imageSaved = imageRepository.save(image);
 			bookSaved.setImage(imageSaved);
 			bookRepository.save(bookSaved);
-		}else {
+		} else {
 			// Create thumbnail image 1
 			Image imageThumbnail = new Image();
 			imageThumbnail.setThumbnailName("BookThumbnail.png");
-			imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+			imageThumbnail
+					.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 			imageRepository.save(imageThumbnail);
 			bookSaved.setImage(imageThumbnail);
 			bookRepository.save(bookSaved);
 		}
 
-		
 	}
 
 	@Override
 	public List<Book> getTopFeatured() {
 		List<Book> topFeatured = new ArrayList<>();
 		List<Book> books = bookRepository.findAll();
-		if(!books.isEmpty()) {
+		if (!books.isEmpty()) {
 			topFeatured.add(books.get(0));
 			topFeatured.add(books.get(1));
 		}
@@ -111,7 +124,7 @@ public class BookServiceImpl implements IBookService{
 	public List<Book> getBestSeller() {
 		List<Book> bestSeller = new ArrayList<>();
 		List<Book> books = bookRepository.findAll();
-		if(!books.isEmpty()) {
+		if (!books.isEmpty()) {
 			bestSeller.add(books.get(2));
 			bestSeller.add(books.get(3));
 		}
@@ -128,10 +141,8 @@ public class BookServiceImpl implements IBookService{
 	public List<String> getAllPublishers() {
 		List<Book> books = bookRepository.findAll();
 		List<String> publishers = new ArrayList<>();
-		for(Book book:books)
-		{
-			if(!publishers.contains(book.getPublisherName()))
-			{
+		for (Book book : books) {
+			if (!publishers.contains(book.getPublisherName())) {
 				publishers.add(book.getPublisherName());
 			}
 		}
@@ -142,39 +153,35 @@ public class BookServiceImpl implements IBookService{
 	public Long getMaxPrice() {
 		List<Book> books = bookRepository.findAll();
 		Long max = 0L;
-		for(Book book: books)
-		{
-			if(book.getPrice() > max)
-			{
+		for (Book book : books) {
+			if (book.getPrice() > max) {
 				max = book.getPrice();
 			}
 		}
-		
-		double tempPrice = (double)max;
-		while(tempPrice > 10)
-		{
+
+		double tempPrice = (double) max;
+		while (tempPrice > 10) {
 			tempPrice = tempPrice / 10;
 		}
 		tempPrice = Math.ceil(tempPrice);
-		
-		while(tempPrice < max)
-		{
+
+		while (tempPrice < max) {
 			tempPrice = tempPrice * 10;
 		}
-		return (long)tempPrice;
+		return (long) tempPrice;
 	}
 
 	@Override
 	public Long getNumAllBooks() {
 		List<Book> books = bookRepository.findAll();
-		return (long)books.size();
+		return (long) books.size();
 	}
 
 	@Override
 	public List<Book> getBooksByCategory(String category) {
 		List<Book> books = new ArrayList<>();
-		for(Book book:bookRepository.findAll()) {
-			if(book.getCategory().getDomain().compareTo(category) == 0) {
+		for (Book book : bookRepository.findAll()) {
+			if (book.getCategory().getDomain().compareTo(category) == 0) {
 				books.add(book);
 			}
 		}
@@ -184,7 +191,7 @@ public class BookServiceImpl implements IBookService{
 	public List<BookForm> getBookShows() {
 		List<Book> books = bookRepository.findAll();
 		List<BookForm> bookForms = new ArrayList<>();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		for (Book book : books) {
 			BookForm bookForm = new BookForm();
 			List<String> authorNames = new ArrayList<>();
@@ -194,7 +201,7 @@ public class BookServiceImpl implements IBookService{
 			bookForm.setAuthors(authorNames);
 			bookForm.setCategory(book.getCategory().getName());
 			bookForm.setDescription(book.getDescription());
-			//bookForm.setFile(book.getImage());
+			// bookForm.setFile(book.getImage());
 			bookForm.setLanguage(book.getLanguage().getName());
 			bookForm.setPrice(book.getPrice().toString());
 			bookForm.setPublicationDate(formatter.format(book.getPublicationDate()));
@@ -202,17 +209,16 @@ public class BookServiceImpl implements IBookService{
 			bookForm.setQuantity(book.getInventory().getQuantiy().toString());
 			bookForm.setTitle(book.getTitle());
 			bookForm.setId(book.getId().toString());
-			bookForm.setAvailable(book.getAvailable()==true? "Còn bán" : "Ngưng bán");
+			bookForm.setAvailable(book.getAvailable() == true ? "Còn bán" : "Ngưng bán");
 			bookForms.add(bookForm);
 		}
 		return bookForms;
 	}
 
-
 	@Override
 	public void deleteById(Long bookId) {
 		bookRepository.deleteById(bookId);
-		
+
 	}
 
 	@Override
@@ -221,10 +227,10 @@ public class BookServiceImpl implements IBookService{
 		if (Objects.isNull(book)) {
 			log.error(AppConstant.BOOK_NOT_FOUND + bookId.toString());
 		}
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		BookForm bookForm = new BookForm();
 		List<String> authorNames = new ArrayList<>();
-		if (book.getAuthors().size()>0) {
+		if (book.getAuthors().size() > 0) {
 			for (Author author : book.getAuthors()) {
 				authorNames.add(author.getName());
 			}
@@ -232,9 +238,10 @@ public class BookServiceImpl implements IBookService{
 		bookForm.setAuthors(authorNames);
 		bookForm.setCategory(book.getCategory().getName());
 		bookForm.setDescription(book.getDescription());
-		//bookForm.setFile(book.getImage());
+		// bookForm.setFile(book.getImage());
 		if (!Objects.isNull(book.getImage())) {
 			bookForm.setImageName(book.getImage().getTitle());
+			bookForm.setThumbnailName(book.getImage().getThumbnailName());
 		}
 		bookForm.setId(bookId.toString());
 		bookForm.setLanguage(book.getLanguage().getName());
@@ -244,7 +251,7 @@ public class BookServiceImpl implements IBookService{
 		bookForm.setPublisherName(book.getPublisherName());
 		bookForm.setQuantity(book.getInventory().getQuantiy().toString());
 		bookForm.setTitle(book.getTitle());
-		bookForm.setAvailable(book.getAvailable()==true? "Còn bán" : "Ngưng bán");
+		bookForm.setAvailable(book.getAvailable() == true ? "Còn bán" : "Ngưng bán");
 		return bookForm;
 	}
 
@@ -256,10 +263,9 @@ public class BookServiceImpl implements IBookService{
 		}
 		List<Author> authors = new ArrayList<>();
 		for (String author : bookForm.getAuthors()) {
-			authors.add(authorRepository.findById(Long.parseLong(author)).get());
+			authors.add(authorRepository.findByName(author));
 		}
-		
-		
+
 		book.setAuthors(authors);
 		book.setLanguage(languageRepository.findById(Long.parseLong(bookForm.getLanguage())).get());
 		book.setDescription(bookForm.getDescription());
@@ -273,27 +279,26 @@ public class BookServiceImpl implements IBookService{
 		inventory.setQuantiy(Integer.parseInt(bookForm.getQuantity()));
 		inventoryRepository.save(inventory);
 		book.setInventory(inventory);
-		//log.info(book.toString());
-		
-		
-		Book bookSaved =  bookRepository.save(book);
-		if(!bookForm.getFile().isEmpty()) {
-			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(),bookSaved.getId());
+		// log.info(book.toString());
+
+		Book bookSaved = bookRepository.save(book);
+		if (!bookForm.getFile().isEmpty()) {
+			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(), bookSaved.getId());
 			Image image = new Image();
-			image.setTitle(bookSaved.getId().toString()+".png");
+			image.setTitle(bookSaved.getId().toString() + ".png");
 			image.setUrl(fileNameAndPath.toString());
 			Image imageSaved = imageRepository.save(image);
 			bookSaved.setImage(imageSaved);
 			bookRepository.save(bookSaved);
 		}
-		
+
 	}
 
 	@Override
 	public List<Book> filter(List<Book> books, FilterForm filterForm) {
 		List<Book> filterBooks = new ArrayList<>();
-		for(Book book: books) {
-			if(book.getPrice() >= filterForm.getMinPrice() && book.getPrice() <= filterForm.getMaxPrice()) {
+		for (Book book : books) {
+			if (book.getPrice() >= filterForm.getMinPrice() && book.getPrice() <= filterForm.getMaxPrice()) {
 				filterBooks.add(book);
 			}
 		}
@@ -301,39 +306,63 @@ public class BookServiceImpl implements IBookService{
 		if (filterForm.getPublisherName().compareTo("Tất cả") != 0) {
 			books.clear();
 			books.addAll(filterBooks);
-			
+
 			filterBooks.clear();
-			
-			for(Book book: books) {
+			for (Book book : books) {
 				if (book.getPublisherName().compareTo(filterForm.getPublisherName()) == 0) {
 					filterBooks.add(book);
 				}
 			}
 		}
-		if(filterBooks.size() < 2) {
+		if (filterBooks.size() < 2) {
 			return filterBooks;
-		}else if(filterForm.getSort() != "none"){
+		} else if (filterForm.getSort() != "none") {
 			int min;
 			int n = filterBooks.size();
-		    for (int i = 0; i < n - 1; i++) {
-		        min = i;
-		        for (int j = i+1; j < n; j++){
-		            if (filterBooks.get(j).getPrice() < filterBooks.get(min).getPrice()) min = j;
-		        }
-		        swap(i, min, filterBooks);
-		    }
-		    
-		    if(filterForm.getSort() == "decre") {
-		    	Collections.reverse(filterBooks);
-		    }
+			for (int i = 0; i < n - 1; i++) {
+				min = i;
+				for (int j = i + 1; j < n; j++) {
+					if (filterBooks.get(j).getPrice() < filterBooks.get(min).getPrice())
+						min = j;
+				}
+				swap(i, min, filterBooks);
+			}
+
+			if (filterForm.getSort() == "decre") {
+				Collections.reverse(filterBooks);
+			}
 		}
 		return filterBooks;
 	}
-	
+
 	private List<Book> swap(int index1, int index2, List<Book> list) {
 		Book temp = list.get(index1);
 		list.set(index1, list.get(index2));
 		list.set(index2, temp);
 		return list;
 	}
+
+	@Override
+	public int getSoldNumberById(Long bookId) {
+		int sold = 0;
+		Book book = bookRepository.findById(bookId).get();
+		if (Objects.isNull(book)) {
+			log.error(AppConstant.BOOK_NOT_FOUND + bookId);
+			return -1;
+		}
+		List<Order> orders = orderRepository.findAll();
+		for (Order order : orders) {
+			if (!order.getOrderTrack().getStatus().equals("Chờ thanh toán")) {
+				for (OrderItem orderItem : order.getOrderItems()) {
+					if (orderItem.getBook().getId() == bookId) {
+						sold = sold + orderItem.getQuantity();
+					}
+
+				}
+			}
+		}
+
+		return sold;
+	}
+
 }
