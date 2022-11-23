@@ -35,7 +35,8 @@
     <!-- Start Shop Page  -->
     <div class="shop-box-inner">
         <div class="container">
-            <div class="row">
+        <form action="#" th:action="@{/shop/{categoryName}?page=1(categoryName=${cur_category})}" th:object="${filterForm}" method="post">
+            <div class="row">            
                 <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
                     <div class="product-categori">
                         <div class="search-product">
@@ -53,7 +54,6 @@
                                 <a th:each="category:${categories}" th:styleappend="${cur_category==category.getDomain()? 'font-weight: 600; color:#d33b33;' : ''}" th:href="@{/shop/{categoryName}?page=1(categoryName=${category.getDomain()})}" class="list-group-item list-group-item-action"> [[${category.name}]] <small class="text-muted"> ([[${#lists.size(category.books)}]]) </small></a>          
                             </div>
                         </div>
-                        <form action="#" th:action="@{/shop/{categoryName}?page=1(categoryName=${cur_category})}" th:object="${filterForm}" method="post">
 
                         <div class="filter-price-left">
                             <div class="title-left">
@@ -91,8 +91,6 @@
                                 <button class="btn hvr-hover" type="submit" style="color: white;">Lọc</button>
                             </div>
                         </div>
-						
-						</form>
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
@@ -101,13 +99,11 @@
                             <div class="col-12 col-sm-8 text-center text-sm-left">
                                 <div class="toolbar-sorter-right">
                                     <span>Sắp xếp </span>
-                                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-									<option data-display="Select">Nothing</option>
-									<option value="1">Nổi bật</option>
-									<option value="2">Bán chạy</option>
-									<option value="3">Giá tăng dần</option>
-									<option value="4">Giá giảm dần</option>
-								</select>
+                                    <select th:field="*{sort}" id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+										<option th:selected="${sort == value}" data-display="Select" value="none" >Mặc định</option>
+										<option th:selected="${sort == value}" value="incre" >Giá tăng dần</option>
+										<option th:selected="${sort == value}" value="decre" >Giá giảm dần</option>
+									</select>
                                 </div>
                                 <p>Tất cả [[${#lists.size(books)}]] sản phẩm</p>
                             </div>
@@ -133,7 +129,10 @@
                                                     <div class="type-lb">
                                                         <p class="sale">Sale</p>
                                                     </div>
-                                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                                    <img th:if ="${book.image.title}" th:src="@{${'/uploads/books/'+ book.image.title}}"
+														class="img-fluid"/>
+													<img th:if ="${book.image.thumbnailName!=null && book.image.title == null }" th:src="@{${'/uploads/'+ book.image.thumbnailName}}"
+													class="img-fluid"/>
                                                     <div class="mask-icon">
                                                         <ul>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>   
@@ -158,7 +157,10 @@
                                                         <div class="type-lb">
                                                             <p class="new">New</p>
                                                         </div>
-                                                        <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                                        <img th:if ="${book.image.title}" th:src="@{${'/uploads/books/'+ book.image.title}}"
+															class="img-fluid"/>
+														<img th:if ="${book.image.thumbnailName!=null && book.image.title == null }" th:src="@{${'/uploads/'+ book.image.thumbnailName}}"
+														class="img-fluid"/>
                                                         <div class="mask-icon">
                                                             <ul>
                                                                 <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
@@ -179,19 +181,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="container pagination-custom">
+                            <div th:styleappend="${#lists.size(books) > 0 ? 'display: block' : 'display: none'}" class="container pagination-custom">
                             	<input hidden id="cur_page" th:value="1">
                             	<input hidden id="size" th:value="${#lists.size(books)}">
-							  <ul id="pagination" class="pagination" >
+							  <ul  id="pagination" class="pagination">
 							    <li class="page-item"><a class="page-link-custom page-link" id="p-before">Trước</a></li>
 							    <li class="page-item"><a class="page-link-custom page-link" id="p-1">1</a></li>							    	    
 							    <li id="last-page" class="page-item"><a class="page-link-custom page-link" id="p-after">Sau</a></li>
 							  </ul>
 							</div>
+							<div th:styleappend="${#lists.size(books) > 0 ? 'display: none' : 'display: block'}" class="alert alert-danger">
+								  <strong>Sorry!</strong> NOT FOUND.
+							 </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
+            </form>
         </div>
     </div>
     <!-- End Shop Page -->
@@ -208,11 +215,6 @@
        <div th:replace="client/fragments/footer :: footer"></div>
    	   <script th:src="@{/js/jquery-ui.js}"></script>
        <script th:src="@{/js/jquery.nicescroll.min.js}"></script>
-       <script>
-       		function reload() {
-				   alert(window.location.href);
-			   }
-       </script>
     </footer>
     <!-- End Footer  -->
 

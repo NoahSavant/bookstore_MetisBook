@@ -47,6 +47,7 @@ public class ShopController {
 		filterForm.setMaxPrice(bookService.getMaxPrice());
 		filterForm.setMinPrice(0L);
 		filterForm.setPublisherName("Tất cả");
+		filterForm.setSort("none");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("books", books);
 		mav.addObject("publishers", publishers);
@@ -70,7 +71,7 @@ public class ShopController {
 			books = bookService.getBooksByCategory(category);
 		}
 		books = bookService.filter(books, filterForm);
-		System.out.print(filterForm.getMinPrice() + " aaaa " + filterForm.getMaxPrice() + " aaa " + filterForm.getPublisherName());
+		System.out.println(books.size());
 		List<String> publishers = bookService.getAllPublishers();
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();

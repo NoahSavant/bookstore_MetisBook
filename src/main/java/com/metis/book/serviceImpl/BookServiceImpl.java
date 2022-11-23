@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +28,7 @@ import com.metis.book.repository.LanguageRepository;
 import com.metis.book.service.IBookService;
 import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
+import com.metis.book.utils.Swap;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -294,17 +297,43 @@ public class BookServiceImpl implements IBookService{
 				filterBooks.add(book);
 			}
 		}
+		System.out.println(filterForm.getPublisherName());
 		if (filterForm.getPublisherName().compareTo("Tất cả") != 0) {
-			books = filterBooks;
+			books.clear();
+			books.addAll(filterBooks);
+			
 			filterBooks.clear();
+			
 			for(Book book: books) {
 				if (book.getPublisherName().compareTo(filterForm.getPublisherName()) == 0) {
 					filterBooks.add(book);
 				}
 			}
 		}
-		
+		if(filterBooks.size() < 2) {
+			return filterBooks;
+		}else if(filterForm.getSort() != "none"){
+			int min;
+			int n = filterBooks.size();
+		    for (int i = 0; i < n - 1; i++) {
+		        min = i;
+		        for (int j = i+1; j < n; j++){
+		            if (filterBooks.get(j).getPrice() < filterBooks.get(min).getPrice()) min = j;
+		        }
+		        swap(i, min, filterBooks);
+		    }
+		    
+		    if(filterForm.getSort() == "decre") {
+		    	Collections.reverse(filterBooks);
+		    }
+		}
 		return filterBooks;
 	}
-
+	
+	private List<Book> swap(int index1, int index2, List<Book> list) {
+		Book temp = list.get(index1);
+		list.set(index1, list.get(index2));
+		list.set(index2, temp);
+		return list;
+	}
 }

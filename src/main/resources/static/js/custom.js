@@ -207,23 +207,21 @@
 			pagination.removeChild(child);
 		}
 		var size = document.getElementById("size").value;
-		var maxPage = Math.ceil(size/2);		
-		if(maxPage == 1) {
-			return;
-		} else {
-			var page_item = document.getElementById("last-page");
-			for(let i = 2; i <= maxPage; i++) {
-				if(Math.abs(cur_page -i) <= 1 || i == maxPage) {
-					var newPage = page_item.cloneNode(true);
-					newPage.setAttribute('name', 'temp');
-					newPage.removeAttribute('id');
-					newPage.firstChild.setAttribute('id', 'p-' + i.toString());
-					newPage.firstChild.innerHTML = i;
-					newPage.addEventListener("click", function(){pageChange(this.firstChild.id)});
-					pagination.insertBefore(newPage, page_item);
-				}
+		var maxPage = Math.ceil(size/2);	
+	
+		var page_item = document.getElementById("last-page");
+		for(let i = 2; i <= maxPage; i++) {
+			if(Math.abs(cur_page -i) <= 1 || i == maxPage) {
+				var newPage = page_item.cloneNode(true);
+				newPage.setAttribute('name', 'temp');
+				newPage.removeAttribute('id');
+				newPage.firstChild.setAttribute('id', 'p-' + i.toString());
+				newPage.firstChild.innerHTML = i;
+				newPage.addEventListener("click", function(){pageChange(this.firstChild.id)});
+				pagination.insertBefore(newPage, page_item);
 			}
 		}
+		
 		document.getElementById('p-' + cur_page).innerHTML = '<u>' + cur_page + '</u>'; 
 		
 		if(last_page != 0) {
@@ -238,7 +236,6 @@
 				document.getElementById('long' + i.toString()).style.display = "none";
 			}
 		}
-		
 		let start =  (cur_page - 1) * 2;
 		let end = Math.min(size, cur_page * 2);
 		for(let i = start; i < end; i++) {
@@ -261,6 +258,7 @@
 			}, 600);
 			return false;
 		});
+		console.log("alooo");
 		getPageList(0);
 	});
 
@@ -289,10 +287,6 @@
 	/* ..............................................
 	   NiceScroll
 	   ................................................. */
-
-	$(".brand-box").niceScroll({
-		cursorcolor: "#9b9b9c",
-	}); 
 	
 	
 }(jQuery));
