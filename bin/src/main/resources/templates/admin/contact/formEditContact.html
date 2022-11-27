@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+	<div th:replace="admin/fragments/header :: header"></div>
+
+	<link rel="stylesheet" th:href="@{/css/multiselect.css}">
+	<link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/css/richtext.min.css}">
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<div th:replace="admin/fragments/navbar :: navbar"></div>
+				<!-- End Topbar -->
+
+					
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">Chỉnh sửa thông tin liên hệ!</h1>
+								</div>
+
+								<form class="user" th:action="@{/admin/contact/insert}" th:object="${contact}"
+									method="post">
+									<div class="row">
+										
+											<input type="text" th:field="*{id}" hidden /> 
+										
+										<div class="form-group col mr-2">
+											<label for="title">Tên người dùng:</label>
+											<input type="text" id="title" placeholder="Tên người dùng" autocomplete="off"
+												class="form-control" th:field="*{name}" />
+										</div>
+										<div class="form-group col">
+											<label for="title">Email:</label>
+											<input type="text" id="title" placeholder="Email" autocomplete="off"
+												class="form-control" th:field="*{email}" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="content">Tiêu đề:</label>
+										<input type="text" rows="4" placeholder="Tiêu đề"
+											class="form-control content" th:field="*{title}"
+											autocomplete="off"></input>
+									</div>
+									<div class="form-group">
+										<label for="content">Nội dung:</label>
+										<textarea type="text" rows="4" placeholder="Nội dung"
+											class="form-control content" th:field="*{content}"
+											autocomplete="off"></textarea>
+									</div>
+									<button type="submit" class="btn btn-primary" th:text="Lưu"></button>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+
+
+	<div th:replace="admin/fragments/footer :: footer"></div>
+
+
+</body>
+
+</html>

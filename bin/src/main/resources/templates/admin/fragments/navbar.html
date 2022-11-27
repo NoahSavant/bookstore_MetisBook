@@ -56,24 +56,25 @@
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" th:href="@{/#}" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                    <img class="img-profile rounded-circle"
-                        th:src="@{/img/undraw_profile.svg}">
+                    <span th:text="${#authentication.getPrincipal().getUsername()}" 
+                    class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                    <img
+					th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle!=null }"
+					th:src="@{${'/uploads/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
+					class="img-profile rounded-circle " 
+					/>
+					<img
+					th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle==null }"
+					th:src="@{${'/uploads/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
+					class="img-profile rounded-circle " 
+					/>
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                     aria-labelledby="userDropdown">
-                    <a class="dropdown-item" th:href="@{/#}">
+                    <a class="dropdown-item" th:href="@{/member/profile}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                    </a>
-                    <a class="dropdown-item" th:href="@{/#}">
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item" th:href="@{/#}">
-                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Activity Log
+                        Hồ sơ
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" th:href="@{/auth/logout}" data-toggle="modal" data-target="#logoutModal">

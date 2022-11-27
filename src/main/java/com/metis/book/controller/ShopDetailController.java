@@ -13,8 +13,6 @@ import com.metis.book.dto.BookForm;
 import com.metis.book.model.Book;
 import com.metis.book.service.IBookService;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
 @RequestMapping("/shop-detail")
 public class ShopDetailController {
