@@ -23,19 +23,10 @@
 		<div class="sidebar-heading">
 			Menu
 		</div>
-		<li class="nav-item" th:classappend="${#httpServletRequest.requestURI.contains('/admin/user') ? 'active' : ''}">
-			<a class="nav-link collapsed" th:href="@{/#}" data-toggle="collapse" data-target="#collapseTwo"
-				aria-expanded="true" aria-controls="collapseTwo">
-				<i class="fas fa-fw fa-cog"></i>
-				<span>Tài khoản</span>
-			</a>
-			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-
-					<a class="collapse-item" th:href="@{/staff.html}">Nhân viên</a>
-					<a class="collapse-item" th:href="@{/customer.html}">Khách hàng</a>
-				</div>
-			</div>
+			<li class="nav-item" th:classappend="${#httpServletRequest.requestURI.contains('/admin/user') ? 'active' : ''}">
+			<a class="nav-link" th:href="@{/admin/user}">
+				<i class="fas fa-fw fa-table"></i>
+				<span>Tài khoản</span></a>
 		</li>
 		<li class="nav-item" th:classappend="${#httpServletRequest.requestURI.contains('/admin/book') ? 'active' : ''}">
 			<a class="nav-link collapsed" th:href="@{/#}" data-toggle="collapse" data-target="#collapseBook"

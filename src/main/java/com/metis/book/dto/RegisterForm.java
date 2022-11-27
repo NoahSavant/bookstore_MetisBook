@@ -4,6 +4,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.metis.book.validation.Phone;
 
 import lombok.AllArgsConstructor;
@@ -46,6 +48,8 @@ public class RegisterForm {
 	private String phoneNumber;
 	
 	private String birthday;
+	
+	private MultipartFile file;	
 
 	public RegisterForm() {
 		this.gender = "1";
