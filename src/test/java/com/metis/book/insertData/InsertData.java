@@ -22,6 +22,7 @@ import com.metis.book.model.Book;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.Category;
+import com.metis.book.model.Feedback;
 import com.metis.book.model.Image;
 import com.metis.book.model.Inventory;
 import com.metis.book.model.Language;
@@ -38,6 +39,7 @@ import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.CategoryRepository;
+import com.metis.book.repository.FeedbackRepository;
 import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.LanguageRepository;
@@ -105,6 +107,9 @@ public class InsertData {
 	@Autowired
 	BlogRepository blogRepository;
 
+	@Autowired
+	FeedbackRepository feedbackRepository;
+	
 	@Test
 	@Order(1)
 	public void testCreateAuthor() {
@@ -539,6 +544,24 @@ public class InsertData {
 		blogRepository.save(blog3);
 	}
 
+	@Test
+	@Order(13)
+	public void testCreateFeedBack() {
+		
+		// Get book
+		Book book = bookRepository.findById(1L).get();
+		
+		// Get user
+		User user = userRepository.findById(2L).get();
+		
+		// Create new feedback
+		Feedback feedback = new Feedback();
+		feedback.setBook(book);
+		feedback.setRating(4);
+		feedback.setContent("Quá hay");
+	
+		feedbackRepository.save(feedback);
+	}
 	public void createCustomer() {
 
 		// Create new Cart

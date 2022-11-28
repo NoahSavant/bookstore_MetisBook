@@ -34,6 +34,7 @@
 				<div class="container">
 
 					<div class="row">
+						<div class="col-2"></div>
 						<div class="col">
 							<div class="p-5">
 								<div class="text-center">
@@ -53,8 +54,8 @@
 									<div class="form-group row">
 
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="text" class="form-control form-control-user"
-												id="exampleFirstName" th:field="*{firstName}" placeholder="Tên" required
+											<input type="text" class="form-control" id="exampleFirstName"
+												th:field="*{firstName}" placeholder="Tên" required
 												oninvalid="this.setCustomValidity('Tên Không thể bỏ trống')"
 												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
@@ -67,8 +68,8 @@
 										</div>
 
 										<div class="col-sm-6">
-											<input type="text" class="form-control form-control-user"
-												id="exampleLastName" th:field="*{lastName}" placeholder="Họ" required
+											<input type="text" class="form-control" id="exampleLastName"
+												th:field="*{lastName}" placeholder="Họ" required
 												oninvalid="this.setCustomValidity('Họ Không thể bỏ trống')"
 												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
@@ -80,9 +81,8 @@
 										</div>
 									</div>
 									<div class="form-group mt-3">
-										<input type="text" class="form-control form-control-user"
-											id="exampleInputUsername" th:field="*{username}" placeholder="Tên đăng nhập"
-											required
+										<input type="text" class="form-control" id="exampleInputUsername"
+											th:field="*{username}" placeholder="Tên đăng nhập" required
 											oninvalid="this.setCustomValidity('Tên đăng nhập Không thể bỏ trống')"
 											oninput="this.setCustomValidity('')">
 										<div class="alert alert-warning mt-3 mb-3"
@@ -102,7 +102,7 @@
 										<div class="datepicker form-group col-sm-6 mb-3 mb-sm-0">
 											<h6 class="ml-3">Ngày sinh: </h6>
 											<input placeholder="Select date" th:field="*{birthday}" type="date"
-												id="birthday" class="form-control form-control-user">
+												id="birthday" class="form-control">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
 										</div>
@@ -134,8 +134,8 @@
 
 									<div class="row mt-3">
 										<div class="form-group col-md-6 ">
-											<input type="email" class="form-control form-control-user"
-												id="exampleInputEmail" th:field="*{email}" placeholder="Email" required
+											<input type="email" class="form-control" id="exampleInputEmail"
+												th:field="*{email}" placeholder="Email" required
 												oninvalid="this.setCustomValidity('Email Không thể bỏ trống')"
 												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
@@ -146,7 +146,7 @@
 											</div>
 										</div>
 										<div class="form-group col-md-6 ">
-											<input type="text" class="form-control form-control-user" id="phoneNumber"
+											<input type="text" class="form-control" id="phoneNumber"
 												th:field="*{phoneNumber}" placeholder="Số điện thoại" required
 												oninvalid="this.setCustomValidity('Số điện thoại Không thể bỏ trống')"
 												oninput="this.setCustomValidity('')">
@@ -155,10 +155,55 @@
 											</div>
 										</div>
 									</div>
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label>Tỉnh/Thành phố</label>
+											<input type="text" class="form-control" th:field="*{province}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('province')}" th:errors="*{province}">
+											</div>
+											<div th:if="${formErrors!=null &&  formErrors.containsKey('provinceSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${formErrors.get('provinceSpecial')}">
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<label>Quận/Huyện</label>
+											<input type="text" class="form-control" th:field="*{district}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('district')}" th:errors="*{district}">
+											</div>
+											<div th:if="${formErrors!=null && formErrors.containsKey('districtSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${formErrors.get('districtSpecial')}">
+											</div>
+										</div>
+									</div> <!-- form-row.// -->
 
+
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label>Phường/Xã</label>
+											<input type="text" class="form-control" th:field="*{subDistrict}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('subDistrict')}" th:errors="*{subDistrict}">
+											</div>
+											<div th:if="${formErrors!=null && formErrors.containsKey('subDistrictSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${formErrors.get('subDistrictSpecial')}">
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<label>Số nhà</label>
+											<input type="text" class="form-control" th:field="*{street}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
+											</div>
+										</div>
+									</div> <!-- form-row.// -->
 									<div class="form-group row ">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="password" class="form-control form-control-user"
+											<input type="password" class="form-control"
 												th:field="*{password}" id="exampleInputPassword" placeholder="Mật khẩu">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
@@ -167,7 +212,7 @@
 												oninput="this.setCustomValidity('')"></div>
 										</div>
 										<div class="col-sm-6">
-											<input type="password" class="form-control form-control-user"
+											<input type="password" class="form-control"
 												th:field="*{confirmPassword}" id="exampleRepeatPassword"
 												placeholder="Nhập lại mật khẩu" required
 												oninvalid="this.setCustomValidity('Mật khẩu nhập lại Không thể bỏ trống')"
@@ -178,18 +223,20 @@
 											</div>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-5"></div>
+										<button type="submit" class="btn btn-primary btn-user btn-block  col"
+											style="width: 100px;">
+											Tạo
+										</button>
+										<div class="col-5"></div>
+									</div>
 							</div>
-							<div class="row">
-								<div class="col-5"></div>
-								<button type="submit" class="btn btn-primary btn-user btn-block mt-3 col"
-									style="width: 200px;">
-									Tạo
-								</button>
-								<div class="col-5"></div>
-							</div>
+
 
 							</form>
 						</div>
+						<div class="col-3"></div>
 					</div>
 				</div>
 			</div>

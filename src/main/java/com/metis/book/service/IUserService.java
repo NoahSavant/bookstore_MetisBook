@@ -3,7 +3,6 @@ package com.metis.book.service;
 import java.io.IOException;
 import java.util.List;
 
-import com.metis.book.model.order.Order;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metis.book.dto.CheckoutForm;
@@ -52,4 +51,9 @@ public interface IUserService {
 	void updateCheckout(CheckoutForm checkoutForm);
 
 	List<User> getAllUser();
+
+	User createNewUserForAdmin(RegisterForm registerRequest) throws IOException;
+
+	void updateImageForAdmin(MultipartFile file, Long id) throws IOException;
+
 }

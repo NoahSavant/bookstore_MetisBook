@@ -47,6 +47,12 @@ public class RegisterForm {
 	@Phone(message = "Số điện thoại không hợp lệ")
 	private String phoneNumber;
 	
+
+	private String street;
+	private String district;
+	private String subDistrict;
+	private String province;
+	
 	private String birthday;
 	
 	private MultipartFile file;	
