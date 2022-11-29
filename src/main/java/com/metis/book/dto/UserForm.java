@@ -75,14 +75,13 @@ public class UserForm {
 		}
 		
 	
-		
+		this.role = "Khách hàng";
 		for (Role role : user.getRoles()) {
 			if(role.getName().equals(RoleName.ADMIN)) {
 				this.role = "Quản lý";
+				return;
 			}else if(role.getName().equals(RoleName.STAFF)) {
 				this.role = "Nhân viên";
-			}else {
-				this.role = "Khách hàng";
 			}
 		}
 		

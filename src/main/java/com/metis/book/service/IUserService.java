@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.dto.UserEditForm;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
 import com.metis.book.model.user.User;
@@ -55,5 +56,11 @@ public interface IUserService {
 	User createNewUserForAdmin(RegisterForm registerRequest) throws IOException;
 
 	void updateImageForAdmin(MultipartFile file, Long id) throws IOException;
+
+	void uploadImageForAdmin(MultipartFile file, String userId) throws NumberFormatException, IOException;
+
+	void updateProfileForAdmin(UserEditForm userEditForm);
+
+	void updatePasswordForAdmin(String userId, String password);
 
 }

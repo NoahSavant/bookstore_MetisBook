@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.dto.UserEditForm;
 import com.metis.book.dto.UserForm;
 import com.metis.book.model.user.Address;
 import com.metis.book.model.user.User;
@@ -72,6 +75,62 @@ public class AdminUserController {
 		return mav;
 	}
 
+	@GetMapping("/edit")
+	public ModelAndView viewEditUserPage(
+			ModelAndView mav,
+			@RequestParam("userId") String userId) {
+		
+		User user = userService.getUserById(Long.parseLong(userId));
+		List<Address> addresses = addressService.getAddressByUser(user);
+		Address address = new Address();
+		for (Address add : addresses) {
+			if(add.getIsPrimary()) {
+				address = add;
+			}
+		}
+		
+		UserEditForm userEditForm = new UserEditForm();
+		userEditForm.convert(user,address);
+		mav.addObject("user",userEditForm);
+		mav.setViewName("/admin/user/formEditUser.html");
+		return mav;
+	}
+	
+	@PostMapping("/edit")
+	public ModelAndView editUser(
+			ModelAndView mav,
+			@ModelAttribute("user") UserEditForm userEditForm) {
+		userService.updateProfileForAdmin(userEditForm);
+		mav.setViewName("redirect:/admin/user");
+		return mav;
+	}
+	
+	@PostMapping("/upload-image")
+	public ModelAndView uploadImage(
+			ModelAndView mav,
+			@RequestParam("image") MultipartFile file,
+			@RequestParam("userId") String userId) throws IOException {
+		userService.uploadImageForAdmin(file,userId);
+		mav.setViewName("redirect:/admin/user/edit?userId="+userId);
+		return mav;
+	}
+	
+	@PostMapping("change-password")
+	public ModelAndView changePassword(
+			ModelAndView mav,
+			@RequestParam("password") String password,
+			@RequestParam("confirmPassword") String confirmPassword,
+			@RequestParam("userId") String userId) throws IOException {
+	
+		Map<String, String> authenErrors = new HashMap<>();
+		if (!password.equals(confirmPassword)) {
+			authenErrors.put("passwordNotMatch", "Mật khẩu nhập lại không khớp");
+			mav.addObject("authenErrors", authenErrors);
+		}
+		userService.updatePasswordForAdmin(userId,password);
+		mav.setViewName("redirect:/admin/user/edit?userId="+userId);
+		return mav;
+	}
 	private List<UserForm> getUsers() {
 		List<UserForm> list = new ArrayList<>();
 		List<User> users = userService.getAllUser();

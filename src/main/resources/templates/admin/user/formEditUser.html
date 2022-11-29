@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+	<div th:replace="admin/fragments/header :: header"></div>
+
+	<link rel="stylesheet" th:href="@{/css/multiselect.css}">
+	<link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/css/richtext.min.css}">
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<div th:replace="admin/fragments/navbar :: navbar"></div>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container">
+
+					<div class="row">
+						<div class="col-2"></div>
+						<div class="col">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">Sửa thông tin tài khoản!</h1>
+								</div>
+								<img th:if="${user.imageName}" th:src="@{${'/uploads/users/'+user.imageName}}"
+									class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:20%;"
+									id="avatar" />
+								<img th:if="${user.thumbnailName!=null && user.imageName == null }"
+									th:src="@{${'/uploads/'+user.thumbnailName}}"
+									class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:20%;"
+									id="avatar" />
+								<div class="d-flex justify-content-center">
+									<form id="imageForm" method="post" enctype="multipart/form-data"
+										th:action="@{/admin/user/upload-image}" class="mr-3">
+										<input hidden name="userId" th:value="${user.id}" />
+										<label for="image-upload" class="btn btn-outline-primary">
+											Đổi ảnh đại diện
+										</label>
+										<input hidden id="image-upload" class="form-control" type="file"
+											accept="image/png, image/jpeg" name="image"
+											onchange="document.getElementById('imageForm').submit();" />
+									</form>
+
+									<label class="btn btn-outline-primary" onclick="showChangePassword()">
+										Đổi mật khẩu
+									</label>
+								</div>
+								<form id="PasswordForm" method="post" th:action="@{/admin/user/change-password}"
+									class="mt-5" hidden>
+									<input hidden name="userId" th:value="${user.id}" />
+									<div class="form-group row ">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="password" class="form-control form-control-user"
+												name="password" id="exampleInputPassword" placeholder="Mật khẩu"
+												required
+												oninvalid="this.setCustomValidity('Mật khẩu Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
+										</div>
+										<div class="col-sm-6">
+											<input type="password" class="form-control form-control-user"
+												name="confirmPassword" id="exampleRepeatPassword"
+												placeholder="Nhập lại mật khẩu" required
+												oninvalid="this.setCustomValidity('Mật khẩu nhập lại Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
+											<div th:if="${authenErrors != null && authenErrors.containsKey('passwordNotMatch')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${authenErrors.get('passwordNotMatch')}">
+											</div>
+										</div>
+										<div class="col-4"></div>
+										<button type="submit" class="btn btn-primary btn-user btn-block mt-3 mr-3"
+											style="width: 100px;">
+											Đổi
+										</button>
+
+										<button type="button" onclick="back()"
+											class="btn btn-primary btn-user btn-block  mt-3" style="width: 100px;">
+											Quay lại
+										</button>
+										<div class="col-4"></div>
+
+
+									</div>
+
+
+								</form>
+
+
+								<form class="user" id="user-info" method="post" th:action="@{/admin/user/edit}"
+									th:object="${user}" enctype="multipart/form-data">
+
+									<input hidden th:field="*{id}" />
+
+									<div class="form-group row mt-3">
+
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label>Tên:</label>
+											<input type="text" class="form-control" id="exampleFirstName"
+												th:field="*{firstName}" placeholder="Tên" required
+												oninvalid="this.setCustomValidity('Tên Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+											</div>
+											<div th:if="${authenErrors != null && authenErrors.containsKey('firstNameSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${authenErrors.get('firstNameSpecial')}">
+											</div>
+										</div>
+
+										<div class="col-sm-6 ">
+											<label>Họ:</label>
+											<input type="text" class="form-control" id="exampleLastName"
+												th:field="*{lastName}" placeholder="Họ" required
+												oninvalid="this.setCustomValidity('Họ Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+											<div th:if="${authenErrors != null && authenErrors.containsKey('lastNameSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${authenErrors.get('lastNameSpecial')}">
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="datepicker form-group col-sm-6 mb-3 mb-sm-0">
+											<h6 class="ml-3">Ngày sinh: </h6>
+											<input placeholder="Select date" th:field="*{birthday}" type="date"
+												id="birthday" class="form-control">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+										</div>
+
+										<div class="ml-4">
+											<h6 class="mb-2 pb-1">Giới tính: </h6>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{gender}"
+													id="maleGender" value="1" checked />
+												<label class="form-check-label" for="maleGender">Nam</label>
+											</div>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{gender}"
+													id="maleGender" value="2" />
+												<label class="form-check-label" for="maleGender">Nữ</label>
+											</div>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{gender}"
+													id="otherGender" value="0" />
+												<label class="form-check-label" for="otherGender">Khác</label>
+											</div>
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+										</div>
+									</div>
+
+
+									<div class="form-row mt-3">
+										<div class="form-group col-md-6">
+											<label>Tỉnh/Thành phố</label>
+											<input type="text" class="form-control" th:field="*{province}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('province')}" th:errors="*{province}">
+											</div>
+											<div th:if="${formErrors!=null &&  formErrors.containsKey('provinceSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${formErrors.get('provinceSpecial')}">
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<label>Quận/Huyện</label>
+											<input type="text" class="form-control" th:field="*{district}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('district')}" th:errors="*{district}">
+											</div>
+											<div th:if="${formErrors!=null && formErrors.containsKey('districtSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${formErrors.get('districtSpecial')}">
+											</div>
+										</div>
+									</div> <!-- form-row.// -->
+
+
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label>Phường/Xã</label>
+											<input type="text" class="form-control" th:field="*{subDistrict}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('subDistrict')}" th:errors="*{subDistrict}">
+											</div>
+											<div th:if="${formErrors!=null && formErrors.containsKey('subDistrictSpecial')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${formErrors.get('subDistrictSpecial')}">
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<label>Số nhà</label>
+											<input type="text" class="form-control" th:field="*{street}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
+											</div>
+										</div>
+									</div> <!-- form-row.// -->
+
+									<div class="form-group row">
+										<div class="col-6">
+											<h6 class="mb-2 pb-1">Trạng thái: </h6>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{enabled}"
+													id="block" value="1" />
+												<label class="form-check-label" for="block">Hoạt động</label>
+											</div>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{enabled}"
+													id="active" value="0" />
+												<label class="form-check-label" for="active">Chặn</label>
+											</div>
+
+										</div>
+										<div class="col-6" th:if="${!user.role.equals('1')}">
+											<h6 class="mb-2 pb-1">Vai trò: </h6>
+
+										
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{role}"
+													id="staff" value="3" />
+												<label class="form-check-label" for="staff">Nhân viên</label>
+											</div>
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{role}"
+													id="user" value="2" />
+												<label class="form-check-label" for="user">Khách hàng</label>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-5"></div>
+										<button type="submit" class="btn btn-primary btn-user btn-block  col"
+											style="width: 100px;">
+											Sửa
+										</button>
+										<div class="col-5"></div>
+									</div>
+							</div>
+
+
+							</form>
+						</div>
+						<div class="col-3"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- /.container-fluid -->
+
+	</div>
+	<!-- End of Main Content -->
+
+	<!-- Footer -->
+	<footer class="sticky-footer bg-white">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; Your Website 2020</span>
+			</div>
+		</div>
+	</footer>
+	<!-- End of Footer -->
+
+	</div>
+	<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+
+	<div th:replace="admin/fragments/footer :: footer"></div>
+
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/jquery.richtext.min.js}"></script>
+
+
+	<script>
+		function showChangePassword() {
+			var passForm = document.getElementById("PasswordForm");
+			passForm.removeAttribute("hidden");
+
+
+			var infoForm = document.getElementById("user-info");
+			infoForm.setAttribute("hidden", true);
+		}
+
+		function back() {
+			var passForm = document.getElementById("PasswordForm");
+			passForm.setAttribute("hidden", true);
+
+
+			var infoForm = document.getElementById("user-info");
+			infoForm.removeAttribute("hidden");
+		}
+	</script>
+
+</body>
+
+</html>

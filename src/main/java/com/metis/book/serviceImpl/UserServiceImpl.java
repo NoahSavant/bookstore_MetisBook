@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.dto.RegisterForm;
+import com.metis.book.dto.UserEditForm;
 import com.metis.book.model.Cart;
 import com.metis.book.model.Image;
 import com.metis.book.model.PasswordResetToken;
@@ -417,6 +418,84 @@ public class UserServiceImpl implements IUserService {
 			imageRepository.save(image);
 		}
 
+	}
+
+	@Override
+	public void uploadImageForAdmin(MultipartFile file, String userId) throws NumberFormatException, IOException {
+		User user = userRepository.findById(Long.parseLong(userId)).get();
+		Image image = user.getImage();
+		if (!file.isEmpty()) {
+			Path fileNameAndPath = FileUploadUtils.saveUserImage(file, Long.parseLong(userId));
+			image.setTitle(userId + ".png");
+			image.setUrl(fileNameAndPath.toString());
+			imageRepository.save(image);
+		}
+
+	}
+
+	@Override
+	public void updateProfileForAdmin(UserEditForm userEditForm) {
+		User user = userRepository.findById(Long.parseLong(userEditForm.getId())).get();
+		List<Address> addresses = addressRepository.findByUser(user);
+		Address address = new Address();
+		for (Address addr : addresses) {
+			if(addr.getIsPrimary()) {
+				address = addr;
+			}
+		}
+		
+		address.setDistrict(userEditForm.getDistrict());
+		address.setSubDistrict(userEditForm.getSubDistrict());
+		address.setProvince(userEditForm.getProvince());
+		address.setStreet(userEditForm.getStreet());
+		address.setRecievePhoneNumber(userEditForm.getPhoneNumber());
+		addressRepository.save(address);
+
+		user.setFirstName(userEditForm.getFirstName());
+		user.setLastName(userEditForm.getLastName());
+		user.setGender(Integer.valueOf(userEditForm.getGender()));
+		user.setPhoneNumber(userEditForm.getPhoneNumber());
+		user.setBirthday(LocalDate.parse(userEditForm.getBirthday()));
+
+		if(userEditForm.getEnabled().equals("1")) {
+			user.setEnabled(true);
+		}else {
+			user.setEnabled(false);
+		}
+		log.error(userEditForm.getRole() + "aaaaa");
+		int flag = 2; // user
+		List<Role> roles = user.getRoles();
+		for (Role role : roles) {
+			if(role.getName().equals(RoleName.ADMIN)) {
+				flag = 1;
+				return;
+			}
+			if(role.getName().equals(RoleName.STAFF)) {
+				flag = 3;
+			}
+		}
+		Role roleStaff = roleRepository.findByName(RoleName.STAFF);
+		
+		// if upgrade to staff
+		if(userEditForm.getRole().equals("3") && flag == 2) {
+			roles.add(roleStaff);
+		}
+		// if remove staff
+		else if(userEditForm.getRole().equals("2") && flag == 3){
+			log.error(flag + "aaaaa");
+			roles.remove(roleStaff);
+		}
+		
+		user.setRoles(roles);
+		userRepository.save(user);
+
+	}
+
+	@Override
+	public void updatePasswordForAdmin(String userId, String password) {
+		User user = userRepository.findById(Long.parseLong(userId)).get();
+		user.setPassword(passwordEncoder.encode(password));
+		userRepository.save(user);		
 	}
 
 }
