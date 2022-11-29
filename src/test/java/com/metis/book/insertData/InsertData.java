@@ -306,7 +306,7 @@ public class InsertData {
 
 		// Create new address for admin
 		Address address = new Address();
-		address.setFullAddress("241 Nguyễn Trãi, Lái Thiêu, Thuận An, Bình Dương");
+		address.setFullAddress("");
 		address.setStreet("241 Nguyễn Trãi");
 		address.setSubDistrict("Lái Thiêu");
 		address.setDistrict("Thuận An");
@@ -325,7 +325,7 @@ public class InsertData {
 
 		// Create new address for customer
 		Address addressCustomer1 = new Address();
-		addressCustomer1.setFullAddress("168 Trương Văn Bang, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
+		addressCustomer1.setFullAddress("");
 		addressCustomer1.setStreet("168 Trương Văn Bang");
 		addressCustomer1.setSubDistrict("Thạnh Mỹ Lợi");
 		addressCustomer1.setDistrict("Thủ Đức");
@@ -338,7 +338,7 @@ public class InsertData {
 
 		// Create new address for customer
 		Address addressCustomer2 = new Address();
-		addressCustomer2.setFullAddress("24 Hồ Văn Hà, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
+		addressCustomer2.setFullAddress("");
 		addressCustomer2.setStreet("24 Hồ Văn Hà");
 		addressCustomer2.setSubDistrict("Thạnh Mỹ Lợi");
 		addressCustomer2.setDistrict("Thủ Đức");
@@ -434,7 +434,10 @@ public class InsertData {
 		com.metis.book.model.order.Order order1 = new com.metis.book.model.order.Order();
 		order1.setOrderDate(new Date());
 		order1.setOrderTrack(trackDelivering);
-		order1.setPaymentMethod("paypal");
+		order1.setPaymentMethod("Cash");
+		order1.setCostVAT("0");
+		order1.setDeliverCost("20000");
+		order1.setDeliverMethod("Standard");
 		order1.setUser(user);
 		orderRepository.save(order1);
 
@@ -442,6 +445,9 @@ public class InsertData {
 		order2.setOrderDate(new Date());
 		order2.setOrderTrack(trackDelivering);
 		order2.setPaymentMethod("momo");
+		order2.setCostVAT("0");
+		order2.setDeliverCost("40000");
+		order2.setDeliverMethod("Fast");
 		order2.setUser(user);
 		orderRepository.save(order2);
 	}

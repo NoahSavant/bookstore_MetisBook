@@ -142,8 +142,9 @@
 
 								<div class="d-flex justify-content-between pt-2">
 									<p class="fw-bold mb-0">Chi tiết đơn hàng</p>
-									<p class="text-muted mb-0"><span class="fw-bold me-4">Tổng</span>
-										[[${order.getTotalPrice()}]] VNĐ</p>
+									<p class="text-muted mb-0"><span class="fw-bold me-4">Phí giao hàng:</span> [[${order.deliverCost}]] VNĐ
+									</p>
+									
 								</div>
 
 								<div class="d-flex justify-content-between">
@@ -153,12 +154,12 @@
 
 								<div class="d-flex justify-content-between">
 									<p class="text-muted mb-0">Ngày đặt hàng : [[${order.orderDate}]]</p>
-									<p class="text-muted mb-0"><span class="fw-bold me-4">VAT:</span> 0 VNĐ</p>
+									<p class="text-muted mb-0"><span class="fw-bold me-4">VAT:</span> [[${order.costVAT}]] VNĐ</p>
 								</div>
 
 								<div class="d-flex justify-content-between mb-5">
-									<p class="text-muted mb-0"><span class="fw-bold me-4">Phí giao hàng:</span> Miễn phí
-									</p>
+									<p class="text-muted mb-0"><span class="fw-bold me-4">Tổng</span>
+										[[${order.getTotalPrice()}]] VNĐ</p>
 								</div>
 								<div class="shopping-box">
 								 	<a th:href="@{/}" class="ml-auto btn hvr-hover ">Trang chủ</a>

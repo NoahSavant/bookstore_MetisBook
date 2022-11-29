@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.dto.CheckoutForm;
@@ -68,7 +69,6 @@ public class CheckoutController {
 			return mav;
 		}
 		
-		log.info(checkoutForm.toString());
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		
@@ -93,24 +93,25 @@ public class CheckoutController {
 			BindingResult result) {
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
-		
-		renderObject(mav,userPrincipal.getId(),checkoutForm);
 		mav.setViewName("/client/checkout.html");
 		if(checkoutForm.getRecievePhoneNumber()==null||checkoutForm.getNewAddress()==null) {
 			mav.addObject("lackInfo",true);
 			return mav;
 		}
 		userService.updateCheckout(checkoutForm);
-	
+		renderObject(mav,userPrincipal.getId(),checkoutForm);
+		
 		return mav;
 	}
 	
 	@PostMapping("/pay")
 	public ModelAndView paymentProcessing(
 			ModelAndView mav,
-			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm) {
+			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
+			@RequestParam("delivery_cost") String delivery_cost) {
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
+		checkoutForm.setDeliverCost(delivery_cost);
 		if(lackOfInfo(checkoutForm)) {
 			mav.addObject("lackInfo",true);
 			renderObject(mav,userPrincipal.getId(),checkoutForm);

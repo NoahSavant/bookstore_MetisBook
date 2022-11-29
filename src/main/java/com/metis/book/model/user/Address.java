@@ -59,11 +59,8 @@ public class Address extends UserDateAudit{
 	private User user;
 
 	public String getFullAddress() {
-		
-		if(this.fullAddress!="" && this.fullAddress != null) {
-			return this.fullAddress;
-		}
-		String fullAddress = "";
+	
+		String fullAddress = this.fullAddress == null ? "": this.fullAddress + ", ";
 		if(this.street!="" && this.street!=null) {
 			System.out.println(this.street);
 			fullAddress = fullAddress + this.street+", ";
