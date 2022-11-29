@@ -70,8 +70,10 @@ public class SecurityConfig {
 						.permitAll()
 					.antMatchers("/member/**")
 						.hasAuthority("ROLE_USER")
-					.antMatchers("/admin/**")
+					.antMatchers("/admin/user/**")
 						.hasAuthority("ROLE_ADMIN")
+					.antMatchers("/admin/**")
+						.hasAnyAuthority("ROLE_ADMIN","ROLE_STAFF")
 					.anyRequest()
 						.permitAll();
 		return http.build();
