@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import com.metis.book.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +26,6 @@ import com.metis.book.model.Inventory;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.order.OrderItem;
 import com.metis.book.model.order.OrderTrack;
-import com.metis.book.repository.AuthorRepository;
-import com.metis.book.repository.BookRepository;
-import com.metis.book.repository.CartItemReposirory;
-import com.metis.book.repository.CartReposiroty;
-import com.metis.book.repository.CategoryRepository;
-import com.metis.book.repository.ImageRepository;
-import com.metis.book.repository.InventoryRepository;
-import com.metis.book.repository.LanguageRepository;
-import com.metis.book.repository.OrderItemRepository;
-import com.metis.book.repository.OrderRepository;
-import com.metis.book.repository.OrderTrackRepository;
 import com.metis.book.service.IBookService;
 import com.metis.book.utils.AppConstant;
 import com.metis.book.utils.FileUploadUtils;
@@ -63,6 +53,8 @@ public class BookServiceImpl implements IBookService {
 	OrderRepository orderRepository;
 	@Autowired
 	OrderItemRepository orderItemRepository;
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
 	public void insert(BookForm bookForm) throws ParseException, IOException {
@@ -210,6 +202,18 @@ public class BookServiceImpl implements IBookService {
 			bookForm.setTitle(book.getTitle());
 			bookForm.setId(book.getId().toString());
 			bookForm.setAvailable(book.getAvailable() == true ? "Còn bán" : "Ngưng bán");
+			if (book.getCategory()!=null){
+				bookForm.setCreateBy(userRepository.findById(book.getCreateBy()).get().getUsername());
+			} else {
+				bookForm.setCreateBy("");
+			}
+			if (book.getUpdateBy()!=null){
+				bookForm.setLastUpdateBy(userRepository.findById(book.getUpdateBy()).get().getUsername());
+			} else {
+				bookForm.setLastUpdateDate("");
+			}
+			bookForm.setCreateDate(formatter.format(book.getCreatedAt()));
+			bookForm.setLastUpdateDate(formatter.format(book.getUpdatedAt()));
 			bookForms.add(bookForm);
 		}
 		return bookForms;

@@ -45,5 +45,10 @@ public class BookForm {
 	private String ImageName;
 	private String thumbnailName;
 	private List<String> authors;
+
+	private String createBy;
+	private String lastUpdateBy;
+	private String createDate;
+	private String lastUpdateDate;
 	
 }
