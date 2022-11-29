@@ -127,7 +127,7 @@ public class AdminBookController {
 		return mav;
 	}
 	@PostMapping("/category/add")
-	public ModelAndView insertCategory(@Valid @ModelAttribute("category") CategoryForm category, BindingResult result) {
+	public ModelAndView insertCategory(@Valid @ModelAttribute("category") CategoryForm category, BindingResult result) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		categoryService.insert(category);
 		mav.setViewName("redirect:/admin/book/");

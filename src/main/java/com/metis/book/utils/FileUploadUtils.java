@@ -28,4 +28,9 @@ public class FileUploadUtils {
 		Files.write(fileNameAndPath, file.getBytes());
 		return fileNameAndPath;
 	}
+	public static Path saveCategorryImage(MultipartFile file, Long categoryId) throws IOException {
+		Path fileNameAndPath = Paths.get(AppConstant.UPLOAD_CATEGORY_DIRECTORY, categoryId.toString()+".png");
+		Files.write(fileNameAndPath, file.getBytes());
+		return fileNameAndPath;
+	}
 }

@@ -1,5 +1,6 @@
 package com.metis.book.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,6 +12,6 @@ public interface ICategoryService {
 
 	List<Category> getAllCategories();
 
-	void insert(@Valid CategoryForm category);
+	void insert(@Valid CategoryForm category) throws IOException;
 		
 }

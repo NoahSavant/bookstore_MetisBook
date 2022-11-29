@@ -5,14 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.metis.book.model.audit.UserDateAudit;
 
@@ -41,6 +34,10 @@ public class Category extends UserDateAudit {
 	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL,
 			orphanRemoval = true)
 	private List<Book> books;
+
+	@OneToOne
+	@JoinColumn(name = "image_id", referencedColumnName = "id")
+	private Image image;
 
 	public List<Book> getBooks() {
 		return books == null ? null : new ArrayList<Book>(this.books);
