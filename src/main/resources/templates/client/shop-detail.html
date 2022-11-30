@@ -81,12 +81,15 @@
 				<div class="container my-5 py-5">
 					<div class="row d-flex justify-content-center">
 						<div class="col-10">
-
+							<div sec:authorize="!isAuthenticated()" class="alert-warning mb-5">
+								Vui lòng đăng nhập để bình luận
+							</div>
+							<div th:if="${error}" class="alert-danger mb-5">
+								Bạn không đủ quyền để xóa
+							</div>
 							<div class="card">
 								<div class="row d-flex justify-content-start">
-									<div sec:authorize="!isAuthenticated()">
-										Vui lòng đăng nhập để bình luận
-									</div>
+
 									<div sec:authorize="isAuthenticated()" class="col">
 
 
@@ -100,85 +103,98 @@
 												th:src="@{${'/uploads/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
 												class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
 												height="65" />
-											<div class="w-100">
-												<h5>Đánh giá</h5>
-												<div class="rating d-flex mb-3">
-													<input type="radio" name="rating" value="5" id="5"><label
-														for="5">☆</label>
-													<input type="radio" name="rating" value="4" id="4"><label
-														for="4">☆</label>
-													<input type="radio" name="rating" value="3" id="3"><label
-														for="3">☆</label>
-													<input type="radio" name="rating" value="2" id="2"><label
-														for="2">☆</label>
-													<input type="radio" name="rating" value="1" id="1"><label
-														for="1">☆</label>
-												</div>
+											<form method="post" th:object="${feedback}" th:action="@{/feedback}"
+												class="w-100">
+												<div class="w-100">
+													<input hidden name="bookId" th:value="${book.id}" />
+													<h5>Đánh giá</h5>
+													<div class="rating d-flex mb-3">
+														<input th:field="*{rating}" type="radio" value="5" id="5"><label
+															for="5">☆</label>
+														<input type="radio" th:field="*{rating}" value="4" id="4"><label
+															for="4">☆</label>
+														<input type="radio" th:field="*{rating}" value="3" id="3"><label
+															for="3">☆</label>
+														<input type="radio" th:field="*{rating}" value="2" id="2"><label
+															for="2">☆</label>
+														<input type="radio" th:field="*{rating}" value="1" id="1"><label
+															for="1">☆</label>
+													</div>
 
-												<div class="form-outline">
-													<textarea class="form-control"id="textAreaExample"
-														rows="4"></textarea>
+													<div class="form-outline">
+														<textarea th:field="*{content}" class="form-control"
+															id="textAreaExample" rows="4"></textarea>
+													</div>
+													<div class="d-flex justify-content-end mt-3">
+														<button type="submit" class="btn btn-danger">
+															Gửi bình luận <i
+																class="fas fa-long-arrow-alt-right ms-1"></i>
+														</button>
+													</div>
 												</div>
-												<div class="d-flex justify-content-end mt-3">
-													<button type="button" class="btn btn-danger">
-														Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
-													</button>
-												</div>
-											</div>
+											</form>
 										</div>
-
-
-
 									</div>
-
 								</div>
 								<div class="card-body p-4">
 									<h4 class="text-center mb-4 pb-2">Bình luận</h4>
 
-									<div class="row">
+									<div th:each="feedback : ${feedbacks}" class="row mb-5">
 										<div class="col">
 											<div class="d-flex flex-start">
-												<img class="rounded-circle shadow-1-strong me-3 mr-4"
-													src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
-													alt="avatar" width="65" height="65" />
+
+												<img th:if="${feedback.user.getImage()!=null && feedback.user.getImage().getTitle!=null }"
+													th:src="@{${'/uploads/users/'+ feedback.user.getImage().getTitle().toString()}}"
+													class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
+													height="65" />
+												<img th:if="${feedback.user.getImage()!=null && feedback.user.getImage().getTitle==null }"
+													th:src="@{${'/uploads/'+ feedback.user.getImage().getThumbnailName().toString()}}"
+													class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
+													height="65" />
 												<div class="flex-grow-1 flex-shrink-1">
 													<div>
-														<div class="d-flex justify-content-between align-items-center">
-															<p class="mb-1">
-																Maria Smantha <span class="small">- 2 hours ago</span>
+														<div class="d-flex justify-content-start align-items-center">
+															<p class="">
+																[[${feedback.user.username}]] <span class="small"> -
+																	[[${feedback.createdAt}]]</span>
 															</p>
-															<a href="#!"><i class="fas fa-reply fa-xs"></i><span
-																	class="small"> reply</span></a>
-														</div>
-														<p class="small mb-0">
-															It is a long established fact that a reader will be
-															distracted by
-															the readable content of a page.
-														</p>
-													</div>
 
-													<div class="d-flex flex-start mt-4">
-														<a class="me-3" href="#">
-															<img class="rounded-circle shadow-1-strong mr-4"
-																src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp"
-																alt="avatar" width="65" height="65" />
-														</a>
-														<div class="flex-grow-1 flex-shrink-1">
-															<div>
-																<div
-																	class="d-flex justify-content-between align-items-center">
-																	<p class="mb-1">
-																		Simona Disa <span class="small">- 3 hours
-																			ago</span>
-																	</p>
-																</div>
-																<p class="small mb-0">
-																	letters, as opposed to using 'Content here, content
-																	here',
-																	making it look like readable English.
-																</p>
+															<div sec:authorize="isAuthenticated()"
+																th:if="${#authentication.getPrincipal().getId() == feedback.user.id || #authentication.getPrincipal().getId() == 1 }"
+																class="ml-4">
+																<form method="post" th:action="@{/feedback/delete}"
+																	th:id="'delete_cmt_' + ${feedback.id}">
+																	<a th:onclick="deletecmt([[${feedback.id}]])"
+																		href="#!" class="link-muted"><i
+																			class="fas fa-trash-alt ms-2"></i></a>
+																	<input hidden name="feedbackId"
+																		th:value="${feedback.id}" />
+																	<input hidden name="bookId"
+																		th:value="${feedback.book.id}" />
+																</form>
 															</div>
 														</div>
+														<div class="rating d-flex">
+															<input disabled type="radio" value="5"
+																th:checked="${feedback.rating==5}"
+																id="5"><label>☆</label>
+															<input disabled type="radio" value="4"
+																th:checked="${feedback.rating==4}"
+																id="4"><label>☆</label>
+															<input disabled type="radio" value="3"
+																th:checked="${feedback.rating==3}"
+																id="3"><label>☆</label>
+															<input disabled type="radio" value="2"
+																th:checked="${feedback.rating==2}" id="2"><label
+																for="2">☆</label>
+															<input disabled type="radio" value="1"
+																th:checked="${feedback.rating==1}" id="1"><label
+																for="1">☆</label>
+														</div>
+
+														<p class="small mb-0">
+															[[${feedback.content}]]
+														</p>
 													</div>
 												</div>
 											</div>
@@ -188,7 +204,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
 			</section>
 
 			<div class="row my-5">
@@ -248,7 +263,12 @@
 		<div th:replace="client/fragments/footer :: footer"></div>
 	</footer>
 	<!-- End Footer  -->
-
+	
+	<script>
+		function deletecmt(id) {
+			document.getElementById('delete_cmt_' + id).submit();
+		}
+	</script>
 	<style>
 		.rating {
 			display: flex;

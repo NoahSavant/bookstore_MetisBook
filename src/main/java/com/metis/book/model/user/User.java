@@ -21,7 +21,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.metis.book.model.Cart;
+import com.metis.book.model.Feedback;
 import com.metis.book.model.Image;
 import com.metis.book.model.audit.UserDateAudit;
 import com.metis.book.model.order.Order;
@@ -82,8 +88,10 @@ public class User extends UserDateAudit  {
 	
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Order> orders;
-
+	
+	
 	@ManyToMany(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(
 			name = "user_role",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -104,6 +112,9 @@ public class User extends UserDateAudit  {
 	@OneToOne
 	@JoinColumn(name = "image_id", referencedColumnName = "id")
 	private Image image;
+	
+	@OneToMany (mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Feedback> feedbacks;
 
 	
 	public List<Address> getAddresses() {
@@ -137,6 +148,18 @@ public class User extends UserDateAudit  {
 			this.orders = null;
 		}else {
 			this.orders = orders;
+		}
+		
+	}
+	
+	public List<Feedback> getFeedbacks() {
+		return feedbacks==null?null:new ArrayList<>(this.feedbacks);
+	}
+	public void setFeedbacks(List<Feedback> feedbacks) {
+		if(feedbacks == null) {
+			this.feedbacks = null;
+		}else {
+			this.feedbacks = feedbacks;
 		}
 		
 	}

@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
@@ -44,6 +43,10 @@ public class Feedback extends UserDateAudit {
 	
 	@Column(name = "rating")
 	private int rating;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 	
 	
 }

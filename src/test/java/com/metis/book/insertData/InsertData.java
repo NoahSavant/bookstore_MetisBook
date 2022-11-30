@@ -562,6 +562,7 @@ public class InsertData {
 		
 		// Create new feedback
 		Feedback feedback = new Feedback();
+		feedback.setUser(user);
 		feedback.setBook(book);
 		feedback.setRating(4);
 		feedback.setContent("Quá hay");
@@ -593,7 +594,7 @@ public class InsertData {
 				.email("kietle1709@gmail.com").firstName("kiet").lastName("Le Nguyen Tuan")
 				.birthday(LocalDate.of(2002, 9, 17)).gender(1) // 1: male, 2: female, 3: Not know
 				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleUser)).cart(cartSaved)
-				.addresses(null).image(imageThumbnail).build();
+				.addresses(null).image(imageThumbnail).feedbacks(null).build();
 		userRepository.save(user);
 
 	}
@@ -632,7 +633,7 @@ public class InsertData {
 				.email("duckhailinux@gmail.com").firstName("khai").lastName("Nguyen")
 				.birthday(LocalDate.of(2002, 06, 06)).gender(1) // 1: male, 2: female, 3: Not know
 				.phoneNumber("0783511740").enabled(Boolean.TRUE).roles(Arrays.asList(roleAdmin, roleUser)).cart(null)
-				.addresses(null).image(imageThumbnail).cart(cartSaved).build();
+				.addresses(null).image(imageThumbnail).cart(cartSaved).feedbacks(null).build();
 		userRepository.save(user);
 
 	}
