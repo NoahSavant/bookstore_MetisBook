@@ -53,7 +53,12 @@ public class UserForm {
 			this.gender = "Nữ";
 		}
 		this.phoneNumber = user.getPhoneNumber();
-		this.birthday = user.getBirthday().toString();
+		if(Objects.nonNull(user.getBirthday())) {
+			this.birthday = user.getBirthday().toString();
+		}else {
+			this.birthday = "";
+		}
+		
 		
 		// Check auth provider
 		if(Objects.nonNull(user.getAuthProvider())) {
@@ -69,16 +74,14 @@ public class UserForm {
 			this.enabled = "Chặn";
 		}
 		
-		
-		this.image = "";
-		
+	
+		this.role = "Khách hàng";
 		for (Role role : user.getRoles()) {
 			if(role.getName().equals(RoleName.ADMIN)) {
 				this.role = "Quản lý";
+				return;
 			}else if(role.getName().equals(RoleName.STAFF)) {
 				this.role = "Nhân viên";
-			}else {
-				this.role = "Khách hàng";
 			}
 		}
 		

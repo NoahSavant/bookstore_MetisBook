@@ -58,9 +58,11 @@ public class CartController {
 
 		checkError(request,session,mav);
 		log.info("in cart page");
-		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		userPrincipal.setCartItemNum(String.valueOf(user.getCart().getCartItems().size()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		renderObject(mav,userPrincipal.getId());
 		mav.setViewName("/client/cart");
 		return mav;
@@ -143,6 +145,7 @@ public class CartController {
 		}
 		
 		cartService.addToCart(user,Long.parseLong(bookId),Integer.parseInt(quantity));
+		
 		mav.setViewName("redirect:/member/cart");
 		return mav;
 	}

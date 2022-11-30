@@ -34,7 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		}
 		
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-        if (roles.contains("ROLE_ADMIN")) {
+        if (roles.contains("ROLE_ADMIN") || roles.contains("ROLE_STAFF")) {
             response.sendRedirect("/admin/"); // admin page
         }else if (roles.contains("ROLE_USER")) {
         	

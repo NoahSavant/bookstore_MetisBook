@@ -48,6 +48,15 @@ public class Order extends UserDateAudit {
 	@Column(name = "deliver_method")
 	private String deliverMethod;
 	
+	@Column(name = "deliver_cost")
+	private String deliverCost;
+	
+	@Column(name = "cost_vat")
+	private String costVAT;
+	
+	@Column(name = "discount")
+	private String discount;
+	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<OrderItem> orderItems;	
 	

@@ -38,22 +38,81 @@
 						<div class="col">
 							<div class="p-5">
 								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">Thêm tài khoản mới!</h1>
+									<h1 class="h4 text-gray-900 mb-4">Sửa thông tin tài khoản!</h1>
 								</div>
+								<img th:if="${user.imageName}" th:src="@{${'/uploads/users/'+user.imageName}}"
+									class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:20%;"
+									id="avatar" />
+								<img th:if="${user.thumbnailName!=null && user.imageName == null }"
+									th:src="@{${'/uploads/'+user.thumbnailName}}"
+									class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:20%;"
+									id="avatar" />
+								<div class="d-flex justify-content-center">
+									<form id="imageForm" method="post" enctype="multipart/form-data"
+										th:action="@{/admin/user/upload-image}" class="mr-3">
+										<input hidden name="userId" th:value="${user.id}" />
+										<label for="image-upload" class="btn btn-outline-primary">
+											Đổi ảnh đại diện
+										</label>
+										<input hidden id="image-upload" class="form-control" type="file"
+											accept="image/png, image/jpeg" name="image"
+											onchange="document.getElementById('imageForm').submit();" />
+									</form>
 
-								<form class="user" method="post" th:action="@{/admin/user/insert}" th:object="${user}"
-									enctype="multipart/form-data">
-
-									<div class="form-group row">
-										<div class="col-sm-6">
-											<input id="image-upload" type="file" th:field="*{file}"
-												accept="image/png, image/jpeg" />
+									<label class="btn btn-outline-primary" onclick="showChangePassword()">
+										Đổi mật khẩu
+									</label>
+								</div>
+								<form id="PasswordForm" method="post" th:action="@{/admin/user/change-password}"
+									class="mt-5" hidden>
+									<input hidden name="userId" th:value="${user.id}" />
+									<div class="form-group row ">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="password" class="form-control form-control-user"
+												name="password" id="exampleInputPassword" placeholder="Mật khẩu"
+												required
+												oninvalid="this.setCustomValidity('Mật khẩu Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
 										</div>
+										<div class="col-sm-6">
+											<input type="password" class="form-control form-control-user"
+												name="confirmPassword" id="exampleRepeatPassword"
+												placeholder="Nhập lại mật khẩu" required
+												oninvalid="this.setCustomValidity('Mật khẩu nhập lại Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
+											<div th:if="${authenErrors != null && authenErrors.containsKey('passwordNotMatch')}"
+												class="alert alert-warning mt-3 mb-3"
+												th:text="${authenErrors.get('passwordNotMatch')}">
+											</div>
+										</div>
+										<div class="col-4"></div>
+										<button type="submit" class="btn btn-primary btn-user btn-block mt-3 mr-3"
+											style="width: 100px;">
+											Đổi
+										</button>
+
+										<button type="button" onclick="back()"
+											class="btn btn-primary btn-user btn-block  mt-3" style="width: 100px;">
+											Quay lại
+										</button>
+										<div class="col-4"></div>
+
+
 									</div>
 
-									<div class="form-group row">
+
+								</form>
+
+
+								<form class="user" id="user-info" method="post" th:action="@{/admin/user/edit}"
+									th:object="${user}" enctype="multipart/form-data">
+
+									<input hidden th:field="*{id}" />
+
+									<div class="form-group row mt-3">
 
 										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label>Tên:</label>
 											<input type="text" class="form-control" id="exampleFirstName"
 												th:field="*{firstName}" placeholder="Tên" required
 												oninvalid="this.setCustomValidity('Tên Không thể bỏ trống')"
@@ -67,7 +126,8 @@
 											</div>
 										</div>
 
-										<div class="col-sm-6">
+										<div class="col-sm-6 ">
+											<label>Họ:</label>
 											<input type="text" class="form-control" id="exampleLastName"
 												th:field="*{lastName}" placeholder="Họ" required
 												oninvalid="this.setCustomValidity('Họ Không thể bỏ trống')"
@@ -78,23 +138,6 @@
 												class="alert alert-warning mt-3 mb-3"
 												th:text="${authenErrors.get('lastNameSpecial')}">
 											</div>
-										</div>
-									</div>
-									<div class="form-group mt-3">
-										<input type="text" class="form-control" id="exampleInputUsername"
-											th:field="*{username}" placeholder="Tên đăng nhập" required
-											oninvalid="this.setCustomValidity('Tên đăng nhập Không thể bỏ trống')"
-											oninput="this.setCustomValidity('')">
-										<div class="alert alert-warning mt-3 mb-3"
-											th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-
-										<div th:if="${authenErrors != null && authenErrors.containsKey('existByUsername')}"
-											class="alert alert-warning mt-3 mb-3"
-											th:text="${authenErrors.get('existByUsername')}">
-										</div>
-										<div th:if="${authenErrors != null && authenErrors.containsKey('usernameSpecial')}"
-											class="alert alert-warning mt-3 mb-3"
-											th:text="${authenErrors.get('usernameSpecial')}">
 										</div>
 									</div>
 
@@ -132,30 +175,8 @@
 										</div>
 									</div>
 
-									<div class="row mt-3">
-										<div class="form-group col-md-6 ">
-											<input type="email" class="form-control" id="exampleInputEmail"
-												th:field="*{email}" placeholder="Email" required
-												oninvalid="this.setCustomValidity('Email Không thể bỏ trống')"
-												oninput="this.setCustomValidity('')">
-											<div class="alert alert-warning mt-3 mb-3"
-												th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-											<div th:if="${authenErrors != null && authenErrors.containsKey('existByEmail')}"
-												class="alert alert-warning mt-3 mb-3"
-												th:text="${authenErrors.get('existByEmail')}">
-											</div>
-										</div>
-										<div class="form-group col-md-6 ">
-											<input type="text" class="form-control" id="phoneNumber"
-												th:field="*{phoneNumber}" placeholder="Số điện thoại" required
-												oninvalid="this.setCustomValidity('Số điện thoại Không thể bỏ trống')"
-												oninput="this.setCustomValidity('')">
-											<div class="alert alert-warning mt-3 mb-3"
-												th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
-											</div>
-										</div>
-									</div>
-									<div class="form-row">
+
+									<div class="form-row mt-3">
 										<div class="form-group col-md-6">
 											<label>Tỉnh/Thành phố</label>
 											<input type="text" class="form-control" th:field="*{province}">
@@ -201,33 +222,48 @@
 											</div>
 										</div>
 									</div> <!-- form-row.// -->
-									<div class="form-group row ">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="password" class="form-control"
-												th:field="*{password}" id="exampleInputPassword" placeholder="Mật khẩu">
-											<div class="alert alert-warning mt-3 mb-3"
-												th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-												required
-												oninvalid="this.setCustomValidity('Mật khẩu Không thể bỏ trống')"
-												oninput="this.setCustomValidity('')"></div>
+
+									<div class="form-group row">
+										<div class="col-6">
+											<h6 class="mb-2 pb-1">Trạng thái: </h6>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{enabled}"
+													id="block" value="1" />
+												<label class="form-check-label" for="block">Hoạt động</label>
+											</div>
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{enabled}"
+													id="active" value="0" />
+												<label class="form-check-label" for="active">Chặn</label>
+											</div>
+
 										</div>
-										<div class="col-sm-6">
-											<input type="password" class="form-control"
-												th:field="*{confirmPassword}" id="exampleRepeatPassword"
-												placeholder="Nhập lại mật khẩu" required
-												oninvalid="this.setCustomValidity('Mật khẩu nhập lại Không thể bỏ trống')"
-												oninput="this.setCustomValidity('')">
-											<div th:if="${authenErrors != null && authenErrors.containsKey('passwordNotMatch')}"
-												class="alert alert-warning mt-3 mb-3"
-												th:text="${authenErrors.get('passwordNotMatch')}">
+										<div class="col-6" th:if="${!user.role.equals('1')}">
+											<h6 class="mb-2 pb-1">Vai trò: </h6>
+
+										
+
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{role}"
+													id="staff" value="3" />
+												<label class="form-check-label" for="staff">Nhân viên</label>
+											</div>
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" th:field="*{role}"
+													id="user" value="2" />
+												<label class="form-check-label" for="user">Khách hàng</label>
 											</div>
 										</div>
 									</div>
+
+
 									<div class="row">
 										<div class="col-5"></div>
 										<button type="submit" class="btn btn-primary btn-user btn-block  col"
 											style="width: 100px;">
-											Tạo
+											Sửa
 										</button>
 										<div class="col-5"></div>
 									</div>
@@ -276,23 +312,24 @@
 
 
 	<script>
-		$('.content').richText();
+		function showChangePassword() {
+			var passForm = document.getElementById("PasswordForm");
+			passForm.removeAttribute("hidden");
 
-		//@@@@
-		document.addEventListener('click', function (e) {
-			const app = document.querySelector('.app')
-			e = e || window.event;
-			var target = e.target || e.srcElement;
-			console.log(target.classList[0], target.innerHTML + "s")
-			if (target.innerHTML == "" || (app.innerHTML.includes(target.innerHTML) && app.innerHTML.includes("@@@@"))) {
-				document.querySelector('#category').style.display = "block"
-			}
-			else {
-				document.querySelector('#category').style.display = "none"
-			}
-		}, false);
+
+			var infoForm = document.getElementById("user-info");
+			infoForm.setAttribute("hidden", true);
+		}
+
+		function back() {
+			var passForm = document.getElementById("PasswordForm");
+			passForm.setAttribute("hidden", true);
+
+
+			var infoForm = document.getElementById("user-info");
+			infoForm.removeAttribute("hidden");
+		}
 	</script>
-
 
 </body>
 

@@ -75,7 +75,7 @@ public class OrderServiceImpl implements IOrderService{
 				cartItemRepository.deleteById(Long.parseLong(item));
 			}
 		}
-		OrderTrack orderTrack ;
+		OrderTrack orderTrack;
 		if(checkoutForm.getPaymentMethod().equals("Momo")) {
 			orderTrack = trackRepository.findByStatus("Chờ thanh toán");
 		}else {
@@ -89,6 +89,8 @@ public class OrderServiceImpl implements IOrderService{
 		order.setPaymentMethod(checkoutForm.getPaymentMethod());
 		order.setOrderTrack(orderTrack);
 		order.setOrderDate(new Date());
+		order.setCostVAT("0");
+		order.setDeliverCost(checkoutForm.getDeliverCost());
 		
 		orderRepository.save(order);
 		List<OrderItem> orderItems = convertToOrderItem(order,cartItems);

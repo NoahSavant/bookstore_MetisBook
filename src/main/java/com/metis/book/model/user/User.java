@@ -104,6 +104,7 @@ public class User extends UserDateAudit  {
 	@OneToOne
 	@JoinColumn(name = "image_id", referencedColumnName = "id")
 	private Image image;
+
 	
 	public List<Address> getAddresses() {
 		return addresses == null ? null : new ArrayList<Address>(this.addresses);

@@ -14,7 +14,7 @@
 		<hr class="sidebar-divider my-0">
 
 		<!-- Nav Item - Dashboard -->
-		<li class="nav-item" >
+		<li class="nav-item">
 			<a class="nav-link" th:href="@{/index.html}">
 				<i class="fas fa-fw fa-tachometer-alt"></i>
 				<span>Dashboard</span></a>
@@ -23,7 +23,8 @@
 		<div class="sidebar-heading">
 			Menu
 		</div>
-			<li class="nav-item" th:classappend="${#httpServletRequest.requestURI.contains('/admin/user') ? 'active' : ''}">
+		<li sec:authorize="hasRole('ADMIN')" class="nav-item"
+			th:classappend="${#httpServletRequest.requestURI.contains('/admin/user') ? 'active' : ''}">
 			<a class="nav-link" th:href="@{/admin/user}">
 				<i class="fas fa-fw fa-table"></i>
 				<span>Tài khoản</span></a>

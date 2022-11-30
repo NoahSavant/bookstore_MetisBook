@@ -22,6 +22,7 @@ import com.metis.book.model.Book;
 import com.metis.book.model.Cart;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.Category;
+import com.metis.book.model.Feedback;
 import com.metis.book.model.Image;
 import com.metis.book.model.Inventory;
 import com.metis.book.model.Language;
@@ -38,6 +39,7 @@ import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
 import com.metis.book.repository.CartReposiroty;
 import com.metis.book.repository.CategoryRepository;
+import com.metis.book.repository.FeedbackRepository;
 import com.metis.book.repository.ImageRepository;
 import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.LanguageRepository;
@@ -105,6 +107,9 @@ public class InsertData {
 	@Autowired
 	BlogRepository blogRepository;
 
+	@Autowired
+	FeedbackRepository feedbackRepository;
+	
 	@Test
 	@Order(1)
 	public void testCreateAuthor() {
@@ -301,7 +306,7 @@ public class InsertData {
 
 		// Create new address for admin
 		Address address = new Address();
-		address.setFullAddress("241 Nguyễn Trãi, Lái Thiêu, Thuận An, Bình Dương");
+		address.setFullAddress("");
 		address.setStreet("241 Nguyễn Trãi");
 		address.setSubDistrict("Lái Thiêu");
 		address.setDistrict("Thuận An");
@@ -320,7 +325,7 @@ public class InsertData {
 
 		// Create new address for customer
 		Address addressCustomer1 = new Address();
-		addressCustomer1.setFullAddress("168 Trương Văn Bang, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
+		addressCustomer1.setFullAddress("");
 		addressCustomer1.setStreet("168 Trương Văn Bang");
 		addressCustomer1.setSubDistrict("Thạnh Mỹ Lợi");
 		addressCustomer1.setDistrict("Thủ Đức");
@@ -333,7 +338,7 @@ public class InsertData {
 
 		// Create new address for customer
 		Address addressCustomer2 = new Address();
-		addressCustomer2.setFullAddress("24 Hồ Văn Hà, Thạnh Mỹ Lợi, Thủ Đức, Hồ Chí Minh");
+		addressCustomer2.setFullAddress("");
 		addressCustomer2.setStreet("24 Hồ Văn Hà");
 		addressCustomer2.setSubDistrict("Thạnh Mỹ Lợi");
 		addressCustomer2.setDistrict("Thủ Đức");
@@ -429,7 +434,10 @@ public class InsertData {
 		com.metis.book.model.order.Order order1 = new com.metis.book.model.order.Order();
 		order1.setOrderDate(new Date());
 		order1.setOrderTrack(trackDelivering);
-		order1.setPaymentMethod("paypal");
+		order1.setPaymentMethod("Cash");
+		order1.setCostVAT("0");
+		order1.setDeliverCost("20000");
+		order1.setDeliverMethod("Standard");
 		order1.setUser(user);
 		orderRepository.save(order1);
 
@@ -437,6 +445,9 @@ public class InsertData {
 		order2.setOrderDate(new Date());
 		order2.setOrderTrack(trackDelivering);
 		order2.setPaymentMethod("momo");
+		order2.setCostVAT("0");
+		order2.setDeliverCost("40000");
+		order2.setDeliverMethod("Fast");
 		order2.setUser(user);
 		orderRepository.save(order2);
 	}
@@ -539,6 +550,24 @@ public class InsertData {
 		blogRepository.save(blog3);
 	}
 
+	@Test
+	@Order(13)
+	public void testCreateFeedBack() {
+		
+		// Get book
+		Book book = bookRepository.findById(1L).get();
+		
+		// Get user
+		User user = userRepository.findById(2L).get();
+		
+		// Create new feedback
+		Feedback feedback = new Feedback();
+		feedback.setBook(book);
+		feedback.setRating(4);
+		feedback.setContent("Quá hay");
+	
+		feedbackRepository.save(feedback);
+	}
 	public void createCustomer() {
 
 		// Create new Cart
