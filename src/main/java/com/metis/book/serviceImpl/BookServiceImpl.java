@@ -202,7 +202,7 @@ public class BookServiceImpl implements IBookService {
 			bookForm.setTitle(book.getTitle());
 			bookForm.setId(book.getId().toString());
 			bookForm.setAvailable(book.getAvailable() == true ? "Còn bán" : "Ngưng bán");
-			if (book.getCategory()!=null){
+			if (book.getCreateBy()!=null){
 				bookForm.setCreateBy(userRepository.findById(book.getCreateBy()).get().getUsername());
 			} else {
 				bookForm.setCreateBy("");

@@ -13,4 +13,9 @@ public interface ILanguageService {
 
 	void insert(@Valid LanguageForm language);
 
+    List<LanguageForm> getLanguageShows();
+
+	LanguageForm getById(long parseLong);
+
+	void updateLanguage(LanguageForm languageForm);
 }

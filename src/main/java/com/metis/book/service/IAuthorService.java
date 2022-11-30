@@ -13,4 +13,9 @@ public interface IAuthorService {
 
 	void insert(@Valid AuthorForm author);
 
+    List<AuthorForm> getAuthorShows();
+
+    AuthorForm getById(long parseLong);
+
+    void updateAuthor(AuthorForm authorForm);
 }

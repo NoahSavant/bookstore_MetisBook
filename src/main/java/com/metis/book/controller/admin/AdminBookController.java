@@ -53,7 +53,7 @@ public class AdminBookController {
 		mav.setViewName("/admin/book/book.html");
 		return mav;
 	}
-	
+
 	@GetMapping("/insert")
 	public ModelAndView viewInsertBook() {
 		ModelAndView mav = new ModelAndView();
@@ -118,6 +118,14 @@ public class AdminBookController {
 		mav.setViewName("redirect:/admin/book/");
 		return mav;
 	}
+	@GetMapping("/category")
+	public ModelAndView categoryView() {
+		ModelAndView mav = new ModelAndView();
+		List<CategoryForm> categoryForms = categoryService.getCategoryShows();
+		mav.addObject("categoryForms", categoryForms);
+		mav.setViewName("/admin/book/category.html");
+		return mav;
+	}
 	@GetMapping("/category/add")
 	public ModelAndView viewInsertCategory() {
 		ModelAndView mav = new ModelAndView();
@@ -133,6 +141,33 @@ public class AdminBookController {
 		mav.setViewName("redirect:/admin/book/");
 		return mav;
 	}
+	@GetMapping("/category/edit")
+	public ModelAndView viewUpdateCategory(
+			ModelAndView mav,
+			@RequestParam("id") String id) {
+
+		CategoryForm categoryForm = categoryService.getById(Long.parseLong(id));
+		mav.addObject("category", categoryForm);
+		mav.setViewName("/admin/book/formEditCategory.html");
+		return mav;
+	}
+	@PostMapping("/category/edit")
+	public ModelAndView updateCategory(
+			ModelAndView mav,
+			@ModelAttribute("category") CategoryForm categoryForm, BindingResult result) throws ParseException, IOException {
+		categoryService.updateCategory(categoryForm);
+		mav.addObject("updateSucceed", true);
+		mav.setViewName("redirect:/admin/book/category");
+		return mav;
+	}
+	@GetMapping("/author")
+	public ModelAndView viewAuthor() {
+		ModelAndView mav = new ModelAndView();
+		List<AuthorForm> authorForms = authorService.getAuthorShows();
+		mav.addObject("authorForms", authorForms);
+		mav.setViewName("/admin/book/author.html");
+		return mav;
+	}
 	@GetMapping("/author/add")
 	public ModelAndView viewInsertAuthor() {
 		ModelAndView mav = new ModelAndView();
@@ -145,7 +180,34 @@ public class AdminBookController {
 	public ModelAndView insertAuthor(@Valid @ModelAttribute("author") AuthorForm author, BindingResult result) {
 		ModelAndView mav = new ModelAndView();
 		authorService.insert(author);
-		mav.setViewName("redirect:/admin/book/");
+		mav.setViewName("redirect:/admin/book/author/");
+		return mav;
+	}
+	@GetMapping("/author/edit")
+	public ModelAndView viewUpdateAuthor(
+			ModelAndView mav,
+			@RequestParam("id") String id) {
+
+		AuthorForm authorForm = authorService.getById(Long.parseLong(id));
+		mav.addObject("author", authorForm);
+		mav.setViewName("/admin/book/formEditAuthor.html");
+		return mav;
+	}
+	@PostMapping("/author/edit")
+	public ModelAndView updateAuthor(
+			ModelAndView mav,
+			@ModelAttribute("author") AuthorForm authorForm, BindingResult result) throws ParseException, IOException {
+		authorService.updateAuthor(authorForm);
+		mav.addObject("updateSucceed", true);
+		mav.setViewName("redirect:/admin/book/author/");
+		return mav;
+	}
+	@GetMapping("/language")
+	public ModelAndView viewLanguage() {
+		ModelAndView mav = new ModelAndView();
+		List<LanguageForm> languageForms = languageService.getLanguageShows();
+		mav.addObject("languageForms", languageForms);
+		mav.setViewName("/admin/book/language.html");
 		return mav;
 	}
 	@GetMapping("/language/add")
@@ -161,6 +223,25 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		languageService.insert(language);
 		mav.setViewName("redirect:/admin/book/");
+		return mav;
+	}
+	@GetMapping("/language/edit")
+	public ModelAndView viewUpdateLanguage(
+			ModelAndView mav,
+			@RequestParam("id") String id) {
+
+		LanguageForm languageForm = languageService.getById(Long.parseLong(id));
+		mav.addObject("language", languageForm);
+		mav.setViewName("/admin/book/formEditLanguage.html");
+		return mav;
+	}
+	@PostMapping("/language/edit")
+	public ModelAndView updateLanguage(
+			ModelAndView mav,
+			@ModelAttribute("language") LanguageForm languageForm, BindingResult result) throws ParseException, IOException {
+		languageService.updateLanguage(languageForm);
+		mav.addObject("updateSucceed", true);
+		mav.setViewName("redirect:/admin/book/language/");
 		return mav;
 	}
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <div th:replace="admin/fragments/header :: header"></div>
+</head>
+
+<body id="page-top" >
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <div th:replace="admin/fragments/navbar :: navbar"></div>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <h6 class="m-0 font-weight-bold text-primary">Thông tin ngôn ngữ</h6>
+                                </div>
+                                <div class="col-sm-2">
+                                	<a th:href="@{/admin/book/language/add}">
+                                    <input type="button" class="btn btn-success" value="Thêm ngôn ngữ">
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            	
+                                <table class="table table-bordered" id="language" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th width="14%">ID</th>
+                                            <th width="30%">Ngôn ngữ</th>
+                                            <th width="14%">Ngày tạo</th>
+                                            <th width="14%">Người tạo</th>
+                                            <th width="14%">Ngày cập nhật</th>
+                                            <th width="14%">Cập nhật</th>
+                                            <th width="5%">Sửa</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th width="14%">ID</th>
+                                            <th width="30%">Ngôn ngữ</th>
+                                            <th width="14%">Ngày tạo</th>
+                                            <th width="14%">Người tạo</th>
+                                            <th width="14%">Ngày cập nhật</th>
+                                            <th width="14%">Cập nhật</th>
+                                            <th width="5%">Sửa</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr th:each="language : ${languageForms}">
+                                            <td>[[${language.id}]]</td>
+                                            <td>[[${language.name}]]</td>
+                                            <td>[[${language.createDate}]]</td>
+                                            <td>[[${language.createBy}]]</td>
+                                            <td>[[${language.lastUpdateDate}]]</td>
+                                            <td>[[${language.lastUpdateBy}]]</td>
+                                            <td>
+                                            	<a th:href="@{/admin/book/language/edit(id=${language.id})}">
+													<input type="button" class="btn btn-primary" value="Sửa">
+												</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+   
+
+    <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <script>
+
+
+		function initData() {
+			$('#language').DataTable({
+				"processing": true,
+				"lengthMenu": [5, 10, 20, 50],
+				"oLanguage": {
+					"sSearch": "Tìm kiếm:",
+					"sLengthMenu": "Liệt kê _MENU_ dòng",
+					"sInfo": "Liệt kê dòng _START_ - _END_ trong _TOTAL_ dòng",
+					"sZeroRecords": "Không tìm thấy dữ liệu",
+					oPaginate: {
+						"sFirst": "Đầu",
+						"sLast": "Cuối",
+						"sNext": "Tiếp",
+						"sPrevious": "Trước"
+					}
+				},
+			});
+		}
+
+		$(document).ready(function () {
+			initData();
+		})
+		
+		
+	</script>
+
+	<script th:if="${updateSucceed}">
+
+			alert("Sửa thành công");
+	
+	</script>
+
+</body>
+
+</html>
