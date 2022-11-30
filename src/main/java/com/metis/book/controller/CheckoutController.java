@@ -129,6 +129,9 @@ public class CheckoutController {
 		Cart cart = cartService.getCartByUser(userId);
 		User user = userService.getUserById(userId);
 		List<Address> addresses = addressService.getAddressByUser(user);
+		for (Address address : addresses) {
+			address.setFullAddress(address.fetchFullAddress());
+		}
 		checkoutForm = convert(user,checkoutForm);
 		
 		if(lackOfInfo(checkoutForm)) {
@@ -174,7 +177,7 @@ public class CheckoutController {
 		List<Address> addresses = addressService.getAddressByUser(user);
 		for (Address address : addresses) {
 			if(address.getIsPrimary()) {
-				checkoutForm.setFullAddress(address.getFullAddress());
+				checkoutForm.setFullAddress(address.fetchFullAddress());
 				checkoutForm.setDistrict(address.getDistrict());
 				checkoutForm.setSubDistrict(address.getSubDistrict());
 				checkoutForm.setStreet(address.getStreet());

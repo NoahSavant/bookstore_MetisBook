@@ -52,7 +52,7 @@ public class RegisterForm {
 	private String district;
 	private String subDistrict;
 	private String province;
-	
+	private String fullAddress;
 	private String birthday;
 	
 	private MultipartFile file;	

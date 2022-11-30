@@ -54,6 +54,7 @@ public class ProfileForm {
 	@Size(min = 2, max =20, message = "Độ dài tỉnh phải từ [2-20] ký tự")
 	private String province;
 	
+	private String fulllAddress;
 	private String imageName;
 	private String thumbnailName;
 

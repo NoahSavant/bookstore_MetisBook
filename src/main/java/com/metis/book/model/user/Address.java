@@ -58,9 +58,9 @@ public class Address extends UserDateAudit{
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
-	public String getFullAddress() {
+	public String fetchFullAddress() {
 	
-		String fullAddress = this.fullAddress == null ? "": this.fullAddress + ", ";
+		String fullAddress = this.fullAddress == null || this.fullAddress.equals("")? "": this.fullAddress + ", ";
 		if(this.street!="" && this.street!=null) {
 			System.out.println(this.street);
 			fullAddress = fullAddress + this.street+", ";

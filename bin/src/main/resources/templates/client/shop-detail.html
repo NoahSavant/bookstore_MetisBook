@@ -10,7 +10,6 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 	</div>
-
 </head>
 
 <body>
@@ -77,6 +76,121 @@
 				</div>
 			</div>
 
+			<!-- Start COMMENT SECTION -->
+			<section class="gradient-custom">
+				<div class="container my-5 py-5">
+					<div class="row d-flex justify-content-center">
+						<div class="col-10">
+
+							<div class="card">
+								<div class="row d-flex justify-content-start">
+									<div sec:authorize="!isAuthenticated()">
+										Vui lòng đăng nhập để bình luận
+									</div>
+									<div sec:authorize="isAuthenticated()" class="col">
+
+
+										<div class="d-flex w-100 card-body">
+
+											<img th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle!=null }"
+												th:src="@{${'/uploads/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
+												class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
+												height="65" />
+											<img th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle==null }"
+												th:src="@{${'/uploads/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
+												class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
+												height="65" />
+											<div class="w-100">
+												<h5>Đánh giá</h5>
+												<div class="rating d-flex mb-3">
+													<input type="radio" name="rating" value="5" id="5"><label
+														for="5">☆</label>
+													<input type="radio" name="rating" value="4" id="4"><label
+														for="4">☆</label>
+													<input type="radio" name="rating" value="3" id="3"><label
+														for="3">☆</label>
+													<input type="radio" name="rating" value="2" id="2"><label
+														for="2">☆</label>
+													<input type="radio" name="rating" value="1" id="1"><label
+														for="1">☆</label>
+												</div>
+
+												<div class="form-outline">
+													<textarea class="form-control"id="textAreaExample"
+														rows="4"></textarea>
+												</div>
+												<div class="d-flex justify-content-end mt-3">
+													<button type="button" class="btn btn-danger">
+														Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+
+
+
+									</div>
+
+								</div>
+								<div class="card-body p-4">
+									<h4 class="text-center mb-4 pb-2">Bình luận</h4>
+
+									<div class="row">
+										<div class="col">
+											<div class="d-flex flex-start">
+												<img class="rounded-circle shadow-1-strong me-3 mr-4"
+													src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
+													alt="avatar" width="65" height="65" />
+												<div class="flex-grow-1 flex-shrink-1">
+													<div>
+														<div class="d-flex justify-content-between align-items-center">
+															<p class="mb-1">
+																Maria Smantha <span class="small">- 2 hours ago</span>
+															</p>
+															<a href="#!"><i class="fas fa-reply fa-xs"></i><span
+																	class="small"> reply</span></a>
+														</div>
+														<p class="small mb-0">
+															It is a long established fact that a reader will be
+															distracted by
+															the readable content of a page.
+														</p>
+													</div>
+
+													<div class="d-flex flex-start mt-4">
+														<a class="me-3" href="#">
+															<img class="rounded-circle shadow-1-strong mr-4"
+																src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp"
+																alt="avatar" width="65" height="65" />
+														</a>
+														<div class="flex-grow-1 flex-shrink-1">
+															<div>
+																<div
+																	class="d-flex justify-content-between align-items-center">
+																	<p class="mb-1">
+																		Simona Disa <span class="small">- 3 hours
+																			ago</span>
+																	</p>
+																</div>
+																<p class="small mb-0">
+																	letters, as opposed to using 'Content here, content
+																	here',
+																	making it look like readable English.
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<div class="row my-5">
 				<div class="col-lg-12">
 					<div class="title-all text-center">
@@ -88,17 +202,20 @@
 							<div class="products-single fix">
 								<div class="box-img-hover">
 									<div class="type-lb">
-		                                <p class="sale">Còn bán</p>
-		                            </div>
+										<p class="sale">Còn bán</p>
+									</div>
 									<img th:if="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}"
 										class="img-fluid" />
 									<img th:if="${item.image.thumbnailName!=null && item.image.title == null }"
 										th:src="@{${'/uploads/'+item.image.thumbnailName}}" class="img-fluid" />
 									<div class="mask-icon">
-										 <ul>
-		                                    <li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip" data-placement="right" title="Chi tiết"><i class="fas fa-eye"></i></a></li>
-		                                </ul> 
-										<a class="cart" th:href="@{/member/shop/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
+										<ul>
+											<li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip"
+													data-placement="right" title="Chi tiết"><i
+														class="fas fa-eye"></i></a></li>
+										</ul>
+										<a class="cart" th:href="@{/member/shop/add(bookId=${item.id})}">Thêm vào giỏ
+											hàng</a>
 									</div>
 								</div>
 								<div class="why-text">
@@ -112,6 +229,10 @@
 			</div>
 
 		</div>
+
+
+
+
 	</div>
 	<!-- End Cart -->
 
@@ -128,6 +249,43 @@
 	</footer>
 	<!-- End Footer  -->
 
+	<style>
+		.rating {
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: start;
+		}
+
+		.rating>input {
+			display: none;
+		}
+
+		.rating>label {
+			position: relative;
+			font-size: 2vw;
+			color: #FFD600;
+			cursor: pointer;
+		}
+
+		.rating>label::before {
+			content: "\2605";
+			position: absolute;
+			opacity: 0;
+		}
+
+		.rating>label:hover:before,
+		.rating>label:hover~label:before {
+			opacity: 1 !important;
+		}
+
+		.rating>input:checked~label:before {
+			opacity: 1;
+		}
+
+		.rating:hover>input:checked~label:before {
+			opacity: 0.4;
+		}
+	</style>
 </body>
 
 </html>

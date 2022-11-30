@@ -105,6 +105,46 @@ public class AdminUserController {
 		return mav;
 	}
 	
+	@GetMapping("/address")
+	public ModelAndView viewAddressPage(
+			ModelAndView mav,
+			@RequestParam("userId") String userId) {
+		User user = userService.getUserById(Long.parseLong(userId));
+		List<Address> addresses = addressService.getAddressByUser(user);
+		for (Address address : addresses) {
+			address.setFullAddress(address.fetchFullAddress());
+		}
+		mav.addObject("userId",userId);
+		mav.addObject("addresses",addresses);
+		mav.setViewName("/admin/user/address.html");
+		return mav;
+	}
+	
+	@GetMapping("/address-detail")
+	public ModelAndView viewAddressDetailPage(
+			ModelAndView mav,
+			@RequestParam("id") String addressId,
+			@RequestParam("userId") String userId) {
+		
+		Address address = addressService.getAddressById(Long.parseLong(addressId));
+		mav.addObject("userId",userId);
+		mav.addObject("address",address);
+		mav.setViewName("/admin/user/formEditAddress.html");
+		return mav;
+	}
+	
+	@PostMapping("/address")
+	public ModelAndView editAddress(
+			ModelAndView mav,
+			@RequestParam("userId") String userId,
+			@ModelAttribute("address") Address address) {
+		
+		User user = userService.getUserById(Long.parseLong(userId));
+		addressService.updateAddress(address,user);
+		mav.setViewName("redirect:/admin/user/address?userId="+userId);
+		return mav;
+	}
+	
 	@PostMapping("/upload-image")
 	public ModelAndView uploadImage(
 			ModelAndView mav,
@@ -169,7 +209,7 @@ public class AdminUserController {
 		for (Address address : addresses) {
 			list.add(address.getFullAddress());
 			if (address.getIsPrimary()) {
-				userForm.setPrimaryAddress(address.getFullAddress());
+				userForm.setPrimaryAddress(address.fetchFullAddress());
 			}
 		}
 		user.setAddresses(addresses);

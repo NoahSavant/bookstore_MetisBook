@@ -48,34 +48,42 @@
                         <div class="card-body">
                             <div class="table-responsive">
                             	
-                                <table class="table table-bordered" id="book" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="book" width="200%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th width="5%">ID</th>
-                                            <th width="20%">Tựa sách</th>
-                                            <th width="10%">Giá sách</th>
-                                            <th width="10%">Nhà xuất bản</th>
+                                            <th width="15%">Tựa sách</th>
+                                            <th width="5%">Giá sách</th>
+                                            <th width="5%">Nhà xuất bản</th>
                                             <th width="10%">Mô tả</th>
-                                            <th width="15%">Ngày xuất bản</th>
-                                            <th width="10%">Ngôn ngữ</th>
-                                            <th width="10%">Tác giả</th>
-                                            <th width="15%">Số lượng</th>
-                                            <th width="15%">Trạng thái</th>
+                                            <th width="5%">Ngày xuất bản</th>
+                                            <th width="5%">Ngôn ngữ</th>
+                                            <th width="5%">Tác giả</th>
+                                            <th width="5%">Số lượng</th>
+                                            <th width="5%">Trạng thái</th>
+                                            <th width="5%">Ngày tạo</th>
+                                            <th width="10%">Người tạo</th>
+                                            <th width="5%">Ngày cập nhật</th>
+                                            <th width="10%">Cập nhật</th>
                                             <th width="5%">Sửa</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th width="5%">ID</th>
-                                            <th width="20%">Tựa sách</th>
-                                            <th width="10%">Giá sách</th>
-                                            <th width="10%">Nhà xuất bản</th>
+                                            <th width="15%">Tựa sách</th>
+                                            <th width="5%">Giá sách</th>
+                                            <th width="5%">Nhà xuất bản</th>
                                             <th width="10%">Mô tả</th>
-                                            <th width="15%">Ngày xuất bản</th>
-                                            <th width="10%">Ngôn ngữ</th>
-                                            <th width="10%">Tác giả</th>
-                                            <th width="15%">Số lượng</th>
-                                            <th width="15%">Trạng thái</th>
+                                            <th width="5%">Ngày xuất bản</th>
+                                            <th width="5%">Ngôn ngữ</th>
+                                            <th width="5%">Tác giả</th>
+                                            <th width="5%">Số lượng</th>
+                                            <th width="5%">Trạng thái</th>
+                                            <th width="5%">Ngày tạo</th>
+                                            <th width="10%">Người tạo</th>
+                                            <th width="5%">Ngày cập nhật</th>
+                                            <th width="10%">Cập nhật</th>
                                             <th width="5%">Sửa</th>
                                         </tr>
                                     </tfoot>
@@ -99,6 +107,10 @@
 											</td>
 											<td>[[${book.quantity}]]</td>
 											<td>[[${book.available}]]</td>
+                                            <td>[[${book.createDate}]]</td>
+                                            <td>[[${book.createBy}]]</td>
+                                            <td>[[${book.lastUpdateDate}]]</td>
+                                            <td>[[${book.lastUpdateBy}]]</td>
                                             <td>
                                             	<a th:href="@{/admin/book/edit(bookId=${book.id})}">
 													<input type="button" class="btn btn-primary" value="Sửa">

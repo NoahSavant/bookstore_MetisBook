@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+	<div th:replace="admin/fragments/header :: header"></div>
+
+	<link rel="stylesheet" th:href="@{/css/multiselect.css}">
+	<link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/css/richtext.min.css}">
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<div th:replace="admin/fragments/navbar :: navbar"></div>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container">
+
+					<div class="row">
+						<div class="col-2"></div>
+						<div class="col">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">Sửa thông tin địa chỉ!</h1>
+								</div>
+
+							</div>
+								<form id="address-info" class="pl-3 mb-5" th:action="@{/admin/user/address}" method="post"
+							th:object="${address}">
+							<div class="row">
+								<input hidden th:field="*{id}" />
+								<input hidden name = "userId" th:value = "${userId}">
+								<div class="col-md-4 mb-3">
+									<label class="mt-3 mb-3">Phường/xã *</label>
+									<input type="text" class="form-control user-info" th:field="*{subDistrict}"
+										id="subDistrict" placeholder="" required
+										oninvalid="this.setCustomValidity('Phường/xã Không thể bỏ trống')"
+										oninput="this.setCustomValidity('')">
+								</div>
+								<div class="col-md-3 mb-3">
+									<label class="mt-3 mb-3">Quận/huyện *</label>
+									<input type="text" class="form-control user-info" th:field="*{district}"
+										id="district" placeholder="" required
+										oninvalid="this.setCustomValidity('Quận/huyện Không thể bỏ trống')"
+										oninput="this.setCustomValidity('')">
+								</div>
+								<div class="col-md-3 mb-3">
+									<label class="mt-3 mb-3">Tỉnh *</label>
+									<input type="text" class="form-control user-info" th:field="*{province}"
+										id="province" placeholder="" required
+										oninvalid="this.setCustomValidity('Tỉnh Không thể bỏ trống')"
+										oninput="this.setCustomValidity('')">
+								</div>
+								<div class="col-md-5 mb-3">
+									<label class="mt-3 mb-3">Số nhà *</label>
+									<input type="text" class="form-control user-info" th:field="*{street}" id="street"
+										placeholder="" required
+										oninvalid="this.setCustomValidity('Số nhà Không thể bỏ trống')"
+										oninput="this.setCustomValidity('')">
+								</div>
+								<div class="col-md-5 mb-3">
+									<label class="mt-3 mb-3">Số điện thoại nhận hàng *</label>
+									<input type="text" class="form-control user-info" th:field="*{recievePhoneNumber}"
+										placeholder="" required id="recievePhoneNumber"
+										oninvalid="this.setCustomValidity('Số điện thoại nhận hàng Không thể bỏ trống')"
+										oninput="this.setCustomValidity('')">
+								</div>
+								
+								
+							</div>
+							<div class="row">
+								<div class="col mb-3">
+									<label class="mt-3 mb-3">Địa chỉ cụ thể | được đặt trước dãy địa chỉ *</label>
+									<input type="text" class="form-control user-info" th:field="*{fullAddress}"
+										placeholder="" id="recievePhoneNumber">
+								</div>
+								<div class="col-4"></div>
+								
+							</div>
+							<div class="row">
+								<div class="form-check mt-3 mb-3 ml-3 col">
+									<input class="form-check-input" type="checkbox" th:field="*{isPrimary}"
+										id="flexCheckDefault">
+									<label class="form-check-label" for="flexCheckDefault">
+										 Địa chỉ mặc định
+									</label>
+								</div>
+							</div>
+							<div id="profileSave">
+								<a th:href="@{/admin/user/address(userId=${userId})}" class="btn btn-outline-primary mr-4">Trở
+									về</a>
+								<button type="submit" class="btn btn-outline-primary">Lưu</button>
+
+							</div>
+						</form>
+
+							</div>
+							<div class="col-3"></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- /.container-fluid -->
+
+		</div>
+		<!-- End of Main Content -->
+
+		<!-- Footer -->
+		<footer class="sticky-footer bg-white">
+			<div class="container my-auto">
+				<div class="copyright text-center my-auto">
+					<span>Copyright &copy; Your Website 2020</span>
+				</div>
+			</div>
+		</footer>
+		<!-- End of Footer -->
+
+	</div>
+	<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+
+	<div th:replace="admin/fragments/footer :: footer"></div>
+
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/jquery.richtext.min.js}"></script>
+
+
+	
+</body>
+
+</html>

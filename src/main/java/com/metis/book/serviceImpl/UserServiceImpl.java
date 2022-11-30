@@ -399,7 +399,7 @@ public class UserServiceImpl implements IUserService {
 		address.setStreet(registerRequest.getStreet());
 		address.setDistrict(registerRequest.getDistrict());
 		address.setSubDistrict(registerRequest.getSubDistrict());
-		address.setFullAddress(address.getFullAddress());
+		address.setFullAddress(registerRequest.getFullAddress());
 		address.setIsPrimary(true);
 		address.setUser(userSaved);
 		addressRepository.save(address);
@@ -449,6 +449,7 @@ public class UserServiceImpl implements IUserService {
 		address.setProvince(userEditForm.getProvince());
 		address.setStreet(userEditForm.getStreet());
 		address.setRecievePhoneNumber(userEditForm.getPhoneNumber());
+		address.setFullAddress(userEditForm.getFullAddress());
 		addressRepository.save(address);
 
 		user.setFirstName(userEditForm.getFirstName());

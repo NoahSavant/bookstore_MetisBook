@@ -171,6 +171,7 @@ public class ProfileController {
 				.district(address==null?null:address.getDistrict())
 				.subDistrict(address==null?null:address.getSubDistrict())
 				.street(address==null?null:address.getStreet())
+				.fulllAddress(address.fetchFullAddress())
 				.build();
 		
 		return profileForm;

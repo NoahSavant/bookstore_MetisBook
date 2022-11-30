@@ -42,6 +42,9 @@ public class AddressController {
 		User user = userService.getUserById(userPrincipal.getId());
 		
 		List<Address> addresses = addressService.getAddressByUser(user);
+		for (Address address : addresses) {
+			address.setFullAddress(address.fetchFullAddress());
+		}
 		mav.addObject("addresses", addresses);
 		mav.setViewName("client/address.html");
 		return mav;
@@ -66,9 +69,6 @@ public class AddressController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		User user = userService.getUserById(userPrincipal.getId());
-		
-		System.out.println(address.getIsPrimary());
-		System.out.println(address.getFullAddress());
 		addressService.updateAddress(address,user);
 		mav.setViewName("redirect:/member/address");
 		return mav;

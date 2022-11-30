@@ -26,6 +26,7 @@ public class UserEditForm {
 	private String district;
 	private String subDistrict;
 	private String province;
+	private String fullAddress;
 	private String enabled;
 	private String imageName;
 	private String thumbnailName;
@@ -71,5 +72,6 @@ public class UserEditForm {
 			}	
 		}
 	    
+	    this.fullAddress = address.getFullAddress();
 	}
 }

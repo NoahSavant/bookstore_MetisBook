@@ -142,21 +142,16 @@
 							<h4>Giảm giá</h4>
 							<div class="ml-auto font-weight-bold"> 0 VNĐ </div>
 						</div>
-						<hr class="my-1">
-						<div class="d-flex">
-							<h4>Phí vận chuyển</h4>
-							<div class="ml-auto font-weight-bold"> Miễn Phí </div>
-						</div>
-						<hr>
 						<div class="d-flex gr-total">
 							<h5>Tiền phải trả</h5>
-							<div class="ml-auto h5"> [[${cart.getTotalPrice()}]] VNĐ </div>
+							<div id="must-pay" class="ml-auto h5"> [[${cart.getTotalPrice()}]]</div>
+							<span class="font-weight-bold ml-1"> VNĐ </span>
 						</div>
 						<hr>
 					</div>
 				</div>
 				<div class="col-12 d-flex shopping-box" title="Phải có ít nhất một sản phẩm để thanh toán">
-					<a th:classappend="${cartItems.size()<=0?'disabled':''}" 
+					<a th:classappend="${cartItems.size()==0?'disabled':''}" 
 						href="#" th:onclick = "return submitItem()" class="ml-auto btn hvr-hover">Đặt hàng</a>
 					
 				</div>
@@ -190,14 +185,14 @@
 			var currItemNum = element.value;
 			var oldItemNum = element.oldValue;
 			document.getElementById('total-pr' + id).innerText = price * currItemNum + 'VNĐ';
-			console.log(currItemNum + " old: " + oldItemNum);
+
 			// Change total cart price
 			var amountPriceChange = currItemNum * price - oldItemNum * price;
 			var oldTotalPrice = parseInt(document.getElementById('cart-price').innerText);
 			var newTotalPrice = oldTotalPrice + amountPriceChange;
-			console.log(amountPriceChange + " and " + oldTotalPrice + " and " + newTotalPrice);
-			document.getElementById('cart-price').innerText = newTotalPrice;
 
+			document.getElementById('cart-price').innerText = newTotalPrice;
+			document.getElementById('must-pay').innerText = newTotalPrice;
 			// set old is curr value
 			element.oldValue = element.value;
 			$.ajax({
