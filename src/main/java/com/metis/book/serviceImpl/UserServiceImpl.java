@@ -25,6 +25,7 @@ import com.metis.book.model.Cart;
 import com.metis.book.model.Image;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
+import com.metis.book.model.order.Order;
 import com.metis.book.model.user.Address;
 import com.metis.book.model.user.Role;
 import com.metis.book.model.user.RoleName;
@@ -497,6 +498,11 @@ public class UserServiceImpl implements IUserService {
 		User user = userRepository.findById(Long.parseLong(userId)).get();
 		user.setPassword(passwordEncoder.encode(password));
 		userRepository.save(user);		
+	}
+
+	@Override
+	public User findByOrder(Order order) {
+		return userRepository.findByOrders(order);
 	}
 
 }

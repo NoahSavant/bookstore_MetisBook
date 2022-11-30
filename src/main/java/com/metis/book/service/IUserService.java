@@ -11,6 +11,7 @@ import com.metis.book.dto.RegisterForm;
 import com.metis.book.dto.UserEditForm;
 import com.metis.book.model.PasswordResetToken;
 import com.metis.book.model.VerificationToken;
+import com.metis.book.model.order.Order;
 import com.metis.book.model.user.User;
 
 public interface IUserService {
@@ -62,5 +63,7 @@ public interface IUserService {
 	void updateProfileForAdmin(UserEditForm userEditForm);
 
 	void updatePasswordForAdmin(String userId, String password);
+
+	User findByOrder(Order order);
 
 }

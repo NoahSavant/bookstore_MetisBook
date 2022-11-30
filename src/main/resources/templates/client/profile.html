@@ -217,6 +217,9 @@
 						<header class="card-header" id="header_bill">
 							<strong class="d-inline-block mr-3 ">Đơn hàng gần đây</strong>
 						</header><br>
+						<th:block th:if="${#lists.isEmpty(orders)}">
+							<strong class="mr-auto ml-auto mb-3">Không có đơn hàng nào gần đây</strong>
+						</th:block>
 						<div class="table-responsive">
 						
 						<th:block th:if="${orders}">

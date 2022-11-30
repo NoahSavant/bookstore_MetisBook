@@ -50,9 +50,8 @@ public class OrderServiceImpl implements IOrderService{
 	OrderTrackRepository trackRepository;
 
 	@Override
-	public List<Order> getAllOrderByUser() {
-
-		return orderRepository.findAll();
+	public List<Order> getAllOrderByUser(User user) {
+		return orderRepository.findByUser(user);
 	}
 
 	@Override

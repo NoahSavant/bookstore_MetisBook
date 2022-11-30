@@ -5,10 +5,10 @@ import java.util.List;
 import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.OrderShow;
 import com.metis.book.model.order.Order;
+import com.metis.book.model.user.User;
 
 public interface IOrderService {
 
-	List<Order> getAllOrderByUser();
 
 	Long createOrder(CheckoutForm checkoutForm);
 
@@ -19,4 +19,6 @@ public interface IOrderService {
     OrderShow getOrderShowById(Long orderID);
 
     void updateOrder(OrderShow orderShow);
+
+	List<Order> getAllOrderByUser(User user);
 }

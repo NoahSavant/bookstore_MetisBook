@@ -135,7 +135,7 @@ public class ProfileController {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		User user = userService.getUserById(userPrincipal.getId());
 		
-		List<Order> orders = orderService.getAllOrderByUser();
+		List<Order> orders = orderService.getAllOrderByUser(user);
 		log.info(String.valueOf(orders.size()));
 		if(orders.size()>0) {
 			mav.addObject("orders", orders);
