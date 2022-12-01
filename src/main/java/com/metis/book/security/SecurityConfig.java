@@ -93,7 +93,6 @@ public class SecurityConfig {
 	AuthenticationFailureHandler myLoginFailureHandler() {
 		return new LoginFailureHandler();
 	}
-	
 	@Bean
 	OAuthLoginFailureHandler myOAuthLoginFailureHandler() {
 		return new OAuthLoginFailureHandler();
