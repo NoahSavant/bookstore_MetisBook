@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.dto.PageResponse;
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.user.Address;
@@ -86,6 +87,27 @@ public class ProfileController {
 		userService.updateProfile(profileForm);
 		return mav;
 	}
+	
+	@GetMapping("/order")
+	public ModelAndView viewProfileOrderPage(
+			ModelAndView mav,
+			@RequestParam(value = "page", required =  false) String page) {
+		
+		if(Objects.isNull(page)) {
+			page = "0";
+		}
+		PageResponse<Order> orders = orderService.getOrderByPage(Integer.parseInt(page));
+		if(orders.getContent().size() == 0) {
+			mav.setViewName("redirect:/profile/order");
+		}
+		mav.addObject("page",Integer.parseInt(page));
+		mav.addObject("isFirst",orders.isFirst());
+		mav.addObject("isLast",orders.isLast());
+		mav.addObject("totalPage",orders.getTotalPages());
+		mav.addObject("orders", orders.getContent());
+		mav.setViewName("client/profile-order");
+		return mav;
+	}
 
 	private ModelAndView getFormErrors(ProfileForm profileForm) {
 		ModelAndView mav = new ModelAndView();
@@ -135,7 +157,7 @@ public class ProfileController {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		User user = userService.getUserById(userPrincipal.getId());
 		
-		List<Order> orders = orderService.getAllOrderByUser(user);
+		List<Order> orders = orderService.getTop3OrderByUser(user);
 		log.info(String.valueOf(orders.size()));
 		if(orders.size()>0) {
 			mav.addObject("orders", orders);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.OrderShow;
+import com.metis.book.dto.PageResponse;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.user.User;
 
@@ -21,4 +22,8 @@ public interface IOrderService {
     void updateOrder(OrderShow orderShow);
 
 	List<Order> getAllOrderByUser(User user);
+
+	List<Order> getTop3OrderByUser(User user);
+
+	PageResponse<Order> getOrderByPage(int page);
 }
