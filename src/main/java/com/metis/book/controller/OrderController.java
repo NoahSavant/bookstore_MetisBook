@@ -3,12 +3,14 @@ package com.metis.book.controller;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metis.book.model.order.Order;
@@ -40,8 +42,7 @@ public class OrderController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		if(!user.getId().equals(userPrincipal.getId())) {
-			mav.setViewName("redirect:/");
-			return mav;
+			throw new AccessDeniedException("Bạn không có quyền truy cập");
 		}
 		
 		if(Objects.isNull(order)) {

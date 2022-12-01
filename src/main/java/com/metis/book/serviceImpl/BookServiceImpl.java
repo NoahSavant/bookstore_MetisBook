@@ -306,7 +306,6 @@ public class BookServiceImpl implements IBookService {
 				filterBooks.add(book);
 			}
 		}
-		System.out.println(filterForm.getPublisherName());
 		if (filterForm.getPublisherName().compareTo("Tất cả") != 0) {
 			books.clear();
 			books.addAll(filterBooks);
