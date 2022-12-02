@@ -96,7 +96,13 @@ public class ProfileController {
 		if(Objects.isNull(page)) {
 			page = "0";
 		}
-		PageResponse<Order> orders = orderService.getOrderByPage(Integer.parseInt(page));
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		
+		
+		PageResponse<Order> orders = orderService.getOrderByUserAndPage(user,Integer.parseInt(page));
 		if(orders.getContent().size() == 0) {
 			mav.setViewName("redirect:/profile/order");
 		}

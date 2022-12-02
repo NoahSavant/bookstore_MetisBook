@@ -25,5 +25,5 @@ public interface IOrderService {
 
 	List<Order> getTop3OrderByUser(User user);
 
-	PageResponse<Order> getOrderByPage(int page);
+	PageResponse<Order> getOrderByUserAndPage(User user, int parseInt);
 }

@@ -32,11 +32,11 @@
 				</aside>
 				<main class="col-md-9 mt-2">
 					<div class="row gx-4 gx-lg-5 justify-content-start">
-						<header class="card-header" id="header_bill">
-							<strong class="d-inline-block mr-3 ">Đơn hàng</strong>
+						<header class="card-header w-100" id="header_bill">
+							<strong class="d-inline-block mr-3">Đơn hàng</strong>
 						</header><br>
 						<th:block th:if="${#lists.isEmpty(orders)}">
-							<strong class="mr-auto ml-auto mb-3">Không có đơn hàng nào gần đây</strong>
+							<strong class="mr-auto ml-auto mb-3 mt-3">Không có đơn hàng nào gần đây</strong>
 						</th:block>
 						<div class="table-responsive">
 
@@ -91,7 +91,7 @@
 							</th:block>
 
 						</div> <!-- table-responsive .end// -->
-						<div th:hidden="${totalPage == 1}" class="pagination-custom row mb-5">
+						<div th:hidden="${totalPage == 0}" class="pagination-custom row mb-5">
 							<div class="col-3"></div>
 							<div class="col">
 								<ul class="pagination">

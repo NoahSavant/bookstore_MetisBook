@@ -202,9 +202,9 @@ public class OrderServiceImpl implements IOrderService{
 	}
 
 	@Override
-	public PageResponse<Order> getOrderByPage(int page) {
+	public PageResponse<Order> getOrderByUserAndPage(User user, int page) {
 		Pageable pageable = PageRequest.of(page, 3); // 3 = size of each page
-		Page<Order> orders = orderRepository.findAll(pageable);
+		Page<Order> orders = orderRepository.findAllByUser(user,pageable);
 		PageResponse<Order> pageResponse = new PageResponse<>();
 		pageResponse.setContent(orders.getContent());
 		pageResponse.setTotalPages(orders.getTotalPages());

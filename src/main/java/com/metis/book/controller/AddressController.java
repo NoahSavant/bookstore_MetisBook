@@ -37,7 +37,7 @@ public class AddressController {
 	public ModelAndView viewAddressPage(ModelAndView mav) {
 		
 		
-		// Get authenticated usser
+		// Get authenticated user
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		User user = userService.getUserById(userPrincipal.getId());
