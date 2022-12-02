@@ -31,7 +31,7 @@
 									 Vào lúc:
 									 <span th:text="${#dates.format(blog.createdAt, 'dd-MM-yyyy')}"></span>
 								</p>
-								<p><a class="btn hvr-hover" href="#">Mua hàng</a></p>
+								<p><a class="btn hvr-hover" th:href="@{/shop/Tatca?page=1}">Mua hàng</a></p>
 							</div>
 						</div>
 					</div>

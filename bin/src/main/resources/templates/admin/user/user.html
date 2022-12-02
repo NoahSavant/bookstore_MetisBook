@@ -59,6 +59,7 @@
 											<th width="5%">Giới tính</th>
 											<th width="5%">Số ĐT</th>
 											<th width="10%">Địa chỉ</th>
+											<th witth="5%">Sửa địa chỉ</th>
 											<th width="5%">Ngày sinh</th>
 											<th width="5%">Trạng thái</th>
 											<th width="5%">Ngày tạo</th>
@@ -80,6 +81,7 @@
 											<th width="5%">Giới tính</th>
 											<th width="5%">Số ĐT</th>
 											<th width="10%">Địa chỉ</th>
+											<th witth="10%">Sửa địa chỉ</th>
 											<th width="5%">Ngày sinh</th>
 											<th width="5%">Trạng thái</th>
 											<th width="5%">Ngày tạo</th>
@@ -101,6 +103,11 @@
 											<td>[[${user.gender}]]</td>
 											<td>[[${user.phoneNumber}]]</td>
 											<td>[[${user.primaryAddress}]]</td>
+											<td>
+												<a th:href="@{/admin/user/address(userId=${user.id})}">
+													<input type="button" class="btn btn-primary" value="Sửa địa chỉ">
+												</a>
+											</td>
 											<td>[[${user.birthday}]]</td>
 											<td>[[${user.enabled}]]</td>
 											<td>[[${user.createDate}]]</td>

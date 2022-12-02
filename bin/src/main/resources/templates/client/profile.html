@@ -23,6 +23,7 @@
 					<ul class="list-group">
 						<a class="list-group-item active" th:href="@{/member/profile}"> Thông tin cá nhân</a>
 						<a class="list-group-item" th:href="@{/member/address}"> Địa chỉ</a>
+						<a class="list-group-item" th:href="@{/member/profile/order}"> Đơn hàng</a>
 					</ul>
 					<br>
 					<a class="btn btn-light btn-block" th:href="@{/auth/logout}"> <i class="fa fa-power-off"></i> <span
@@ -217,6 +218,9 @@
 						<header class="card-header" id="header_bill">
 							<strong class="d-inline-block mr-3 ">Đơn hàng gần đây</strong>
 						</header><br>
+						<th:block th:if="${#lists.isEmpty(orders)}">
+							<strong class="mr-auto ml-auto mb-3">Không có đơn hàng nào gần đây</strong>
+						</th:block>
 						<div class="table-responsive">
 						
 						<th:block th:if="${orders}">
@@ -247,7 +251,7 @@
 									
 									<br>Nhà xuất bản: [[${orderItem.book.publisherName}]]
 									</td>
-									<td width="200"><a href="#"
+									<td width="200"><a th:href="@{/member/order-detail(orderId=${order.id})}"
 											class="btn btn-outline-primary">Chi tiết</a></td>
 								</tr>
 								
