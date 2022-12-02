@@ -129,6 +129,26 @@ public class InsertData {
 		author3.setName("Huyền Trang");
 		author3.setBooks(null);
 		authorRepository.save(author3);
+
+		Author author4= new Author();
+		author4.setName("Nguyễn Quang Ngọc");
+		author4.setBooks(null);
+		authorRepository.save(author4);
+
+		Author author5= new Author();
+		author5.setName("Trịnh Ngọc Trang");
+		author5.setBooks(null);
+		authorRepository.save(author5);
+
+		Author author6= new Author();
+		author6.setName("Kousuke Sawamura");
+		author6.setBooks(null);
+		authorRepository.save(author6);
+
+		Author author7= new Author();
+		author7.setName("Trang Anh");
+		author7.setBooks(null);
+		authorRepository.save(author7);
 	}
 
 	@Test
@@ -155,6 +175,14 @@ public class InsertData {
 		Category category5 = new Category();
 		category5.setName("Kinh tế");
 		categoryRepository.save(category5);
+
+		Category category6= new Category();
+		category6.setName("Kỹ thuật");
+		categoryRepository.save(category6);
+
+		Category category7= new Category();
+		category7.setName("Giáo dục");
+		categoryRepository.save(category7);
 	}
 
 	@Test
@@ -211,6 +239,16 @@ public class InsertData {
 			log.error(AppConstant.CATEGORY_NOT_FOUND + "Kinh tế");
 		}
 
+		Category categoryKyThuat = categoryRepository.findByName("Kỹ thuật");
+		if (Objects.isNull(categoryKyThuat)) {
+			log.error(AppConstant.CATEGORY_NOT_FOUND + "Kỹ thuật");
+		}
+
+		Category categoryGiaoDuc = categoryRepository.findByName("Giáo dục");
+		if (Objects.isNull(categoryGiaoDuc)) {
+			log.error(AppConstant.CATEGORY_NOT_FOUND + "Giáo dục");
+		}
+
 		// Get language
 		Language languageTiengViet = languageRepository.findByName("Tiếng Việt");
 		if (Objects.isNull(languageTiengViet)) {
@@ -253,6 +291,26 @@ public class InsertData {
 			log.error(AppConstant.AUTHOR_NOT_FOUND + "Huyền Trang");
 		}
 
+		Author author4 = authorRepository.findByName("Nguyễn Quang Ngọc");
+		if (Objects.isNull(author4)) {
+			log.error(AppConstant.AUTHOR_NOT_FOUND + "Nguyễn Quang Ngọc");
+		}
+
+		Author author5 = authorRepository.findByName("Trịnh Ngọc Trang");
+		if (Objects.isNull(author5)) {
+			log.error(AppConstant.AUTHOR_NOT_FOUND + "Trịnh Ngọc Trang");
+		}
+
+		Author author6 = authorRepository.findByName("Kousuke Sawamura");
+		if (Objects.isNull(author6)) {
+			log.error(AppConstant.AUTHOR_NOT_FOUND + "Kousuke Sawamura");
+		}
+
+		Author author7 = authorRepository.findByName("Trang Anh");
+		if (Objects.isNull(author7)) {
+			log.error(AppConstant.AUTHOR_NOT_FOUND + "Trang Anh");
+		}
+
 		// Create new inventory for Book1
 		Inventory inventoryForBook1 = new Inventory();
 		inventoryForBook1.setQuantiy(10);
@@ -283,6 +341,36 @@ public class InsertData {
 		inventoryForBook5.setBook(null);
 		Inventory inventorySaved5 = inventoryRepository.save(inventoryForBook5);
 
+		// Create new inventory for Book6
+		Inventory inventoryForBook6 = new Inventory();
+		inventoryForBook6.setQuantiy(7);
+		inventoryForBook6.setBook(null);
+		Inventory inventorySaved6 = inventoryRepository.save(inventoryForBook6);
+
+		// Create new inventory for Book7
+		Inventory inventoryForBook7 = new Inventory();
+		inventoryForBook7.setQuantiy(3);
+		inventoryForBook7.setBook(null);
+		Inventory inventorySaved7 = inventoryRepository.save(inventoryForBook7);
+
+		// Create new inventory for Book8
+		Inventory inventoryForBook8 = new Inventory();
+		inventoryForBook8.setQuantiy(10);
+		inventoryForBook8.setBook(null);
+		Inventory inventorySaved8 = inventoryRepository.save(inventoryForBook8);
+
+		// Create new inventory for Book9
+		Inventory inventoryForBook9 = new Inventory();
+		inventoryForBook9.setQuantiy(9);
+		inventoryForBook9.setBook(null);
+		Inventory inventorySaved9 = inventoryRepository.save(inventoryForBook9);
+
+		// Create new inventory for Book10
+		Inventory inventoryForBook10 = new Inventory();
+		inventoryForBook10.setQuantiy(10);
+		inventoryForBook10.setBook(null);
+		Inventory inventorySaved10 = inventoryRepository.save(inventoryForBook10);
+
 		// Create new Thumbnail for Book1
 		Image image1 = new Image();
 		image1.setTitle("1.png");
@@ -293,28 +381,77 @@ public class InsertData {
 		
 
 		// Create new Thumbnail for Book2
-		Image imageThumbnail2 = new Image();
-		imageThumbnail2.setThumbnailName("BookThumbnail.png");
-		imageThumbnail2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
-		imageRepository.save(imageThumbnail2);
+		Image image2 = new Image();
+		image2.setTitle("2.png");
+		image2.setUrl("uploads\\books\\2.png");
+		image2.setThumbnailName("BookThumbnail.png");
+		image2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image2);
 
 		// Create new Thumbnail for Book3
-		Image imageThumbnail3 = new Image();
-		imageThumbnail3.setThumbnailName("BookThumbnail.png");
-		imageThumbnail3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
-		imageRepository.save(imageThumbnail3);
+		Image image3 = new Image();
+		image3.setTitle("3.png");
+		image3.setUrl("uploads\\books\\3.png");
+		image3.setThumbnailName("BookThumbnail.png");
+		image3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image3);
 
 		// Create new Thumbnail for Book4
-		Image imageThumbnail4 = new Image();
-		imageThumbnail4.setThumbnailName("BookThumbnail.png");
-		imageThumbnail4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
-		imageRepository.save(imageThumbnail4);
+		Image image4 = new Image();
+		image4.setTitle("4.png");
+		image4.setUrl("uploads\\books\\4.png");
+		image4.setThumbnailName("BookThumbnail.png");
+		image4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image4);
 
 		// Create new Thumbnail for Book5
-		Image imageThumbnail5 = new Image();
-		imageThumbnail5.setThumbnailName("BookThumbnail.png");
-		imageThumbnail5.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
-		imageRepository.save(imageThumbnail5);
+		Image image5 = new Image();
+		image5.setTitle("5.png");
+		image5.setUrl("uploads\\books\\5.png");
+		image5.setThumbnailName("BookThumbnail.png");
+		image5.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image5);
+		
+
+		// Create new Thumbnail for Book6
+		Image image6 = new Image();
+		image6.setTitle("6.png");
+		image6.setUrl("uploads\\books\\6.png");
+		image6.setThumbnailName("BookThumbnail.png");
+		image6.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image6);
+
+		// Create new Thumbnail for Book7
+		Image image7 = new Image();
+		image7.setTitle("7.png");
+		image7.setUrl("uploads\\books\\7.png");
+		image7.setThumbnailName("BookThumbnail.png");
+		image7.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image7);
+
+		// Create new Thumbnail for Book8
+		Image image8 = new Image();
+		image8.setTitle("8.png");
+		image8.setUrl("uploads\\books\\8.png");
+		image8.setThumbnailName("BookThumbnail.png");
+		image8.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image8);
+
+		// Create new Thumbnail for Book9
+		Image image9 = new Image();
+		image9.setTitle("9.png");
+		image9.setUrl("uploads\\books\\9.png");
+		image9.setThumbnailName("BookThumbnail.png");
+		image9.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image9);
+
+		// Create new Thumbnail for Book10
+		Image image10 = new Image();
+		image10.setTitle("10.png");
+		image10.setUrl("uploads\\books\\10.png");
+		image10.setThumbnailName("BookThumbnail.png");
+		image10.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image10);
 
 		// Create Book 1
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE).price(50000L)
@@ -328,7 +465,7 @@ public class InsertData {
 		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTrinhTham).price(45000L)
 				.description("Một cuốn tiểu thuyết chốn đồng quê").language(languageTiengViet).publicationDate(new Date())
 				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author1))
-				.image(imageThumbnail2).build();
+				.image(image2).build();
 		bookRepository.save(book2);
 
 		// Create Book 3
@@ -336,7 +473,7 @@ public class InsertData {
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
 				.price(58000L).description("Một cuốn sách về cung đấu").language(languageTiengViet).publicationDate(new Date())
 				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author1))
-				.image(imageThumbnail3).build();
+				.image(image3).build();
 		bookRepository.save(book3);
 
 		// Create Book 4
@@ -344,7 +481,7 @@ public class InsertData {
 		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh).price(26000L)
 				.description("Một cuốn sách ngôn tình").language(languageTiengViet).publicationDate(new Date())
 				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author1))
-				.image(imageThumbnail4).build();
+				.image(image4).build();
 		bookRepository.save(book4);
 
 		// Create Book 5
@@ -352,8 +489,48 @@ public class InsertData {
 		Book book5 = Book.builder().title("Marketing căn bản").available(Boolean.TRUE).category(categoryKinhTe).price(126000L)
 				.description("Tất cả các thông tin cần thiết để phục vụ cho marketing").language(languageTiengViet).publicationDate(new Date())
 				.publisherName("Nhà xuất bản lao động").inventory(inventorySaved5).authors(Arrays.asList(author2, author3))
-				.image(imageThumbnail5).build();
+				.image(image5).build();
 		bookRepository.save(book5);
+
+		// Create Book 6
+
+		Book book6 = Book.builder().title("Thư bán hàng đỉnh cao").available(Boolean.TRUE).category(categoryKinhTe).price(130000L)
+				.description("Để trở thành người bán hàng đỉnh cao").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Nhà xuất bản tổng hợp").inventory(inventorySaved6).authors(Arrays.asList(author4))
+				.image(image6).build();
+		bookRepository.save(book6);
+
+		// Create Book 7
+
+		Book book7 = Book.builder().title("Kỹ thuật sữa chữa máy in").available(Boolean.TRUE).category(categoryKyThuat).price(30000L)
+				.description("Dành cho ai đam mê xử lý với máy in").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Nhà xuất bản giao thông vận tải").inventory(inventorySaved7).authors(Arrays.asList(author5))
+				.image(image7).build();
+		bookRepository.save(book7);
+
+		// Create Book 8
+
+		Book book8 = Book.builder().title("Tiệm cắt tóc lúc nửa đêm").available(Boolean.TRUE).category(categoryTieuThuyet).price(90000L)
+				.description("Câu chuyện về tình bạn cảm động").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Nhà xuất bản giao thông vận tải").inventory(inventorySaved8).authors(Arrays.asList(author6))
+				.image(image8).build();
+		bookRepository.save(book8);
+
+		// Create Book 9
+
+		Book book9 = Book.builder().title("Cẩm nang cấu trúc tiếng anh").available(Boolean.TRUE).category(categoryGiaoDuc).price(80000L)
+				.description("Học cấu trúc tiếng anh").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Nhà xuất bản đại học sư phạm").inventory(inventorySaved9).authors(Arrays.asList(author7))
+				.image(image9).build();
+		bookRepository.save(book9);
+
+		// Create Book 10
+
+		Book book10 = Book.builder().title("25 chuyên đề ngữ pháp tiếng anh").available(Boolean.TRUE).category(categoryGiaoDuc).price(110000L)
+				.description("Học ngữ pháp tiếng anh").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Nhà xuất bản đại học sư phạm").inventory(inventorySaved10).authors(Arrays.asList(author7))
+				.image(image10).build();
+		bookRepository.save(book10);
 	}
 
 	@Test
