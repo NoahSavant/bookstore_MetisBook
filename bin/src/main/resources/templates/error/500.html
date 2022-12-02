@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<div th:replace="client/fragments/header :: header"></div>
+	<div>
+		<title>Trang chủ</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	</div>
+
+</head>
+
+<body>
+	<div th:replace="client/fragments/main-top :: mainTop"></div>
+
+	<div class="container">
+
+		<div class="d-flex align-items-center justify-content-center vh-100 mb-5">
+			<div class="text-center">
+				<h1 class="display-1 fw-bold">500</h1>
+				<p class="fs-3"> <span class="text-danger">Opps!</span> Đã có lỗi xảy ra.</p>
+				<p class="lead">
+					Xin lỗi bạn vì sự bất tiện này
+				</p>
+				<a th:href="@{/}" class="btn btn-primary">Trang chủ</a>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<!-- Start Instagram Feed  -->
+	<div class="instagram-box">
+		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
+	</div>
+	<!-- End Instagram Feed  -->
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 package com.metis.book.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -42,9 +43,13 @@ public class AddressController {
 		User user = userService.getUserById(userPrincipal.getId());
 		
 		List<Address> addresses = addressService.getAddressByUser(user);
-		for (Address address : addresses) {
-			address.setFullAddress(address.fetchFullAddress());
+		if(!addresses.isEmpty()) {
+			for (Address address : addresses) {
+				log.error("Vô đây ne");
+				address.setFullAddress(address.getFullAddress()==null?null:address.fetchFullAddress());
+			}
 		}
+		log.error("Ra đây ne");
 		mav.addObject("addresses", addresses);
 		mav.setViewName("client/address.html");
 		return mav;

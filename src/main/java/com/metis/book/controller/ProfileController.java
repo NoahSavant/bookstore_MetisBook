@@ -141,7 +141,7 @@ public class ProfileController {
 		}
 
 		for (Address address : addresses) {
-			if (address.getIsPrimary()) {
+			if (Objects.nonNull(address.getIsPrimary()) && address.getIsPrimary()) {
 				return address;
 			}
 		}
@@ -193,7 +193,7 @@ public class ProfileController {
 				.district(address==null?null:address.getDistrict())
 				.subDistrict(address==null?null:address.getSubDistrict())
 				.street(address==null?null:address.getStreet())
-				.fulllAddress(address.fetchFullAddress())
+				.fulllAddress(address==null?null:address.fetchFullAddress())
 				.build();
 		
 		return profileForm;

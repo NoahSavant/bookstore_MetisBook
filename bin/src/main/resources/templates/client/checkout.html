@@ -92,7 +92,7 @@
 							</div>
 							<div id="address-spec" class="pt-3" hidden>
 								<div class="mb-3">
-									<label class="mt-3 mb-3">Địa chỉ giao hàng *</label>
+									<label class="mt-3 mb-3">Địa chỉ cụ thể *</label>
 									<input type="text" class="form-control user-info" th:field="*{newAddress}"
 										placeholder="" required
 										oninvalid="this.setCustomValidity('Điạ chỉ Không thể bỏ trống')"
@@ -290,7 +290,7 @@
 								<div class="d-flex">
 									<h4>Phí giao hàng</h4>
 									<div id="deliverFee" class="ml-auto font-weight-bold"> [[${Standard}]] VNĐ </div>
-									<input id="delivery_cost" hidden name="delivery_cost" value="${Standard}">
+									<input id="delivery_cost" hidden name="delivery_cost" th:value="${Standard}">
 								</div>
 								<hr>
 								<div class="d-flex gr-total">

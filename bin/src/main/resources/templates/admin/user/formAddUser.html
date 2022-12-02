@@ -102,7 +102,9 @@
 										<div class="datepicker form-group col-sm-6 mb-3 mb-sm-0">
 											<h6 class="ml-3">Ngày sinh: </h6>
 											<input placeholder="Select date" th:field="*{birthday}" type="date"
-												id="birthday" class="form-control">
+												id="birthday" class="form-control"  required
+												oninvalid="this.setCustomValidity('Ngày sinh Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
 										</div>
@@ -200,11 +202,22 @@
 												th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
 											</div>
 										</div>
+										
+											<div class="form-group col">
+												<label>Địa chỉ cụ thể | Được thêm vào đầu dãy địa chỉ</label>
+												<input type="text" class="form-control" th:field="*{fullAddress}">
+												<div class="alert alert-warning mt-3 mb-3"
+													th:if="${#fields.hasErrors('subDistrict')}"
+													th:errors="*{fullAddress}">
+												</div>
+											</div>
+
+					
 									</div> <!-- form-row.// -->
 									<div class="form-group row ">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="password" class="form-control"
-												th:field="*{password}" id="exampleInputPassword" placeholder="Mật khẩu">
+											<input type="password" class="form-control" th:field="*{password}"
+												id="exampleInputPassword" placeholder="Mật khẩu">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
 												required
@@ -212,9 +225,8 @@
 												oninput="this.setCustomValidity('')"></div>
 										</div>
 										<div class="col-sm-6">
-											<input type="password" class="form-control"
-												th:field="*{confirmPassword}" id="exampleRepeatPassword"
-												placeholder="Nhập lại mật khẩu" required
+											<input type="password" class="form-control" th:field="*{confirmPassword}"
+												id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu" required
 												oninvalid="this.setCustomValidity('Mật khẩu nhập lại Không thể bỏ trống')"
 												oninput="this.setCustomValidity('')">
 											<div th:if="${authenErrors != null && authenErrors.containsKey('passwordNotMatch')}"

@@ -22,12 +22,13 @@
 
 					<div class="col">
 						<a href="#">
-							<img th:if ="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}" class="img-fluid d-block mx-auto" />
-							<img th:if ="${blog.image.thumbnailName!=null && blog.image.title == null }" th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
-										class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;"
-										id="avatar" />
+							<img th:if="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}"
+								class="img-fluid d-block mx-auto" />
+							<img th:if="${blog.image.thumbnailName!=null && blog.image.title == null }"
+								th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
+								class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;" id="avatar" />
 						</a>
-						
+
 					</div>
 					<!-- Post preview-->
 					<div class="post-preview col-8">
@@ -46,6 +47,22 @@
 				<hr class="my-4" />
 
 			</div>
+
+		</div>
+		<div th:hidden="${totalPage == 1}" class="pagination-custom row mb-5">
+			<div class="col-3"></div>
+			<div class="col">
+				<ul class="pagination">
+					<li th:if="${!isFirst}" class="page-item"><a class="page-link" th:href="@{/blog(page=${page-1})}">Trước</a></li>
+					
+					<th:block th:each="i: ${#numbers.sequence(1,totalPage)}">
+						<li class="page-item" th:classappend="${page + 1 == i ? 'active' : ''}"><a class="page-link" th:href="@{/blog(page=${i-1})}">[[${i}]]</a></li>
+					</th:block>
+					
+					<li th:if="${!isLast}" class="page-item"><a class="page-link" th:href="@{/blog(page=${page+1})}">Sau</a></li>
+				</ul>
+			</div>
+			<div class="col-3"></div>
 		</div>
 	</div>
 	<footer>

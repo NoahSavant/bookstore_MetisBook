@@ -92,6 +92,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 		user.setLastName(oauth2User.getAttribute("family_name"));
 		user.setEmail(oauth2User.getAttribute("email"));
 		user.setImage(imageThumbnail);
+		user.setGender(1);
 		user.setEnabled(true);
 		return userService.createNewUserOAuth2(user);
 	}
