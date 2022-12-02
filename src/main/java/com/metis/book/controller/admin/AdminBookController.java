@@ -98,6 +98,7 @@ public class AdminBookController {
 			@RequestParam("bookId") String bookId) {	
 		
 		BookForm bookForm = bookService.getById(Long.parseLong(bookId));
+		
 		List<Category> categories = categoryService.getAllCategories();
 		mav.addObject("categories", categories);
 		List<Language> languages = languageService.getAllLanguages();

@@ -115,10 +115,20 @@ public class InsertData {
 	public void testCreateAuthor() {
 
 		// Create author
-		Author author = new Author();
-		author.setName("Nguyễn Nhật Ánh");
-		author.setBooks(null);
-		authorRepository.save(author);
+		Author author1 = new Author();
+		author1.setName("Nguyễn Nhật Ánh");
+		author1.setBooks(null);
+		authorRepository.save(author1);
+
+		Author author2 = new Author();
+		author2.setName("Hà Minh Hoàng");
+		author2.setBooks(null);
+		authorRepository.save(author2);
+
+		Author author3= new Author();
+		author3.setName("Huyền Trang");
+		author3.setBooks(null);
+		authorRepository.save(author3);
 	}
 
 	@Test
@@ -141,14 +151,34 @@ public class InsertData {
 		Category category4 = new Category();
 		category4.setName("Cung đấu");
 		categoryRepository.save(category4);
+
+		Category category5 = new Category();
+		category5.setName("Kinh tế");
+		categoryRepository.save(category5);
 	}
 
 	@Test
 	@Order(3)
 	public void testCreateLanguage() {
-		Language language = new Language();
-		language.setName("Tiếng Việt");
-		languageRepository.save(language);
+		Language language1 = new Language();
+		language1.setName("Tiếng Việt");
+		languageRepository.save(language1);
+
+		Language language2 = new Language();
+		language2.setName("Tiếng Anh");
+		languageRepository.save(language2);
+
+		Language language3 = new Language();
+		language3.setName("Tiếng Trung");
+		languageRepository.save(language3);
+
+		Language language4 = new Language();
+		language4.setName("Tiếng Nhật");
+		languageRepository.save(language4);
+
+		Language language5 = new Language();
+		language5.setName("Tiếng Hàn");
+		languageRepository.save(language5);
 	}
 
 	@Test
@@ -175,16 +205,52 @@ public class InsertData {
 		if (Objects.isNull(categoryCungDau)) {
 			log.error(AppConstant.CATEGORY_NOT_FOUND + "Trinh thám");
 		}
+
+		Category categoryKinhTe = categoryRepository.findByName("Kinh tế");
+		if (Objects.isNull(categoryKinhTe)) {
+			log.error(AppConstant.CATEGORY_NOT_FOUND + "Kinh tế");
+		}
+
 		// Get language
-		Language language = languageRepository.findByName("Tiếng Việt");
-		if (Objects.isNull(language)) {
+		Language languageTiengViet = languageRepository.findByName("Tiếng Việt");
+		if (Objects.isNull(languageTiengViet)) {
 			log.error(AppConstant.LANGUAGE_NOT_FOUND + "Tiếng Việt");
 		}
 
+		Language languageTiengAnh = languageRepository.findByName("Tiếng Anh");
+		if (Objects.isNull(languageTiengAnh)) {
+			log.error(AppConstant.LANGUAGE_NOT_FOUND + "Tiếng Anh");
+		}
+
+		Language languageTiengTrung = languageRepository.findByName("Tiếng Trung");
+		if (Objects.isNull(languageTiengTrung)) {
+			log.error(AppConstant.LANGUAGE_NOT_FOUND + "Tiếng Trung");
+		}
+
+		Language languageTiengNhat = languageRepository.findByName("Tiếng Nhật");
+		if (Objects.isNull(languageTiengNhat)) {
+			log.error(AppConstant.LANGUAGE_NOT_FOUND + "Tiếng Nhật");
+		}
+
+		Language languageTiengHan = languageRepository.findByName("Tiếng Hàn");
+		if (Objects.isNull(languageTiengHan)) {
+			log.error(AppConstant.LANGUAGE_NOT_FOUND + "Tiếng Hàn");
+		}
+
 		// Get Author
-		Author author = authorRepository.findByName("Nguyễn Nhật Ánh");
-		if (Objects.isNull(author)) {
+		Author author1 = authorRepository.findByName("Nguyễn Nhật Ánh");
+		if (Objects.isNull(author1)) {
 			log.error(AppConstant.AUTHOR_NOT_FOUND + "Nguyễn Nhật Ánh");
+		}
+
+		Author author2 = authorRepository.findByName("Hà Minh Hoàng");
+		if (Objects.isNull(author2)) {
+			log.error(AppConstant.AUTHOR_NOT_FOUND + "Hà Minh Hoàng");
+		}
+
+		Author author3 = authorRepository.findByName("Huyền Trang");
+		if (Objects.isNull(author3)) {
+			log.error(AppConstant.AUTHOR_NOT_FOUND + "Huyền Trang");
 		}
 
 		// Create new inventory for Book1
@@ -211,11 +277,20 @@ public class InsertData {
 		inventoryForBook4.setBook(null);
 		Inventory inventorySaved4 = inventoryRepository.save(inventoryForBook4);
 
+		// Create new inventory for Book5
+		Inventory inventoryForBook5 = new Inventory();
+		inventoryForBook5.setQuantiy(4);
+		inventoryForBook5.setBook(null);
+		Inventory inventorySaved5 = inventoryRepository.save(inventoryForBook5);
+
 		// Create new Thumbnail for Book1
-		Image imageThumbnail1 = new Image();
-		imageThumbnail1.setThumbnailName("BookThumbnail.png");
-		imageThumbnail1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
-		imageRepository.save(imageThumbnail1);
+		Image image1 = new Image();
+		image1.setTitle("1.png");
+		image1.setUrl("uploads\\books\\1.png");
+		image1.setThumbnailName("BookThumbnail.png");
+		image1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(image1);
+		
 
 		// Create new Thumbnail for Book2
 		Image imageThumbnail2 = new Image();
@@ -235,36 +310,50 @@ public class InsertData {
 		imageThumbnail4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(imageThumbnail4);
 
+		// Create new Thumbnail for Book5
+		Image imageThumbnail5 = new Image();
+		imageThumbnail5.setThumbnailName("BookThumbnail.png");
+		imageThumbnail5.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
+		imageRepository.save(imageThumbnail5);
+
 		// Create Book 1
 		Book book1 = Book.builder().title("Tôi thấy hoa vàng trên cỏ xanh").available(Boolean.TRUE).price(50000L)
-				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(language)
+				.category(categoryTieuThuyet).description("Một cuốn tiểu thuyết giành cho giới trẻ").language(languageTiengViet)
 				.publicationDate(new Date()).publisherName("Kim Đồng").inventory(inventorySaved1)
-				.authors(Arrays.asList(author)).image(imageThumbnail1).build();
+				.authors(Arrays.asList(author1)).image(image1).build();
 		bookRepository.save(book1);
 
 		// Create Book 2
 
 		Book book2 = Book.builder().title("Mắt biếc").available(Boolean.TRUE).category(categoryTrinhTham).price(45000L)
-				.description("Một cuốn tiểu thuyết chốn đồng quê").language(language).publicationDate(new Date())
-				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author))
+				.description("Một cuốn tiểu thuyết chốn đồng quê").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Kim Đồng").inventory(inventorySaved2).authors(Arrays.asList(author1))
 				.image(imageThumbnail2).build();
 		bookRepository.save(book2);
 
 		// Create Book 3
 
 		Book book3 = Book.builder().title("Game of throne").available(Boolean.TRUE).category(categoryCungDau)
-				.price(58000L).description("Một cuốn sách về cung đấu").language(language).publicationDate(new Date())
-				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author))
+				.price(58000L).description("Một cuốn sách về cung đấu").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Phụ nữ").inventory(inventorySaved3).authors(Arrays.asList(author1))
 				.image(imageThumbnail3).build();
 		bookRepository.save(book3);
 
 		// Create Book 4
 
 		Book book4 = Book.builder().title("Your Name").available(Boolean.TRUE).category(categoryNgonTinh).price(26000L)
-				.description("Một cuốn sách ngôn tình").language(language).publicationDate(new Date())
-				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author))
+				.description("Một cuốn sách ngôn tình").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Kadokawa").inventory(inventorySaved4).authors(Arrays.asList(author1))
 				.image(imageThumbnail4).build();
 		bookRepository.save(book4);
+
+		// Create Book 5
+
+		Book book5 = Book.builder().title("Marketing căn bản").available(Boolean.TRUE).category(categoryKinhTe).price(126000L)
+				.description("Tất cả các thông tin cần thiết để phục vụ cho marketing").language(languageTiengViet).publicationDate(new Date())
+				.publisherName("Nhà xuất bản lao động").inventory(inventorySaved5).authors(Arrays.asList(author2, author3))
+				.image(imageThumbnail5).build();
+		bookRepository.save(book5);
 	}
 
 	@Test

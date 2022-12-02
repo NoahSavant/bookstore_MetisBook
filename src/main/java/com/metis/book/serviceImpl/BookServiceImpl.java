@@ -72,7 +72,7 @@ public class BookServiceImpl implements IBookService {
 		book.setTitle(bookForm.getTitle());
 		book.setPublicationDate(new SimpleDateFormat("yyyy-MM-dd").parse(bookForm.getPublicationDate()));
 		book.setAvailable(true);
-		book.setCategory(categoryRepository.findById(Long.parseLong(bookForm.getCategory())).get());
+		book.setCategory(categoryRepository.findById(bookForm.getCategory().getId()).get());
 		Inventory inventory = new Inventory();
 		inventory.setQuantiy(Integer.parseInt(bookForm.getQuantity()));
 		inventoryRepository.save(inventory);
@@ -191,7 +191,7 @@ public class BookServiceImpl implements IBookService {
 				authorNames.add(author.getName());
 			}
 			bookForm.setAuthors(authorNames);
-			bookForm.setCategory(book.getCategory().getName());
+			bookForm.setCategory(book.getCategory());
 			bookForm.setDescription(book.getDescription());
 			// bookForm.setFile(book.getImage());
 			bookForm.setLanguage(book.getLanguage().getName());
@@ -240,7 +240,7 @@ public class BookServiceImpl implements IBookService {
 			}
 		}
 		bookForm.setAuthors(authorNames);
-		bookForm.setCategory(book.getCategory().getName());
+		bookForm.setCategory(book.getCategory());
 		bookForm.setDescription(book.getDescription());
 		// bookForm.setFile(book.getImage());
 		if (!Objects.isNull(book.getImage())) {
@@ -264,37 +264,45 @@ public class BookServiceImpl implements IBookService {
 		Book book = bookRepository.findById(Long.parseLong(bookForm.getId())).get();
 		if (Objects.isNull(book)) {
 			log.error(AppConstant.BOOK_NOT_FOUND + bookForm.getId());
-		}
-		List<Author> authors = new ArrayList<>();
-		for (String author : bookForm.getAuthors()) {
-			authors.add(authorRepository.findByName(author));
-		}
+		} else {
+			
+			List<Author> authors = new ArrayList<>();
+			for (String author : bookForm.getAuthors()) {
+				authors.add(authorRepository.findByName(author));
+			}
+			book.setAuthors(authors);
+			
+			try {
+				book.setLanguage(languageRepository.findById(Long.parseLong(bookForm.getLanguage())).get());
+			} catch (Exception e) {
+				System.out.println(bookForm.getLanguage());
+			}
+			
+			book.setDescription(bookForm.getDescription());
+			book.setPrice(Long.parseLong(bookForm.getPrice()));
+			book.setPublisherName(bookForm.getPublisherName());
+			book.setTitle(bookForm.getTitle());
+			book.setPublicationDate(new SimpleDateFormat("yyyy-MM-dd").parse(bookForm.getPublicationDate()));
+			book.setAvailable(bookForm.getAvailable().equals("Còn bán") ? true : false);
+			book.setCategory(categoryRepository.findById(bookForm.getCategory().getId()).get());
+			Inventory inventory = new Inventory();
+			inventory.setQuantiy(Integer.parseInt(bookForm.getQuantity()));
+			inventoryRepository.save(inventory);
+			book.setInventory(inventory);
+			// log.info(book.toString());
 
-		book.setAuthors(authors);
-		book.setLanguage(languageRepository.findById(Long.parseLong(bookForm.getLanguage())).get());
-		book.setDescription(bookForm.getDescription());
-		book.setPrice(Long.parseLong(bookForm.getPrice()));
-		book.setPublisherName(bookForm.getPublisherName());
-		book.setTitle(bookForm.getTitle());
-		book.setPublicationDate(new SimpleDateFormat("yyyy-MM-dd").parse(bookForm.getPublicationDate()));
-		book.setAvailable(bookForm.getAvailable().equals("Còn bán") ? true : false);
-		book.setCategory(categoryRepository.findById(Long.parseLong(bookForm.getCategory())).get());
-		Inventory inventory = new Inventory();
-		inventory.setQuantiy(Integer.parseInt(bookForm.getQuantity()));
-		inventoryRepository.save(inventory);
-		book.setInventory(inventory);
-		// log.info(book.toString());
-
-		Book bookSaved = bookRepository.save(book);
-		if (!bookForm.getFile().isEmpty()) {
-			Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(), bookSaved.getId());
-			Image image = new Image();
-			image.setTitle(bookSaved.getId().toString() + ".png");
-			image.setUrl(fileNameAndPath.toString());
-			Image imageSaved = imageRepository.save(image);
-			bookSaved.setImage(imageSaved);
-			bookRepository.save(bookSaved);
+			Book bookSaved = bookRepository.save(book);
+			if (!bookForm.getFile().isEmpty()) {
+				Path fileNameAndPath = FileUploadUtils.saveBookImage(bookForm.getFile(), bookSaved.getId());
+				Image image = new Image();
+				image.setTitle(bookSaved.getId().toString() + ".png");
+				image.setUrl(fileNameAndPath.toString());
+				Image imageSaved = imageRepository.save(image);
+				bookSaved.setImage(imageSaved);
+				bookRepository.save(bookSaved);
+			}
 		}
+		
 
 	}
 
