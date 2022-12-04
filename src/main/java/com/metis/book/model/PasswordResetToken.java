@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PasswordResetToken {
-	private static final int EXPIRATION = 1;
+	private static final int EXPIRATION = 60;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
