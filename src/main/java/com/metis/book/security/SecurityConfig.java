@@ -63,7 +63,7 @@ public class SecurityConfig {
 				.and()
 			.and()
 				.rememberMe()
-				.tokenValiditySeconds(1209600)
+				.tokenValiditySeconds(1209600) // 14 days
 			.and()
 				.authorizeRequests()
 					.antMatchers(allowURL)

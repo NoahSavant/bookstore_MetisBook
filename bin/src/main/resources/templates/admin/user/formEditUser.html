@@ -181,7 +181,9 @@
 									<div class="form-row mt-3">
 										<div class="form-group col-md-6">
 											<label>Tỉnh/Thành phố</label>
-											<input type="text" class="form-control" th:field="*{province}">
+											<input type="text" class="form-control" th:field="*{province}" required
+												oninvalid="this.setCustomValidity('Tỉnh/Thành phố khhông thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('province')}" th:errors="*{province}">
 											</div>
@@ -192,7 +194,9 @@
 										</div>
 										<div class="form-group col-md-6">
 											<label>Quận/Huyện</label>
-											<input type="text" class="form-control" th:field="*{district}">
+											<input type="text" class="form-control" th:field="*{district}" required
+												oninvalid="this.setCustomValidity('Quận/Huyện không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('district')}" th:errors="*{district}">
 											</div>
@@ -207,7 +211,9 @@
 									<div class="form-row">
 										<div class="form-group col-md-6">
 											<label>Phường/Xã</label>
-											<input type="text" class="form-control" th:field="*{subDistrict}">
+											<input type="text" class="form-control" th:field="*{subDistrict}" required
+												oninvalid="this.setCustomValidity('Phường xã Không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('subDistrict')}" th:errors="*{subDistrict}">
 											</div>
@@ -218,7 +224,9 @@
 										</div>
 										<div class="form-group col-md-6">
 											<label>Số nhà</label>
-											<input type="text" class="form-control" th:field="*{street}">
+											<input type="text" class="form-control" th:field="*{street}" required
+												oninvalid="this.setCustomValidity('Số nhà không thể bỏ trống')"
+												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
 												th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
 											</div>

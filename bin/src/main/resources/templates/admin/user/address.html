@@ -40,50 +40,51 @@
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">Sửa thông tin tài khoản!</h1>
 								</div>
-
+								<div th:if="${#lists.size(addresses) == 0}" class="alert alert-primary">Không có địa chỉ
+									nào</div>
 							</div>
-								<div class="row" th:each="address : ${addresses}">
+							<div th:if="${#lists.size(addresses) > 0}" class="row" th:each="address : ${addresses}">
 
-									<!-- address preview-->
-									<div class="post-preview col">
-										<h2 class="font-weight-bold" style="font-size: 20px">Địa chỉ:
-											[[${addressStat.index+1}]] <span th:if="${address.isPrimary == true}"> | Địa
-												chỉ mặc định</span> </h2>
-										<h3 class="post-subtitle" style="font-size: 15px">Địa chỉ:
-											[[${address.getFullAddress()}]]</h3>
-										<h3 class="post-subtitle d-inline" style="font-size:15px">Số điện thoại:
-											[[${address.recievePhoneNumber}]]</h3>
-										<a style="margin-left: 165px;"
-											th:href="@{/admin/user/address-detail(id=${address.id},userId=${userId})}"><i
-												class="fas fa-pencil-alt">&emsp;Chỉnh sửa</i></a>
-										<hr class="my-3" />
-									</div>
-
-
+								<!-- address preview-->
+								<div class="post-preview col">
+									<h2 class="font-weight-bold" style="font-size: 20px">Địa chỉ:
+										[[${addressStat.index+1}]] <span th:if="${address.isPrimary == true}"> | Địa
+											chỉ mặc định</span> </h2>
+									<h3 class="post-subtitle" style="font-size: 15px">Địa chỉ:
+										[[${address.getFullAddress()}]]</h3>
+									<h3 class="post-subtitle d-inline" style="font-size:15px">Số điện thoại:
+										[[${address.recievePhoneNumber}]]</h3>
+									<a style="margin-left: 165px;"
+										th:href="@{/admin/user/address-detail(id=${address.id},userId=${userId})}"><i
+											class="fas fa-pencil-alt">&emsp;Chỉnh sửa</i></a>
+									<hr class="my-3" />
 								</div>
-								<!-- Divider-->
+
 
 							</div>
-							<div class="col-3"></div>
+							<!-- Divider-->
+
 						</div>
+						<div class="col-3"></div>
 					</div>
 				</div>
-
 			</div>
-			<!-- /.container-fluid -->
 
 		</div>
-		<!-- End of Main Content -->
+		<!-- /.container-fluid -->
 
-		<!-- Footer -->
-		<footer class="sticky-footer bg-white">
-			<div class="container my-auto">
-				<div class="copyright text-center my-auto">
-					<span>Copyright &copy; Your Website 2020</span>
-				</div>
+	</div>
+	<!-- End of Main Content -->
+
+	<!-- Footer -->
+	<footer class="sticky-footer bg-white">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; Your Website 2020</span>
 			</div>
-		</footer>
-		<!-- End of Footer -->
+		</div>
+	</footer>
+	<!-- End of Footer -->
 
 	</div>
 	<!-- End of Content Wrapper -->
