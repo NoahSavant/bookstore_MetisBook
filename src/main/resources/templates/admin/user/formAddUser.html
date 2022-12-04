@@ -102,7 +102,7 @@
 										<div class="datepicker form-group col-sm-6 mb-3 mb-sm-0">
 											<h6 class="ml-3">Ngày sinh: </h6>
 											<input placeholder="Select date" th:field="*{birthday}" type="date"
-												id="birthday" class="form-control"  required
+												id="birthday" class="form-control" required
 												oninvalid="this.setCustomValidity('Ngày sinh Không thể bỏ trống')"
 												oninput="this.setCustomValidity('')">
 											<div class="alert alert-warning mt-3 mb-3"
@@ -202,17 +202,16 @@
 												th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
 											</div>
 										</div>
-										
-											<div class="form-group col">
-												<label>Địa chỉ cụ thể | Được thêm vào đầu dãy địa chỉ</label>
-												<input type="text" class="form-control" th:field="*{fullAddress}">
-												<div class="alert alert-warning mt-3 mb-3"
-													th:if="${#fields.hasErrors('subDistrict')}"
-													th:errors="*{fullAddress}">
-												</div>
-											</div>
 
-					
+										<div class="form-group col">
+											<label>Địa chỉ cụ thể | Được thêm vào đầu dãy địa chỉ</label>
+											<input type="text" class="form-control" th:field="*{fullAddress}">
+											<div class="alert alert-warning mt-3 mb-3"
+												th:if="${#fields.hasErrors('subDistrict')}" th:errors="*{fullAddress}">
+											</div>
+										</div>
+
+
 									</div> <!-- form-row.// -->
 									<div class="form-group row ">
 										<div class="col-sm-6 mb-3 mb-sm-0">
@@ -236,12 +235,20 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-5"></div>
+
+										<div class="col-3"></div>
 										<button type="submit" class="btn btn-primary btn-user btn-block  col"
 											style="width: 100px;">
 											Tạo
 										</button>
-										<div class="col-5"></div>
+										<div class="col-1"></div>
+										<a th:href="@{/admin/user}" class="btn btn-primary btn-user btn-block"
+											style="width: 100px;">
+											Trở về
+										</a>
+
+
+										<div class="col-3"></div>
 									</div>
 							</div>
 
