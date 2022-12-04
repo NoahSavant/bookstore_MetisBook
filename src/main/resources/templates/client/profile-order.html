@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<div th:replace="client/fragments/header :: header"></div>
+	<div>
+		<title>Trang chủ</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	</div>
+</head>
+
+<body>
+	<div th:replace="client/fragments/main-top :: mainTop"></div>
+
+	<section class="section-conten padding-y bg mt-3">
+
+		<div class="container">
+			<div class="row">
+				<aside class="col-md-3">
+					<!--   SIDEBAR   -->
+					<ul class="list-group">
+						<a class="list-group-item" th:href="@{/member/profile}"> Thông tin cá nhân</a>
+						<a class="list-group-item" th:href="@{/member/address}"> Địa chỉ</a>
+						<a class="list-group-item active" th:href="@{/member/profile/order}"> Đơn hàng</a>
+					</ul>
+					<br>
+					<a class="btn btn-light btn-block" th:href="@{/auth/logout}"> <i class="fa fa-power-off"></i> <span
+							class="text">Đăng xuất</span> </a>
+					<!--   SIDEBAR .//END   -->
+				</aside>
+				<main class="col-md-9 mt-2">
+					<div class="row gx-4 gx-lg-5 justify-content-start">
+						<header class="card-header w-100" id="header_bill">
+							<strong class="d-inline-block mr-3">Đơn hàng</strong>
+						</header><br>
+						<th:block th:if="${#lists.isEmpty(orders)}">
+							<strong class="mr-auto ml-auto mb-3 mt-3">Không có đơn hàng nào gần đây</strong>
+						</th:block>
+						<div class="table-responsive">
+
+							<th:block th:if="${orders}">
+								<table class="table table-hover" th:each="order : ${orders}">
+									<b class="ml-3"> <i class="fas fa-bell mr-2"></i> Đơn hàng
+										[[${page == 0 ? orderStat.index+1 : page*3 + orderStat.index+1}]]:</b>
+									<div class="text-center">
+										<label id="date_label"><strong>[[${#dates.format(order.orderDate, 'dd-MM-yyyy |
+												hh:mm:ss')}]] </strong></label>
+										<p id="total_label"><strong>Tổng cộng: </strong>[[${order.getTotalPrice()}]] VNĐ
+										</p>
+									</div>
+
+									<tr th:each="orderItem : ${order.orderItems}">
+										<td width="100">
+											<img th:if="${orderItem.book.image.title}"
+												th:src="@{${'/uploads/books/'+orderItem.book.image.title}}"
+												class="border img-fluid" />
+											<img th:if="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }"
+												th:src="@{${'/uploads/'+orderItem.book.image.thumbnailName}}"
+												class="border img-fluid" />
+										</td>
+										<td>
+											<p class="title mb-0">[[${orderItem.book.title}]]</p>
+											<small class="title text-muted">Giá: [[${orderItem.book.price}]]
+												VNĐ</small><br>
+											<p class="price text-muted">Tổng: [[${orderItem.getTotalPrice()}]] VNĐ</p>
+										</td>
+										<td width="200" style="word-wrap:break-word;">Số lượng:
+											[[${orderItem.quantity}]]
+											<br>
+											Tác Giả:
+											<th:block th:each="author : ${orderItem.book.authors}">
+												[[${author.name}]] <span
+													th:if="${authorStat.index < orderItem.book.authors.size()-1}">,
+													<br></span>
+											</th:block>
+
+											<br>Nhà xuất bản: [[${orderItem.book.publisherName}]]
+										</td>
+										<td width="200"><a th:href="@{/member/order-detail(orderId=${order.id})}"
+												class="btn btn-outline-primary">Chi tiết</a></td>
+									</tr>
+
+
+
+
+
+								</table>
+
+							</th:block>
+
+						</div> <!-- table-responsive .end// -->
+						<div th:hidden="${totalPage == 1}" class="pagination-custom row mb-5">
+							<div class="col-3"></div>
+							<div class="col">
+								<ul class="pagination">
+									<li th:if="${!isFirst}" class="page-item"><a class="page-link"
+											th:href="@{/member/profile/order(page=${page-1})}">Trước</a></li>
+
+									<th:block th:each="i: ${#numbers.sequence(1, totalPage)}">
+										<li class="page-item" th:classappend="${page + 1 == i ? 'active' : ''}"><a
+												class="page-link" th:href="@{/member/profile/order(page=${i-1})}">[[${i}]]</a></li>
+									</th:block>
+
+									<li th:if="${!isLast}" class="page-item"><a class="page-link"
+											th:href="@{/member/profile/order(page=${page+1})}">Sau</a></li>
+								</ul>
+							</div>
+							<div class="col-3"></div>
+						</div>
+					</div>
+				</main>
+			</div> <!-- row.// -->
+		</div>
+
+
+	</section>
+
+	<!-- Start Instagram Feed  -->
+	<div class="instagram-box">
+		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
+	</div>
+	<!-- End Instagram Feed  -->
+	<footer>
+		<div th:replace="client/fragments/footer :: footer"></div>
+	</footer>
+
+	<script>
+
+
+	</script>
+
+</body>
+
+</html>

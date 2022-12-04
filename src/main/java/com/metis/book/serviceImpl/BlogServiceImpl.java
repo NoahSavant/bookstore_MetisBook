@@ -6,13 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.validation.constraints.Min;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metis.book.dto.BlogForm;
+import com.metis.book.dto.PageResponse;
 import com.metis.book.model.Blog;
 import com.metis.book.model.Image;
 import com.metis.book.repository.BlogRepository;
@@ -124,6 +126,18 @@ public class BlogServiceImpl implements IBlogService {
 			lastestBlogs.add(blogs.get(i));
 		}
 		return lastestBlogs;
+	}
+
+	@Override
+	public PageResponse<Blog> getBlogByPage(int page) {
+		Pageable pageable = PageRequest.of(page, 3); // 3 = size of each page
+		Page<Blog> blogs = blogRepository.findAll(pageable);
+		PageResponse<Blog> pageResponse = new PageResponse<>();
+		pageResponse.setContent(blogs.getContent());
+		pageResponse.setTotalPages(blogs.getTotalPages());
+		pageResponse.setLast(blogs.isLast());
+		pageResponse.setFirst(blogs.isFirst());
+		return pageResponse;
 	}
 
 }

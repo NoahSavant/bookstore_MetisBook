@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -109,8 +110,8 @@ public class CheckoutController {
 			ModelAndView mav,
 			@ModelAttribute("checkoutForm") CheckoutForm checkoutForm,
 			@RequestParam("delivery_cost") String delivery_cost) {
-		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		checkoutForm.setDeliverCost(delivery_cost);
 		if(lackOfInfo(checkoutForm)) {
 			mav.addObject("lackInfo",true);
@@ -119,7 +120,6 @@ public class CheckoutController {
 			return mav;
 		}
 		Long orderId = orderService.createOrder(checkoutForm);
-		
 		
 		mav.setViewName("redirect:/member/order-detail?orderId="+orderId);
 		return mav;

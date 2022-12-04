@@ -71,8 +71,20 @@
 										oninvalid="this.setCustomValidity('Số điện thoại nhận hàng Không thể bỏ trống')"
 										oninput="this.setCustomValidity('')">
 								</div>
-
-								<div class="form-check mt-3 mb-3 ml-3">
+								
+								
+							</div>
+							<div class="row">
+								<div class="col mb-3">
+									<label class="mt-3 mb-3">Địa chỉ cụ thể | được đặt trước dãy địa chỉ *</label>
+									<input type="text" class="form-control user-info" th:field="*{fullAddress}"
+										placeholder="" id="recievePhoneNumber">
+								</div>
+								<div class="col-4"></div>
+								
+							</div>
+							<div class="row">
+								<div class="form-check mt-3 mb-3 ml-3 col">
 									<input class="form-check-input" type="checkbox" th:field="*{isPrimary}"
 										id="flexCheckDefault">
 									<label class="form-check-label" for="flexCheckDefault">
@@ -80,7 +92,6 @@
 									</label>
 								</div>
 							</div>
-
 							<div id="profileSave">
 								<a th:href="@{/member/address}" class="btn btn-outline-primary mr-4">Trở
 									về</a>

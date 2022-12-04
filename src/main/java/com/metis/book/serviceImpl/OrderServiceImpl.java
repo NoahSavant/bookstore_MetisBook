@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.metis.book.dto.OrderShow;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.metis.book.dto.CheckoutForm;
+import com.metis.book.dto.OrderShow;
+import com.metis.book.dto.PageResponse;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.order.OrderItem;
@@ -103,7 +107,8 @@ public class OrderServiceImpl implements IOrderService{
 		Authentication authentication = SecurityContextHolder
 				.getContext().getAuthentication();
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		userPrincipal.setCartItemNum(String.valueOf(checkoutForm.getCheckoutItems().size()));
+		User userSaved = userRepository.findById(userPrincipal.getId()).get();
+		userPrincipal.setCartItemNum(String.valueOf(userSaved.getCart().getCartItems().size() - itemsId.size()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		return order.getId();
@@ -186,10 +191,25 @@ public class OrderServiceImpl implements IOrderService{
 		if (Objects.isNull(order)) {
 			log.error(AppConstant.BOOK_NOT_FOUND + orderShow.getOrder().getId());
 		}
-		log.info("aaaaaaaaaaaaaaaaaa");
 		log.info(orderShow.getOrder().getOrderTrack().getStatus());
-		log.info("aaaaaaaaaaaaaaaaaa");
 		order.setOrderTrack(trackRepository.findById(orderShow.getOrder().getOrderTrack().getId()).get());
 		orderRepository.save(order);
+	}
+
+	@Override
+	public List<Order> getTop3OrderByUser(User user) {
+		return orderRepository.findTop3ByUser(user);
+	}
+
+	@Override
+	public PageResponse<Order> getOrderByUserAndPage(User user, int page) {
+		Pageable pageable = PageRequest.of(page, 3); // 3 = size of each page
+		Page<Order> orders = orderRepository.findAllByUser(user,pageable);
+		PageResponse<Order> pageResponse = new PageResponse<>();
+		pageResponse.setContent(orders.getContent());
+		pageResponse.setTotalPages(orders.getTotalPages());
+		pageResponse.setLast(orders.isLast());
+		pageResponse.setFirst(orders.isFirst());
+		return pageResponse;
 	}
 }

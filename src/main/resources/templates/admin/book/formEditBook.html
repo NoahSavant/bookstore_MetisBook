@@ -72,9 +72,9 @@
 										</div>
 
 										<div class="col-sm-6">
-											<select id="categoryBook" th:field="*{category}" class="form-control">
+											<select id="categoryBook" th:field="*{category.id}" class="form-control">
 												<option th:value="${category.id}" th:each="category : ${categories}"
-													th:classappend="${bookForm.category.equals(category.name) ? 'selected' : ''}">
+													>
 													[[${category.name}]]</option>
 
 											</select>
@@ -127,7 +127,7 @@
 										<div class="col-sm-6">
 											<select id="language" th:field="*{language}" class="form-control">
 												<option th:value="${language.id}" th:each="language : ${languages}"
-													th:classappend="${bookForm.language.equals(language.name) ? 'selected' : ''}">
+													>
 													[[${language.name}]]</option>
 
 											</select>

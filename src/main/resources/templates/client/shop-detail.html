@@ -155,8 +155,9 @@
 													<div>
 														<div class="d-flex justify-content-start align-items-center">
 															<p class="">
-																[[${feedback.user.username}]] <span class="small"> -
-																	[[${feedback.createdAt}]]</span>
+																[[${feedback.user.username}]] 
+																<span th:text="${#dates.format(feedback.createdAt, 'dd-MM-yyyy | HH-mm-ss')}" class="small"> -
+																	</span>
 															</p>
 
 															<div sec:authorize="isAuthenticated()"
@@ -234,8 +235,11 @@
 									</div>
 								</div>
 								<div class="why-text">
-									<h4>[[${item.title}]]</h4>
-									<h5>[[${item.price}]] VNĐ</h5>
+									<a th:href="@{/shop-detail(bookId=${item.id})}">
+										<h4>[[${item.title}]]</h4>
+										<h5>[[${item.price}]] VNĐ</h5>
+									</a>
+
 								</div>
 							</div>
 						</div>
@@ -263,7 +267,7 @@
 		<div th:replace="client/fragments/footer :: footer"></div>
 	</footer>
 	<!-- End Footer  -->
-	
+
 	<script>
 		function deletecmt(id) {
 			document.getElementById('delete_cmt_' + id).submit();

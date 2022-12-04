@@ -2,6 +2,7 @@ package com.metis.book.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.dto.PageResponse;
 import com.metis.book.model.Blog;
 import com.metis.book.service.IBlogService;
 import com.metis.book.service.IUserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/blog")
+@Slf4j
 public class BlogController {
 
 	@Autowired
@@ -25,10 +30,23 @@ public class BlogController {
 	IUserService userService;
 	
 	@GetMapping 
-	public ModelAndView viewBlogPage(ModelAndView mav) {
-		List<Blog> blogs = blogService.getAllBlogs();
-		updateAudit(blogs);
-		mav.addObject("blogs",blogs);
+	public ModelAndView viewBlogPage(ModelAndView mav, @RequestParam(value = "page",required = false) String page) {
+		
+		if(Objects.isNull(page)) {
+			page = "0";
+		}
+		PageResponse<Blog> blogs = blogService.getBlogByPage(Integer.parseInt(page));
+		if(blogs.getContent().isEmpty()) {
+			mav.setViewName("redirect:/blog");
+			return mav;
+		}
+		updateAudit(blogs.getContent());
+		
+		mav.addObject("page",Integer.parseInt(page));
+		mav.addObject("isFirst",blogs.isFirst());
+		mav.addObject("isLast",blogs.isLast());
+		mav.addObject("totalPage",blogs.getTotalPages());
+		mav.addObject("blogs",blogs.getContent());
 		mav.setViewName("client/blog");
 		return mav;
 	}

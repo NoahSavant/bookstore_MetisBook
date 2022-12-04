@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metis.book.dto.BlogForm;
+import com.metis.book.dto.PageResponse;
 import com.metis.book.model.Blog;
 
 public interface IBlogService {
@@ -23,6 +24,8 @@ public interface IBlogService {
 	void updateImage(MultipartFile file);
 
 	List<Blog> getLatestBlogs();
+
+	PageResponse<Blog> getBlogByPage(int parseInt);
 
 
 }

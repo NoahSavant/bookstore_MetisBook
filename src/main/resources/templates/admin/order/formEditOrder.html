@@ -56,7 +56,7 @@
 	                                                <option
 
                                                             th:value="${orderTrack.id}"
-                                                            th:classappend="${orderShow.order.orderTrack.status.equals(orderTrack.status) ? 'selected' : ''}"
+                                                            
                                                             th:each="orderTrack : ${orderTracks}">[[${orderTrack.status}]]
                                                     </option>
 	                                                

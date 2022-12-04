@@ -183,7 +183,7 @@ public class UserServiceImpl implements IUserService {
 		}
 		user.setUsername(String.valueOf(int_random));
 		User userSaved = userRepository.save(user);
-
+		
 		return userSaved;
 	}
 
@@ -380,9 +380,6 @@ public class UserServiceImpl implements IUserService {
 		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.jpg");
 		imageRepository.save(imageThumbnail);
 
-		
-		
-		
 		// Create new User
 		User user = User.builder().username(registerRequest.getUsername())
 				.password(passwordEncoder.encode(registerRequest.getPassword())).email(registerRequest.getEmail())
@@ -392,8 +389,8 @@ public class UserServiceImpl implements IUserService {
 						registerRequest.getBirthday().isEmpty() ? null : LocalDate.parse(registerRequest.getBirthday()))
 				.enabled(true).gender(Integer.parseInt(registerRequest.getGender())).addresses(null).cart(cartSaved)
 				.roles(Arrays.asList(role)).build();
-				
-		User userSaved =   userRepository.save(user);
+
+		User userSaved = userRepository.save(user);
 		// Create new address
 		Address address = new Address();
 		address.setProvince(registerRequest.getProvince());
@@ -404,7 +401,7 @@ public class UserServiceImpl implements IUserService {
 		address.setIsPrimary(true);
 		address.setUser(userSaved);
 		addressRepository.save(address);
-		
+
 		return userSaved;
 	}
 
@@ -440,17 +437,19 @@ public class UserServiceImpl implements IUserService {
 		List<Address> addresses = addressRepository.findByUser(user);
 		Address address = new Address();
 		for (Address addr : addresses) {
-			if(addr.getIsPrimary()) {
+			if (addr.getIsPrimary()) {
 				address = addr;
 			}
 		}
-		
+
 		address.setDistrict(userEditForm.getDistrict());
 		address.setSubDistrict(userEditForm.getSubDistrict());
 		address.setProvince(userEditForm.getProvince());
 		address.setStreet(userEditForm.getStreet());
 		address.setRecievePhoneNumber(userEditForm.getPhoneNumber());
 		address.setFullAddress(userEditForm.getFullAddress());
+		address.setIsPrimary(true);
+		address.setUser(user);
 		addressRepository.save(address);
 
 		user.setFirstName(userEditForm.getFirstName());
@@ -459,35 +458,35 @@ public class UserServiceImpl implements IUserService {
 		user.setPhoneNumber(userEditForm.getPhoneNumber());
 		user.setBirthday(LocalDate.parse(userEditForm.getBirthday()));
 
-		if(userEditForm.getEnabled().equals("1")) {
+		if (userEditForm.getEnabled().equals("1")) {
 			user.setEnabled(true);
-		}else {
+		} else {
 			user.setEnabled(false);
 		}
 		log.error(userEditForm.getRole() + "aaaaa");
 		int flag = 2; // user
 		List<Role> roles = user.getRoles();
 		for (Role role : roles) {
-			if(role.getName().equals(RoleName.ADMIN)) {
+			if (role.getName().equals(RoleName.ADMIN)) {
 				flag = 1;
 				return;
 			}
-			if(role.getName().equals(RoleName.STAFF)) {
+			if (role.getName().equals(RoleName.STAFF)) {
 				flag = 3;
 			}
 		}
 		Role roleStaff = roleRepository.findByName(RoleName.STAFF);
-		
+
 		// if upgrade to staff
-		if(userEditForm.getRole().equals("3") && flag == 2) {
+		if (userEditForm.getRole().equals("3") && flag == 2) {
 			roles.add(roleStaff);
 		}
 		// if remove staff
-		else if(userEditForm.getRole().equals("2") && flag == 3){
+		else if (userEditForm.getRole().equals("2") && flag == 3) {
 			log.error(flag + "aaaaa");
 			roles.remove(roleStaff);
 		}
-		
+
 		user.setRoles(roles);
 		userRepository.save(user);
 
@@ -497,7 +496,7 @@ public class UserServiceImpl implements IUserService {
 	public void updatePasswordForAdmin(String userId, String password) {
 		User user = userRepository.findById(Long.parseLong(userId)).get();
 		user.setPassword(passwordEncoder.encode(password));
-		userRepository.save(user);		
+		userRepository.save(user);
 	}
 
 	@Override

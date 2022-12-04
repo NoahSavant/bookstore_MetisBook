@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.metis.book.dto.PageResponse;
 import com.metis.book.dto.ProfileForm;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.user.Address;
@@ -69,21 +70,48 @@ public class ProfileController {
 			BindingResult result,
 			ModelAndView mav) {
 
-		mav = getFormErrors(profileForm);
-		if(!mav.isEmpty()) {
-			mav = renderObjects();
-			return mav;
-		}
 		
-		// get required objects
-		mav = renderObjects();
+		
 		
 		if(result.hasErrors()) {
 			log.info(result.getAllErrors().toString());
+			mav.setViewName("/client/profile.html");
 			return mav;
 		}
-
+		mav = getFormErrors(profileForm);
+		if(!mav.isEmpty()) {
+			mav.setViewName("client/profile");
+			return mav;
+		}
 		userService.updateProfile(profileForm);
+		mav.setViewName("redirect:/member/profile");
+		return mav;
+	}
+	
+	@GetMapping("/order")
+	public ModelAndView viewProfileOrderPage(
+			ModelAndView mav,
+			@RequestParam(value = "page", required =  false) String page) {
+		
+		if(Objects.isNull(page)) {
+			page = "0";
+		}
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		
+		
+		PageResponse<Order> orders = orderService.getOrderByUserAndPage(user,Integer.parseInt(page));
+		if(orders.getContent().size() == 0) {
+			mav.setViewName("redirect:/profile/order");
+		}
+		mav.addObject("page",Integer.parseInt(page));
+		mav.addObject("isFirst",orders.isFirst());
+		mav.addObject("isLast",orders.isLast());
+		mav.addObject("totalPage",orders.getTotalPages());
+		mav.addObject("orders", orders.getContent());
+		mav.setViewName("client/profile-order");
 		return mav;
 	}
 
@@ -119,7 +147,7 @@ public class ProfileController {
 		}
 
 		for (Address address : addresses) {
-			if (address.getIsPrimary()) {
+			if (Objects.nonNull(address.getIsPrimary()) && address.getIsPrimary()) {
 				return address;
 			}
 		}
@@ -135,7 +163,7 @@ public class ProfileController {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		User user = userService.getUserById(userPrincipal.getId());
 		
-		List<Order> orders = orderService.getAllOrderByUser(user);
+		List<Order> orders = orderService.getTop3OrderByUser(user);
 		log.info(String.valueOf(orders.size()));
 		if(orders.size()>0) {
 			mav.addObject("orders", orders);
@@ -171,7 +199,7 @@ public class ProfileController {
 				.district(address==null?null:address.getDistrict())
 				.subDistrict(address==null?null:address.getSubDistrict())
 				.street(address==null?null:address.getStreet())
-				.fulllAddress(address.fetchFullAddress())
+				.fulllAddress(address==null?null:address.fetchFullAddress())
 				.build();
 		
 		return profileForm;

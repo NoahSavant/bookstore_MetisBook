@@ -372,8 +372,6 @@ public class AuthController {
 	}
 
 	private ModelAndView viewVerifyPage(HttpServletRequest request, ModelAndView mav) {
-		try {
-
 			// get session from LoginFailureHandler
 			String email = request.getSession().getAttribute("email").toString();
 			User user = userService.findByEmail(email);
@@ -382,11 +380,5 @@ public class AuthController {
 			mav.addObject("message", "Xin vui lòng xác thực tài khoản của bạn.");
 			mav.setViewName("client/verify.html");
 			return mav;
-		} catch (Exception e) {
-			String message = "Đường dẫn đăng nhập không đúng";
-			mav.addObject("message", message);
-			mav.setViewName("client/exception/badUser.html");
-			return mav;
-		}
 	}
 }
