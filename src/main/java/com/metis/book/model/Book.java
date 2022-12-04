@@ -141,7 +141,18 @@ public class Book extends UserDateAudit {
 		this.feedbacks = feedbacks;
 	}
 	
-	
+	public float getAvgRate() {
+		float totalRate = 0;
+		int totalFB = 0;
+		for (Feedback fb : feedbacks) {
+			int rate = fb.getRating();
+			if(rate > 0) {
+				totalRate += fb.getRating();
+				totalFB += 1;
+			} 
+		}
+		return totalRate/totalFB;
+	}
 	
 
 }

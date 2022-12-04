@@ -2,6 +2,8 @@ package com.metis.book.model.user;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,8 +25,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import com.metis.book.model.Cart;
 import com.metis.book.model.Feedback;
@@ -164,6 +164,15 @@ public class User extends UserDateAudit  {
 		
 	}
 	
-	
-
+	public long totalPurchase(int year) {
+		long total = 0;
+		for (Order order : this.orders) {
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(order.getOrderDate());
+			if(calendar.get(Calendar.YEAR) == year) {
+				total += order.getTotalPrice();
+			}
+		}
+		return total;
+	}
 }

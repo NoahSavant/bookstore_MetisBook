@@ -72,6 +72,14 @@ public class Order extends UserDateAudit {
 	private Long totalPrice;
 	
 	
+	public Long getTotalPrice() {
+		long total = 0l;
+		for (OrderItem orderItem : orderItems) {
+			total += orderItem.getTotalPrice();
+		}
+		return total;
+	}
+	
 	public Long getTotalPrice(String deliverMethod) {
 		Long total = 0L;
 		if(this.orderItems.size()>0) {
@@ -103,5 +111,11 @@ public class Order extends UserDateAudit {
 		
 	}
 	
-	
+	public int getNumProduct() {
+		int total = 0;
+		for (OrderItem orderItem : orderItems) {
+			total += orderItem.getQuantity();
+		}
+		return total;
+	}
 }

@@ -74,9 +74,6 @@ public class ShopController {
 			books = bookService.getBooksByCategory(category);
 		}
 		books = bookService.filter(books, filterForm);
-		System.out.println(books.size());
-		System.out.print(filterForm.getMinPrice() + " aaaa " + filterForm.getMaxPrice() + " aaa "
-				+ filterForm.getPublisherName());
 		List<String> publishers = bookService.getAllPublishers();
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();
