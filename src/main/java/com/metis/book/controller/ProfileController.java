@@ -70,21 +70,21 @@ public class ProfileController {
 			BindingResult result,
 			ModelAndView mav) {
 
-		mav = getFormErrors(profileForm);
-		if(!mav.isEmpty()) {
-			mav = renderObjects();
-			return mav;
-		}
 		
-		// get required objects
-		mav = renderObjects();
+		
 		
 		if(result.hasErrors()) {
 			log.info(result.getAllErrors().toString());
+			mav.setViewName("/client/profile.html");
 			return mav;
 		}
-
+		mav = getFormErrors(profileForm);
+		if(!mav.isEmpty()) {
+			mav.setViewName("client/profile");
+			return mav;
+		}
 		userService.updateProfile(profileForm);
+		mav.setViewName("redirect:/member/profile");
 		return mav;
 	}
 	

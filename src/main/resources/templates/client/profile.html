@@ -80,7 +80,9 @@
 											<div class="form-group col-md-6">
 												<label>Tên</label>
 												<input type="text" class="form-control" disabled
-													th:field="*{firstName}">
+													th:field="*{firstName}" required
+                                            	oninvalid="this.setCustomValidity('Tên Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
 												</div>
@@ -91,7 +93,9 @@
 											</div>
 											<div class="form-group col-md-6">
 												<label>Họ</label>
-												<input type="text" class="form-control" disabled th:field="*{lastName}">
+												<input type="text" class="form-control" disabled th:field="*{lastName}" required
+                                            	oninvalid="this.setCustomValidity('Họ Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
 												</div>
@@ -106,7 +110,9 @@
 											<div class="form-group col-md-6">
 												<label>Số điện thoại</label>
 												<input type="text" class="form-control" disabled
-													th:field="*{phoneNumber}">
+													th:field="*{phoneNumber}" required
+                                            	oninvalid="this.setCustomValidity('Số điện thoại Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('phoneNumber')}"
 													th:errors="*{phoneNumber}"></div>
@@ -122,7 +128,9 @@
 										<div class="form-row">
 											<div class="form-group col-md-6">
 												<label>Tỉnh/Thành phố</label>
-												<input type="text" class="form-control" disabled th:field="*{province}">
+												<input type="text" class="form-control" disabled th:field="*{province}" required
+                                            	oninvalid="this.setCustomValidity('Tỉnh/Thành phố Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('province')}" th:errors="*{province}">
 												</div>
@@ -133,7 +141,9 @@
 											</div>
 											<div class="form-group col-md-6">
 												<label>Quận/Huyện</label>
-												<input type="text" class="form-control" disabled th:field="*{district}">
+												<input type="text" class="form-control" disabled th:field="*{district}" required
+                                            	oninvalid="this.setCustomValidity('Quận/Huyện Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('district')}" th:errors="*{district}">
 												</div>
@@ -149,7 +159,9 @@
 											<div class="form-group col-md-6">
 												<label>Phường/Xã</label>
 												<input type="text" class="form-control" disabled
-													th:field="*{subDistrict}">
+													th:field="*{subDistrict}" required
+                                            	oninvalid="this.setCustomValidity('Phường xã Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('subDistrict')}"
 													th:errors="*{subDistrict}"></div>
@@ -160,7 +172,10 @@
 											</div>
 											<div class="form-group col-md-6">
 												<label>Số nhà</label>
-												<input type="text" class="form-control" disabled th:field="*{street}">
+												<input type="text" class="form-control" disabled th:field="*{street}"
+												required
+                                            	oninvalid="this.setCustomValidity('Số nhà Không thể bỏ trống')"
+                                                oninput="this.setCustomValidity('')">
 												<div class="alert alert-warning mt-3 mb-3"
 													th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
 												</div>
