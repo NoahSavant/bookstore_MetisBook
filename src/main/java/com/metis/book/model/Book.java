@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import com.metis.book.model.audit.UserDateAudit;
 import com.metis.book.model.order.OrderItem;
+import com.metis.book.utils.Service;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -151,8 +152,13 @@ public class Book extends UserDateAudit {
 				totalFB += 1;
 			} 
 		}
+		if(totalFB == 0) return 0;
 		return totalRate/totalFB;
 	}
 	
-
+	public boolean keywordInTitle(String keyword) {
+		keyword = Service.removeAccent(keyword).toUpperCase();
+		String bookTitle = Service.removeAccent(this.title).toUpperCase();
+		return bookTitle.contains(keyword); 
+	}
 }

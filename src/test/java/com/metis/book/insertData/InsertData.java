@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
+import com.metis.book.model.Aim;
 import com.metis.book.model.Author;
 import com.metis.book.model.Blog;
 import com.metis.book.model.Book;
@@ -33,6 +34,7 @@ import com.metis.book.model.user.Role;
 import com.metis.book.model.user.RoleName;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.AddressRepository;
+import com.metis.book.repository.AimRepository;
 import com.metis.book.repository.AuthorRepository;
 import com.metis.book.repository.BlogRepository;
 import com.metis.book.repository.BookRepository;
@@ -109,6 +111,9 @@ public class InsertData {
 
 	@Autowired
 	FeedbackRepository feedbackRepository;
+	
+	@Autowired
+	AimRepository aimRepository;
 	
 	@Test
 	@Order(1)
@@ -835,6 +840,19 @@ public class InsertData {
 	
 		feedbackRepository.save(feedback);
 	}
+	
+	@Test
+	@Order(13)
+	public void testCreateAim() {
+		
+		Aim aim = new Aim();
+		aim.setValue("1000000 4 6 4 20");
+		aim.setYear(2022);
+		
+		aimRepository.save(aim);
+	}
+	
+	
 	public void createCustomer() {
 
 		// Create new Cart

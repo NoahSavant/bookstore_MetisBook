@@ -169,26 +169,25 @@
 	   Scroll
 	   ................................................. */
 	$(".page-item").click(function() {
-		pageChange(this.firstChild.id);
+		pageChange(this.id);
 	});
 	
-	function pageChange(event) {
+	function pageChange(pageId) {
 		var controller = document.getElementById("cur_page");
 		var cur_page = parseInt(controller.value);
 		var last_page = cur_page;
-		if(event == 'p-before'){
+		if(pageId == 'p-before'){
 			if(cur_page == 1) {
 				return;
 			}
 			cur_page = cur_page - 1;
-		}else if(event == "p-after") {
-			if(cur_page == Math.ceil(document.getElementById("size").value/2)) {
+		}else if(pageId == "p-after") {
+			if(cur_page == Math.ceil(document.getElementById("size").value/6)) {
 				return;
 			}
 			cur_page = cur_page + 1;
-			console.log(cur_page);
 		}else {
-			cur_page = event.split("-")[1];
+			cur_page = parseInt(pageId.split("-")[1]);
 		}
 		if(last_page == cur_page) {
 			return;
@@ -196,48 +195,55 @@
 		controller.value = cur_page;
 		var url = window.location.href.split("=")[0] + "=" + cur_page.toString();
 		history.pushState({}, "", url);
-		getPageList(last_page);
+		displayList(last_page);
 	}
 	
-	function getPageList(last_page) {
-		var pagination = document.getElementById("pagination");
-		var children = document.getElementsByName("temp");
-		var cur_page = document.getElementById("cur_page").value;
-		for(const child of children) {
-			pagination.removeChild(child);
-		}
+	function createPageList() {
 		var size = document.getElementById("size").value;
-		var maxPage = Math.ceil(size/2);	
+		var maxPage = Math.ceil(size/6);
+		var pagination = document.getElementById("pagination");
+		var page_item = document.getElementById("p-after");
+		for(let i = 1; i <= maxPage; i++) {
+			var newPage = page_item.cloneNode(true);
+			newPage.setAttribute('id', 'p-' + i.toString());
+			newPage.firstChild.innerHTML = i;
+			newPage.addEventListener("click", function(){pageChange(this.id)});
+			pagination.insertBefore(newPage, page_item);
+		}
+		displayList(0);
+	}
 	
-		var page_item = document.getElementById("last-page");
-		for(let i = 2; i <= maxPage; i++) {
-			if(Math.abs(cur_page -i) <= 1 || i == maxPage) {
-				var newPage = page_item.cloneNode(true);
-				newPage.setAttribute('name', 'temp');
-				newPage.removeAttribute('id');
-				newPage.firstChild.setAttribute('id', 'p-' + i.toString());
-				newPage.firstChild.innerHTML = i;
-				newPage.addEventListener("click", function(){pageChange(this.firstChild.id)});
-				pagination.insertBefore(newPage, page_item);
+	function displayList(last_page) {
+		var cur_page = document.getElementById("cur_page").value;
+		var size = document.getElementById("size").value;
+		var maxPage = Math.ceil(size/6);	
+		
+		
+		for(let i = 1; i <= maxPage; i++) {
+			var element = document.getElementById('p-' + i.toString());
+			if(Math.abs(cur_page -i) <= 1 || i == maxPage || i == 1) {
+				element.style.display = "block";
+			} else {
+				element.style.display = "none";
 			}
 		}
 		
-		document.getElementById('p-' + cur_page).innerHTML = '<u>' + cur_page + '</u>'; 
+		document.getElementById('p-' + cur_page).firstChild.innerHTML = '<div style="color:  #d33b33">'+ cur_page +'</div>'; 
 		
 		if(last_page != 0) {
 			let last = document.getElementById('p-' + last_page);
 			if(last != null) {
-				last.innerHTML = last_page;
+				last.firstChild.innerHTML = last_page;
 			}
-			let start =  (last_page - 1) * 2;
-			let end = Math.min(size, last_page * 2);
+			let start =  (last_page - 1) * 6;
+			let end = Math.min(size, last_page * 6);
 			for(let i = start; i < end; i++) {
 				document.getElementById('short' + i.toString()).style.display = "none";
 				document.getElementById('long' + i.toString()).style.display = "none";
 			}
 		}
-		let start =  (cur_page - 1) * 2;
-		let end = Math.min(size, cur_page * 2);
+		let start =  (cur_page - 1) * 6;
+		let end = Math.min(size, cur_page * 6);
 		for(let i = start; i < end; i++) {
 			document.getElementById('short' + i.toString()).style.display = "block";
 			document.getElementById('long' + i.toString()).style.display = "block";
@@ -258,7 +264,7 @@
 			}, 600);
 			return false;
 		});
-		getPageList(0);
+		createPageList();
 	});
 
 	/* ..............................................

@@ -50,7 +50,9 @@ public class ShopController {
 		filterForm.setMinPrice(0L);
 		filterForm.setPublisherName("Tất cả");
 		filterForm.setSort("none");
+		filterForm.setTextSearch("");
 		ModelAndView mav = new ModelAndView();
+		if(page <= 0) page = 1;
 		mav.addObject("books", books);
 		mav.addObject("publishers", publishers);
 		mav.addObject("categories", categories);
@@ -78,6 +80,7 @@ public class ShopController {
 		List<Category> categories = categoryService.getAllCategories();
 		Long numAllBooks = bookService.getNumAllBooks();
 		ModelAndView mav = new ModelAndView();
+		if(page <= 0) page = 1;
 		mav.addObject("books", books);
 		mav.addObject("publishers", publishers);
 		mav.addObject("categories", categories);

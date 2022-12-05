@@ -197,11 +197,19 @@ public class AimServiceImpl implements IAimService {
 		
 		List<Book> listBook = bookRepository.findAll();
 		float rate = 0;
+		int totalRate = 0;
 		for (Book book : listBook) {
-			rate += book.getAvgRate();
+			float rateTemp = book.getAvgRate();
+			if(rateTemp > 0) {
+				rate += rateTemp;
+				totalRate += 1;
+			}
 		}
-		rate /= listBook.size();
+			
+		System.out.println(String.valueOf(rate)+ ".........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		rate /= totalRate;
 		data += String.valueOf(Math.min(100, rate*100/Float.parseFloat(list[3]))) + " ";
+		System.out.println(String.valueOf(rate) + ".........................." + String.valueOf(Float.parseFloat(list[3])));
 		
 		int totalProduct = 0;
 		for (Order order : listOrder) {

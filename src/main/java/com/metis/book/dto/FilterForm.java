@@ -16,4 +16,5 @@ public class FilterForm {
 	private Long minPrice;
 	private String publisherName;
 	private String sort;
+	private String textSearch;
 }

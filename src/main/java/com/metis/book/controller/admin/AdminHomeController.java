@@ -36,7 +36,6 @@ public class AdminHomeController {
 		String pie1Data = aimService.getProductData(year);
 		String pie2Data = aimService.getCustomerData(year);
 		String cardData = aimService.getAimData(year);
-		System.out.println(areaData + "..." + pie1Data + "..." + cardData + "..." + pie2Data);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("aimForm", aimForm);
 		mav.addObject("areaData", areaData);
@@ -49,8 +48,6 @@ public class AdminHomeController {
 	
 	@PostMapping
 	public ModelAndView post(@ModelAttribute("aimForm") AimForm aimForm, BindingResult result) {
-		Calendar instance = Calendar.getInstance();
-        int year = instance.get(Calendar.YEAR);
         aimService.save(aimForm);
         aimForm.setData(aimService.getAimInYear(aimForm.getCustomAreaYear()));
         String areaData = aimService.getSalesData(aimForm.getCustomAreaYear());

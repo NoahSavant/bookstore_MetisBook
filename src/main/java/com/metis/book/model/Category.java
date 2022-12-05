@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.persistence.*;
 
 import com.metis.book.model.audit.UserDateAudit;
+import com.metis.book.utils.Service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,9 +52,7 @@ public class Category extends UserDateAudit {
 	}
 	
 	public String getDomain(){
-		String temp = Normalizer.normalize(this.name, Normalizer.Form.NFD);
-		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-		return pattern.matcher(temp).replaceAll("").replaceAll("đ", "d").replaceAll("Đ", "D").replaceAll(" ", "");
+		return Service.removeAccent(name);
 	}
 	
 	

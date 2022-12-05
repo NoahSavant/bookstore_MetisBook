@@ -343,6 +343,16 @@ public class BookServiceImpl implements IBookService {
 				Collections.reverse(filterBooks);
 			}
 		}
+		
+		if(filterForm.getTextSearch() != "") {
+			books.clear();
+			books.addAll(filterBooks);
+			filterBooks.clear();
+			String keyword = filterForm.getTextSearch();
+			for (Book book : books) {
+				if(book.keywordInTitle(keyword)) filterBooks.add(book);
+			}
+		}
 		return filterBooks;
 	}
 
