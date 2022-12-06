@@ -47,28 +47,28 @@
 										<div class="form-group col mr-2">
 											<label for="title">Tên người dùng:</label>
 											<input type="text" id="title" placeholder="Tên người dùng" autocomplete="off"
-												class="form-control" th:field="*{name}" />
+												class="form-control" th:field="*{name}" required/>
 										</div>
 										<div class="form-group col">
 											<label for="title">Email:</label>
-											<input type="text" id="title" placeholder="Email" autocomplete="off"
-												class="form-control" th:field="*{email}" />
+											<input type="email" id="title" placeholder="Email" autocomplete="off"
+												class="form-control" th:field="*{email}" required/>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="content">Tiêu đề:</label>
 										<input type="text" rows="4" placeholder="Tiêu đề"
-											class="form-control content" th:field="*{title}"
+											class="form-control content" th:field="*{title}" required
 											autocomplete="off"></input>
 									</div>
 									<div class="form-group">
 										<label for="content">Nội dung:</label>
 										<textarea type="text" rows="4" placeholder="Nội dung"
-											class="form-control content" th:field="*{content}"
+											class="form-control content" th:field="*{content}" required
 											autocomplete="off"></textarea>
 									</div>
-									<button type="submit" class="btn btn-primary" th:text="Lưu"></button>
+									<button type="submit" class="btn btn-primary" th:text="Thêm"></button>
 
 								</form>
 
