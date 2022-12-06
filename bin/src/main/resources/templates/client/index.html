@@ -1,211 +1,197 @@
 <!DOCTYPE html>
 <html lang="vi">
-
-<head>
-	<div th:replace="client/fragments/header :: header"></div>
-	<div>
-		<title>Trang chủ</title>
-		<meta name="keywords" content="">
-		<meta name="description" content="">
-		<meta name="author" content="">
-	</div>
-</head>
-
-<body>
-	<div th:replace="client/fragments/main-top :: mainTop"></div>
-	<!-- Start Slider -->
-	<div id="slides-shop" class="cover-slides">
-		<ul class="slides-container">
-			<li class="text-left">
-				<img th:src="@{/images/img2.jpg}" alt="">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<h1 class="m-b-20"><strong>Welcome To <br> Metis's Book</strong></h1>
-							<p class="m-b-40">When it comes to searching for books, there is only one place to turn to –
-								Metis's Book.</p>
-							<p><a class="btn hvr-hover" th:href="@{/shop/Tatca?page=1}">Shop New</a></p>
-						</div>
-					</div>
-				</div>
-			</li>
-			<li class="text-center">
-				<img th:src="@{/images/img3.jpg}" alt="">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<h1 class="m-b-20"><strong>Welcome To <br> Book Hub</strong></h1>
-							<p class="m-b-40">When it comes to searching for books, there is only one place to turn to –
-								Book Hub.</p>
-							<p><a class="btn hvr-hover" href="#">Shop New</a></p>
-						</div>
-					</div>
-				</div>
-			</li>
-			<li class="text-right">
-				<img th:src="@{/images/img1.webp}" alt="">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<h1 class="m-b-20"><strong>Welcome To <br> Book Hub</strong></h1>
-							<p class="m-b-40">When it comes to searching for books, there is only one place to turn to –
-								Book Hub.</p>
-							<p><a class="btn hvr-hover" href="#">Shop New</a></p>
-						</div>
-					</div>
-				</div>
-			</li>
-		</ul>
-		<div class="slides-navigation">
-			<a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-			<a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-		</div>
-	</div>
-	<!-- End Slider -->
-
-	<!-- Start Categories  -->
-	<div class="categories-shop">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" th:each="category:${categories}">
-					<div class="shop-cat-box">
-						<img class="img-fluid" th:src="@{/images/action and advencture.jpg}" width="352px"
-							length="352px" alt="" />
-						<a class="btn hvr-hover" href="#">[[${category.name}]]</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Categories -->
-
-	<!-- Start Products  -->
-	<div class="products-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-all text-center">
-						<h1>Sách hot</h1>
-						<p>Những cuốn sách hay nhất</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="special-menu text-center">
-						<div class="button-group filter-button-group">
-							<button class="active" data-filter="*">Tất cả</button>
-							<button data-filter=".top-featured">Xu hướng</button>
-							<button data-filter=".best-seller">Bán chạy</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row special-list">
-				<div class="col-lg-3 col-md-6 special-grid best-seller" th:each="item:${bestSeller}">
-					<div class="products-single fix">
-						<div class="box-img-hover">
-							<div class="type-lb">
-								<p class="sale">Còn bán</p>
-							</div>
-							<img th:if="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}"
-								class="img-fluid" />
-							<img th:if="${item.image.thumbnailName!=null && item.image.title == null }"
-								th:src="@{${'/uploads/'+item.image.thumbnailName}}" class="img-fluid" />
-							<div class="mask-icon">
-								<ul>
-									<li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip"
-											data-placement="right" title="Chi tiết"><i class="fas fa-eye"></i></a></li>
-								</ul>
-								<a class="cart" th:href="@{/member/cart/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
-							</div>
-						</div>
-						<div class="why-text">
-							<a th:href="@{/shop-detail(bookId=${item.id})}">
-								<h3><b>[[${item.title}]]</b></h3>
-								<h5><small>[[${item.price}]] VNĐ</small></h5>
-
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-md-6 special-grid top-featured" th:each="item:${topFeatured}">
-					<div class="products-single fix">
-						<div class="box-img-hover">
-							<div class="type-lb">
-								<p class="sale">Còn bán</p>
-							</div>
-							<img th:if="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}"
-								class="img-fluid" />
-							<img th:if="${item.image.thumbnailName!=null && item.image.title == null }"
-								th:src="@{${'/uploads/'+item.image.thumbnailName}}" class="img-fluid" />
-							<div class="mask-icon">
-								<ul>
-									<li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip"
-											data-placement="right" title="Chi tiết"><i class="fas fa-eye"></i></a></li>
-								</ul>
-								<a class="cart" th:href="@{/member/cart/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
-							</div>
-						</div>
-						<div class="why-text">
-							<h3><b>[[${item.title}]]</b></h3>
-							<h5><small>[[${item.price}]] VNĐ</small></h5>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Products  -->
-
-	<!-- Start Blog  -->
-	<div class="latest-blog">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-all text-center">
-						<h1>Nhũng bài viết gần đây</h1>
-						<p><strong>“A room without books is like a body without a soul.” – Cicero</strong></p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div th:each="blog:${latestBlogs}" class="col-md-6 col-lg-4 col-xl-4">
-					<div class="blog-box">
-						<div class="blog-img">
-							<img class="img-fluid" th:src="@{/images/bo.webp}" alt="" />
-						</div>
-						<div class="blog-content">
-							<div class="title-blog">
-								<h2 style="font-weight: 600;">[[${blog.title}]]</h2><br>
-								<h4 style="color: #d33b33; font-weight: 600;">[[${blog.subTitle}]]</h4><br>
-								<p class="collapse-content">
-									[[${blog.content}]]
-								</p>
-							</div>
-							<ul class="option-blog">
-								<li><a th:href="@{/blog/blog-detail(blogId=${blog.id})}" data-toggle="tooltip" data-placement="right" title="Chi tiết"><i
-											class="fas fa-eye"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Blog  -->
-
-
-	<!-- Start Instagram Feed  -->
-	<div class="instagram-box">
-		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
-	</div>
-	<!-- End Instagram Feed  -->
-	<footer>
-		<div th:replace="client/fragments/footer :: footer"></div>
-	</footer>
-</body>
-
+	<head>
+		<div th:replace="client/fragments/header :: header"></div>
+	 	<div>
+	 		<title>Trang chủ</title>
+		    <meta name="keywords" content="">
+		    <meta name="description" content="">
+		    <meta name="author" content="">
+	 	</div>
+	</head>
+ 	<body>
+		<div th:replace="client/fragments/main-top :: mainTop"></div>
+		<!-- Start Slider -->
+		    <div id="slides-shop" class="cover-slides">
+		        <ul class="slides-container">
+		            <li class="text-left">
+		                <img th:src="@{/images/img2.jpg}" alt="">
+		                <div class="container">
+		                    <div class="row">
+		                        <div class="col-md-12">
+		                            <h1 class="m-b-20"><strong>Welcome To <br> Metis's Book</strong></h1>
+		                            <p class="m-b-40">When it comes to searching for books, there is only one place to turn to – Metis's Book.</p>
+		                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+		                        </div>
+		                    </div>
+		                </div>
+		            </li>
+		            <li class="text-center">
+		                <img th:src="@{/images/img3.jpg}" alt="">
+		                <div class="container">
+		                    <div class="row">
+		                        <div class="col-md-12">
+		                            <h1 class="m-b-20"><strong>Welcome To <br> Book Hub</strong></h1>
+		                            <p class="m-b-40">When it comes to searching for books, there is only one place to turn to – Book Hub.</p>
+		                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+		                        </div>
+		                    </div>
+		                </div>
+		            </li>
+		            <li class="text-right">
+		                <img th:src="@{/images/img1.webp}" alt="">
+		                <div class="container">
+		                    <div class="row">
+		                        <div class="col-md-12">
+		                            <h1 class="m-b-20"><strong>Welcome To <br> Book Hub</strong></h1>
+		                            <p class="m-b-40">When it comes to searching for books, there is only one place to turn to – Book Hub.</p>
+		                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+		                        </div>
+		                    </div>
+		                </div>
+		            </li>
+		        </ul>
+		        <div class="slides-navigation">
+		            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+		            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+		        </div>
+		    </div>
+		    <!-- End Slider -->
+		
+		    <!-- Start Categories  -->
+		    <div class="categories-shop">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" th:each="category:${categories}">
+		                    <div class="shop-cat-box">
+		                        <img class="img-fluid" th:src="@{/images/action and advencture.jpg}" width="352px" length="352px" alt="" />
+		                        <a class="btn hvr-hover" href="#">[[${category.name}]]</a>
+		                    </div>
+		                </div>		            
+		            </div>
+		        </div>
+		    </div>
+		    <!-- End Categories -->
+		
+		    <!-- Start Products  -->
+		    <div class="products-box">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="title-all text-center">
+		                        <h1>Sách hot</h1>
+		                        <p>Những cuốn sách hay nhất</p>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="special-menu text-center">
+		                        <div class="button-group filter-button-group">
+		                            <button class="active" data-filter="*">Tất cả</button>
+		                            <button data-filter=".top-featured">Xu hướng</button>
+		                            <button data-filter=".best-seller">Bán chạy</button>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		
+		            <div class="row special-list">
+		                <div class="col-lg-3 col-md-6 special-grid best-seller" th:each="item:${bestSeller}">
+		                    <div class="products-single fix">
+		                        <div class="box-img-hover">
+		                            <div class="type-lb">
+		                                <p class="sale">Còn bán</p>
+		                            </div>
+		                            <img th:if ="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}" class="img-fluid" />
+									<img th:if ="${item.image.thumbnailName!=null && item.image.title == null }" th:src="@{${'/uploads/'+item.image.thumbnailName}}"
+									class="img-fluid"/>
+		                            <div class="mask-icon">
+		                                <ul>
+		                                    <li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip" data-placement="right" title="Chi tiết"><i class="fas fa-eye"></i></a></li>
+		                                </ul>
+		                                <a class="cart" th:href="@{/member/cart/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
+		                            </div>
+		                        </div>
+		                        <div class="why-text">
+		                            <h3><b>[[${item.title}]]</b></h3>
+		                            <h5><small>[[${item.price}]] VNĐ</small></h5>
+		                        </div>
+		                    </div>
+		                </div>
+		                
+		                <div class="col-lg-3 col-md-6 special-grid top-featured" th:each="item:${topFeatured}">
+		                    <div class="products-single fix">
+		                        <div class="box-img-hover">
+		                            <div class="type-lb">
+		                                <p class="sale">Còn bán</p>
+		                            </div>
+		                            <img th:if ="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}" class="img-fluid" />
+									<img th:if ="${item.image.thumbnailName!=null && item.image.title == null }" th:src="@{${'/uploads/'+item.image.thumbnailName}}"
+									class="img-fluid"/>
+		                            <div class="mask-icon">
+		                                <ul>
+		                                    <li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip" data-placement="right" title="Chi tiết"><i class="fas fa-eye"></i></a></li>
+		                                </ul>
+		                                <a class="cart" th:href="@{/member/cart/add(bookId=${item.id})}">Thêm vào giỏ hàng</a>
+		                            </div>
+		                        </div>
+		                        <div class="why-text">
+		                            <h3><b>[[${item.title}]]</b></h3>
+		                            <h5><small>[[${item.price}]] VNĐ</small></h5>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    <!-- End Products  -->
+		
+		    <!-- Start Blog  -->
+		    <div class="latest-blog">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="title-all text-center">
+		                        <h1>Những bài viết gần đây</h1>
+		                        <p><strong>“A room without books is like a body without a soul.” – Cicero</strong></p>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div th:each= "blog:${latestBlogs}" class="col-md-6 col-lg-4 col-xl-4">
+		                    <div class="blog-box">
+		                        <div class="blog-img">
+		                            <img class="img-fluid" th:src="@{/images/bo.webp}" alt="" />
+		                        </div>
+		                        <div class="blog-content">
+		                            <div class="title-blog">
+		                                <h2 style="font-weight: 600;">[[${blog.title}]]</h2><br>
+		                                <h4 style="color: #d33b33; font-weight: 600;">[[${blog.subTitle}]]</h4><br>
+		                                <p class="collapse-content">
+		                                    [[${blog.content}]]
+		                                </p>
+		                            </div>
+		                            <ul class="option-blog">
+		                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Likes"><i class="far fa-heart"></i></a></li>
+		                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Views"><i class="fas fa-eye"></i></a></li>
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    <!-- End Blog  -->
+		
+		
+		    <!-- Start Instagram Feed  -->
+		    <div class="instagram-box">
+			  <div th:replace="client/fragments/sub-footer :: subFooter"></div>
+		    </div>
+		    <!-- End Instagram Feed  -->
+		    <footer>
+ 				<div th:replace="client/fragments/footer :: footer"></div>
+ 			</footer>
+ 	</body>
 </html>

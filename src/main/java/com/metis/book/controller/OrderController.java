@@ -36,7 +36,7 @@ public class OrderController {
 	public ModelAndView viewOrderDetailPage(
 			ModelAndView mav,
 			@RequestParam("orderId") String orderId) {
-		
+		log.error("VÔ đây");
 		Order order = orderService.getOrderById(Long.parseLong(orderId));
 		User user = userService.findByOrder(order);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -44,7 +44,7 @@ public class OrderController {
 		if(!user.getId().equals(userPrincipal.getId())) {
 			throw new AccessDeniedException("Bạn không có quyền truy cập");
 		}
-		
+		log.error("VÔ đây");
 		if(Objects.isNull(order)) {
 			// for temp, redirect to cart page if order id not valid
 			mav.setViewName("redirect:/member/cart");

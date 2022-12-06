@@ -42,7 +42,7 @@
 						<div class="product-categori">
 							<div class="search-product">
 								<form action="#">
-									<input class="form-control" placeholder="Tìm kiếm..." type="text">
+									<input class="form-control" placeholder="Tìm kiếm..." type="text" th:field="*{textSearch}">
 									<button type="submit"> <i class="fa fa-search"></i> </button>
 								</form>
 							</div>
@@ -74,7 +74,7 @@
 									<div id="slider-range"></div>
 									<p>
 										<input type="text" id="amount" readonly
-											style="border:0; color:#fbb714; font-weight:bold;" />
+											style="border:0; color:#d33b33; font-weight:bold;" />
 									</p>
 								</div>
 							</div>
@@ -114,9 +114,8 @@
 									<div class="toolbar-sorter-right">
 										<span>Sắp xếp </span>
 										<select th:field="*{sort}" id="basic"
-											class="selectpicker show-tick form-control" data-placeholder="$ USD">
-											<option th:selected="${sort == value}" data-display="Select" value="none">
-												Mặc định</option>
+											class="selectpicker show-tick form-control">
+											<option th:selected="${sort == value}" data-display="Select" value="none">Mặc định</option>
 											<option th:selected="${sort == value}" value="incre">Giá tăng dần</option>
 											<option th:selected="${sort == value}" value="decre">Giá giảm dần</option>
 										</select>
@@ -225,14 +224,11 @@
 								</div>
 								<div th:styleappend="${#lists.size(books) > 0 ? 'display: block' : 'display: none'}"
 									class="container pagination-custom">
-									<input hidden id="cur_page" th:value="1">
+									<input hidden id="cur_page" th:value="${cur_page}">
 									<input hidden id="size" th:value="${#lists.size(books)}">
 									<ul id="pagination" class="pagination">
-										<li class="page-item"><a class="page-link-custom page-link"
-												id="p-before">Trước</a></li>
-										<li class="page-item"><a class="page-link-custom page-link" id="p-1">1</a></li>
-										<li id="last-page" class="page-item"><a class="page-link-custom page-link"
-												id="p-after">Sau</a></li>
+										<li id="p-before" class="page-item"><a class="page-link">Trước</a></li>
+										<li id="p-after" class="page-item"><a class="page-link">Sau</a></li>
 									</ul>
 								</div>
 								<div th:styleappend="${#lists.size(books) > 0 ? 'display: none' : 'display: block'}"

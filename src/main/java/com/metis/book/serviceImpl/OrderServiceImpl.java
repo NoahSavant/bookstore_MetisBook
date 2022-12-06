@@ -142,8 +142,6 @@ public class OrderServiceImpl implements IOrderService{
 		
 		// check if authenticated user has that order
 		Optional<Order> order = orderRepository.findById(orderId);
-		System.out.println(orderId);
-		System.out.println(order);
 		if(order.isEmpty()) {
 			log.error("Not found order");
 			return null;
