@@ -100,8 +100,6 @@ public class OrderServiceImpl implements IOrderService{
 		List<OrderItem> orderItemsSaved = orderItemRepository.saveAll(orderItems);
 		
 		order.setOrderItems(orderItemsSaved);
-		order.setTotalPrice(order.getTotalPrice(deliverMethod));
-		log.info(order.getTotalPrice().toString());
 		orderRepository.save(order);
 		// update cart item
 		Authentication authentication = SecurityContextHolder
@@ -144,7 +142,8 @@ public class OrderServiceImpl implements IOrderService{
 		
 		// check if authenticated user has that order
 		Optional<Order> order = orderRepository.findById(orderId);
-		
+		System.out.println(orderId);
+		System.out.println(order);
 		if(order.isEmpty()) {
 			log.error("Not found order");
 			return null;
@@ -177,7 +176,13 @@ public class OrderServiceImpl implements IOrderService{
 
 	@Override
 	public OrderShow getOrderShowById(Long orderID) {
+		List<Order> temp = orderRepository.findAll();
+		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+		System.out.println(temp.get(1));
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		Order order = getOrderById(orderID);
+		
+		System.out.println(order);
 		OrderShow orderShow = new OrderShow();
 		orderShow.setOrder(order);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

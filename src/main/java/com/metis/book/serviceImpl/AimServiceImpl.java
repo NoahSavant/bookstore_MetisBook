@@ -206,10 +206,8 @@ public class AimServiceImpl implements IAimService {
 			}
 		}
 			
-		System.out.println(String.valueOf(rate)+ ".........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		rate /= totalRate;
 		data += String.valueOf(Math.min(100, rate*100/Float.parseFloat(list[3]))) + " ";
-		System.out.println(String.valueOf(rate) + ".........................." + String.valueOf(Float.parseFloat(list[3])));
 		
 		int totalProduct = 0;
 		for (Order order : listOrder) {

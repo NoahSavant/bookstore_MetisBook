@@ -37,12 +37,16 @@ public class AdminOrderController {
         mav.setViewName("/admin/order/order.html");
         return mav;
     }
+    
     @GetMapping("/edit")
     public ModelAndView viewUpdateOrder(
             ModelAndView mav,
             @RequestParam("orderId") String orderId,
             @RequestParam("username") String username) {
+    	log.error(username);
+    	log.error(orderId);
         OrderShow orderShow = orderService.getOrderShowById(Long.parseLong(orderId));
+        log.error(orderShow.toString());
         orderShow.setUsername(username);
         mav.addObject("orderShow", orderShow);
         List<OrderTrack> orderTracks = orderTrackService.getAllOrderTrack();

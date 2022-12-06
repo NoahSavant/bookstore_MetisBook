@@ -68,11 +68,7 @@ public class Order extends UserDateAudit {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
-	@Column(name =  "total_price")
-	private Long totalPrice;
-	
-	
-	public Long getTotalPrice() {
+	public Long getTotalProductPrice() {
 		long total = 0l;
 		for (OrderItem orderItem : orderItems) {
 			total += orderItem.getTotalPrice();
@@ -80,13 +76,8 @@ public class Order extends UserDateAudit {
 		return total;
 	}
 	
-	public Long getTotalPrice(String deliverMethod) {
-		Long total = 0L;
-		if(this.orderItems.size()>0) {
-			for (OrderItem item : orderItems) {
-				total = total + item.getTotalPrice();
-			}
-		}
+	public Long getTotalPrice() {
+		Long total = getTotalProductPrice();
 		if(deliverMethod.equals("Tiêu chuẩn")) {
 			total = total + AppConstant.STANDARD;
 		}else if(deliverMethod.equals("Nhanh")) {
@@ -94,7 +85,6 @@ public class Order extends UserDateAudit {
 		}else if(deliverMethod.equals("Rất nhanh")) {
 			total = total + AppConstant.VERY_FAST;
 		}
-		
 		return total;
 	}
 	

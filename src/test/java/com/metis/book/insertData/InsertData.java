@@ -708,8 +708,10 @@ public class InsertData {
 		order1.setPaymentMethod("Cash");
 		order1.setCostVAT("0");
 		order1.setDeliverCost("20000");
-		order1.setDeliverMethod("Standard");
+		order1.setDeliverMethod("Tiêu chuẩn");
 		order1.setUser(user);
+		order1.setCreateBy(2L);
+		order1.setUpdateBy(2L);
 		orderRepository.save(order1);
 
 		com.metis.book.model.order.Order order2 = new com.metis.book.model.order.Order();
@@ -718,8 +720,10 @@ public class InsertData {
 		order2.setPaymentMethod("momo");
 		order2.setCostVAT("0");
 		order2.setDeliverCost("40000");
-		order2.setDeliverMethod("Fast");
+		order2.setDeliverMethod("Nhanh");
 		order2.setUser(user);
+		order2.setCreateBy(2L);
+		order2.setUpdateBy(2L);
 		orderRepository.save(order2);
 	}
 
@@ -842,7 +846,7 @@ public class InsertData {
 	}
 	
 	@Test
-	@Order(13)
+	@Order(14)
 	public void testCreateAim() {
 		
 		Aim aim = new Aim();
