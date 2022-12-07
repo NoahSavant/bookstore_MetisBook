@@ -18,11 +18,13 @@ import org.springframework.stereotype.Service;
 import com.metis.book.dto.CheckoutForm;
 import com.metis.book.dto.OrderShow;
 import com.metis.book.dto.PageResponse;
+import com.metis.book.model.Book;
 import com.metis.book.model.CartItem;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.order.OrderItem;
 import com.metis.book.model.order.OrderTrack;
 import com.metis.book.model.user.User;
+import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
 import com.metis.book.repository.OrderItemRepository;
 import com.metis.book.repository.OrderRepository;
@@ -52,6 +54,9 @@ public class OrderServiceImpl implements IOrderService{
 	
 	@Autowired
 	OrderTrackRepository trackRepository;
+	
+	@Autowired
+	BookRepository bookRepository;
 
 	@Override
 	public List<Order> getAllOrderByUser(User user) {
@@ -214,5 +219,19 @@ public class OrderServiceImpl implements IOrderService{
 		pageResponse.setLast(orders.isLast());
 		pageResponse.setFirst(orders.isFirst());
 		return pageResponse;
+	}
+
+	@Override
+	public Boolean ExistByUserAndBook(User user, Long bookId) {
+		Book book = bookRepository.findById(bookId).get();
+		List<Order> orders = orderRepository.findByUser(user);
+		Boolean result = false;
+		for (Order order : orders) {
+			result = orderItemRepository.existsByBookAndOrder(book, order);
+			if (result == true) {
+				break;
+			}
+		}
+		return result;
 	}
 }

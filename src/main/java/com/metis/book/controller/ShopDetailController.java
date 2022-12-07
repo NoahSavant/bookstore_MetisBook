@@ -1,13 +1,11 @@
 package com.metis.book.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +15,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.metis.book.dto.BookForm;
 import com.metis.book.model.Book;
 import com.metis.book.model.Feedback;
+import com.metis.book.model.user.User;
+import com.metis.book.security.UserPrincipal;
 import com.metis.book.service.IBookService;
 import com.metis.book.service.IFeedbackService;
+import com.metis.book.service.IOrderService;
+import com.metis.book.service.IUserService;
 
-import net.bytebuddy.agent.builder.AgentBuilder.FallbackStrategy.Simple;
+import lombok.extern.slf4j.Slf4j;
+
+
 
 @Controller
 @RequestMapping("/shop-detail")
+@Slf4j
 public class ShopDetailController {
 
 	@Autowired
@@ -32,12 +37,29 @@ public class ShopDetailController {
 	@Autowired
 	IFeedbackService feedbackService;
 	
+	@Autowired
+	IUserService userService;
+	
+	@Autowired
+	IOrderService orderService;
+	
 	@GetMapping
 	public ModelAndView viewShopDetailPage(
 			ModelAndView mav,
 			@RequestParam("bookId") String bookId) throws ParseException {
 		
-		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+		User user = userService.getUserById(userPrincipal.getId());
+		Boolean isComment = orderService.ExistByUserAndBook(user, Long.parseLong(bookId));
+		log.error(isComment.toString());
+		if (isComment.equals(false)) {
+			mav.addObject("isComment", "false");
+			
+		}
+		else {
+			mav.addObject("isComment", "true");
+		}
 		BookForm book = bookService.getById(Long.parseLong(bookId)); 
 		int sold = bookService.getSoldNumberById(Long.parseLong(bookId));
 		List<Book> topFeatured = bookService.getTopFeatured();

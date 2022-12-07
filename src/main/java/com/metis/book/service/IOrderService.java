@@ -26,4 +26,6 @@ public interface IOrderService {
 	List<Order> getTop3OrderByUser(User user);
 
 	PageResponse<Order> getOrderByUserAndPage(User user, int parseInt);
+
+	Boolean ExistByUserAndBook(User user, Long bookId);
 }

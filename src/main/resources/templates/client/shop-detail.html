@@ -93,8 +93,8 @@
 									<div sec:authorize="isAuthenticated()" class="col">
 
 
-										<div class="d-flex w-100 card-body">
-
+										<div class="d-flex w-100 card-body" th:if = "${isComment.equals('true') || #authorization.expression('hasRole(''ADMIN'')')}">
+						
 											<img th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle!=null }"
 												th:src="@{${'/uploads/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
 												class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
