@@ -82,7 +82,7 @@
 					<div class="row d-flex justify-content-center">
 						<div class="col-10">
 							<div sec:authorize="!isAuthenticated()" class="alert-warning mb-5">
-								Vui lòng đăng nhập để bình luận
+								Vui lòng đăng nhập để đánh giá
 							</div>
 							<div th:if="${error}" class="alert-danger mb-5">
 								Bạn không đủ quyền để xóa
@@ -127,7 +127,7 @@
 													</div>
 													<div class="d-flex justify-content-end mt-3">
 														<button type="submit" class="btn btn-danger">
-															Gửi bình luận <i
+															Gửi <i
 																class="fas fa-long-arrow-alt-right ms-1"></i>
 														</button>
 													</div>
@@ -137,7 +137,7 @@
 									</div>
 								</div>
 								<div class="card-body p-4">
-									<h4 class="text-center mb-4 pb-2">Bình luận</h4>
+									<h4 class="text-center mb-4 pb-2">Đánh giá</h4>
 
 									<div th:each="feedback : ${feedbacks}" class="row mb-5">
 										<div class="col">
