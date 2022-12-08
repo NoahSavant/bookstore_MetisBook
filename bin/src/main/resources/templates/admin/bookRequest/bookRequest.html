@@ -55,7 +55,6 @@
 											<th width="20%">Tên sách</th>
 											<th width="20%">Tên tác giả</th>
 											<th width="5%">Xóa</th>
-											<th width="5%">Sửa</th>
 										</tr>
 									</thead>
 									<tfoot>
@@ -66,7 +65,6 @@
 											<th width="20%">Tên sách</th>
 											<th width="20%">Tên tác giả</th>
 											<th width="5%">Xóa</th>
-											<th width="5%">Sửa</th>
 										</tr>
 									</tfoot>
 									<tbody>
@@ -81,11 +79,11 @@
 											
 											<td><input type="button" class="btn btn-danger" value="Xóa"
 													th:onclick="deleteRow([[${bookrequest.id}]])"></td>
-											<td>
+											<!-- <td>
 												<a th:href="@{/admin/bookrequest/edit(bookrequestId=${bookrequest.id})}">
 													<input type="button" class="btn btn-primary" value="Sửa">
 												</a>
-											</td>
+											</td> -->
 											
 										</tr>
 									</tbody>

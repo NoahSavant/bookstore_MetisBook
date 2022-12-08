@@ -33,9 +33,11 @@ public class Blog extends UserDateAudit {
 	private Long id;
 	
 	@Column(name = "title")
+	@Lob
 	private String title;
 	
 	@Column(name = "sub_title")
+	@Lob
 	private String subTitle;
 	
 	@Column(name = "content")
