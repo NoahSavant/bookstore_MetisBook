@@ -932,8 +932,10 @@ public class InsertData {
 
 		// Create new Image
 		Image imageThumbnail = new Image();
-		imageThumbnail.setThumbnailName("2.jpg");
-		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\2.png");
+		imageThumbnail.setTitle("2.png");
+		imageThumbnail.setUrl("uploads\\users\\2.png");
+		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
+		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.png");
 		imageRepository.save(imageThumbnail);
 
 		// get user role
