@@ -144,20 +144,15 @@ public class OrderServiceImpl implements IOrderService{
 			return null;
 		}
 		
+	
 		
 		// check if authenticated user has that order
-		Optional<Order> order = orderRepository.findById(orderId);
-		if(order.isEmpty()) {
+		Order order = orderRepository.findById(orderId).get();
+		if(Objects.isNull(order)) {
 			log.error("Not found order");
 			return null;
-		}else {
-			User userChecked  = userRepository.findByOrders(order.get());
-			if(!user.getId().equals(userChecked.getId())) {
-				log.error("Not found order");
-				return null;
-			}
 		}
-		return order.get();
+		return order;
 	}
 
 	@Override
@@ -181,11 +176,8 @@ public class OrderServiceImpl implements IOrderService{
 	public OrderShow getOrderShowById(Long orderID) {
 		List<Order> temp = orderRepository.findAll();
 		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-		System.out.println(temp.get(1));
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
 		Order order = getOrderById(orderID);
-		
-		System.out.println(order);
 		OrderShow orderShow = new OrderShow();
 		orderShow.setOrder(order);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
