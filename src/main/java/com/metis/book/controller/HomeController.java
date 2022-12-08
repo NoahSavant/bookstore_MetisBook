@@ -38,6 +38,9 @@ public class HomeController {
 	@GetMapping
 	public ModelAndView home(ModelAndView mav) {
 		List<Category> categories = categoryService.getAllCategories();
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		System.out.println(categories.get(1).getImage().getUrl());
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		List<Book> topFeatured = bookService.getTopFeatured();
 		List<Book> bestSeller = bookService.getBestSeller();
 		List<Blog> latestBlogs = blogService.getLatestBlogs();

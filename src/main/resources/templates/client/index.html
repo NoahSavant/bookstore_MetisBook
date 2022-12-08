@@ -64,7 +64,7 @@
 		            <div class="row">
 		                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" th:each="category:${categories}">
 		                    <div class="shop-cat-box">
-		                        <img class="img-fluid" th:src="@{/images/action and advencture.jpg}" width="352px" length="352px" alt="" />
+		                        <img class="img-fluid" th:src="${category.image.url}" width="352px" length="352px" alt="" />
 		                        <a class="btn hvr-hover" href="#">[[${category.name}]]</a>
 		                    </div>
 		                </div>		            

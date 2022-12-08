@@ -165,43 +165,43 @@ public class InsertData {
 		// Create image Tieu Thuyet
 		Image image1 = new Image();
 		image1.setTitle("1.png");
-		image1.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\1.png");
+		image1.setUrl("uploads\\categories\\1.png");
 		imageRepository.save(image1);
 		
 		// Create image Ngon Tinh
 		Image image2 = new Image();
 		image2.setTitle("2.png");
-		image2.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\2.png");
+		image2.setUrl("uploads\\categories\\2.png");
 		imageRepository.save(image2);
 		
 		// Create image Ngon Tinh
 		Image image3 = new Image();
 		image3.setTitle("3.png");
-		image3.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\3.png");
+		image3.setUrl("uploads\\categories\\3.png");
 		imageRepository.save(image3);
 		
 		// Create image Cung đấu
 		Image image4 = new Image();
 		image4.setTitle("4.png");
-		image4.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\4.png");
+		image4.setUrl("uploads\\categories\\4.png");
 		imageRepository.save(image4);
 		
 		// Create image kinh te
 		Image image5 = new Image();
 		image5.setTitle("5.png");
-		image5.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\5.png");
+		image5.setUrl("uploads\\categories\\5.png");
 		imageRepository.save(image5);
 		
 		// Create image kinh te
 		Image image6 = new Image();
 		image6.setTitle("6.png");
-		image6.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\6.png");
+		image6.setUrl("uploads\\categories\\6.png");
 		imageRepository.save(image6);
 		
 		// Create image kinh te
 		Image image7 = new Image();
 		image7.setTitle("7.png");
-		image7.setUrl("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\7.png");
+		image7.setUrl("uploads\\categories\\7.png");
 		imageRepository.save(image7);
 		
 		// Create category
@@ -227,12 +227,12 @@ public class InsertData {
 
 		Category category5 = new Category();
 		category5.setName("Kinh tế");
-		category4.setImage(image5);
+		category5.setImage(image5);
 		categoryRepository.save(category5);
 
 		Category category6= new Category();
 		category6.setName("Kỹ thuật");
-		category4.setImage(image6);
+		category6.setImage(image6);
 		categoryRepository.save(category6);
 
 		Category category7= new Category();
@@ -970,8 +970,10 @@ public class InsertData {
 
 		// Create new Image
 		Image imageThumbnail = new Image();
-		imageThumbnail.setThumbnailName("1.png");
-		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\1.png");
+		imageThumbnail.setTitle("1.png");
+		imageThumbnail.setUrl("uploads\\users\\1.png");
+		imageThumbnail.setThumbnailName("avtThumbnail.png");
+		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.png");
 		imageRepository.save(imageThumbnail);
 
 		// get user role
