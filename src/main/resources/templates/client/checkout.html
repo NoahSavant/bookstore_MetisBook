@@ -3,8 +3,8 @@
 <!-- Basic -->
 
 <head>
-	<div th:replace="admin/fragments/header :: header"></div>
-	<div th:replace="client/fragments/header :: header"></div>
+	<div th:replace="~{admin/fragments/header :: header}"></div>
+	<div th:replace="~{client/fragments/header :: header}"></div>
 	<div>
 		<title>Đăng nhập</title>
 		<meta name="keywords" content="">
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div th:replace="client/fragments/main-top :: mainTop"></div>
+	<div th:replace="~{client/fragments/main-top :: mainTop}"></div>
 	<!-- Start Main Top -->
 
 
@@ -314,11 +314,11 @@
 
 	<!-- Start Instagram Feed  -->
 	<div class="instagram-box">
-		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
+		<div th:replace="~{client/fragments/sub-footer :: subFooter}"></div>
 	</div>
 	<!-- End Instagram Feed  -->
 	<footer>
-		<div th:replace="client/fragments/footer :: footer"></div>
+		<div th:replace="~{client/fragments/footer :: footer}"></div>
 	</footer>
 
 	<script th:inline="javascript">

@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-	<div th:replace="admin/fragments/header :: header"></div>
-	<div th:replace="client/fragments/header :: header"></div>
+	<div th:replace="~{admin/fragments/header :: header}"></div>
+	<div th:replace="~{client/fragments/header :: header}"></div>
 	 	<div>
 	 		<title>Đăng nhập</title>
 		    <meta name="keywords" content="">
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<div th:replace="client/fragments/main-top :: mainTop"></div>
+	<div th:replace="~{client/fragments/main-top :: mainTop}"></div>
     <div class="container">
 
         <!-- Outer Row -->
@@ -90,7 +90,7 @@
 
     </div>
 	<footer>
-		<div th:replace="client/fragments/footer :: footer"></div>
+		<div th:replace="~{client/fragments/footer :: footer}"></div>
 		<!-- Bootstrap core JavaScript-->
 	    <script src="vendor/jquery/jquery.min.js"></script>
 	    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

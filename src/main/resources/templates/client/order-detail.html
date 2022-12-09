@@ -3,8 +3,8 @@
 
 <head>
 
-	<div th:replace="admin/fragments/header :: header"></div>
-	<div th:replace="client/fragments/header :: header"></div>
+	<div th:replace="~{admin/fragments/header :: header}"></div>
+	<div th:replace="~{client/fragments/header :: header}"></div>
 	<div>
 		<title>Đăng ký</title>
 		<meta name="keywords" content="">
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<div th:replace="client/fragments/main-top :: mainTop"></div>
+	<div th:replace="~{client/fragments/main-top :: mainTop}"></div>
 	<div class="container-fluid mt-3 mb-3">
 
 
@@ -183,7 +183,7 @@
 	</div>
 
 	<footer>
-		<div th:replace="client/fragments/footer :: footer"></div>
+		<div th:replace="~{client/fragments/footer :: footer}"></div>
 	</footer>
 
 	<style>

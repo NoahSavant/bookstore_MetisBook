@@ -3,7 +3,7 @@
 <!-- Basic -->
 
 <head>
-	<div th:replace="client/fragments/header :: header"></div>
+	<div th:replace="~{client/fragments/header :: header}"></div>
 	<div>
 		<title>Giỏ hàng</title>
 		<meta name="keywords" content="">
@@ -16,7 +16,7 @@
 
 
 
-	<div th:replace="client/fragments/main-top :: mainTop"></div>
+	<div th:replace="~{client/fragments/main-top :: mainTop}"></div>
 
 	<!-- Start All Title Box -->
 	<div class="all-title-box">
@@ -164,14 +164,14 @@
 
 	<!-- Start Instagram Feed  -->
 	<div class="instagram-box">
-		<div th:replace="client/fragments/sub-footer :: subFooter"></div>
+		<div th:replace="~{client/fragments/sub-footer :: subFooter}"></div>
 	</div>
 	<!-- End Instagram Feed  -->
 
 
 	<!-- Start Footer  -->
 	<footer>
-		<div th:replace="client/fragments/footer :: footer"></div>
+		<div th:replace="~{client/fragments/footer :: footer}"></div>
 	</footer>
 	<!-- End Footer  -->
 

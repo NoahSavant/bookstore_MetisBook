@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 	<head>
-		<div th:replace="client/fragments/header :: header"></div>
+		<div th:replace="~{client/fragments/header :: header}"></div>
 	 	<div>
 	 		<title>Trang chủ</title>
 		    <meta name="keywords" content="">
@@ -10,7 +10,7 @@
 	 	</div>
 	</head>
  	<body>
-		<div th:replace="client/fragments/main-top :: mainTop"></div>
+		<div th:replace="~{client/fragments/main-top :: mainTop}"></div>
 		
 			
 		<div class="d-flex align-items-center justify-content-center vh-100 mb-5 mt-5">
@@ -29,11 +29,11 @@
         </div>
 		    <!-- Start Instagram Feed  -->
 		    <div class="instagram-box">
-			  <div th:replace="client/fragments/sub-footer :: subFooter"></div>
+			  <div th:replace="~{client/fragments/sub-footer :: subFooter}"></div>
 		    </div>
 		    <!-- End Instagram Feed  -->
 		    <footer>
- 				<div th:replace="client/fragments/footer :: footer"></div>
+ 				<div th:replace="~{client/fragments/footer :: footer}"></div>
  			</footer>
  			
  			

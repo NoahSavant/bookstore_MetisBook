@@ -5,7 +5,7 @@
 
 <head>
 
-    <div th:replace="admin/fragments/header :: header"></div>
+    <div th:replace="~{admin/fragments/header :: header}"></div>
 
     <link rel="stylesheet" th:href="@{/css/multiselect.css}">
     
@@ -18,7 +18,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+        <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -28,7 +28,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <div th:replace="admin/fragments/navbar :: navbar"></div>
+                <div th:replace="~{admin/fragments/navbar :: navbar}"></div>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -82,7 +82,7 @@
     <!-- End of Page Wrapper -->
 
 
-    <div th:replace="admin/fragments/footer :: footer"></div>
+    <div th:replace="~{admin/fragments/footer :: footer}"></div>
 
 
     <script th:src="@{/js/index.js}"></script>

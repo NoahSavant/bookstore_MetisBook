@@ -4,7 +4,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <div th:replace="admin/fragments/header :: header"></div>
+    <div th:replace="~{admin/fragments/header :: header}"></div>
 </head>
 
 <body id="page-top">
@@ -85,7 +85,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <div th:replace="admin/fragments/navbar :: navbar"></div>
+                <div th:replace="~{admin/fragments/navbar :: navbar}"></div>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -762,7 +762,7 @@
         </div>
     </div>
 
-    <div th:replace="admin/fragments/footer :: footer"></div>
+    <div th:replace="~{admin/fragments/footer :: footer}"></div>
 
 </body>
 
