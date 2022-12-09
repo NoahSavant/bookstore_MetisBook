@@ -22,7 +22,7 @@
 
 					<div class="col">
 						<a href="#">
-							<img th:if="${blog.image.title}" th:src="@{${'/uploads/blogs/'+blog.image.title}}"
+							<img th:if="${blog.image.title}" th:src="blog.image.url"
 								class="img-fluid d-block mx-auto" />
 							<img th:if="${blog.image.thumbnailName!=null && blog.image.title == null }"
 								th:src="@{${'/uploads/'+blog.image.thumbnailName}}"

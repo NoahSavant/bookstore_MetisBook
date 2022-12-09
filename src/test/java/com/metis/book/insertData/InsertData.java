@@ -165,43 +165,43 @@ public class InsertData {
 		// Create image Tieu Thuyet
 		Image image1 = new Image();
 		image1.setTitle("1.png");
-		image1.setUrl("uploads\\categories\\1.png");
+		image1.setUrl("https://www.tor.com/wp-content/uploads/2015/06/WordsofRadiance_new_320x480.jpg");
 		imageRepository.save(image1);
 		
 		// Create image Ngon Tinh
 		Image image2 = new Image();
 		image2.setTitle("2.png");
-		image2.setUrl("uploads\\categories\\2.png");
+		image2.setUrl("https://i.pinimg.com/564x/a8/e1/6a/a8e16a1259b174d21156a69fb5d56fbe.jpg");
 		imageRepository.save(image2);
 		
 		// Create image Ngon Tinh
 		Image image3 = new Image();
 		image3.setTitle("3.png");
-		image3.setUrl("uploads\\categories\\3.png");
+		image3.setUrl("https://cdn0.fahasa.com/media/catalog/product/8/9/8935095618316.jpg");
 		imageRepository.save(image3);
 		
 		// Create image Cung đấu
 		Image image4 = new Image();
 		image4.setTitle("4.png");
-		image4.setUrl("uploads\\categories\\4.png");
+		image4.setUrl("https://307a0e78.vws.vegacdn.vn/view/v2/image/img.retail_book/0/0/0/340.jpg");
 		imageRepository.save(image4);
 		
 		// Create image kinh te
 		Image image5 = new Image();
 		image5.setTitle("5.png");
-		image5.setUrl("uploads\\categories\\5.png");
+		image5.setUrl("https://novapublishers.com/wp-content/uploads/2018/11/9781536148428-e1552407229197.jpg");
 		imageRepository.save(image5);
 		
 		// Create image kinh te
 		Image image6 = new Image();
 		image6.setTitle("6.png");
-		image6.setUrl("uploads\\categories\\6.png");
+		image6.setUrl("https://product.hstatic.net/200000273991/product/code_dao_ki_su_b1_54382e95243146b1b08779b835cfa304_master.jpg");
 		imageRepository.save(image6);
 		
 		// Create image kinh te
 		Image image7 = new Image();
 		image7.setTitle("7.png");
-		image7.setUrl("uploads\\categories\\7.png");
+		image7.setUrl("https://salt.tikicdn.com/cache/750x750/ts/product/4f/97/29/bd044bebefc9cc2ec99f832d056d823f.jpg.webp");
 		imageRepository.save(image7);
 		
 		// Create category
@@ -430,7 +430,7 @@ public class InsertData {
 		// Create new Thumbnail for Book1
 		Image image1 = new Image();
 		image1.setTitle("1.png");
-		image1.setUrl("uploads\\books\\1.png");
+		image1.setUrl("https://adcbook.net.vn/web/image/product.template/19617/image_1920");
 		image1.setThumbnailName("BookThumbnail.png");
 		image1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image1);
@@ -439,7 +439,7 @@ public class InsertData {
 		// Create new Thumbnail for Book2
 		Image image2 = new Image();
 		image2.setTitle("2.png");
-		image2.setUrl("uploads\\books\\2.png");
+		image2.setUrl("http://sovhtt.hanoi.gov.vn/wp-content/uploads/2019/11/main-1.jpg");
 		image2.setThumbnailName("BookThumbnail.png");
 		image2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image2);
@@ -447,7 +447,7 @@ public class InsertData {
 		// Create new Thumbnail for Book3
 		Image image3 = new Image();
 		image3.setTitle("3.png");
-		image3.setUrl("uploads\\books\\3.png");
+		image3.setUrl("https://media.viez.vn/prod/2022/8/22/0_CC_7_FF_1_E_BDF_2_4_E82_9216_FA_5_ABFFF_18_A6_6d23445556.jpeg");
 		image3.setThumbnailName("BookThumbnail.png");
 		image3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image3);
@@ -455,7 +455,7 @@ public class InsertData {
 		// Create new Thumbnail for Book4
 		Image image4 = new Image();
 		image4.setTitle("4.png");
-		image4.setUrl("uploads\\books\\4.png");
+		image4.setUrl("https://upload.wikimedia.org/wikipedia/vi/b/b3/Your_Name_novel.jpg");
 		image4.setThumbnailName("BookThumbnail.png");
 		image4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image4);
@@ -463,7 +463,7 @@ public class InsertData {
 		// Create new Thumbnail for Book5
 		Image image5 = new Image();
 		image5.setTitle("5.png");
-		image5.setUrl("uploads\\books\\5.png");
+		image5.setUrl("https://salt.tikicdn.com/ts/product/e6/30/15/f04495630c3c7f4a2e9f457c5474c1be.jpg");
 		image5.setThumbnailName("BookThumbnail.png");
 		image5.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image5);
@@ -472,7 +472,7 @@ public class InsertData {
 		// Create new Thumbnail for Book6
 		Image image6 = new Image();
 		image6.setTitle("6.png");
-		image6.setUrl("uploads\\books\\6.png");
+		image6.setUrl("https://salt.tikicdn.com/cache/750x750/media/catalog/product/i/m/img146.u547.d20170224.t115830.165377.jpg.webp");
 		image6.setThumbnailName("BookThumbnail.png");
 		image6.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image6);
@@ -480,7 +480,7 @@ public class InsertData {
 		// Create new Thumbnail for Book7
 		Image image7 = new Image();
 		image7.setTitle("7.png");
-		image7.setUrl("uploads\\books\\7.png");
+		image7.setUrl("https://salt.tikicdn.com/cache/750x750/media/catalog/product/0/0/005_1_2.jpg.webp");
 		image7.setThumbnailName("BookThumbnail.png");
 		image7.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image7);
@@ -488,7 +488,7 @@ public class InsertData {
 		// Create new Thumbnail for Book8
 		Image image8 = new Image();
 		image8.setTitle("8.png");
-		image8.setUrl("uploads\\books\\8.png");
+		image8.setUrl("https://salt.tikicdn.com/cache/750x750/ts/product/6a/b4/e4/75db18dd08c687d4394bc1815e71974f.png.webp");
 		image8.setThumbnailName("BookThumbnail.png");
 		image8.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image8);
@@ -496,7 +496,7 @@ public class InsertData {
 		// Create new Thumbnail for Book9
 		Image image9 = new Image();
 		image9.setTitle("9.png");
-		image9.setUrl("uploads\\books\\9.png");
+		image9.setUrl("https://www.netabooks.vn/Data/Sites/1/Product/26028/cam-nang-cau-truc-tieng-anh.jpg");
 		image9.setThumbnailName("BookThumbnail.png");
 		image9.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image9);
@@ -504,7 +504,7 @@ public class InsertData {
 		// Create new Thumbnail for Book10
 		Image image10 = new Image();
 		image10.setTitle("10.png");
-		image10.setUrl("uploads\\books\\10.png");
+		image10.setUrl("https://salt.tikicdn.com/cache/750x750/ts/product/d3/ee/73/18dca42a5cf75f6b8a603caf80bbf9c9.jpg.webp");
 		image10.setThumbnailName("BookThumbnail.png");
 		image10.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image10);
@@ -837,24 +837,32 @@ public class InsertData {
 
 		// Create thumbnail image 1
 		Image imageThumbnail1 = new Image();
+		imageThumbnail1.setTitle("1.png");
+		imageThumbnail1.setUrl("https://tranhsondaudepviet.com/wp-content/uploads/2020/09/tranh-phong-canh-dep.jpeg");
 		imageThumbnail1.setThumbnailName("BlogThumbnail.png");
 		imageThumbnail1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
 		imageRepository.save(imageThumbnail1);
 
 		// Create thumbnail image 2
 		Image imageThumbnail2 = new Image();
+		imageThumbnail2.setTitle("2.png");
+		imageThumbnail2.setUrl("https://sieuthitranhsondau.com/wp-content/uploads/2022/05/Nhung-buc-tranh-phong-canh-dep-nhat2.jpg");
 		imageThumbnail2.setThumbnailName("BlogThumbnail.png");
 		imageThumbnail2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
 		imageRepository.save(imageThumbnail2);
 
 		// Create thumbnail image 3
 		Image imageThumbnail3 = new Image();
+		imageThumbnail3.setTitle("3.png");
+		imageThumbnail3.setUrl("https://anhdepfree.com/wp-content/uploads/2020/11/hinh-nen-phong-canh.jpg");
 		imageThumbnail3.setThumbnailName("BlogThumbnail.png");
 		imageThumbnail3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
 		imageRepository.save(imageThumbnail3);
 		
 		// Create thumbnail image 4
 		Image imageThumbnail4 = new Image();
+		imageThumbnail4.setTitle("4.png");
+		imageThumbnail4.setUrl("https://nld.mediacdn.vn/2017/photo-1-1502239793492.jpg");
 		imageThumbnail4.setThumbnailName("BlogThumbnail.png");
 		imageThumbnail4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BlogThumbnail.png");
 		imageRepository.save(imageThumbnail4);
@@ -933,7 +941,7 @@ public class InsertData {
 		// Create new Image
 		Image imageThumbnail = new Image();
 		imageThumbnail.setTitle("2.png");
-		imageThumbnail.setUrl("uploads\\users\\2.png");
+		imageThumbnail.setUrl("https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg");
 		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
 		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.png");
 		imageRepository.save(imageThumbnail);
@@ -973,7 +981,7 @@ public class InsertData {
 		// Create new Image
 		Image imageThumbnail = new Image();
 		imageThumbnail.setTitle("1.png");
-		imageThumbnail.setUrl("uploads\\users\\1.png");
+		imageThumbnail.setUrl("https://phunugioi.com/wp-content/uploads/2020/01/anh-avatar-supreme-dep-lam-dai-dien-facebook.jpg");
 		imageThumbnail.setThumbnailName("avtThumbnail.png");
 		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.png");
 		imageRepository.save(imageThumbnail);
