@@ -22,10 +22,10 @@
 
 					<div class="col">
 						<a href="#">
-							<img th:if="${blog.image.title}" th:src="blog.image.url"
+							<img th:if="${blog.image.title}" th:src="@{${'/images/blogs/'+blog.image.title}}"
 								class="img-fluid d-block mx-auto" />
 							<img th:if="${blog.image.thumbnailName!=null && blog.image.title == null }"
-								th:src="@{${'/uploads/'+blog.image.thumbnailName}}"
+								th:src="@{${'/images/'+blog.image.thumbnailName}}"
 								class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:100%;" id="avatar" />
 						</a>
 
