@@ -88,6 +88,7 @@ public class BlogServiceImpl implements IBlogService {
 	@Override
 	public void updateBlog(BlogForm blogForm) throws IOException {
 		log.info(blogForm.getId());
+		log.error(System.getProperty("user.dir"));
 		Long blogId = Long.parseLong(blogForm.getId());
 		Blog blog = blogRepository.findById(blogId).get();
 		if(Objects.isNull(blog)) {

@@ -165,43 +165,43 @@ public class InsertData {
 		// Create image Tieu Thuyet
 		Image image1 = new Image();
 		image1.setTitle("1.png");
-		image1.setUrl("uploads\\categories\\1.png");
+		image1.setUrl("images\\categories\\1.png");
 		imageRepository.save(image1);
 		
 		// Create image Ngon Tinh
 		Image image2 = new Image();
 		image2.setTitle("2.png");
-		image2.setUrl("uploads\\categories\\2.png");
+		image2.setUrl("images\\categories\\2.png");
 		imageRepository.save(image2);
 		
 		// Create image Ngon Tinh
 		Image image3 = new Image();
 		image3.setTitle("3.png");
-		image3.setUrl("uploads\\categories\\3.png");
+		image3.setUrl("images\\categories\\3.png");
 		imageRepository.save(image3);
 		
 		// Create image Cung đấu
 		Image image4 = new Image();
 		image4.setTitle("4.png");
-		image4.setUrl("uploads\\categories\\4.png");
+		image4.setUrl("images\\categories\\4.png");
 		imageRepository.save(image4);
 		
 		// Create image kinh te
 		Image image5 = new Image();
 		image5.setTitle("5.png");
-		image5.setUrl("uploads\\categories\\5.png");
+		image5.setUrl("images\\categories\\5.png");
 		imageRepository.save(image5);
 		
 		// Create image kinh te
 		Image image6 = new Image();
 		image6.setTitle("6.png");
-		image6.setUrl("uploads\\categories\\6.png");
+		image6.setUrl("images\\categories\\6.png");
 		imageRepository.save(image6);
 		
 		// Create image kinh te
 		Image image7 = new Image();
 		image7.setTitle("7.png");
-		image7.setUrl("uploads\\categories\\7.png");
+		image7.setUrl("images\\categories\\7.png");
 		imageRepository.save(image7);
 		
 		// Create category
@@ -430,7 +430,7 @@ public class InsertData {
 		// Create new Thumbnail for Book1
 		Image image1 = new Image();
 		image1.setTitle("1.png");
-		image1.setUrl("uploads\\books\\1.png");
+		image1.setUrl("images\\books\\1.png");
 		image1.setThumbnailName("BookThumbnail.png");
 		image1.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image1);
@@ -439,7 +439,7 @@ public class InsertData {
 		// Create new Thumbnail for Book2
 		Image image2 = new Image();
 		image2.setTitle("2.png");
-		image2.setUrl("uploads\\books\\2.png");
+		image2.setUrl("images\\books\\2.png");
 		image2.setThumbnailName("BookThumbnail.png");
 		image2.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image2);
@@ -447,7 +447,7 @@ public class InsertData {
 		// Create new Thumbnail for Book3
 		Image image3 = new Image();
 		image3.setTitle("3.png");
-		image3.setUrl("uploads\\books\\3.png");
+		image3.setUrl("images\\books\\3.png");
 		image3.setThumbnailName("BookThumbnail.png");
 		image3.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image3);
@@ -455,7 +455,7 @@ public class InsertData {
 		// Create new Thumbnail for Book4
 		Image image4 = new Image();
 		image4.setTitle("4.png");
-		image4.setUrl("uploads\\books\\4.png");
+		image4.setUrl("images\\books\\4.png");
 		image4.setThumbnailName("BookThumbnail.png");
 		image4.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image4);
@@ -463,7 +463,7 @@ public class InsertData {
 		// Create new Thumbnail for Book5
 		Image image5 = new Image();
 		image5.setTitle("5.png");
-		image5.setUrl("uploads\\books\\5.png");
+		image5.setUrl("images\\books\\5.png");
 		image5.setThumbnailName("BookThumbnail.png");
 		image5.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image5);
@@ -472,7 +472,7 @@ public class InsertData {
 		// Create new Thumbnail for Book6
 		Image image6 = new Image();
 		image6.setTitle("6.png");
-		image6.setUrl("uploads\\books\\6.png");
+		image6.setUrl("images\\books\\6.png");
 		image6.setThumbnailName("BookThumbnail.png");
 		image6.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image6);
@@ -480,7 +480,7 @@ public class InsertData {
 		// Create new Thumbnail for Book7
 		Image image7 = new Image();
 		image7.setTitle("7.png");
-		image7.setUrl("uploads\\books\\7.png");
+		image7.setUrl("images\\books\\7.png");
 		image7.setThumbnailName("BookThumbnail.png");
 		image7.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image7);
@@ -488,7 +488,7 @@ public class InsertData {
 		// Create new Thumbnail for Book8
 		Image image8 = new Image();
 		image8.setTitle("8.png");
-		image8.setUrl("uploads\\books\\8.png");
+		image8.setUrl("images\\books\\8.png");
 		image8.setThumbnailName("BookThumbnail.png");
 		image8.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image8);
@@ -496,7 +496,7 @@ public class InsertData {
 		// Create new Thumbnail for Book9
 		Image image9 = new Image();
 		image9.setTitle("9.png");
-		image9.setUrl("uploads\\books\\9.png");
+		image9.setUrl("images\\books\\9.png");
 		image9.setThumbnailName("BookThumbnail.png");
 		image9.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image9);
@@ -504,7 +504,7 @@ public class InsertData {
 		// Create new Thumbnail for Book10
 		Image image10 = new Image();
 		image10.setTitle("10.png");
-		image10.setUrl("uploads\\books\\10.png");
+		image10.setUrl("images\\books\\10.png");
 		image10.setThumbnailName("BookThumbnail.png");
 		image10.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\BookThumbnail.png");
 		imageRepository.save(image10);
@@ -933,7 +933,7 @@ public class InsertData {
 		// Create new Image
 		Image imageThumbnail = new Image();
 		imageThumbnail.setTitle("2.png");
-		imageThumbnail.setUrl("uploads\\users\\2.png");
+		imageThumbnail.setUrl("images\\users\\2.png");
 		imageThumbnail.setThumbnailName("avtThumbnail.jpg");
 		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.png");
 		imageRepository.save(imageThumbnail);
@@ -973,7 +973,7 @@ public class InsertData {
 		// Create new Image
 		Image imageThumbnail = new Image();
 		imageThumbnail.setTitle("1.png");
-		imageThumbnail.setUrl("uploads\\users\\1.png");
+		imageThumbnail.setUrl("images\\users\\1.png");
 		imageThumbnail.setThumbnailName("avtThumbnail.png");
 		imageThumbnail.setThumbnailURL("E:\\HCMUTE\\School_Project\\bookstore_MetisBook\\uploads\\avtThumbnail.png");
 		imageRepository.save(imageThumbnail);
