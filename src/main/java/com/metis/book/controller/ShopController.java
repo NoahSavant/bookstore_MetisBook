@@ -61,7 +61,7 @@ public class ShopController {
 		mav.addObject("cur_category", category);
 		mav.addObject("maxP", bookService.getMaxPrice());
 		mav.addObject("cur_page", page);
-		mav.setViewName("/client/shop");
+		mav.setViewName("client/shop");
 		return mav;
 	}
 
@@ -89,7 +89,7 @@ public class ShopController {
 		mav.addObject("cur_category", category);
 		mav.addObject("cur_page", page);
 		mav.addObject("maxP", bookService.getMaxPrice());
-		mav.setViewName("/client/shop");
+		mav.setViewName("client/shop");
 		return mav;
 	}
 
