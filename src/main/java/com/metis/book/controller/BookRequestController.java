@@ -26,14 +26,14 @@ public class BookRequestController {
 	{
 		BookRequest request = new BookRequest();
 		mav.addObject("request",request);
-		mav.setViewName("client/book-request.html");
+		mav.setViewName("client/book-request");
 		return mav;
 	}
 	@PostMapping
 	public ModelAndView addBookRequest(ModelAndView mav, @ModelAttribute("request") BookRequest request)
 	{
 		log.info(request.toString());
-		mav.setViewName("/client/book-request.html");
+		mav.setViewName("client/book-request");
 		bookRequestService.insertBookRequest(request);
 		mav.addObject("isSucceed", true);
 		mav.addObject("request", new BookRequest());
