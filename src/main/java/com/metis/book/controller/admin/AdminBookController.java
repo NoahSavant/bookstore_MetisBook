@@ -50,7 +50,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		List<BookForm> bookForms = bookService.getBookShows();
 		mav.addObject("books", bookForms);
-		mav.setViewName("/admin/book/book.html");
+		mav.setViewName("admin/book/book.html");
 		return mav;
 	}
 
@@ -65,7 +65,7 @@ public class AdminBookController {
 		List<Category> categories = categoryService.getAllCategories();
 		mav.addObject("categories", categories);
 		mav.addObject("bookForm", bookForm);
-		mav.setViewName("/admin/book/formAddBook.html");
+		mav.setViewName("admin/book/formAddBook.html");
 		return mav;
 	}
 	@PostMapping("/add")

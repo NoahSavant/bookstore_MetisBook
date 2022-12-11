@@ -42,7 +42,7 @@ public class AdminHomeController {
 		mav.addObject("pie1Data", pie1Data);
 		mav.addObject("pie2Data", pie2Data);
 		mav.addObject("cardData", cardData);
-		mav.setViewName("/admin/index");
+		mav.setViewName("admin/index");
 		return mav;
 	}
 	
@@ -60,7 +60,7 @@ public class AdminHomeController {
 		mav.addObject("pie1Data", pie1Data);
 		mav.addObject("pie2Data", pie2Data);
 		mav.addObject("cardData", cardData);
-		mav.setViewName("/admin/index");
+		mav.setViewName("admin/index");
 		return mav;
 	}
 }

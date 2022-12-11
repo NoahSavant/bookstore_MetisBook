@@ -26,13 +26,13 @@ public class AdminContactController {
 	public ModelAndView viewAdminContactPage(ModelAndView mav) {
 		List<Contact> contacts = contactService.getAllContacts();
 		mav.addObject("contacts", contacts);
-		mav.setViewName("/admin/contact/contact.html");
+		mav.setViewName("admin/contact/contact.html");
 		return mav;
 	}
 	@GetMapping("/insert")
 	public ModelAndView viewAddContact(ModelAndView mav) {
 		mav.addObject("contact",new Contact());
-		mav.setViewName("/admin/contact/formAddContact.html");
+		mav.setViewName("admin/contact/formAddContact.html");
 		return mav;
 	}
 	@PostMapping("/insert")
@@ -51,7 +51,7 @@ public class AdminContactController {
 	public ModelAndView viewEditContact(ModelAndView mav, @RequestParam("contactId") String contactId) {
 		Contact contact =  contactService.getById(Long.parseLong(contactId));
 		mav.addObject("contact",contact);
-		mav.setViewName("/admin/contact/formEditContact.html");
+		mav.setViewName("admin/contact/formEditContact.html");
 		return mav;
 	}
 	@PostMapping("/edit")

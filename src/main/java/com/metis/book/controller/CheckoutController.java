@@ -75,7 +75,7 @@ public class CheckoutController {
 		
 		renderObject(mav,userPrincipal.getId(),checkoutForm);
 		
-		mav.setViewName("/client/checkout.html");
+		mav.setViewName("client/checkout.html");
 		return mav;
 	}
 	
@@ -94,7 +94,7 @@ public class CheckoutController {
 			BindingResult result) {
 		UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
-		mav.setViewName("/client/checkout.html");
+		mav.setViewName("client/checkout.html");
 		if(checkoutForm.getRecievePhoneNumber()==null||checkoutForm.getNewAddress()==null) {
 			mav.addObject("lackInfo",true);
 			return mav;
@@ -116,7 +116,7 @@ public class CheckoutController {
 		if(lackOfInfo(checkoutForm)) {
 			mav.addObject("lackInfo",true);
 			renderObject(mav,userPrincipal.getId(),checkoutForm);
-			mav.setViewName("/client/checkout.html");
+			mav.setViewName("client/checkout.html");
 			return mav;
 		}
 		Long orderId = orderService.createOrder(checkoutForm);

@@ -64,7 +64,7 @@ public class CartController {
 		userPrincipal.setCartItemNum(String.valueOf(user.getCart().getCartItems().size()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		renderObject(mav,userPrincipal.getId());
-		mav.setViewName("/client/cart");
+		mav.setViewName("client/cart");
 		return mav;
 	}
 	

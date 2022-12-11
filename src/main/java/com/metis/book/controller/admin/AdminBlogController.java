@@ -38,7 +38,7 @@ public class AdminBlogController {
 		List<Blog> blogs = blogService.getAllBlogs();
 		updateAudit(blogs);
 		mav.addObject("blogs",blogs);
-		mav.setViewName("/admin/blog/blog.html");
+		mav.setViewName("admin/blog/blog.html");
 		return mav;
 	}
 	
@@ -58,7 +58,7 @@ public class AdminBlogController {
 	@GetMapping("/insert")
 	public ModelAndView viewInsertBlogPage(ModelAndView mav) {
 		mav.addObject("blogForm", new BlogForm());
-		mav.setViewName("/admin/blog/formAddBlog.html");
+		mav.setViewName("admin/blog/formAddBlog.html");
 		return mav;
 	}
 	
@@ -80,7 +80,7 @@ public class AdminBlogController {
 		Blog blog = blogService.getById(Long.parseLong(blogId));
 		BlogForm blogForm = convert(blog);
 		mav.addObject("blogForm",blogForm);
-		mav.setViewName("/admin/blog/formEditBlog.html");
+		mav.setViewName("admin/blog/formEditBlog.html");
 		return mav;
 	}
 	
@@ -115,7 +115,7 @@ public class AdminBlogController {
 			ModelAndView mav,
 			@RequestParam("blogId") String blogId) {		
 		blogService.deleteById(Long.parseLong(blogId));
-		mav.setViewName("/admin/blog/blog.html");
+		mav.setViewName("admin/blog/blog.html");
 		return mav;
 	}
 }

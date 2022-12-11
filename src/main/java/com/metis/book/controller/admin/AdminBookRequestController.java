@@ -28,14 +28,14 @@ public class AdminBookRequestController {
 	public ModelAndView viewAdminBookRequestPage(ModelAndView mav) {
 		List<BookRequest> bookrequests = bookRequestService.getAllRequest();
 		mav.addObject("bookrequests", bookrequests);
-		mav.setViewName("/admin/bookrequest/bookRequest.html");
+		mav.setViewName("admin/bookrequest/bookRequest.html");
 		return mav;
 		
 	}
 	@GetMapping("/insert")
 	public ModelAndView viewAddRequestPage(ModelAndView mav) {
 		mav.addObject("bookrequest",new BookRequest());
-		mav.setViewName("/admin/bookrequest/formAddRequest.html");
+		mav.setViewName("admin/bookrequest/formAddRequest.html");
 		return mav;
 	}
 	@PostMapping("/insert")
@@ -54,7 +54,7 @@ public class AdminBookRequestController {
 	public ModelAndView viewEditRequest(ModelAndView mav, @RequestParam("bookrequestId") String bookrequestId) {
 		BookRequest bookrequest =  bookRequestService.getById(Long.parseLong(bookrequestId));
 		mav.addObject("bookrequest",bookrequest);
-		mav.setViewName("/admin/bookrequest/formEditRequest.html");
+		mav.setViewName("admin/bookrequest/formEditRequest.html");
 		return mav;
 	}
 	@PostMapping("/edit")

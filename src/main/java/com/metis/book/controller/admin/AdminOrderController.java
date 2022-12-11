@@ -34,7 +34,7 @@ public class AdminOrderController {
         ModelAndView mav = new ModelAndView();
         List<OrderShow> orderShows = orderService.getOrderShows();
         mav.addObject("orderShows", orderShows);
-        mav.setViewName("/admin/order/order.html");
+        mav.setViewName("admin/order/order.html");
         return mav;
     }
     

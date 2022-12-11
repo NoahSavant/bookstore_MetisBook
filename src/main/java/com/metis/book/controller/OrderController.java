@@ -51,7 +51,7 @@ public class OrderController {
 			return mav;
 		}
 		mav.addObject("order",order);
-		mav.setViewName("/client/order-detail.html");
+		mav.setViewName("client/order-detail.html");
 		return mav;
 	}
 }

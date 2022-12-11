@@ -46,7 +46,7 @@ public class AdminUserController {
 
 		List<UserForm> users = getUsers();
 		mav.addObject("users", users);
-		mav.setViewName("/admin/user/user.html");
+		mav.setViewName("admin/user/user.html");
 		return mav;
 	}
 
@@ -54,7 +54,7 @@ public class AdminUserController {
 	public ModelAndView viewInsertPage(ModelAndView mav) {
 
 		mav.addObject("user", new RegisterForm());
-		mav.setViewName("/admin/user/formAddUser.html");
+		mav.setViewName("admin/user/formAddUser.html");
 		return mav;
 	}
 
@@ -92,7 +92,7 @@ public class AdminUserController {
 		UserEditForm userEditForm = new UserEditForm();
 		userEditForm.convert(user,address);
 		mav.addObject("user",userEditForm);
-		mav.setViewName("/admin/user/formEditUser.html");
+		mav.setViewName("admin/user/formEditUser.html");
 		return mav;
 	}
 	
@@ -116,7 +116,7 @@ public class AdminUserController {
 		}
 		mav.addObject("userId",userId);
 		mav.addObject("addresses",addresses);
-		mav.setViewName("/admin/user/address.html");
+		mav.setViewName("admin/user/address.html");
 		return mav;
 	}
 	
@@ -129,7 +129,7 @@ public class AdminUserController {
 		Address address = addressService.getAddressById(Long.parseLong(addressId));
 		mav.addObject("userId",userId);
 		mav.addObject("address",address);
-		mav.setViewName("/admin/user/formEditAddress.html");
+		mav.setViewName("admin/user/formEditAddress.html");
 		return mav;
 	}
 	
@@ -220,7 +220,7 @@ public class AdminUserController {
 		ModelAndView mav = new ModelAndView();
 		// Check constraint on info
 		if (result.hasErrors()) {
-			mav.setViewName("/admin/user/formAddUser.html");
+			mav.setViewName("admin/user/formAddUser.html");
 			return mav;
 		}
 
@@ -229,7 +229,7 @@ public class AdminUserController {
 		// Check constraint on data - duplicate, not match,...
 		if (authenErrors.size() > 0) {
 			mav.addObject("authenErrors", authenErrors);
-			mav.setViewName("/admin/user/formAddUser.html");
+			mav.setViewName("admin/user/formAddUser.html");
 			return mav;
 		}
 		return mav;

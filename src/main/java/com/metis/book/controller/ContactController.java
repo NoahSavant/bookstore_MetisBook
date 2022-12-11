@@ -24,7 +24,7 @@ public class ContactController {
 	public ModelAndView viewContactPage(ModelAndView mav) {
 		Contact contact = new Contact();
 		mav.addObject("contact", contact);
-		mav.setViewName("/client/contact-us.html");
+		mav.setViewName("client/contact-us.html");
 		return mav;
 	}
 	
@@ -32,7 +32,7 @@ public class ContactController {
 	public ModelAndView addContact(ModelAndView mav, @ModelAttribute("contact") Contact contact) {
 		log.info(contact.toString());
 		contactService.insertContact(contact);
-		mav.setViewName("/client/contact-us.html");
+		mav.setViewName("client/contact-us.html");
 		mav.addObject("isSucceed", true);
 		mav.addObject("contact", new Contact());
 		return mav;

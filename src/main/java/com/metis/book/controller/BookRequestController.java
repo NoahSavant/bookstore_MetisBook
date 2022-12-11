@@ -26,7 +26,7 @@ public class BookRequestController {
 	{
 		BookRequest request = new BookRequest();
 		mav.addObject("request",request);
-		mav.setViewName("/client/book-request.html");
+		mav.setViewName("client/book-request.html");
 		return mav;
 	}
 	@PostMapping
