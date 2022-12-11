@@ -50,7 +50,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		List<BookForm> bookForms = bookService.getBookShows();
 		mav.addObject("books", bookForms);
-		mav.setViewName("admin/book/book.html");
+		mav.setViewName("admin/book/book");
 		return mav;
 	}
 
@@ -88,7 +88,7 @@ public class AdminBookController {
 			ModelAndView mav,
 			@RequestParam("bookId") String bookId) {	
 		bookService.deleteById(Long.parseLong(bookId));
-		mav.setViewName("/admin/book/book.html");
+		mav.setViewName("admin/book/book.html");
 		return mav;
 	}
 	
@@ -106,7 +106,7 @@ public class AdminBookController {
 		List<Author> authors = authorService.getAllAuthors();
 		mav.addObject("authors", authors);
 		mav.addObject("bookForm", bookForm);
-		mav.setViewName("/admin/book/formEditBook.html");
+		mav.setViewName("admin/book/formEditBook.html");
 		return mav;
 	}
 	
@@ -124,7 +124,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		List<CategoryForm> categoryForms = categoryService.getCategoryShows();
 		mav.addObject("categoryForms", categoryForms);
-		mav.setViewName("/admin/book/category.html");
+		mav.setViewName("admin/book/category.html");
 		return mav;
 	}
 	@GetMapping("/category/add")
@@ -132,7 +132,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		CategoryForm categoryForm = new CategoryForm();
 		mav.addObject("category", categoryForm);
-		mav.setViewName("/admin/book/formAddCategory.html");
+		mav.setViewName("admin/book/formAddCategory.html");
 		return mav;
 	}
 	@PostMapping("/category/add")
@@ -149,7 +149,7 @@ public class AdminBookController {
 
 		CategoryForm categoryForm = categoryService.getById(Long.parseLong(id));
 		mav.addObject("category", categoryForm);
-		mav.setViewName("/admin/book/formEditCategory.html");
+		mav.setViewName("admin/book/formEditCategory.html");
 		return mav;
 	}
 	@PostMapping("/category/edit")
@@ -166,7 +166,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		List<AuthorForm> authorForms = authorService.getAuthorShows();
 		mav.addObject("authorForms", authorForms);
-		mav.setViewName("/admin/book/author.html");
+		mav.setViewName("admin/book/author.html");
 		return mav;
 	}
 	@GetMapping("/author/add")
@@ -174,7 +174,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		AuthorForm authorForm = new AuthorForm();
 		mav.addObject("author", authorForm);
-		mav.setViewName("/admin/book/formAddAuthor.html");
+		mav.setViewName("admin/book/formAddAuthor.html");
 		return mav;
 	}
 	@PostMapping("/author/add")
@@ -191,7 +191,7 @@ public class AdminBookController {
 
 		AuthorForm authorForm = authorService.getById(Long.parseLong(id));
 		mav.addObject("author", authorForm);
-		mav.setViewName("/admin/book/formEditAuthor.html");
+		mav.setViewName("admin/book/formEditAuthor.html");
 		return mav;
 	}
 	@PostMapping("/author/edit")
@@ -208,7 +208,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		List<LanguageForm> languageForms = languageService.getLanguageShows();
 		mav.addObject("languageForms", languageForms);
-		mav.setViewName("/admin/book/language.html");
+		mav.setViewName("admin/book/language.html");
 		return mav;
 	}
 	@GetMapping("/language/add")
@@ -216,7 +216,7 @@ public class AdminBookController {
 		ModelAndView mav = new ModelAndView();
 		LanguageForm languageForm = new LanguageForm();
 		mav.addObject("language", languageForm);
-		mav.setViewName("/admin/book/formAddLanguage.html");
+		mav.setViewName("admin/book/formAddLanguage.html");
 		return mav;
 	}
 	@PostMapping("/language/add")
@@ -233,7 +233,7 @@ public class AdminBookController {
 
 		LanguageForm languageForm = languageService.getById(Long.parseLong(id));
 		mav.addObject("language", languageForm);
-		mav.setViewName("/admin/book/formEditLanguage.html");
+		mav.setViewName("admin/book/formEditLanguage.html");
 		return mav;
 	}
 	@PostMapping("/language/edit")

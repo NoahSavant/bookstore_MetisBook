@@ -54,10 +54,10 @@
 									<tr th:each="orderItem : ${order.orderItems}">
 										<td width="100">
 											<img th:if="${orderItem.book.image.title}"
-												th:src="@{${'/uploads/books/'+orderItem.book.image.title}}"
+												th:src="@{${'/images/books/'+orderItem.book.image.title}}"
 												class="border img-fluid" />
 											<img th:if="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }"
-												th:src="@{${'/uploads/'+orderItem.book.image.thumbnailName}}"
+												th:src="@{${'/images/'+orderItem.book.image.thumbnailName}}"
 												class="border img-fluid" />
 										</td>
 										<td>

@@ -2,6 +2,7 @@ package com.metis.book.controller;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -47,19 +48,27 @@ public class ShopDetailController {
 	public ModelAndView viewShopDetailPage(
 			ModelAndView mav,
 			@RequestParam("bookId") String bookId) throws ParseException {
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		User user = userService.getUserById(userPrincipal.getId());
-		Boolean isComment = orderService.ExistByUserAndBook(user, Long.parseLong(bookId));
-		log.error(isComment.toString());
-		if (isComment.equals(false)) {
-			mav.addObject("isComment", "false");
+		Boolean isComment = false;
+		try {
+			User user = new User();
+			
+			if(Objects.nonNull(authentication)) {
+				UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+				user = userService.getUserById(userPrincipal.getId());
+				isComment = orderService.ExistByUserAndBook(user, Long.parseLong(bookId));
+
+			}
+			
+		}catch(Exception e) {
 			
 		}
-		else {
-			mav.addObject("isComment", "true");
-		}
+		mav.addObject("isComment", isComment.toString());
+		
+		
+		
+
+		
 		BookForm book = bookService.getById(Long.parseLong(bookId)); 
 		int sold = bookService.getSoldNumberById(Long.parseLong(bookId));
 		List<Book> topFeatured = bookService.getTopFeatured();

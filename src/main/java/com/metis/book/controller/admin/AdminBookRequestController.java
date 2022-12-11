@@ -28,7 +28,7 @@ public class AdminBookRequestController {
 	public ModelAndView viewAdminBookRequestPage(ModelAndView mav) {
 		List<BookRequest> bookrequests = bookRequestService.getAllRequest();
 		mav.addObject("bookrequests", bookrequests);
-		mav.setViewName("admin/bookrequest/bookRequest.html");
+		mav.setViewName("admin/bookrequest/bookRequest");
 		return mav;
 		
 	}
