@@ -68,9 +68,9 @@
 									<h3>Giá</h3>
 								</div>
 								<div class="price-box-slider" th:field="*{maxPrice}">
-									<input hidden id="maxPrice" th:value="${maxP}" />
-									<input hidden id="min" th:field="*{minPrice}" />
-									<input hidden id="max" th:field="*{maxPrice}" />
+									<input style="display: none;" id="maxPrice" th:value="${maxP}" />
+									<input style="display: none;" id="min" th:field="*{minPrice}" />
+									<input style="display: none;" id="max" th:field="*{maxPrice}" />
 									<div id="slider-range"></div>
 									<p>
 										<input type="text" id="amount" readonly
@@ -224,8 +224,8 @@
 								</div>
 								<div th:styleappend="${#lists.size(books) > 0 ? 'display: block' : 'display: none'}"
 									class="container pagination-custom">
-									<input hidden id="cur_page" th:value="${cur_page}">
-									<input hidden id="size" th:value="${#lists.size(books)}">
+									<input style="display: none;" id="cur_page" th:value="${cur_page}">
+									<input style="display: none;" id="size" th:value="${#lists.size(books)}">
 									<ul id="pagination" class="pagination">
 										<li id="p-before" class="page-item"><a class="page-link">Trước</a></li>
 										<li id="p-after" class="page-item"><a class="page-link">Sau</a></li>
@@ -233,7 +233,7 @@
 								</div>
 								<div th:styleappend="${#lists.size(books) > 0 ? 'display: none' : 'display: block'}"
 									class="alert alert-danger">
-									<strong>Sorry!</strong> NOT FOUND.
+									<strong>Xin lỗi!</strong> Không tìm thấy sách.
 								</div>
 							</div>
 						</div>
@@ -257,6 +257,7 @@
 		<div th:replace="~{client/fragments/footer :: footer}"></div>
 		<script th:src="@{/js/jquery-ui.js}"></script>
 		<script th:src="@{/js/jquery.nicescroll.min.js}"></script>
+		<script th:src="@{/js/shop-page.js}"></script>
 	</footer>
 	<!-- End Footer  -->
 
