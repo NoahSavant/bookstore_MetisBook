@@ -162,7 +162,7 @@
 		                <div th:each= "blog:${latestBlogs}" class="col-md-6 col-lg-4 col-xl-4">
 		                    <div class="blog-box">
 		                        <div class="blog-img">
-		                            <img class="img-fluid" th:src="@{/images/bo.webp}" alt="" />
+		                            <img class="img-fluid" th:src="@{${'/images/blogs/'+blog.image.title}}" alt="" />
 		                        </div>
 		                        <div class="blog-content">
 		                            <div class="title-blog">
