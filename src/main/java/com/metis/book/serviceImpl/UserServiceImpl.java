@@ -234,38 +234,44 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void updateProfile(ProfileForm profileForm) {
 
+		
+		log.error("Go here");
 		// Get user
 		User user = userRepository.findByEmail(profileForm.getEmail());
 		if (Objects.isNull(user)) {
 			log.error(AppConstant.USER_NOT_FOUND + profileForm.getEmail());
 		}
-
+		log.error("User here");
+		log.error(user.getEmail());
 		// Get address
 		List<Address> addresses = addressRepository.findByUser(user);
-		if (Objects.isNull(addresses)) {
-			log.error("Not found any address for this user");
-		}
-
 		Address address = new Address();
-		for (Address addr : addresses) {
-			if (addr.getIsPrimary()) {
-				address = addr;
+		
+		if (addresses.size()==0 || Objects.isNull(addresses)) {
+			log.error("Not found any address for this user");
+			address.setIsPrimary(Boolean.TRUE);
+		}else {
+			for (Address addr : addresses) {
+				if (addr.getIsPrimary()) {
+					address = addr;
+				}
 			}
 		}
 
+		
 		address.setDistrict(profileForm.getDistrict());
 		address.setSubDistrict(profileForm.getSubDistrict());
 		address.setProvince(profileForm.getProvince());
 		address.setStreet(profileForm.getStreet());
-		address.setRecievePhoneNumber(user.getPhoneNumber());
+		address.setRecievePhoneNumber(profileForm.getPhoneNumber());
+		address.setUser(user);
 		addressRepository.save(address);
-
+		
 		user.setFirstName(profileForm.getFirstName());
 		user.setLastName(profileForm.getLastName());
 		user.setGender(Integer.valueOf(profileForm.getGender()));
 		user.setPhoneNumber(profileForm.getPhoneNumber());
 		user.setBirthday(LocalDate.parse(profileForm.getBirthday()));
-
 		userRepository.save(user);
 	}
 

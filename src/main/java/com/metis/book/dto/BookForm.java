@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.metis.book.model.Author;
 import com.metis.book.model.Category;
 import com.metis.book.model.Language;
 

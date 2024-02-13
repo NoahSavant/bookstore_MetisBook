@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Aim extends UserDateAudit {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "value")
-	private String value;
-	
-	@Column(name = "year")
-	private int year;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "value")
+    private String value;
+
+    @Column(name = "year")
+    private int year;
 }

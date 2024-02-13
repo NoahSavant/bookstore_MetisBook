@@ -249,11 +249,11 @@
 										<div class="col-2">
 											<a href="#">
 												<img style="max-width:100%;" th:if="${cartItem.book.image.title}"
-													th:src="@{${'/images/books/'+cartItem.book.image.title}}"
+													th:src="@{${'/uploads/books/'+cartItem.book.image.title}}"
 													class="img-fluid" />
 												<img style="max-width:100%;"
 													th:if="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }"
-													th:src="@{${'/images/'+cartItem.book.image.thumbnailName}}"
+													th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
 													class="img-fluid" />
 											</a>
 										</div>

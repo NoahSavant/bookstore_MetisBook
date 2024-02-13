@@ -1,0 +1,33 @@
+name: Run Tests and Calculate Coverage
+
+on:
+  push:
+    branches:
+      - main  # You can change this to your main branch name
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Test with Maven
+        run: mvn clean test
+
+      - name: Generate Test case Report
+        run: mvn surefire-report:report-only
+
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: Test case Report
+          path: target/site/
+

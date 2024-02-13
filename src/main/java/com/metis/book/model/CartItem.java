@@ -23,27 +23,26 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItem extends UserDateAudit{
-	
-	private static final long serialVersionUID = 1L;
+public class CartItem extends UserDateAudit {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "quantity", nullable = false)
-	private Integer quantity;
-	
-	@ManyToOne
-	@JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false)
-	private Book book;
-	
+    private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cart_id", referencedColumnName = "id")
-	private Cart cart;
-	
-	public Long getTotalPrice() {
-		return quantity * book.getPrice();
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false)
+    private Book book;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
+
+    public Long getTotalPrice() {
+        return quantity * book.getPrice();
+    }
 }

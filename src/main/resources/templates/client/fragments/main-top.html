@@ -49,13 +49,13 @@
 									<a th:href="@{/member/profile}" class="brand-wrap ">
 										<img
 										th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle!=null }"
-										th:src="@{${'/images/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
+										th:src="@{${'/uploads/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
 										class="img-xs icon rounded-circle d-block ml-auto mr-auto " 
 										style="max-width:50%;"
 		            					/>
 		            					<img
 										th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle==null }"
-										th:src="@{${'/images/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
+										th:src="@{${'/uploads/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
 										class="img-xs icon rounded-circle d-block ml-auto mr-auto " 
 										style="max-width:50%;"
 		            					/>

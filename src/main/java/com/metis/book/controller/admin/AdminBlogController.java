@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.metis.book.dto.BlogForm;
 import com.metis.book.model.Blog;
+import com.metis.book.model.Book;
 import com.metis.book.service.IBlogService;
+import com.metis.book.service.IBookService;
 import com.metis.book.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,9 @@ public class AdminBlogController {
 	
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	IBookService bookService;
 
 	
 	@GetMapping
@@ -57,7 +62,10 @@ public class AdminBlogController {
 	
 	@GetMapping("/insert")
 	public ModelAndView viewInsertBlogPage(ModelAndView mav) {
+		
 		mav.addObject("blogForm", new BlogForm());
+		List<Book> books = bookService.getAllBooks();
+		mav.addObject("books",books);
 		mav.setViewName("admin/blog/formAddBlog.html");
 		return mav;
 	}
@@ -79,6 +87,8 @@ public class AdminBlogController {
 		
 		Blog blog = blogService.getById(Long.parseLong(blogId));
 		BlogForm blogForm = convert(blog);
+		List<Book> books = bookService.getAllBooks();
+		mav.addObject("books",books);
 		mav.addObject("blogForm",blogForm);
 		mav.setViewName("admin/blog/formEditBlog.html");
 		return mav;
@@ -104,6 +114,11 @@ public class AdminBlogController {
 		blogForm.setTitle(blog.getTitle());
 		blogForm.setSubTitle(blog.getSubTitle());
 		blogForm.setContent(blog.getContent());
+		
+		if(!blog.getBook().equals(null)) {
+			blogForm.setBook(blog.getBook().getId().toString());
+		}
+		
 		if(blog.getImage()!=null) {
 			blogForm.setImageName(blog.getImage().getTitle());
 		}

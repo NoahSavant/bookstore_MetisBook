@@ -41,10 +41,10 @@
 			<div class="row">
 				<div class="col-xl-4 col-lg-4 col-md-5 d-flex justify-content-end">
 
-					<img th:if="${book.ImageName}" th:src="@{${'/images/books/'+book.ImageName}}"
+					<img th:if="${book.ImageName}" th:src="@{${'/uploads/books/'+book.ImageName}}"
 						class="d-block w-75 img-fluid" />
 					<img th:if="${book.thumbnailName!=null && book.imageName == null }"
-						th:src="@{${'/images/'+book.thumbnailName}}" class="d-block w-75 img-fluid" />
+						th:src="@{${'/uploads/'+book.thumbnailName}}" class="d-block w-75 img-fluid" />
 				</div>
 				<div class="col-xl-8 col-lg-8 col-md-7">
 					<div class="single-product-details">
@@ -96,11 +96,11 @@
 										<div class="d-flex w-100 card-body" th:if = "${isComment.equals('true') || #authorization.expression('hasRole(''ADMIN'')')}">
 						
 											<img th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle!=null }"
-												th:src="@{${'/images/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
+												th:src="@{${'/uploads/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
 												class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
 												height="65" />
 											<img th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle==null }"
-												th:src="@{${'/images/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
+												th:src="@{${'/uploads/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
 												class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
 												height="65" />
 											<form method="post" th:object="${feedback}" th:action="@{/feedback}"
@@ -144,11 +144,11 @@
 											<div class="d-flex flex-start">
 
 												<img th:if="${feedback.user.getImage()!=null && feedback.user.getImage().getTitle!=null }"
-													th:src="@{${'/images/users/'+ feedback.user.getImage().getTitle().toString()}}"
+													th:src="@{${'/uploads/users/'+ feedback.user.getImage().getTitle().toString()}}"
 													class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
 													height="65" />
 												<img th:if="${feedback.user.getImage()!=null && feedback.user.getImage().getTitle==null }"
-													th:src="@{${'/images/'+ feedback.user.getImage().getThumbnailName().toString()}}"
+													th:src="@{${'/uploads/'+ feedback.user.getImage().getThumbnailName().toString()}}"
 													class="rounded-circle shadow-1-strong me-3 mr-4" width="65"
 													height="65" />
 												<div class="flex-grow-1 flex-shrink-1">
@@ -220,10 +220,10 @@
 									<div class="type-lb">
 										<p class="sale">Còn bán</p>
 									</div>
-									<img th:if="${item.image.title}" th:src="@{${'/images/books/'+item.image.title}}"
+									<img th:if="${item.image.title}" th:src="@{${'/uploads/books/'+item.image.title}}"
 										class="img-fluid" />
 									<img th:if="${item.image.thumbnailName!=null && item.image.title == null }"
-										th:src="@{${'/images/'+item.image.thumbnailName}}" class="img-fluid" />
+										th:src="@{${'/uploads/'+item.image.thumbnailName}}" class="img-fluid" />
 									<div class="mask-icon">
 										<ul>
 											<li><a th:href="@{/shop-detail(bookId=${item.id})}" data-toggle="tooltip"

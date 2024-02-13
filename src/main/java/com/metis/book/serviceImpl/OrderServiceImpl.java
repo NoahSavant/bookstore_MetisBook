@@ -20,12 +20,14 @@ import com.metis.book.dto.OrderShow;
 import com.metis.book.dto.PageResponse;
 import com.metis.book.model.Book;
 import com.metis.book.model.CartItem;
+import com.metis.book.model.Inventory;
 import com.metis.book.model.order.Order;
 import com.metis.book.model.order.OrderItem;
 import com.metis.book.model.order.OrderTrack;
 import com.metis.book.model.user.User;
 import com.metis.book.repository.BookRepository;
 import com.metis.book.repository.CartItemReposirory;
+import com.metis.book.repository.InventoryRepository;
 import com.metis.book.repository.OrderItemRepository;
 import com.metis.book.repository.OrderRepository;
 import com.metis.book.repository.OrderTrackRepository;
@@ -57,6 +59,9 @@ public class OrderServiceImpl implements IOrderService{
 	
 	@Autowired
 	BookRepository bookRepository;
+	
+	@Autowired
+	InventoryRepository inventoryRepository;
 
 	@Override
 	public List<Order> getAllOrderByUser(User user) {
@@ -81,6 +86,11 @@ public class OrderServiceImpl implements IOrderService{
 				cartItems.add(cartItem);
 				// delete that item in cart to transfer to order
 				cartItemRepository.deleteById(Long.parseLong(item));
+				
+				// Decrease quantity
+				Inventory inventory = inventoryRepository.findByBook(cartItem.getBook());
+				inventory.setQuantiy(inventory.getQuantiy() - cartItem.getQuantity());
+				inventoryRepository.save(inventory);
 			}
 		}
 		OrderTrack orderTrack;

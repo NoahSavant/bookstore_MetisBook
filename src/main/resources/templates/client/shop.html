@@ -150,10 +150,10 @@
 														</div>
 
 														<img th:if="${book.image.title}"
-															th:src="@{${'/images/books/'+ book.image.title}}"
+															th:src="@{${'/uploads/books/'+ book.image.title}}"
 															class="img-fluid" />
 														<img th:if="${book.image.thumbnailName!=null && book.image.title == null }"
-															th:src="@{${'/images/'+ book.image.thumbnailName}}"
+															th:src="@{${'/uploads/'+ book.image.thumbnailName}}"
 															class="img-fluid" />
 														<div class="mask-icon">
 															<ul>
@@ -189,10 +189,10 @@
 																<p class="new">New</p>
 															</div>
 															<img th:if="${book.image.title}"
-																th:src="@{${'/images/books/'+ book.image.title}}"
+																th:src="@{${'/uploads/books/'+ book.image.title}}"
 																class="img-fluid" />
 															<img th:if="${book.image.thumbnailName!=null && book.image.title == null }"
-																th:src="@{${'/images/'+ book.image.thumbnailName}}"
+																th:src="@{${'/uploads/'+ book.image.thumbnailName}}"
 																class="img-fluid" />
 															<div class="mask-icon">
 																<ul>

@@ -53,12 +53,12 @@
                     class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                     <img
 					th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle!=null }"
-					th:src="@{${'/images/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
+					th:src="@{${'/uploads/users/'+ #authentication.getPrincipal().getImage().getTitle().toString()}}"
 					class="img-profile rounded-circle " 
 					/>
 					<img
 					th:if="${#authentication.getPrincipal().getImage()!=null && #authentication.getPrincipal().getImage().getTitle==null }"
-					th:src="@{${'/images/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
+					th:src="@{${'/uploads/'+ #authentication.getPrincipal().getImage().getThumbnailName().toString()}}"
 					class="img-profile rounded-circle " 
 					/>
                 </a>

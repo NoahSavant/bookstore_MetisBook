@@ -74,7 +74,4 @@ public class Cart {
 		}
 		this.cartItems = cartItems;
 	}
-	
-	
-	
 }

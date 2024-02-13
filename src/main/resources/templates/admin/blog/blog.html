@@ -82,7 +82,10 @@
 										<tr th:each="blog : ${blogs}">
 											<td>[[${blog.id}]]</td>
 											<td>[[${blog.title}]]</td>
-											<td>[[${blog.subTitle}]]</td>
+											<td>
+												<div style="height:70px; width:100px;overflow:auto;">
+													[[${blog.subTitle}]]</div>
+											</td>
 											<td>
 												<div style="height:70px; width:100px;overflow:auto;">
 													[[${blog.content}]]</div>

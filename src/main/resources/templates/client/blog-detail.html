@@ -31,7 +31,8 @@
 									 Vào lúc:
 									 <span th:text="${#dates.format(blog.createdAt, 'dd-MM-yyyy')}"></span>
 								</p>
-								<p><a class="btn hvr-hover" th:href="@{/shop/Tatca?page=1}">Mua hàng</a></p>
+								<p><a class="btn hvr-hover" th:if="${blog.book != null}" th:href="@{/shop-detail(bookId=${blog.book.id})}">Mua hàng</a></p>
+								<p><a class="btn hvr-hover" th:if="${blog.book == null}" th:href="@{/shop/Tatca?page=1}">Mua hàng</a></p>
 							</div>
 						</div>
 					</div>
@@ -49,7 +50,8 @@
 									 Vào lúc:
 									 <span th:text="${#dates.format(blog.createdAt, 'dd-MM-yyyy')}"></span>
 								</p>
-								<p><a class="btn hvr-hover" href="#">Shop New</a></p>
+								<p><a class="btn hvr-hover" th:if="${blog.book != null}" th:href="@{/shop-detail(bookId=${blog.book.id})}">Mua hàng</a></p>
+								<p><a class="btn hvr-hover" th:if="${blog.book == null}" th:href="@{/shop/Tatca?page=1}">Mua hàng</a></p>
 							</div>
 						</div>
 					</div>

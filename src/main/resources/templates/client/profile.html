@@ -39,10 +39,10 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="icontext w-100 text-center">
-										<img th:if ="${profile.imageName}" th:src="@{${'/images/users/'+profile.imageName}}"
+										<img th:if ="${profile.imageName}" th:src="@{${'/uploads/users/'+profile.imageName}}"
 											class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:50%;"
 											id="avatar" />
-										<img th:if ="${profile.thumbnailName!=null && profile.imageName == null }" th:src="@{${'/images/'+profile.thumbnailName}}"
+										<img th:if ="${profile.thumbnailName!=null && profile.imageName == null }" th:src="@{${'/uploads/'+profile.thumbnailName}}"
 										class="img-xs icon d-block ml-auto mr-auto mb-4" style="max-width:50%;"
 										id="avatar" />
 										<label><strong>[[${profile.firstName}]] [[${profile.lastName}]]</strong></label>
@@ -248,8 +248,8 @@
 								
 								<tr th:each="orderItem : ${order.orderItems}">
 									<td width="100">
-									<img th:if ="${orderItem.book.image.title}" th:src="@{${'/images/books/'+orderItem.book.image.title}}" class="border img-fluid" />
-									<img th:if ="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }" th:src="@{${'/images/'+orderItem.book.image.thumbnailName}}"
+									<img th:if ="${orderItem.book.image.title}" th:src="@{${'/uploads/books/'+orderItem.book.image.title}}" class="border img-fluid" />
+									<img th:if ="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }" th:src="@{${'/uploads/'+orderItem.book.image.thumbnailName}}"
 										class="border img-fluid"/>
 									</td>
 									<td>

@@ -68,10 +68,10 @@
 														<td class="thumbnail-img">
 															<a href="#">
 																<img th:if="${orderItem.book.image.title}"
-																	th:src="@{${'/images/books/'+orderItem.book.image.title}}"
+																	th:src="@{${'/uploads/books/'+orderItem.book.image.title}}"
 																	class="img-fluid" />
 																<img th:if="${orderItem.book.image.thumbnailName!=null && orderItem.book.image.title == null }"
-																	th:src="@{${'/images/'+orderItem.book.image.thumbnailName}}"
+																	th:src="@{${'/uploads/'+orderItem.book.image.thumbnailName}}"
 																	class="img-fluid" />
 															</a>
 														</td>

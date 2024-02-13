@@ -7,10 +7,10 @@ import com.metis.book.model.user.User;
 
 public interface ICartService {
 
-	Cart getCartByUser(Long userId);
+    Cart getCartByUser(Long userId);
 
-	void addToCart(User user, Long bookId, int quantity);
+    void addToCart(User user, Long bookId, int quantity);
 
-	int getStatus(List<String> cartItems);
+    int getStatus(List<String> cartItems);
 
 }

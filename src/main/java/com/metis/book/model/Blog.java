@@ -53,6 +53,10 @@ public class Blog extends UserDateAudit {
 	
 	@Transient
 	private String updatedUser;
+	
+	@OneToOne
+	@JoinColumn(name="book_id", referencedColumnName = "id")
+	private Book book;
 
 
 

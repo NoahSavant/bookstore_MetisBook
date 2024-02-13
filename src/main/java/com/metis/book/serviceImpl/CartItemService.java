@@ -17,34 +17,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CartItemService implements ICartItemService {
 
-	@Autowired
-	CartItemReposirory cartItemReposirory;
-	
-	@Override
-	public void deleteById(Long itemId) {
-		cartItemReposirory.deleteById(itemId);
-		
-	}
+    @Autowired
+    CartItemReposirory cartItemReposirory;
 
-	@Override
-	public void updateItem(Long itemId, int currItemNum) {
-		CartItem item = cartItemReposirory.findById(itemId).get();
-		if(Objects.isNull(item)) {
-			log.info(AppConstant.CART_ITEM_NOT_FOUND+itemId);
-		}
-		item.setQuantity(currItemNum);
-		cartItemReposirory.save(item);
-	}
+    @Override
+    public void deleteById(Long itemId) {
+        cartItemReposirory.deleteById(itemId);
 
-	@Override
-	public CartItem getItemById(long itemId) {
-		CartItem item = cartItemReposirory.findById(itemId).get();
-		if(Objects.isNull(item)) {
-			log.info(AppConstant.CART_ITEM_NOT_FOUND+itemId);
-		}
-		return item;
-	}
+    }
 
+    @Override
+    public void updateItem(Long itemId, int currItemNum) {
+        CartItem item = cartItemReposirory.findById(itemId).get();
+        if (Objects.isNull(item)) {
+            log.info(AppConstant.CART_ITEM_NOT_FOUND + itemId);
+        }
+        item.setQuantity(currItemNum);
+        cartItemReposirory.save(item);
+    }
 
+    @Override
+    public CartItem getItemById(long itemId) {
+        CartItem item = cartItemReposirory.findById(itemId).get();
+        if (Objects.isNull(item)) {
+            log.info(AppConstant.CART_ITEM_NOT_FOUND + itemId);
+        }
+        return item;
+    }
 
 }

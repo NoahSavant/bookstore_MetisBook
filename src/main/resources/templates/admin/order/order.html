@@ -46,7 +46,7 @@
                         
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="orderTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -140,6 +140,35 @@
     </div>
 
     <div th:replace="~{admin/fragments/footer :: footer}"></div>
+    <script>
+
+
+		function initData() {
+			$('#orderTable').DataTable({
+				"processing": true,
+				"lengthMenu": [5, 10, 20, 50],
+				"oLanguage": {
+					"sSearch": "Tìm kiếm:",
+					"sLengthMenu": "Liệt kê _MENU_ dòng",
+					"sInfo": "Liệt kê dòng _START_ - _END_ trong _TOTAL_ dòng",
+					"sZeroRecords": "Không tìm thấy dữ liệu",
+					oPaginate: {
+						"sFirst": "Đầu",
+						"sLast": "Cuối",
+						"sNext": "Tiếp",
+						"sPrevious": "Trước"
+					}
+				},
+			});
+		}
+
+		$(document).ready(function () {
+			initData();
+		})
+
+
+	</script>
+
 
 </body>
 

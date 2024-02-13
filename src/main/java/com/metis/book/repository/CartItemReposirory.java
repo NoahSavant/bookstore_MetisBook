@@ -11,6 +11,6 @@ import com.metis.book.model.CartItem;
 @Repository
 public interface CartItemReposirory extends JpaRepository<CartItem, Long> {
 
-	List<CartItem> findByBook(Book book);
+    List<CartItem> findByBook(Book book);
 
 }

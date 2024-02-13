@@ -15,6 +15,7 @@ public class BlogForm{
 	private String title;
 	private String subTitle;
 	private String content;
+	private String book;
 	private MultipartFile file;
 	private String imageName;
 	private String createBy;

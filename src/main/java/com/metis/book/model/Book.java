@@ -92,7 +92,6 @@ public class Book extends UserDateAudit {
 	
 	@OneToMany(mappedBy = "book")
 	private List<OrderItem> orderItems;
-
 	
 	public List<OrderItem> getOrderItems() {
 		return orderItems == null ? null : new ArrayList<OrderItem>(this.orderItems);

@@ -76,10 +76,10 @@
 										<td class="thumbnail-img">
 											<a href="#">
 												<img th:if="${cartItem.book.image.title}"
-													th:src="@{${'/images/books/'+cartItem.book.image.title}}"
+													th:src="@{${'/uploads/books/'+cartItem.book.image.title}}"
 													class="img-fluid" />
 												<img th:if="${cartItem.book.image.thumbnailName!=null && cartItem.book.image.title == null }"
-													th:src="@{${'/images/'+cartItem.book.image.thumbnailName}}"
+													th:src="@{${'/uploads/'+cartItem.book.image.thumbnailName}}"
 													class="img-fluid" />
 											</a>
 										</td>
